@@ -1,0 +1,19 @@
+H2 Database:
+подключение:
+	Class.forName("org.h2.Driver");
+        String url = "jdbc:h2:mem:REPAIR_AGENCY;"+
+                    "MODE=MySQL;"
+                    +"INIT=CREATE SCHEMA IF NOT EXISTS REPAIR_AGENCY\\; "
+                    +"SET SCHEMA REPAIR_AGENCY\\; "
+                    +"RUNSCRIPT FROM 'classpath:/scripts/repair_agency_dump_h2.sql'";
+
+	Connection connection = DriverManager.getConnection(url);
+
+MySQL Database:
+подключение:
+	Connection connection = JDBCDataSource.getDatasource().getConnection();
+
+DAO:
+	Connection connection = JDBCDataSource.getDatasource().getConnection();
+	JDBCDAOFactory jdbcdaoFactory = new JDBCDAOFactory();
+	GenericDAO<User,Integer> dao = jdbcdaoFactory.getDAO(User.class,Integer,connection);

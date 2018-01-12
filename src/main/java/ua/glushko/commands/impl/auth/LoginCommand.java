@@ -1,0 +1,96 @@
+package ua.glushko.commands.impl.auth;
+
+import org.apache.log4j.Logger;
+import ua.glushko.commands.AbstractCommand;
+import ua.glushko.commands.CommandRouter;
+import ua.glushko.configaration.ConfigurationManager;
+import ua.glushko.configaration.MessageManager;
+import ua.glushko.model.entity.*;
+import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.TransactionException;
+import ua.glushko.services.impl.UsersService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
+
+public class LoginCommand extends AbstractCommand {
+    private final Logger LOGGER = Logger.getLogger(LoginCommand.class.getSimpleName());
+
+    @Override
+    public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
+        String page = null;
+        String locale = (String) request.getSession().getAttribute(PARAM_NAME_LOCALE);
+        String login = request.getParameter(PARAM_NAME_USER_LOGIN);
+        String password = request.getParameter(PARAM_NAME_USER_PASSWORD);
+        try {
+            LOGGER.debug("user "+login+" try to login");
+            UsersService loginService = UsersService.getService();
+            Map<User, List<Grant>> userDataAfterLogin = loginService.authenticateUser(login, password);
+            if (isUserActive(getCurrentUser(userDataAfterLogin))) {
+                saveAttributesToSession(request.getSession(), getCurrentUser(userDataAfterLogin), getCurrentUserGrants(userDataAfterLogin));
+                page = ConfigurationManager.getProperty(PATH_PAGE_MAIN);
+            } else if (isUserNotActive(getCurrentUser(userDataAfterLogin))) {
+                request.setAttribute(PARAM_NAME_ERROR_MESSAGE, MessageManager.getMessage(MESSAGE_USER_STATUS + getCurrentUser(userDataAfterLogin).getStatus(), locale));
+                page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
+            }
+            LOGGER.debug("user "+login+" was login");
+        } catch (PersistException | TransactionException | NullPointerException e) {
+            LOGGER.debug("user "+login + " rejected");
+            LOGGER.error(e);
+            request.setAttribute(PARAM_NAME_ERROR_MESSAGE, MessageManager.getMessage(MESSAGE_USER_INCORRECT_LOGIN_OR_PASSWORD, locale));
+            page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
+        }
+        return new CommandRouter(request, response, page);
+    }
+
+    private List<Grant> getCurrentUserGrants(Map<User, List<Grant>> useDataAndGrantsSet) throws NullPointerException {
+        try {
+            return useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
+        } catch (NullPointerException e) {
+            LOGGER.error(e);
+            throw new NullPointerException("useDataAndGrantsSet is null");
+        }
+    }
+
+    private User getCurrentUser(Map<User, List<Grant>> useDataAndGrantsSet) throws NullPointerException {
+        try {
+            return useDataAndGrantsSet.keySet().iterator().next();
+        } catch (NullPointerException e) {
+            LOGGER.error(e);
+            throw new NullPointerException("useDataAndGrantsSet is null");
+        }
+    }
+
+    private boolean isUserNotActive(User currentUser) throws NullPointerException {
+        try {
+            return currentUser != null && currentUser.getStatus() != UserStatus.ACTIVE;
+        } catch (NullPointerException e) {
+            LOGGER.error(e);
+            throw new NullPointerException("currentUser is null");
+        }
+    }
+
+    private boolean isUserActive(User currentUser) throws NullPointerException {
+        try {
+            return currentUser != null && currentUser.getStatus() == UserStatus.ACTIVE;
+        } catch (NullPointerException e) {
+            LOGGER.error(e);
+            throw new NullPointerException("currentUser is null");
+        }
+    }
+
+    private void saveAttributesToSession(HttpSession session, User currentUser, List<Grant> userGrants) throws NullPointerException {
+        try {
+            session.setAttribute(PARAM_NAME_USER_LOGIN, currentUser.getLogin());
+            session.setAttribute(PARAM_NAME_USER_NAME, currentUser.getName());
+            session.setAttribute(PARAM_NAME_USER_ROLE, currentUser.getRole());
+            session.setAttribute(PARAM_NAME_USER_GRANTS, userGrants);
+        } catch (NullPointerException e) {
+            LOGGER.debug(e);
+            throw new NullPointerException("some parameters of userGrants is null");
+        }
+    }
+}

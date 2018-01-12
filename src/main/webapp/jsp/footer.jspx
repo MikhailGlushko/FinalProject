@@ -1,0 +1,6 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns="http://www.w3.org/1999/xhtml" version="2.1">
+    <div class="footer">
+        Разработчик: Михаил Глушко, 2017-2018 г
+    </div>
+</jsp:root>
