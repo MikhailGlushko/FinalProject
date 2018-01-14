@@ -3,6 +3,7 @@ package ua.glushko.model.dao.impl;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.entity.User;
+import ua.glushko.model.entity.UserRole;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import static ua.glushko.model.entity.UserRole.CUSTOMER;
 
 public class UserDAO extends AbstractDAO<User> {
 
@@ -141,5 +144,26 @@ public class UserDAO extends AbstractDAO<User> {
             throw new PersistException(e);
         }
         return users.iterator().next();
+    }
+
+    public List<User> readStuff(UserRole  role, boolean flag) throws PersistException {
+        String sql;
+        if(flag)
+            sql = getSelectQuery() +" where role=?";
+        else
+            sql = getSelectQuery() +" where role!=?";
+        List<User> users;
+        ResultSet resultSet;
+        try (ConnectionWrapper con = TransactionManager.getConnection();
+             PreparedStatement statement = con.prepareStatement(sql)) {
+            statement.setString(1, role.name());
+            resultSet = statement.executeQuery();
+            users = parseResultSet(resultSet);
+            if (users.size() == 0)
+                return null;
+        } catch (Exception e) {
+            throw new PersistException(e);
+        }
+        return users;
     }
 }

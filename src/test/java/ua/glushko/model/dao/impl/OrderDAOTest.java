@@ -26,7 +26,21 @@ public class OrderDAOTest {
     @Test
     public void readAll() throws PersistException {
         List<Order> read = dao.read();
-        System.out.println(read);
+    }
+
+    @Test
+    public void readById() throws PersistException {
+        Order read = dao.read(1);
+    }
+
+    @Test
+    public void readByCustomer() throws PersistException {
+        List<Order> orders = ((OrderDAO) dao).read(0, 100, 5);
+    }
+
+    @Test
+    public void readByEmployee() throws PersistException {
+        List<Order> orders = ((OrderDAO) dao).read(0, 100, 0);
     }
 
 }

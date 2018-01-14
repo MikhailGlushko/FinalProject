@@ -189,7 +189,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     /**
      * готовим стейтмент для запроса выборки по ключу
      */
-    private void prepareStatementForSelectById(PreparedStatement statement, Integer id) throws SQLException {
+    protected void prepareStatementForSelectById(PreparedStatement statement, Integer id) throws SQLException {
         statement.setInt(1, id);
     }
 

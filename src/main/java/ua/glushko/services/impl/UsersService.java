@@ -7,6 +7,7 @@ import ua.glushko.model.dao.impl.GrantDAO;
 import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.User;
+import ua.glushko.model.entity.UserRole;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
@@ -142,5 +143,26 @@ public class UsersService extends AbstractService {
 
     public int count() throws PersistException, TransactionException {
         return this.count(MySQLDAOFactory.getFactory().getUserDao());
+    }
+
+    public List<User> getUsersAsStuff(UserRole role, boolean flag) throws PersistException, TransactionException {
+        List<User> users;
+        try {
+            GenericDAO<User> userDAO = MySQLDAOFactory.getFactory().getUserDao();
+            TransactionManager.beginTransaction();
+            users = ((UserDAO) userDAO).readStuff(role, flag);
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        List<User> result = new LinkedList<>();
+        for (User item:users) {
+            User tmp = new User();
+            tmp.setId(item.getId());
+            tmp.setName(item.getName());
+            tmp.setRole(item.getRole());
+            result.add(tmp);
+        }
+        return result;
     }
 }

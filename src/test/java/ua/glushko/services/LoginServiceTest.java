@@ -31,9 +31,7 @@ public class LoginServiceTest {
         try {
             Map<User, List<Grant>> userListMap = loginService.authenticateUser("misha", "admin");
             User user = userListMap.keySet().iterator().next();
-            System.out.println(user);
             List<Grant> grants = userListMap.get(user);
-            System.out.println(grants);
             assertNull("Метод должен вернуть исключение",userListMap);
         } catch (PersistException e) {
             throw new PersistException(e);
@@ -47,9 +45,7 @@ public class LoginServiceTest {
         try {
             Map<User, List<Grant>> userListMap = loginService.authenticateUser("admin", "admin");
             User user = userListMap.keySet().iterator().next();
-            System.out.println(user);
             List<Grant> grants = userListMap.get(user);
-            System.out.println(grants);
             assertNotNull("Метод должен вернуть обїект",userListMap);
         } catch (PersistException e) {
             throw new PersistException(e);

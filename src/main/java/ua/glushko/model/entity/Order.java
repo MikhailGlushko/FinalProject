@@ -7,6 +7,9 @@ import ua.glushko.model.entity.User;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Order implements GenericEntity, Serializable {
     private int id;
@@ -15,12 +18,16 @@ public class Order implements GenericEntity, Serializable {
     private int repairService;
     private String city;
     private String street;
-    private Date orderDate;
-    private String time;
+    private Date orderDate = new Date(System.currentTimeMillis());
+    private Date expectedDate;
     private String appliance;
-    private String paidMethod;
+    private double price;
     private int userId;
+    private String userName;
     private String memo;
+    private OrderStatus status = OrderStatus.NEW;
+    private int employeeId;
+    private String employeeName;
 
     public void setId(int id) {
         this.id = id;
@@ -74,12 +81,12 @@ public class Order implements GenericEntity, Serializable {
         this.orderDate = orderDate;
     }
 
-    public String getTime() {
-        return time;
+    public Date getExpectedDate() {
+        return expectedDate;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setExpectedDate(Date expectedDate) {
+        this.expectedDate = expectedDate;
     }
 
     public String getAppliance() {
@@ -90,12 +97,12 @@ public class Order implements GenericEntity, Serializable {
         this.appliance = appliance;
     }
 
-    public String getPaidMethod() {
-        return paidMethod;
+    public double getPrice() {
+        return price;
     }
 
-    public void setPaidMethod(String paidMethod) {
-        this.paidMethod = paidMethod;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public int getUserId() {
@@ -114,9 +121,46 @@ public class Order implements GenericEntity, Serializable {
         this.memo = memo;
     }
 
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public void setStatus(String status){
+        this.status = OrderStatus.valueOf(OrderStatus.class,status);
+    }
+
     @Override
     public Integer getId() {
         return id;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
     @Override
@@ -129,11 +173,15 @@ public class Order implements GenericEntity, Serializable {
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
                 ", orderDate=" + orderDate +
-                ", time='" + time + '\'' +
+                ", expectedDate=" + expectedDate +
                 ", appliance='" + appliance + '\'' +
-                ", paidMethod='" + paidMethod + '\'' +
+                ", price=" + price +
                 ", userId=" + userId +
+                ", userName='" + userName + '\'' +
                 ", memo='" + memo + '\'' +
+                ", status=" + status +
+                ", employeeId=" + employeeId +
+                ", employeeName='" + employeeName + '\'' +
                 '}';
     }
 }

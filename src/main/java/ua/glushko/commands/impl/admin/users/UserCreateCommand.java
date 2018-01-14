@@ -24,7 +24,7 @@ public class UserCreateCommand extends Command {
         } catch (TransactionException | PersistException e) {
             LOGGER.error(e);
         }
-        String page = "/do?command=" + COMMAND_NAME_USERS + "&page=" + request.getSession().getAttribute(PARAM_NAME_PAGES_COUNT);
+        String page = "/do?command=" + COMMAND_NAME_USERS + "&page=" + request.getSession().getAttribute(PARAM_NAME_PAGE);
         return new CommandRouter(request, response, page);
 
     }

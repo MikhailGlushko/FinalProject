@@ -23,23 +23,16 @@ public class ValidatorTest {
     public void matchPassword() {
         boolean b1;
         b1 = Validator.validatePassword("compaq");
-        System.out.println(b1);
         assertFalse(b1);
         b1 = Validator.validatePassword("Comp@q");
-        System.out.println(b1);
         assertFalse(b1);
         b1 = Validator.validatePassword("Comp@ q00");
-        System.out.println(b1);
         assertFalse(b1);
         b1 = Validator.validatePassword("Comp@<div>q00");
-        System.out.println(b1);
         assertFalse(b1);
         b1 = Validator.validatePassword("Comp@q&nbsp;01");
-        System.out.println(b1);
         assertFalse(b1);
         b1 = Validator.validatePassword("Comp@q0101");
-        System.out.println(b1);
         assertTrue(b1);
-        System.out.println(b1);
     }
 }

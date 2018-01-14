@@ -33,7 +33,20 @@ public class ShowOrdersListTag extends ShowListTag {
                     .append("<td><a href=\"/do?command=").append(command).append("_detail&order_id=").append(object.getId()).append("\">")
                     .append(object.getId())
                     .append("</a></td>");;
+            builder.append("<td>").append(object.getDescriptionShort()).append("</td>");
+            builder.append("<td>").append(object.getStatus()).append("</td>");
+            builder.append("<td>").append(object.getOrderDate()).append("</td>");
+            builder.append("<td>").append(object.getExpectedDate()).append("</td>");
+            builder.append("<td>").append(object.getUserName()).append("</td>");
+            builder.append("<td>").append(object.getEmployeeName()).append("</td>");
             builder.append("</tr>");
         }
+    }
+
+    public void makeHeader(StringBuilder builder) {
+            builder.append("<thead><tr>");
+            builder.append("<th>ID</th>").append("<th>DESCRIPTION</th>").append("<th>STATUS</th>").append("<th>ORDER DATE</th>")
+            .append("<th>EXPECTED DAY</th>").append("<th>CUSTOMER</th>").append("<th>EMPLOYEE</th>");
+            builder.append("</tr></thead>");
     }
 }

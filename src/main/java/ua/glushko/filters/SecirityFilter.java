@@ -11,7 +11,7 @@ import java.util.Set;
 
 //@WebFilter(urlPatterns = { "/*"})
 class SecirityFilter implements Filter {
-    private static final String PARAM_NAME_COMMAND = "ucommand";
+    private static final String PARAM_NAME_COMMAND = "command";
 
     @Override
     public void init(FilterConfig filterConfig) {

@@ -147,7 +147,6 @@ html, body {
     color: #a00;
 }
 
-
 .row {
     margin-left: auto;
     margin-right: auto;
@@ -189,7 +188,7 @@ select, textarea {
     border: 1px solid #6cf;
 }
 
-.input-field select , textarea{
+.input-field select, textarea{
     width: 50%;
     max-width: 50%;
     color: #039;

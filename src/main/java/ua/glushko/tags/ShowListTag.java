@@ -57,7 +57,6 @@ public abstract class ShowListTag extends TagSupport {
 
             // build head of table
             Integer access = Integer.valueOf(pageContext.getSession().getAttribute(PARAM_NAME_ACCESS).toString());
-            System.out.println(access);
             if((access & C) == C || (access & c) == c ) {
                 builder.append("<div class='addbutton' align=\"right\">")
                         .append("<button class='addbutton' type='button' name='button' value='add' onClick=\"window.location.href='/do?command=")
@@ -68,7 +67,7 @@ public abstract class ShowListTag extends TagSupport {
                         .append("</div>");
             }
             builder.append("<table class=\"browser\">");
-            //makeHeader(builder);
+            makeHeader(builder);
             builder.append("<tbody>");
             makeBody(list,builder, rowsCount);
             builder.append("</tbody>");
@@ -82,7 +81,7 @@ public abstract class ShowListTag extends TagSupport {
         return SKIP_BODY;
     }
 
-    private void makeHeader(StringBuilder builder) {
+    public void makeHeader(StringBuilder builder) {
         Iterator<String> headIterator = head.iterator();
         if (headIterator.hasNext()) {
             builder.append("<thead><tr>");

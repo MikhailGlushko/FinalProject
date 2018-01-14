@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.junit.*;
 import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.User;
+import ua.glushko.model.entity.UserRole;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.transaction.ConnectionPool;
@@ -331,7 +332,20 @@ public class UserDAOTest {
     public void count() throws PersistException{
         userDAO = MySQLDAOFactory.getFactory().getUserDao();
         Integer count = userDAO.count();
-        System.out.println(count);
         assertNotNull(count);
+    }
+
+    @Test
+    public void getAdmins() throws PersistException {
+        userDAO = MySQLDAOFactory.getFactory().getUserDao();
+        List<User> users = ((UserDAO) userDAO).readStuff(UserRole.ADMIN, true);
+        assertTrue(users.size()==1);
+    }
+
+    @Test
+    public void getStuff() throws PersistException {
+        userDAO = MySQLDAOFactory.getFactory().getUserDao();
+        List<User> users = ((UserDAO) userDAO).readStuff(UserRole.CUSTOMER, false);
+        assertTrue(users.size()!=1);
     }
 }

@@ -34,74 +34,112 @@
                     <input type="hidden" name="order_id" value="${orders_detail.id}">
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_description_short" type="text" name="order_description_short" value="${orders_detail.descriptionShort}" required/>
+                            <input id="order_description_short" type="text" name="order_description_short"
+                                   value="${orders_detail.descriptionShort}" required/>
                             <label for="order_description_short"><fmt:message key="order.description.short"/></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <textarea id="order_description_detail" type="" name="order_description_detail"
-                                      value="" required style="height: 100px">${orders_detail.descriptionDetail}</textarea>
+                            <textarea id="order_description_detail" name="order_description_detail" required
+                                      style="height: 100px">${orders_detail.descriptionDetail}</textarea>
                             <label for="order_description_detail"><fmt:message key="order.description.detail"/></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <%--<input id="order_repair_service" type="text" name="order_repair_service" value="${orders_detail.repairService}" required/>--%>
-                                <select id="order_repair_service" name="order_repair_servive" value="${orders_detail.repairService}" required>
-                                    <customtags:OptGoup list="${services_list}" value="${orders_detail.repairService}"/>
-                                </select>
-                                <label for="order_repair_service"><fmt:message key="order.repair.service"/></label>
+                                <%--<input id="order_repair_service" type="text" name="order_repair_service" value="${orders_detail.repairService}" required/>--%>
+                            <select id="order_repair_service" name="order_repair_service"
+                                    value="${orders_detail.repairService}" required>
+                                <customtags:OptGoup list="${services_list}" value="${orders_detail.repairService}"/>
+                            </select>
+                            <label for="order_repair_service"><fmt:message key="order.repair.service"/></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_city" type="text" name="order_city" value="${orders_detail.city}" required/>
+                            <input id="order_city" type="text" name="order_city" value="${orders_detail.city}"
+                                   required/>
                             <label for="order_city"><fmt:message key="order.city"/></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_street" type="text" name="order_street" value="${orders_detail.street}" required/>
+                                <%--<input id="order_street" type="text" name="order_street" value="${orders_detail.street}" required/>--%>
+                            <textarea id="order_street" name="order_street" required
+                                      style="height: 50px">${orders_detail.street}</textarea>
                             <label for="order_street"><fmt:message key="order.street"/></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_order_date" type="date" name="order_order_date" value="${orders_detail.orderDate}" required/>
+                            <input id="order_order_date" type="date" name="order_order_date"
+                                   value="${orders_detail.orderDate}" disabled/>
                             <label for="order_order_date"><fmt:message key="order.order.date"/></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_time" type="text" name="order_time" value="${orders_detail.time}" required/>
-                            <label for="order_time"><fmt:message key="order.time"/></label>
+                            <input id="order_expected_date" type="date" name="order_expected_date"
+                                   value="{orders_detail.expectedDate}"/>
+                            <label for="order_expected_date"><fmt:message key="order.expected.date"/></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_appliance" type="text" name="order_appliance" value="${orders_detail.appliance}" required/>
+                                <%--<input id="order_appliance" type="text" name="order_appliance" value="${orders_detail.appliance}" required/>--%>
+                            <textarea id="order_appliance" name="order_appliance" required
+                                      style="height: 50px">${orders_detail.appliance}</textarea>
                             <label for="order_appliance"><fmt:message key="order.appliance"/></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_paid_method" type="text" name="order_paid_method" value="${orders_detail.paidMethod}" required/>
-                            <label for="order_paid_method"><fmt:message key="order.paid.method"/></label>
+                            <input id="order_price" type="number" name="order_price"
+                                   value="${orders_detail.price}"/>
+                            <label for="order_price"><fmt:message key="order.price"/></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_user_id" type="text" name="order_user_id" value="${orders_detail.userId}" required/>
+                                <%--<input id="order_user_id" type="text" name="order_user_id" value="${orders_detail.userId}" required/>--%>
+                            <select id="order_user_id" name="order_user_id">
+                                <option value="${orders_detail.userId}">${order_user_name}</option>
+                            </select>
                             <label for="order_user_id"><fmt:message key="order.user.id"/></label>
                         </div>
-                    </div><div class="row">
-                    <div class="input-field">
-                        <textarea id="order_memo" type="text" name="order_memo" value="" required style="height: 100px">${orders_detail.memo}</textarea>
-                        <label for="order_memo"><fmt:message key="order.memo"/></label>
                     </div>
-                </div>
-                ${errorMessage}
+                    <div class="row">
+                        <div class="input-field">
+                                <textarea id="order_memo" type="text" name="order_memo" style="height: 100px">${orders_detail.memo}</textarea>
+                            <label for="order_memo"><fmt:message key="order.memo"/></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                            <select id="order_status" name="order_status">
+                                <option value="${orders_detail.status}">${orders_detail.status}</option>
+                                <option value="NEW">NEW</option>
+                                <option value="CLOSE">CLOSE</option>
+                                <option value="COMPLETE">COMPLETE</option>
+                                <option value="SUSPEND">SUSPEND</option>
+                                <option value="INWORK">INWORK</option>
+                                <option value="REJECT">REJECT</option>
+                            </select>
+                            <label for="order_status"><fmt:message key="order.status"/></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                                <%--<input id="order_user_id" type="text" name="order_user_id" value="" required/>--%>
+                            <select id="order_employee_id" name="order_employee_id">
+                                <%--<option value="${order_employee_id}" selected>${order_employee_name}</option>--%>
+                                    <customtags:OptGoupStuff list="${employee_list}" value="${orders_detail.employeeId}"/>
+                            </select>
+                            <label for="order_employee_id"><fmt:message key="order.employee.id"/></label>
+                        </div>
+                    </div>
+                        ${errorMessage}
                     <br/>
                         ${wrongAction}
                     <br/>
@@ -109,15 +147,16 @@
                     <hr/>
                     <br/>
                     <div class="row">
-                            <button name="action" class="mainmenubutton" type="submit" value="save">
-                                <fmt:message key='app.welcome.save'/>
-                            </button>
-                            <button name="action" class="mainmenubutton" type="button" value="cancel" onClick="window.location.href='/do?command=orders&page=${page}'">
-                                <fmt:message key='app.welcome.cancel'/>
-                            </button>
-                            <button name="action" class="mainmenubutton" type="submit" value="delete">
-                                <fmt:message key='app.welcome.delete'/>
-                            </button>
+                        <button name="action" class="mainmenubutton" type="submit" value="save">
+                            <fmt:message key='app.welcome.save'/>
+                        </button>
+                        <button name="action" class="mainmenubutton" type="button" value="cancel"
+                                onClick="window.location.href='/do?command=orders&page=${page}'">
+                            <fmt:message key='app.welcome.cancel'/>
+                        </button>
+                        <button name="action" class="mainmenubutton" type="submit" value="delete">
+                            <fmt:message key='app.welcome.delete'/>
+                        </button>
                     </div>
                 </form>
             </div>

@@ -20,7 +20,7 @@ public class OrderSaveCommand extends Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
 
         try {
-            storeUsersDataToDatabase(request);
+            storeOrderDataToDatabase(request);
         }catch (TransactionException | PersistException e) {
             LOGGER.error(e);
         }
@@ -29,7 +29,7 @@ public class OrderSaveCommand extends Command {
 
     }
 
-    private void storeUsersDataToDatabase(HttpServletRequest request) throws PersistException, TransactionException{
+    private void storeOrderDataToDatabase(HttpServletRequest request) throws PersistException, TransactionException{
         try{
             String button = request.getParameter("button");
             HttpSession session = request.getSession();

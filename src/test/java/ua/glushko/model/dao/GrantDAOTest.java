@@ -27,7 +27,6 @@ public class GrantDAOTest {
     @Test
     public void read() throws PersistException {
         List<Grant> grants = ((GrantDAO) grantDAO).read("ADMIN");
-        System.out.println(grants);
     }
 
 }

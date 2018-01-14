@@ -205,13 +205,15 @@ CREATE TABLE `orders` (
   `city` varchar(45) NOT NULL,
   `street` varchar(45) NOT NULL,
   `order_date` datetime DEFAULT NULL,
-  `time` enum('*','02-12','12-16','16-22') NOT NULL DEFAULT '*',
+  `expected_date` datetime DEFAULT NULL,
   `appliance` varchar(45) NOT NULL,
-  `paid_method` enum('cash','card','free') NOT NULL,
+  `price` decimal(10,2) DEFAULT '0.00',
   `user_id` int(11) NOT NULL,
   `memo` varchar(255) DEFAULT NULL,
+  `status` enum('NEW','CLOSE','COMPLETE','SUSPEND','INWORK','REJECT') DEFAULT 'NEW',
+  `employee_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-INSERT INTO `orders` VALUES (1,'Сломался холодилник','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,'*','Холодильник','cash',5,NULL);
-INSERT INTO `orders` VALUES (2,'Сломался холодилник','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,'*','Холодильник','cash',4,NULL);
+INSERT INTO `orders` VALUES (1,'Сломался холодилник','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',NULL );
+INSERT INTO `orders` VALUES (2,'Сломался холодилник','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,4,NULL,'NEW',NULL );

@@ -39,7 +39,6 @@ public class RegisterServiceTest {
         try {
             User user = registerService.register("test10", "test10", "test10", "test10", "test10","test10");
             assertNotNull("",user);
-            System.out.println(user);
         } catch (PersistException e) {
           throw new PersistException(e);
         }
@@ -50,7 +49,6 @@ public class RegisterServiceTest {
         try {
             User user = registerService.register(null, "test10", "test10", "test10", "test10","test10");
             assertNotNull("",user);
-            System.out.println(user);
         } catch (PersistException e) {
             throw new PersistException(e);
         }

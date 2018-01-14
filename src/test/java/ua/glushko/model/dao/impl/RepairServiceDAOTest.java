@@ -25,7 +25,6 @@ public class RepairServiceDAOTest {
     @Test
     public void readAll() throws PersistException {
         List<RepairService> list = reapirServiceDAO.read();
-        System.out.println(list);
     }
 
 }
