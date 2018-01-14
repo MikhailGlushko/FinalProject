@@ -9,6 +9,7 @@ import ua.glushko.model.entity.Grant;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.transaction.ConnectionPool;
 
+import java.security.spec.ECField;
 import java.util.List;
 
 import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
@@ -27,6 +28,29 @@ public class GrantDAOTest {
     @Test
     public void read() throws PersistException {
         List<Grant> grants = ((GrantDAO) grantDAO).read("ADMIN");
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void create() throws PersistException {
+        Grant grant = new Grant();
+        grantDAO.create(grant);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void update() throws PersistException {
+        Grant grant = grantDAO.read(1);
+        grantDAO.update(grant);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void delete() throws PersistException {
+        Grant grant = grantDAO.read(1);
+        grantDAO.delete(grant.getId());
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void deleteAll() throws PersistException {
+        grantDAO.deleteAll();
     }
 
 }

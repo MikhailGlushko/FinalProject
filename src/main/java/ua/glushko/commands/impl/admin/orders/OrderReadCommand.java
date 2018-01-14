@@ -70,7 +70,7 @@ public class OrderReadCommand extends Command {
             session.setAttribute(OrdersCommandHelper.PARAM_NAME_SERVICE_LIST, repairServiceList);
         } else if ((access & u) == u){
             // изменение только своих заявок
-            if(order.getUserId()==userId){
+            if(order.getUserId()==userId || order.getEmployeeId()==userId){
                 session.setAttribute(PARAM_NAME_ORDERS_USER_ID,clientId);
                 session.setAttribute(PARAM_NAME_ORDERS_USER_NAME,clientName);
                 session.setAttribute(OrdersCommandHelper.PARAM_NAME_ORDERS_LIST_TITLE, titles);

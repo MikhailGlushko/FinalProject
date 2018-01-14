@@ -89,7 +89,7 @@ INSERT INTO `grants` VALUES
 (2,'users','users','MANAGER','MR','ALL'),
 (3,'users','users','MASTER','MR','OWNER'),
 
-(4,'orders','orders','ADMIN','MCRUD','ALL'),
+(4,'orders','orders','ADMIN','MRU','ALL'),
 (5,'orders','orders','MANAGER','MCRU','ALL'),
 (6,'orders','orders','MASTER','MRU','OWNER'),
 (7,'orders','orders','CUSTOMER','MCRU','OWNER'),
@@ -215,5 +215,40 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-INSERT INTO `orders` VALUES (1,'Сломался холодилник','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',NULL );
-INSERT INTO `orders` VALUES (2,'Сломался холодилник','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,4,NULL,'NEW',NULL );
+INSERT INTO `orders` VALUES (1,'Сломался холодилник1','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,4,NULL,'NEW',2 );
+INSERT INTO `orders` VALUES (2,'Сломался холодилник2','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,4,NULL,'NEW',NULL );
+INSERT INTO `orders` VALUES (3,'Сломался холодилни3','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,4,NULL,'NEW',NULL );
+
+INSERT INTO `orders` VALUES (4,'Сломался холодилник4','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',NULL );
+INSERT INTO `orders` VALUES (5,'Сломался холодилник5','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',2 );
+INSERT INTO `orders` VALUES (6,'Сломался холодилни6','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',3 );
+
+INSERT INTO `orders` VALUES (7,'Сломался холодилник7','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',NULL );
+INSERT INTO `orders` VALUES (8,'Сломался холодилник8','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',2 );
+INSERT INTO `orders` VALUES (9,'Сломался холодилни9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',3 );
+
+DROP TABLE IF EXISTS `order_history`;
+CREATE TABLE `order_history` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `action` enum('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE') NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `action_date` datetime NOT NULL,
+  `old_value` varchar(45) NOT NULL,
+  `new_value` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `guest_book`;
+CREATE TABLE `guest_book` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `order_id` varchar(45) DEFAULT NULL,
+  `date` varchar(45) NOT NULL,
+  `description` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

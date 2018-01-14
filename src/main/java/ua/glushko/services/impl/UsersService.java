@@ -25,11 +25,11 @@ public class UsersService extends AbstractService {
     }
 
     public List<User> getUsersList() throws PersistException, TransactionException {
-        return  (List<User>) getList(MySQLDAOFactory.getFactory().getUserDao());
+        return (List<User>) getList(MySQLDAOFactory.getFactory().getUserDao());
     }
 
     public List<User> getUsersList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
-        return (List<User>) getList(MySQLDAOFactory.getFactory().getUserDao(),page,pagesCount,rowsPerPage);
+        return (List<User>) getList(MySQLDAOFactory.getFactory().getUserDao(), page, pagesCount, rowsPerPage);
     }
 
     public List<String> getUsersTitles() {
@@ -37,13 +37,13 @@ public class UsersService extends AbstractService {
     }
 
     public User getUserById(int id) throws PersistException, TransactionException {
-        return getById(MySQLDAOFactory.getFactory().getUserDao(),id);
+        return getById(MySQLDAOFactory.getFactory().getUserDao(), id);
     }
 
     public void updateUser(User user) throws PersistException, TransactionException {
-        if(user.getLogin()==null || user.getLogin().isEmpty()|| user.getPassword()==null || user.getPassword().isEmpty())
+        if (user.getLogin() == null || user.getLogin().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty())
             throw new PersistException(MessageManager.getMessage("user.incorrectLoginOrPassword"));
-        update(MySQLDAOFactory.getFactory().getUserDao(),user);
+        update(MySQLDAOFactory.getFactory().getUserDao(), user);
     }
 
     public User getUserByLogin(String userLogin) throws PersistException, TransactionException {
@@ -60,7 +60,7 @@ public class UsersService extends AbstractService {
     }
 
     public Map<User, List<Grant>> authenticateUser(String login, String password) throws TransactionException, PersistException {
-        if(login==null || password==null || login.isEmpty() || password.isEmpty())
+        if (login == null || password == null || login.isEmpty() || password.isEmpty())
             return null;
         User user;
         Map<User, List<Grant>> userWithGrants = new HashMap<>();
@@ -138,7 +138,7 @@ public class UsersService extends AbstractService {
     }
 
     public void deleteUser(Integer userId) throws PersistException, TransactionException {
-        delete(MySQLDAOFactory.getFactory().getUserDao(),userId);
+        delete(MySQLDAOFactory.getFactory().getUserDao(), userId);
     }
 
     public int count() throws PersistException, TransactionException {
@@ -155,13 +155,16 @@ public class UsersService extends AbstractService {
         } finally {
             TransactionManager.rollBack();
         }
-        List<User> result = new LinkedList<>();
-        for (User item:users) {
-            User tmp = new User();
-            tmp.setId(item.getId());
-            tmp.setName(item.getName());
-            tmp.setRole(item.getRole());
-            result.add(tmp);
+        List<User> result = null;
+        if (users != null) {
+            result = new LinkedList<>();
+            for (User item : users) {
+                User tmp = new User();
+                tmp.setId(item.getId());
+                tmp.setName(item.getName());
+                tmp.setRole(item.getRole());
+                result.add(tmp);
+            }
         }
         return result;
     }

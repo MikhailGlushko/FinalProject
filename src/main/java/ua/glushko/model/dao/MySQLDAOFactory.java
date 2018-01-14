@@ -1,9 +1,7 @@
 package ua.glushko.model.dao;
 
-import ua.glushko.model.dao.impl.GrantDAO;
-import ua.glushko.model.dao.impl.OrderDAO;
-import ua.glushko.model.dao.impl.RepairServiceDAO;
-import ua.glushko.model.dao.impl.UserDAO;
+import ua.glushko.model.dao.impl.*;
+import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.model.entity.RepairService;
 
 /**
@@ -36,5 +34,13 @@ public class MySQLDAOFactory {
 
     public OrderDAO getOrderDao() {
         return OrderDAO.getInstance();
+    }
+
+    public OrderHistoryDAO getOrderHistoryDAO() {
+        return OrderHistoryDAO.getInstance();
+    }
+
+    public GuestBookDAO getGuestBookDAO(){
+        return GuestBookDAO.getInstance();
     }
 }
