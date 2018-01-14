@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static ua.glushko.commands.AbstractCommand.*;
+import static ua.glushko.commands.Command.*;
 
 @SuppressWarnings("serial")
 public class ShowUsersListTag extends ShowListTag {

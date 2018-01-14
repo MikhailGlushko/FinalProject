@@ -5,7 +5,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommandHelper {
+class CommandHelper {
 
     private final ThreadLocal<Map<String,Object>> threadLocal = new ThreadLocal<>();
     private final ThreadLocal<HttpServletRequest> request = new ThreadLocal<>();
@@ -21,6 +21,7 @@ public class CommandHelper {
             Object[] object = (Object[]) stringObjectMap.get(key);
             if(object.length==3){
                 Object obj = object[1];
+                //noinspection unchecked
                 return (T)obj;
             }
         } catch (Exception e){}
@@ -66,7 +67,7 @@ public class CommandHelper {
         return null;
     }
 
-    public void collectParameters(){
+    private void collectParameters(){
         Map<String, Object> result = new HashMap<>();
         // collect parameters from request
         Enumeration<String> attributeNames = request.get().getParameterNames();

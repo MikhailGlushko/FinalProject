@@ -38,7 +38,7 @@
             </div>
             <div class="login_div" align="center">
                 <p class="title"><fmt:message key="app.welcome.resetpassword"/></p>
-                <form name="rerister" method="post" action="/do">
+                <form name="register" method="post" action="/do">
                     <input type="hidden" name="command" value="resetpassword"/>
                     <div class="row">
                         <div class="input-field">

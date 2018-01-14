@@ -11,7 +11,7 @@ import java.io.IOException;
  * Перенаправляет на заданную страницу
  */
 public class CommandRouter {
-    private final Logger LOGGER = Logger.getLogger(Command.class.getSimpleName());
+    private final Logger LOGGER = Logger.getLogger(GenericCommand.class.getSimpleName());
     public static final boolean FORWARD = true;
     public static final boolean REDIRECT = false;
 

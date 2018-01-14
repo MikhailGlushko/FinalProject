@@ -40,7 +40,7 @@ public class TransactionManager {
         }
     }
 
-    public static void rollBack() throws TransactionException, PersistException {
+    public static void rollBack() throws PersistException {
         if (Objects.isNull(threadLocal.get()))
             return; // already closed
             //throw new TransactionException();

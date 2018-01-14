@@ -3,6 +3,7 @@ package ua.glushko.services.impl;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.dao.GenericDAO;
 import ua.glushko.model.dao.MySQLDAOFactory;
+import ua.glushko.model.dao.impl.RepairServiceDAO;
 import ua.glushko.model.entity.RepairService;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
@@ -11,7 +12,7 @@ import ua.glushko.transaction.TransactionManager;
 
 import java.util.*;
 
-public class RepairServicesService implements AbstractService {
+public class RepairServicesService extends AbstractService {
 
     private RepairServicesService() {
     }
@@ -21,72 +22,30 @@ public class RepairServicesService implements AbstractService {
     }
 
     public List<RepairService> getRepairServiceList() throws PersistException, TransactionException {
-        List<RepairService> repairServiceList = Collections.emptyList();
-        GenericDAO<RepairService> serviceDAO = MySQLDAOFactory.getFactory().getRepairServiceDao();
-        try {
-            TransactionManager.beginTransaction();
-            repairServiceList = serviceDAO.read();
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return repairServiceList;
+        return (List<RepairService>) getList(MySQLDAOFactory.getFactory().getRepairServiceDao());
     }
 
     public List<RepairService> getRepairServiceList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
-        List<RepairService> repairServiceList = Collections.emptyList();
-        GenericDAO<RepairService> serviceDAO = MySQLDAOFactory.getFactory().getRepairServiceDao();
-        int start = (page - 1) * rowsPerPage;
-        int limit = pagesCount * rowsPerPage;
-        try {
-            TransactionManager.beginTransaction();
-            repairServiceList = serviceDAO.read(start, limit);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return repairServiceList;
+        return (List<RepairService>) getList(MySQLDAOFactory.getFactory().getRepairServiceDao(),page,pagesCount,rowsPerPage);
     }
 
     public List<String> getRepairServiceTitles() {
-        GenericDAO<RepairService> serviceDAO = MySQLDAOFactory.getFactory().getRepairServiceDao();
-        return  serviceDAO.getTableHead();
+        return  MySQLDAOFactory.getFactory().getRepairServiceDao().getTableHead();
     }
 
     public RepairService getRepairServiceById(int id) throws PersistException, TransactionException {
-        RepairService repairService = null;
-        GenericDAO<RepairService> serviceDAO = MySQLDAOFactory.getFactory().getRepairServiceDao();
-        try {
-            TransactionManager.beginTransaction();
-            repairService = serviceDAO.read(id);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return repairService;
+        return getById(MySQLDAOFactory.getFactory().getRepairServiceDao(),id);
     }
 
     public void updateRepairService(RepairService service) throws PersistException, TransactionException {
-        if(service.getName()==null || service.getName().isEmpty()|| service.getNameRu()==null || service.getNameRu().isEmpty())
-            throw new PersistException(MessageManager.getMessage("user.incorrectLoginOrPassword"));
-        GenericDAO<RepairService> serviceDAO = MySQLDAOFactory.getFactory().getRepairServiceDao();
-        try {
-            TransactionManager.beginTransaction();
-            serviceDAO.update(service);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
+        update(MySQLDAOFactory.getFactory().getRepairServiceDao(),service);
     }
 
     public void deleteRepairService(Integer serviceId) throws PersistException, TransactionException {
-        GenericDAO<RepairService> serviceDAO = MySQLDAOFactory.getFactory().getRepairServiceDao();
-        try {
-            TransactionManager.beginTransaction();
-            serviceDAO.delete(serviceId);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
+        delete(MySQLDAOFactory.getFactory().getRepairServiceDao(),serviceId);
+    }
+
+    public int count() throws PersistException, TransactionException {
+        return this.count(MySQLDAOFactory.getFactory().getRepairServiceDao());
     }
 }

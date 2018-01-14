@@ -9,14 +9,12 @@ public class SessionCreator {
 
     private Logger logger = Logger.getLogger(MailThread.class.getSimpleName());
 
-    private String smtpHost;
-    private String smtpPort;
-    private String userName;
-    private String userPassword;
-    private Properties sessionProperties;
+    private final String userName;
+    private final String userPassword;
+    private final Properties sessionProperties;
     public SessionCreator(Properties configProperties) {
-        smtpHost = configProperties.getProperty("mail.smtp.host");
-        smtpPort = configProperties.getProperty("mail.smtp.port");
+        String smtpHost = configProperties.getProperty("mail.smtp.host");
+        String smtpPort = configProperties.getProperty("mail.smtp.port");
         userName = configProperties.getProperty("mail.user.name");
         userPassword = configProperties.getProperty("mail.user.password");
         // загрузка параметров почтового сервера в свойства почтовой сессии

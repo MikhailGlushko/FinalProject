@@ -15,21 +15,21 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Ремонтное агенство::Вход</title>
+    <title>Ремонтное агенство::Редактирование услуги</title>
     <link href="../../css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main">
     <div class="content">
-        <jsp:include page="../header.jspx"/>
-        <jsp:include page="../mainmenu.jspx"/>
+        <jsp:include page="../../jsp/header.jspx"/>
+        <jsp:include page="../../jsp/mainmenu.jspx"/>
         <BR>
         <p>&nbsp;</p>
         <c:if test="${not empty service_detail}">
             <div class="login_div" align="center">
                 <form name="edit" method="post" action="/do">
                     <br/>
-                    <input type="hidden" name="command" value="services_save"/>
+                    <input type="hidden" name="command" value="services_action"/>
                     <input type="hidden" name="service_id" value="${service_detail.id}">
                     <div class="row">
                         <div class="input-field">
@@ -58,20 +58,20 @@
                     <hr/>
                     <br/>
                     <div class="row">
-                            <button name="button" class="mainmenubutton" type="submit" value="save">
+                            <button name="action" class="mainmenubutton" type="submit" value="save">
                                 <fmt:message key='app.welcome.save'/>
                             </button>
-                            <button name="button" class="mainmenubutton" type="button" value="cancel" onClick="window.location.href='/do?command=services'">
+                            <button name="action" class="mainmenubutton" type="button" value="cancel" onClick="window.location.href='/do?command=services&page=${page}'">
                                 <fmt:message key='app.welcome.cancel'/>
                             </button>
-                            <button name="button" class="mainmenubutton" type="submit" value="delete">
+                            <button name="action" class="mainmenubutton" type="submit" value="delete">
                                 <fmt:message key='app.welcome.delete'/>
                             </button>
                     </div>
                 </form>
             </div>
         </c:if>
-        <jsp:include page="../footer.jspx"/>
+        <jsp:include page="../../jsp/footer.jspx"/>
     </div>
 </div>
 </body>

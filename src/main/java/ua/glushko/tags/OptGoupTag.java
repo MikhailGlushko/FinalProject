@@ -10,13 +10,18 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class OptGoupTag extends TagSupport {
     public List<Object> list;
+    public int value;
 
     public void setList(List<Object> list){
         this.list = list;
     }
 
+    public void setValue(int value){
+        this.value=value;
+    }
+
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         StringBuilder builder = new StringBuilder();
         for (Object o:list) {
             if(o instanceof RepairService){
@@ -27,7 +32,10 @@ public class OptGoupTag extends TagSupport {
                         if(l instanceof RepairService){
                             RepairService s = (RepairService) l;
                             if(s.getParent()==r.getId()){
-                                builder.append("<option value=\"").append(s.getId()).append("\">").append(s.getNameRu()).append("</option>");
+                                builder.append("<option value=\"").append(s.getId()).append("\"");
+                                if(s.getId()==value)
+                                    builder.append(" selected ");
+                                builder.append(">").append(s.getNameRu()).append("</option>");
                             }
                         }
                     }

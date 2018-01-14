@@ -3,12 +3,12 @@ package ua.glushko.model.entity;
 import java.io.Serializable;
 
 public class RepairService implements GenericEntity, Serializable{
-    private int id;
+    private Integer id;
     private int parent;
     private String name;
     private String nameRu;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

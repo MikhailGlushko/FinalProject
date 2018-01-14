@@ -326,4 +326,12 @@ public class UserDAOTest {
             logger.error(e);
         }
     }
+
+    @Test
+    public void count() throws PersistException{
+        userDAO = MySQLDAOFactory.getFactory().getUserDao();
+        Integer count = userDAO.count();
+        System.out.println(count);
+        assertNotNull(count);
+    }
 }

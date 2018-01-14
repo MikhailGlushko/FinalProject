@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static ua.glushko.commands.AbstractCommand.PARAM_NAME_COMMAND;
+import static ua.glushko.commands.Command.PARAM_NAME_COMMAND;
 
 @SuppressWarnings("serial")
 public class ShowServicesListTag extends ShowListTag {

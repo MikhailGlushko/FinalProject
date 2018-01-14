@@ -84,22 +84,22 @@ CREATE TABLE `grants` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
-INSERT INTO `grants` VALUES 
-  (1,'users','users','ADMIN','MCRUD','ALL'),
-  (2,'users','users','MANAGER','MR','ALL'),
-  (3,'users','users','MASTER','MR','OWNER'),
+INSERT INTO `grants` VALUES
+(1,'users','users','ADMIN','MCRUD','ALL'),
+(2,'users','users','MANAGER','MR','ALL'),
+(3,'users','users','MASTER','MR','OWNER'),
 
-  (4,'orders','orders','ADMIN','MCRUD','ALL'),
-  (5,'orders','orders','MANAGER','MRU','ALL'),
-  (6,'orders','orders','MASTER','MRU','OWNER'),
-  (7,'orders','orders','CUSTOMER','MRU','OWNER'),
+(4,'orders','orders','ADMIN','MCRUD','ALL'),
+(5,'orders','orders','MANAGER','MCRU','ALL'),
+(6,'orders','orders','MASTER','MRU','OWNER'),
+(7,'orders','orders','CUSTOMER','MCRU','OWNER'),
 
-  (8,'setup','setup','ADMIN','MCRUD','ALL'),
-  (9,'setup','setup','MANAGER','MRU','OWNER'),
-  (10,'setup','setup','MASTER','MRU','OWNER'),
-  (11,'setup','setup','CUSTOMER','MRU','OWNER'),
-  (12,'services','services','ADMIN','MCRUD','ALL')
-;
+(8,'setup','setup','ADMIN','MCRUD','ALL'),
+(9,'setup','setup','MANAGER','MRU','OWNER'),
+(10,'setup','setup','MASTER','MRU','OWNER'),
+(11,'setup','setup','CUSTOMER','MRU','OWNER'),
+
+(12,'services','services','ADMIN','MCRUD','ALL');
 
 DROP TABLE IF EXISTS `repair_services`;
 CREATE TABLE `repair_services` (
@@ -195,3 +195,23 @@ INSERT INTO `repair_services` VALUES
   (91,'Screwdriver repair','Ремонт шуруповертов','6'),
   (92,'Repair of other equipment','Ремонт другой техники','6'),
   (93,'Repair of other equipment','Ремонт другой техники','7');
+
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description_short` varchar(45) NOT NULL,
+  `description_detail` varchar(255) DEFAULT NULL,
+  `repair_service` int(11) NOT NULL,
+  `city` varchar(45) NOT NULL,
+  `street` varchar(45) NOT NULL,
+  `order_date` datetime DEFAULT NULL,
+  `time` enum('*','02-12','12-16','16-22') NOT NULL DEFAULT '*',
+  `appliance` varchar(45) NOT NULL,
+  `paid_method` enum('cash','card','free') NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `memo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `orders` VALUES (1,'Сломался холодилник','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,'*','Холодильник','cash',5,NULL);
+INSERT INTO `orders` VALUES (2,'Сломался холодилник','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,'*','Холодильник','cash',4,NULL);

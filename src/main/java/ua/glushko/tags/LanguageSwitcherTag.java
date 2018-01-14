@@ -8,7 +8,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.Objects;
 
-import static ua.glushko.commands.AbstractCommand.*;
+import static ua.glushko.commands.Command.*;
 
 @SuppressWarnings("serial")
 public class LanguageSwitcherTag extends TagSupport {

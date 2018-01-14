@@ -26,12 +26,4 @@
         <location>/jsp/error/error.jsp</location>
     </error-page>
 
-    <!--<servlet>-->
-        <!--<servlet-name>Controller</servlet-name>-->
-        <!--<servlet-class>ua.glushko.servlets.Controller</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>Controller</servlet-name>-->
-        <!--<url-pattern>/</url-pattern>-->
-    <!--</servlet-mapping>-->
 </web-app>

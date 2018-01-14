@@ -50,12 +50,32 @@
         </attribute>
     </tag>
     <tag>
+        <name>ShowOrdersList</name>
+        <tag-class>ua.glushko.tags.ShowOrdersListTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>head</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>list</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
         <name>OptGoup</name>
         <tag-class>ua.glushko.tags.OptGoupTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>list</name>
             <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>value</name>
+            <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>

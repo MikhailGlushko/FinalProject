@@ -1,5 +1,7 @@
 package ua.glushko.tags;
 
+import ua.glushko.authentification.Authentification;
+import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.Grant;
@@ -11,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import static ua.glushko.commands.AbstractCommand.*;
+import static ua.glushko.commands.Command.*;
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_LOGOUT;
 
 @SuppressWarnings("serial")
@@ -32,7 +34,7 @@ public class MainMenuTag extends TagSupport {
                     .append(MessageManager.getMessage("main.home",locale))
                     .append("</a>");
 
-            Object attributeUserGrants = session.getAttribute(PARAM_NAME_USER_GRANTS);
+            Object attributeUserGrants = session.getAttribute(Authentification.PARAM_NAME_GRANTS);
             //noinspection unchecked
             @SuppressWarnings("unchecked")
             List<Grant> grants = (List<Grant>) attributeUserGrants;
@@ -48,7 +50,7 @@ public class MainMenuTag extends TagSupport {
             }
             builder.append("</div>");
             builder.append("<div style=\"float: left; width: 30%;\" align=\"right\">");
-            Object userName = session.getAttribute(PARAM_NAME_USER_NAME);
+            Object userName = session.getAttribute(Authentification.PARAM_NAME_NAME);
             if(Objects.nonNull(userName)){
                 builder.append("<a class=\"mainmenubutton\" href=\"/do?command=")
                         .append(COMMAND_NAME_LOGOUT)

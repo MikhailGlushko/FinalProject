@@ -47,4 +47,6 @@ public interface GenericDAO<T extends GenericEntity> {
     List<T> read(int start, int limit) throws PersistException;
 
     List<String> getTableHead();
+
+    Integer count();
 }

@@ -11,7 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static ua.glushko.commands.AbstractCommand.*;
+import static ua.glushko.authentification.Authentification.*;
+import static ua.glushko.commands.Command.*;
 
 @SuppressWarnings("serial")
 public abstract class ShowListTag extends TagSupport {
@@ -55,8 +56,19 @@ public abstract class ShowListTag extends TagSupport {
                 page = 1;
 
             // build head of table
+            Integer access = Integer.valueOf(pageContext.getSession().getAttribute(PARAM_NAME_ACCESS).toString());
+            System.out.println(access);
+            if((access & C) == C || (access & c) == c ) {
+                builder.append("<div class='addbutton' align=\"right\">")
+                        .append("<button class='addbutton' type='button' name='button' value='add' onClick=\"window.location.href='/do?command=")
+                        .append(list.iterator().next().getClass().getSimpleName().toLowerCase() + "s_add")
+                        .append("'\">")
+                        .append(MessageManager.getMessage("menu.add", locale))
+                        .append("</button>")
+                        .append("</div>");
+            }
             builder.append("<table class=\"browser\">");
-            makeHeader(builder);
+            //makeHeader(builder);
             builder.append("<tbody>");
             makeBody(list,builder, rowsCount);
             builder.append("</tbody>");

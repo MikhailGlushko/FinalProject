@@ -1,7 +1,6 @@
 package ua.glushko.model.dao;
 
 import org.apache.log4j.Logger;
-import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.GenericEntity;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.transaction.ConnectionWrapper;
@@ -19,16 +18,8 @@ import java.util.List;
  */
 abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO<T> {
     protected static final Logger logger = Logger.getLogger(AbstractDAO.class.getSimpleName());
-    private final String PROPERTY_NAME_DAO_CAN_NOT_DELETE = "dao.canNotDelete";
-    private final String PROPERTY_NAME_DAO_CAN_NOT_INSERT = "dao.canNotInsert";
-    private final String PROPERTY_NAME_DAO_CAN_NOT_UPDATE = "dao.canNotUpdate";
-    private final String PROPERTY_NAME_DAO_RECEIVE_MORE   = "dao.receivedMoreThenOne";
 
     private List<String> titles;
-
-    /**
-     * для вызова каждого метода будет подаваться один наперед установленный конекшн
-     */
     protected AbstractDAO() {
         super();
     }
@@ -47,8 +38,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             prepareStatementForCreate(statement, object);
             int effectedRows = statement.executeUpdate();
             if (effectedRows == 0) {                        // должны быть записи но их нет
-                throw new PersistException(
-                        String.format(MessageManager.getMessage(PROPERTY_NAME_DAO_CAN_NOT_INSERT), object));
+                throw new PersistException("Can not insert record to database. Operation aborted.");
             }
             generatedKeys = statement.getGeneratedKeys();
             setGeneratedKey(object, generatedKeys);
@@ -89,8 +79,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             prepareStatementForUpdate(statement, object);
             int effectedRows = statement.executeUpdate();
             if (effectedRows != 1) {
-                throw new PersistException(
-                        MessageManager.getMessage(PROPERTY_NAME_DAO_CAN_NOT_UPDATE));
+                throw new PersistException("Can not update record. Operation aborted.");
             }
         } catch (SQLException e) {
             throw new PersistException(e);
@@ -125,8 +114,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             prepareStatementForDeleteByKey(statement, id);
             int effectedRows = statement.executeUpdate();
             if (effectedRows != 1) {
-                throw new PersistException(
-                        MessageManager.getMessage(PROPERTY_NAME_DAO_CAN_NOT_DELETE));
+                throw new PersistException("Can not delete record. Operation aborted");
             }
         } catch (SQLException e) {
             throw new PersistException(e);
@@ -153,8 +141,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
              PreparedStatement statement = con.prepareStatement(sql)) {
             int effectedRows = statement.executeUpdate();
             if (effectedRows == 0) {
-                throw new PersistException(
-                        MessageManager.getMessage(PROPERTY_NAME_DAO_CAN_NOT_DELETE));
+                throw new PersistException("Can not delete record. Operation aborted");
             }
         } catch (Exception e) {
             throw new PersistException(e);
@@ -177,11 +164,10 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
         List<T> list = Collections.emptyList();
         String sql = getSelectQuery() +
                 " where id=?";
-        ResultSet resultSet = null;
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             prepareStatementForSelectById(statement, id);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             list = parseResultSet(resultSet);
         } catch (Exception e) {
             throw new PersistException(e);
@@ -190,8 +176,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             return null;
         }
         if (list.size() > 1) {
-            throw new PersistException(
-                    MessageManager.getMessage(PROPERTY_NAME_DAO_RECEIVE_MORE));
+            throw new PersistException("Received more than one record.");
         }
         return list.iterator().next();
     }
@@ -217,11 +202,10 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
         List<T> list = Collections.emptyList();
         String sql = getSelectQuery() +
                 " where name=?";
-        ResultSet resultSet = null;
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             prepareStatementForSelectByName(statement, name);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             setTitles(statement.getMetaData());
             list = parseResultSet(resultSet);
         } catch (Exception e) {
@@ -245,10 +229,9 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     public List<T> read() throws PersistException {
         List<T> list = Collections.emptyList();
         String sql = getSelectQuery();
-        ResultSet resultSet = null;
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             setTitles(statement.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
@@ -260,12 +243,11 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     public List<T> read(int start, int limit) throws PersistException {
         List<T> list = Collections.emptyList();
         String sql = getSelectQuery(start, limit);
-        ResultSet resultSet = null;
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             statement.setInt(1, start);
             statement.setInt(2, limit);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             setTitles(resultSet.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
@@ -282,7 +264,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
                 " from " + getTableName();
     }
 
-    private String getSelectQuery(int from, int limit) {
+    protected String getSelectQuery(int from, int limit) {
         return "select id, " + getFieldList() +
                 " from " + getTableName() +
                 " limit ?,? ";
@@ -320,13 +302,28 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
         return titles;
     }
 
-    private void setTitles(ResultSetMetaData metaData) throws SQLException {
+    protected void setTitles(ResultSetMetaData metaData) throws SQLException {
         List<String> titles = new LinkedList<>();
         int columnCount = metaData.getColumnCount();
         for (int i=1; i<=columnCount; i++){
             titles.add(metaData.getColumnName(i));
         }
         this.titles = titles;
+    }
+
+    public Integer count(){
+        String sql = getCountSqury();
+        try(ConnectionWrapper con = TransactionManager.getConnection();
+        PreparedStatement statement = con.prepareStatement(sql)) {
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next())
+                return resultSet.getInt("total");
+        } catch (Exception e){}
+        return null;
+    }
+
+    protected String getCountSqury() {
+        return "select count(*) AS total from " + getTableName();
     }
 }
 

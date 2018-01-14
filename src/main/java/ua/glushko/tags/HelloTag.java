@@ -1,5 +1,7 @@
 package ua.glushko.tags;
 
+import ua.glushko.authentification.Authentification;
+import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.MessageManager;
 
 import javax.servlet.http.HttpSession;
@@ -9,7 +11,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-import static ua.glushko.commands.AbstractCommand.*;
+import static ua.glushko.commands.Command.*;
 
 @SuppressWarnings("serial")
 public class HelloTag extends TagSupport {
@@ -20,19 +22,19 @@ public class HelloTag extends TagSupport {
 
             HttpSession session = pageContext.getSession();
             String locale = (String) session.getAttribute(PARAM_NAME_LOCALE);
-            String userName = (String) session.getAttribute(PARAM_NAME_USER_NAME);
-            Timestamp userLastLogin = (Timestamp) session.getAttribute(PARAM_NAME_USER_LAST_LOGIN);
+            String currentUserName = (String) session.getAttribute(Authentification.PARAM_NAME_NAME);
+            Timestamp currentUserLastLogin = (Timestamp) session.getAttribute(Authentification.PARAM_NAME_LAST_LOGIN);
             String PROPERTY_NAME_WELCOME = "app.welcome.message";
             String welcome = MessageManager.getMessage(PROPERTY_NAME_WELCOME,locale);
             String PROPERTY_NAME_LAST_LOGIN = "user.lastLogin";
             String lastLogin = MessageManager.getMessage(PROPERTY_NAME_LAST_LOGIN,locale);
             StringBuilder welcomeMessage = new StringBuilder(welcome);
 
-            if(Objects.nonNull(userName) && !userName.isEmpty()){
-                welcomeMessage.append(" ").append(userName).append(" ");
+            if(Objects.nonNull(currentUserName) && !currentUserName.isEmpty()){
+                welcomeMessage.append(" ").append(currentUserName).append(" ");
 
-                if(Objects.nonNull(userLastLogin))
-                            welcomeMessage.append(lastLogin).append(" ").append(userLastLogin.toString());
+                if(Objects.nonNull(currentUserLastLogin))
+                            welcomeMessage.append(lastLogin).append(" ").append(currentUserLastLogin.toString());
             } else {
                         welcomeMessage.append(" Guest ");
             }

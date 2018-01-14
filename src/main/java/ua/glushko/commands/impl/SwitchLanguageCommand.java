@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl;
 
-import ua.glushko.commands.AbstractCommand;
+import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.configaration.MessageManager;
 
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Переключение языка
  */
-public class SwitchLanguageCommand extends AbstractCommand {
+public class SwitchLanguageCommand extends Command {
 
     private static final String REFERRER = "referer";
 

@@ -89,7 +89,7 @@ public class UsersServiceTest {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(5);
         assertNotNull(user);
-        User update = usersService.update(user.getLogin(), "pass1", "pass1", "", "");
+        User update = usersService.changePassword(user.getLogin(), "pass1", "pass1", "", "");
     }
 
     @Test(expected = NullPointerException.class)
@@ -97,7 +97,7 @@ public class UsersServiceTest {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(5);
         assertNotNull(user);
-        User update = usersService.update(user.getLogin(), "pass1", "pass2", "", "");
+        User update = usersService.changePassword(user.getLogin(), "pass1", "pass2", "", "");
     }
 
     @Test(expected = NullPointerException.class)
@@ -105,7 +105,7 @@ public class UsersServiceTest {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(5);
         assertNotNull(user);
-        User update = usersService.update(user.getLogin(), "pass1", "pass1", "1", "2");
+        User update = usersService.changePassword(user.getLogin(), "pass1", "pass1", "1", "2");
     }
 
     @Test(expected = PersistException.class)

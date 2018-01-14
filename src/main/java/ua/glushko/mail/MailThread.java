@@ -13,13 +13,13 @@ import javax.mail.internet.MimeMessage;
 
 public class MailThread extends Thread {
 
-    private Logger logger = Logger.getLogger(MailThread.class.getSimpleName());
+    private final Logger logger = Logger.getLogger(MailThread.class.getSimpleName());
 
     private MimeMessage message;
-    private String sendToEmail;
-    private String mailSubject;
-    private String mailText;
-    private Properties properties;
+    private final String sendToEmail;
+    private final String mailSubject;
+    private final String mailText;
+    private final Properties properties;
     public MailThread(String sendToEmail,
                       String mailSubject, String mailText, Properties properties) {
         this.sendToEmail = sendToEmail;

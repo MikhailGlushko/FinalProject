@@ -1,5 +1,6 @@
 package ua.glushko.configaration;
 
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class ConfigurationManager {
@@ -13,6 +14,10 @@ public class ConfigurationManager {
     public static String getProperty(String key) {
         if (resourceBundle == null)
             resourceBundle = ResourceBundle.getBundle(FILE_NAME_CONFIG);
-        return resourceBundle.getString(key);
+        try {
+            return resourceBundle.getString(key);
+        } catch (MissingResourceException e){
+            return key;
+        }
     }
 }

@@ -23,18 +23,18 @@
 <body>
 <div class="main">
     <div class="content">
-        <jsp:include page="../header.jspx"/>
-        <jsp:include page="../mainmenu.jspx"/>
+        <jsp:include page="../../jsp/header.jspx"/>
+        <jsp:include page="../../jsp/mainmenu.jspx"/>
         <hr/>
         <!-- логика по выводу списка пользователей-->
-        <c:if test="${not empty services_list}">
+        <c:if test="${not empty users_list}">
             <br/>
-            <fmt:message key="services.title"/>:<br/><br/>
-            <customtags:ShowServicesList head="${services_list_head}" list="${services_list}"/>
+            <fmt:message key="users.title"/>:<br/><br/>
+            <customtags:ShowUsersList head="${users_list_head}" list="${users_list}"/>
             <br/>
         </c:if>
         <hr/>
-        <jsp:include page="../footer.jspx"/>
+        <jsp:include page="../../jsp/footer.jspx"/>
     </div>
 </div>
 </body>
