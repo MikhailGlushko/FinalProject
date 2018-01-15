@@ -25,7 +25,7 @@ public class ServiceUpdateCommand extends Command {
         } catch (TransactionException | PersistException e) {
             LOGGER.error(e);
         }
-        String page = "/do?command=" + COMMAND_NAME_SERVICES;
+        String page = "/do?command=" + COMMAND_NAME_SERVICES+"&page=" + request.getSession().getAttribute(PARAM_NAME_PAGE);
         return new CommandRouter(request, response, page);
 
     }

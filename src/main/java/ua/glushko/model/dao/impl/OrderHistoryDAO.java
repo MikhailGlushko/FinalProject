@@ -185,4 +185,9 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
         }
         return list.iterator().next();
     }
+
+    protected String getCountSqury(int orderId) {
+        return "select count(*) AS total from " + getTableName()+
+                " where order_Id = "+orderId;
+    }
 }

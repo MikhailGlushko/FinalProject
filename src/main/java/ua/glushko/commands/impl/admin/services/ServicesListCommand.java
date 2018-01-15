@@ -53,7 +53,7 @@ public class ServicesListCommand extends Command {
                 session.setAttribute(PARAM_NAME_ROWS_COUNT, rowsCount);
                 session.setAttribute(PARAM_NAME_PAGE, pageNumber);
                 session.setAttribute(PARAM_NAME_ACCESS,access);
-                session.setAttribute(PARAM_NAME_PAGES_COUNT,count);
+                session.setAttribute(PARAM_NAME_LAST_PAGE,count);
             }
         } catch (NullPointerException e){
             LOGGER.error(e);

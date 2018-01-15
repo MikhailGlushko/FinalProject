@@ -54,14 +54,20 @@ public class OrdersListCommand extends Command {
             if ((access & R)== R) {
                 List<Order> items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount);
                 List<String> titles = ordersService.getOrderTitles();
+                int count = ordersService.count();
+                count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
                 session.setAttribute(PARAM_NAME_ORDERS_LIST_TITLE, titles);
                 session.setAttribute(PARAM_NAME_ORDERS_LIST, items);
+                session.setAttribute(PARAM_NAME_LAST_PAGE,count);
             } else if((access & Authentification.r) == Authentification.r) {
                 Integer userId = Integer.valueOf(session.getAttribute(Authentification.PARAM_NAME_ID).toString());
                 List<Order> items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount,userId);
                 List<String> titles = ordersService.getOrderTitles();
+                int count = ordersService.count(userId);
+                count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
                 session.setAttribute(PARAM_NAME_ORDERS_LIST_TITLE, titles);
                 session.setAttribute(PARAM_NAME_ORDERS_LIST, items);
+                session.setAttribute(PARAM_NAME_LAST_PAGE,count);
             }
                 session.setAttribute(PARAM_NAME_PAGES_COUNT, pagesCount);
                 session.setAttribute(PARAM_NAME_ROWS_COUNT, rowsCount);

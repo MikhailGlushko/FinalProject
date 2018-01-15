@@ -2,6 +2,7 @@ package ua.glushko.commands;
 
 import org.apache.log4j.Logger;
 import ua.glushko.commands.impl.*;
+import ua.glushko.commands.impl.admin.history.*;
 import ua.glushko.commands.impl.admin.orders.*;
 import ua.glushko.commands.impl.admin.services.*;
 import ua.glushko.commands.impl.admin.users.*;
@@ -43,6 +44,13 @@ public class CommandFactory {
     public static final String COMMAND_NAME_ORDERS_UPDATE = "orders_update";
     public static final String COMMAND_NAME_ORDERS_DELETE = "orders_delete";
     public static final String COMMAND_NAME_ORDERS_CREATE = "orders_create";
+
+    public static final String COMMAND_NAME_HISTORY_ACTION_CRUD = "history_action";
+    public static final String COMMAND_NAME_HISTORY_CHANGE_EMPLOYEE = "history_change_employee";
+    public static final String COMMAND_NAME_HISTORY_CHANGE_STATUS = "history_change_status";
+    public static final String COMMAND_NAME_HISTORY_CHANGE_DATE = "history_change_date";
+    public static final String COMMAND_NAME_HISTORY_CHANGE_PRICE = "history_change_price";
+    public static final String COMMAND_NAME_HISTORY_CHANGE_COMMENT = "history_change_comment";
 
     public static final String COMMAND_NAME_SETUP = "setup";
     public static final String COMMAND_NAME_SETUP_SAVE = "setup_save";
@@ -86,6 +94,13 @@ public class CommandFactory {
         commandMap.put(COMMAND_NAME_ORDERS_READ,   new OrderReadCommand());
         commandMap.put(COMMAND_NAME_ORDERS_UPDATE, new OrderUpdateCommand());
         commandMap.put(COMMAND_NAME_ORDERS_DELETE, new OrderDeleteCommand());
+
+        commandMap.put(COMMAND_NAME_HISTORY_ACTION_CRUD, new OrderHistoryActionCRUDCommand());
+        commandMap.put(COMMAND_NAME_HISTORY_CHANGE_EMPLOYEE, new OrderHistoryChangeEmployeeCommand());
+        commandMap.put(COMMAND_NAME_HISTORY_CHANGE_STATUS, new OrderHistoryChangeStatusCommand());
+        commandMap.put(COMMAND_NAME_HISTORY_CHANGE_DATE, new OrderHistoryChangeDateCommand());
+        commandMap.put(COMMAND_NAME_HISTORY_CHANGE_PRICE, new OrderHistoryChangePriceCommand());
+        commandMap.put(COMMAND_NAME_HISTORY_CHANGE_COMMENT, new OrderHistoryChangeCommentCommand());
 
         commandMap.put(COMMAND_NAME_SETUP, new SetupCommand());
         commandMap.put(COMMAND_NAME_SETUP_SAVE, new SetupSaveCommand());

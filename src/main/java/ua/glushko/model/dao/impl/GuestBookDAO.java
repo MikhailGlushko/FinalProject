@@ -173,4 +173,9 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
         }
         return list.iterator().next();
     }
+
+    protected String getCountSqury(int orderId) {
+        return "select count(*) AS total from " + getTableName()+
+                " where order_id="+orderId;
+    }
 }

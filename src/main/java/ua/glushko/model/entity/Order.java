@@ -6,12 +6,14 @@ import ua.glushko.model.entity.OrderType;
 import ua.glushko.model.entity.User;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 public class Order implements GenericEntity, Serializable {
+    private boolean chanched = false;
     private int id;
     private String descriptionShort;
     private String descriptionDetail;
@@ -38,7 +40,11 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setDescriptionShort(String descriptionShort) {
-        this.descriptionShort = descriptionShort;
+        if(this.descriptionShort!=null && !this.descriptionShort.equals(descriptionShort) ||
+                descriptionShort!=null && !descriptionShort.equals(this.descriptionShort)) {
+            this.descriptionShort = descriptionShort;
+            this.chanched = true;
+        }
     }
 
     public String getDescriptionDetail() {
@@ -46,7 +52,11 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setDescriptionDetail(String descriptionDetail) {
-        this.descriptionDetail = descriptionDetail;
+        if(this.descriptionDetail!=null && !this.descriptionDetail.equals(descriptionDetail) ||
+        descriptionDetail!=null && !descriptionDetail.equals(this.descriptionDetail)) {
+            this.chanched = true;
+            this.descriptionDetail = descriptionDetail;
+        }
     }
 
     public int getRepairService() {
@@ -54,7 +64,10 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setRepairService(int repairService) {
-        this.repairService = repairService;
+        if(this.repairService!=repairService) {
+            this.repairService = repairService;
+            this.chanched = true;
+        }
     }
 
     public String getCity() {
@@ -62,7 +75,11 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setCity(String city) {
-        this.city = city;
+        if(this.city!=null && !this.city.equals(city) ||
+                city!=null && !city.equals(this.city)) {
+            this.city = city;
+            this.chanched = true;
+        }
     }
 
     public String getStreet() {
@@ -70,7 +87,11 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setStreet(String street) {
-        this.street = street;
+        if(this.street!=null && !this.street.equals(street) ||
+                street!=null && !street.equals(this.street)) {
+            this.street = street;
+            this.chanched = true;
+        }
     }
 
     public Date getOrderDate() {
@@ -78,7 +99,11 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
+        if(this.orderDate!=null && this.orderDate.equals(orderDate) ||
+                orderDate!=null && !orderDate.equals(this.orderDate)) {
+            this.orderDate = orderDate;
+            this.chanched = true;
+        }
     }
 
     public Date getExpectedDate() {
@@ -86,7 +111,11 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setExpectedDate(Date expectedDate) {
-        this.expectedDate = expectedDate;
+        if(this.expectedDate!=null && !this.expectedDate.equals(expectedDate) ||
+                expectedDate!=null && !expectedDate.equals(this.expectedDate)) {
+            this.expectedDate = expectedDate;
+            this.chanched = true;
+        }
     }
 
     public String getAppliance() {
@@ -94,7 +123,11 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setAppliance(String appliance) {
-        this.appliance = appliance;
+        if(this.appliance!=null && this.appliance.equals(appliance) ||
+                appliance!=null && !appliance.equals(this.appliance)) {
+            this.appliance = appliance;
+            this.chanched = true;
+        }
     }
 
     public double getPrice() {
@@ -102,7 +135,10 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        if(!Double.valueOf(this.price).equals(Double.valueOf(price))) {
+            this.price = price;
+            this.chanched = true;
+        }
     }
 
     public int getUserId() {
@@ -110,7 +146,10 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setUserId(int userId) {
-        this.userId = userId;
+        if(this.userId!=userId) {
+            this.userId = userId;
+            this.chanched = true;
+        }
     }
 
     public String getMemo() {
@@ -118,7 +157,11 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setMemo(String memo) {
-        this.memo = memo;
+        if(this.memo!=null && !this.memo.equals(memo) ||
+                memo!=null && !memo.equals(this.memo)) {
+            this.memo = memo;
+            this.chanched = true;
+        }
     }
 
     public OrderStatus getStatus() {
@@ -127,11 +170,19 @@ public class Order implements GenericEntity, Serializable {
 
 
     public void setStatus(OrderStatus status) {
-        this.status = status;
+        if(this.status!=null && !this.status.equals(status) ||
+                status!=null && !status.equals(this.status)) {
+            this.status = status;
+            this.chanched = true;
+        }
     }
 
     public void setStatus(String status){
-        this.status = OrderStatus.valueOf(OrderStatus.class,status);
+        if(this.status!=null && !this.status.equals(status) ||
+                status!=null && !status.equals(this.status)) {
+            this.status = OrderStatus.valueOf(OrderStatus.class, status);
+            this.chanched = true;
+        }
     }
 
     @Override
@@ -144,7 +195,10 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+        if(this.employeeId!=employeeId) {
+            this.employeeId = employeeId;
+            this.chanched = true;
+        }
     }
 
     public String getUserName() {
@@ -152,7 +206,11 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        if(this.userName!=null && !this.userName.equals(userName) ||
+                userName!=null && !userName.equals(this.userName)) {
+            this.userName = userName;
+            this.chanched = true;
+        }
     }
 
     public String getEmployeeName() {
@@ -160,7 +218,15 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
+        if(this.employeeName!=null && this.employeeName.equals(employeeName) ||
+                employeeName!=null && !employeeName.equals(this.employeeName)) {
+            this.employeeName = employeeName;
+            this.chanched = true;
+        }
+    }
+
+    public boolean isChanched() {
+        return chanched;
     }
 
     @Override

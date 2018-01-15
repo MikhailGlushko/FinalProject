@@ -99,4 +99,16 @@ public class AbstractService {
         }
         return count;
     }
+
+    protected <T extends GenericEntity> Integer count(AbstractDAO<T> dao, int userId) throws PersistException, TransactionException {
+        Integer count;
+        try{
+            TransactionManager.beginTransaction();
+            count = dao.count(userId);
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return count;
+    }
 }

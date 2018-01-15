@@ -145,6 +145,10 @@ public class UsersService extends AbstractService {
         return this.count(MySQLDAOFactory.getFactory().getUserDao());
     }
 
+    public int count(int id) throws PersistException, TransactionException {
+        return this.count(MySQLDAOFactory.getFactory().getUserDao(),id);
+    }
+
     public List<User> getUsersAsStuff(UserRole role, boolean flag) throws PersistException, TransactionException {
         List<User> users;
         try {

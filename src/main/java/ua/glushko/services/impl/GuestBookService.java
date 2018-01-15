@@ -49,4 +49,8 @@ public class GuestBookService extends AbstractService {
     public int count() throws PersistException, TransactionException {
         return this.count(MySQLDAOFactory.getFactory().getGuestBookDAO());
     }
+
+    public int count(int id) throws PersistException, TransactionException {
+        return this.count(MySQLDAOFactory.getFactory().getGuestBookDAO(),id);
+    }
 }

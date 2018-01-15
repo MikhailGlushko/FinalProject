@@ -50,4 +50,8 @@ public class OrdersService extends AbstractService {
     public int count() throws PersistException, TransactionException {
         return this.count(MySQLDAOFactory.getFactory().getOrderDao());
     }
+
+    public int count(int id) throws PersistException, TransactionException {
+        return this.count(MySQLDAOFactory.getFactory().getOrderDao(),id);
+    }
 }

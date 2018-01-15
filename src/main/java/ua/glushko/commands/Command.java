@@ -11,7 +11,7 @@ public abstract class Command implements GenericCommand {
     public static final String PARAM_NAME_LOCALE  = "locale";
 
     public static final String PARAM_NAME_PAGE  = "page";
-    public static final String PARAM_NAME_COUNT_PAGE = "countpage";
+    public static final String PARAM_NAME_LAST_PAGE = "lastpage";
     public static final String PARAM_NAME_ACCESS = "access";
 
     public static final String PARAM_NAME_PAGES_COUNT = "pagescount";

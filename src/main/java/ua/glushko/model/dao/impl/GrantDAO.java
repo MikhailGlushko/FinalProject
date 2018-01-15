@@ -50,6 +50,11 @@ public class GrantDAO extends AbstractDAO<Grant> {
     }
 
     @Override
+    protected String getCountSqury(int userid) {
+        return getCountSqury();
+    }
+
+    @Override
     protected String getFieldList() {
         StringBuilder builder = new StringBuilder();
         return builder
@@ -122,4 +127,6 @@ public class GrantDAO extends AbstractDAO<Grant> {
         }
         return list;
     }
+
+
 }

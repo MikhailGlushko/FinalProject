@@ -57,7 +57,7 @@ public class UsersListCommand extends Command {
                 session.setAttribute(PARAM_NAME_ACCESS,access);
                 session.setAttribute(UsersCommandHelper.PARAM_NAME_USER_LIST_TITLE, titles);
                 session.setAttribute(UsersCommandHelper.PARAM_NAME_USER_LIST, users);
-                session.setAttribute(PARAM_NAME_PAGES_COUNT,count);
+                session.setAttribute(PARAM_NAME_LAST_PAGE,count);
                 LOGGER.debug("users list were getted and try to show");
             }
         } catch (NullPointerException e){

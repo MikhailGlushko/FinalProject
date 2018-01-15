@@ -166,4 +166,8 @@ public class UserDAO extends AbstractDAO<User> {
         }
         return users;
     }
+
+    protected String getCountSqury(int userId) {
+        return "select count(*) AS total from " + getTableName();
+    }
 }

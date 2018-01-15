@@ -25,7 +25,7 @@ public class OrderCreateCommand extends Command {
         } catch (TransactionException | PersistException e) {
             LOGGER.error(e);
         }
-        String page = "/do?command=" + COMMAND_NAME_ORDERS + "&page=" + request.getSession().getAttribute(PARAM_NAME_PAGE);
+        String page = "/do?command=" + COMMAND_NAME_ORDERS + "&page=" + request.getSession().getAttribute(PARAM_NAME_LAST_PAGE);
         return new CommandRouter(request, response, page);
 
     }

@@ -322,8 +322,21 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
         return null;
     }
 
+    public Integer count(int userId){
+        String sql = getCountSqury(userId);
+        try(ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement = con.prepareStatement(sql)) {
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next())
+                return resultSet.getInt("total");
+        } catch (Exception e){}
+        return null;
+    }
+
     protected String getCountSqury() {
         return "select count(*) AS total from " + getTableName();
     }
+
+    abstract protected String getCountSqury(int userid);
 }
 

@@ -225,4 +225,9 @@ public class OrderDAO extends AbstractDAO<Order> {
         }
         return list.iterator().next();
     }
+
+    protected String getCountSqury(int userId) {
+        return "select count(*) AS total from " + getTableName()+
+                " where user_id="+userId+" or employee_id="+userId;
+    }
 }
