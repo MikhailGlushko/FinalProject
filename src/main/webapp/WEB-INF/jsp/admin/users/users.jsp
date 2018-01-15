@@ -18,13 +18,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ремонтное агенство::Пользователи</title>
-    <link href="../../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../../../../css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main">
     <div class="content">
-        <jsp:include page="../../jsp/header.jspx"/>
-        <jsp:include page="../../jsp/mainmenu.jspx"/>
+        <jsp:include page="../../../../jsp/header.jspx"/>
+        <jsp:include page="../../../../jsp/mainmenu.jspx"/>
         <hr/>
         <!-- логика по выводу списка пользователей-->
         <c:if test="${not empty users_list}">
@@ -34,7 +34,7 @@
             <br/>
         </c:if>
         <hr/>
-        <jsp:include page="../../jsp/footer.jspx"/>
+        <jsp:include page="../../../../jsp/footer.jspx"/>
     </div>
 </div>
 </body>

@@ -16,13 +16,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ремонтное агенство::Добавление заказа</title>
-    <link href="../../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main">
     <div class="content">
-        <jsp:include page="../../jsp/header.jspx"/>
-        <jsp:include page="../../jsp/mainmenu.jspx"/>
+        <jsp:include page="../../../jsp/header.jspx"/>
+        <jsp:include page="../../../jsp/mainmenu.jspx"/>
         <BR>
         <p>&nbsp;</p>
         <div class="login_div" align="center">
@@ -80,17 +80,17 @@
                     <input type="hidden" name="order_user_id" value="${order_user_id}"/>
                 </fieldset>
                 <fieldset>
-                    <legend><fmt:message key="order.date"/></legend>
+                    <legend><fmt:message key="order.actionDate"/></legend>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_order_date" type="date" name="order_order_date" value="" disabled/>
-                            <label for="order_order_date"><fmt:message key="order.order.date"/></label>
+                            <input id="order_order_date" type="actionDate" name="order_order_date" value="" disabled/>
+                            <label for="order_order_date"><fmt:message key="order.order.actionDate"/></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_expected_date" type="date" name="order_expected_date" value="" required/>
-                            <label for="order_expected_date"><fmt:message key="order.expected.date"/></label>
+                            <input id="order_expected_date" type="actionDate" name="order_expected_date" value="" required/>
+                            <label for="order_expected_date"><fmt:message key="order.expected.actionDate"/></label>
                         </div>
                     </div>
                 </fieldset>
@@ -134,7 +134,7 @@
                 </div>
             </form>
         </div>
-        <jsp:include page="../../jsp/footer.jspx"/>
+        <jsp:include page="../../../jsp/footer.jspx"/>
     </div>
 </div>
 </body>

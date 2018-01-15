@@ -39,19 +39,19 @@ public class AbstractService {
         return read;
     }
 
-    protected List<? extends GenericEntity> getList(AbstractDAO<? extends GenericEntity> dao, int page, int pagesCount, int rowsPerPage, int userId) throws PersistException, TransactionException {
-        int start = (page - 1) * rowsPerPage;
-        int limit = pagesCount * rowsPerPage;
-        List<? extends GenericEntity> read;
-        try {
-            TransactionManager.beginTransaction();
-            read = ((OrderDAO)dao).read(start, limit, userId);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
-    }
+//    protected List<? extends GenericEntity> getList(AbstractDAO<? extends GenericEntity> dao, int page, int pagesCount, int rowsPerPage, int userId) throws PersistException, TransactionException {
+//        int start = (page - 1) * rowsPerPage;
+//        int limit = pagesCount * rowsPerPage;
+//        List<? extends GenericEntity> read;
+//        try {
+//            TransactionManager.beginTransaction();
+//            read = dao.read(start, limit, userId);
+//            TransactionManager.endTransaction();
+//        } finally {
+//            TransactionManager.rollBack();
+//        }
+//        return read;
+//    }
 
     protected <T extends GenericEntity> T getById(AbstractDAO<T> dao, int id) throws PersistException, TransactionException {
         T read;

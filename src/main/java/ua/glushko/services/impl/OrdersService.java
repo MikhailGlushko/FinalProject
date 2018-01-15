@@ -2,11 +2,15 @@ package ua.glushko.services.impl;
 
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.dao.MySQLDAOFactory;
+import ua.glushko.model.dao.impl.OrderDAO;
+import ua.glushko.model.entity.GenericEntity;
 import ua.glushko.model.entity.Order;
+import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.model.entity.RepairService;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
+import ua.glushko.transaction.TransactionManager;
 
 import java.util.List;
 
@@ -25,10 +29,6 @@ public class OrdersService extends AbstractService {
 
     public List<Order> getOrderList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
         return (List<Order>) getList(MySQLDAOFactory.getFactory().getOrderDao(),page,pagesCount,rowsPerPage);
-    }
-
-    public List<Order> getOrderList(int page, int pagesCount, int rowsPerPage, int userId) throws PersistException, TransactionException {
-        return (List<Order>) getList(MySQLDAOFactory.getFactory().getOrderDao(),page,pagesCount,rowsPerPage,userId);
     }
 
     public List<String> getOrderTitles() {
@@ -53,5 +53,21 @@ public class OrdersService extends AbstractService {
 
     public int count(int id) throws PersistException, TransactionException {
         return this.count(MySQLDAOFactory.getFactory().getOrderDao(),id);
+    }
+
+    public List<Order> getOrderList(int page, int pagesCount, int rowsPerPage, Integer id) throws PersistException, TransactionException {
+        OrderDAO orderDAO = MySQLDAOFactory.getFactory().getOrderDao();
+
+        int start = (page - 1) * rowsPerPage;
+        int limit = pagesCount * rowsPerPage;
+        List<? extends GenericEntity> read;
+        try {
+            TransactionManager.beginTransaction();
+            read = orderDAO.read(start, limit,id);
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return (List<Order>)read;
     }
 }

@@ -1,12 +1,11 @@
 package ua.glushko.services.impl;
 
 import ua.glushko.model.dao.MySQLDAOFactory;
+import ua.glushko.model.dao.impl.GuestBookDAO;
 import ua.glushko.model.dao.impl.OrderDAO;
 import ua.glushko.model.dao.impl.OrderHistoryDAO;
-import ua.glushko.model.entity.Action;
-import ua.glushko.model.entity.Order;
-import ua.glushko.model.entity.OrderHistory;
-import ua.glushko.model.entity.OrderStatus;
+import ua.glushko.model.dao.impl.UserDAO;
+import ua.glushko.model.entity.*;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
@@ -35,8 +34,24 @@ public class OrdersHistoryService extends AbstractService {
         return (List<OrderHistory>) getList(MySQLDAOFactory.getFactory().getOrderHistoryDAO(), page, pagesCount, rowsPerPage);
     }
 
-    public List<OrderHistory> getOrderHistoryList(int page, int pagesCount, int rowsPerPage, int userId) throws PersistException, TransactionException {
-        return (List<OrderHistory>) getList(MySQLDAOFactory.getFactory().getOrderHistoryDAO(), page, pagesCount, rowsPerPage, userId);
+    public List<OrderHistory> getOrderHistoryList(int page, int pagesCount, int rowsPerPage, Integer id) throws PersistException, TransactionException {
+
+        OrderHistoryDAO orderHistoryDAO = MySQLDAOFactory.getFactory().getOrderHistoryDAO();
+
+        int start = (page - 1) * rowsPerPage;
+        int limit = pagesCount * rowsPerPage;
+        List<? extends GenericEntity> read;
+        try {
+            TransactionManager.beginTransaction();
+            read = orderHistoryDAO.read(start, limit,id);
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return (List<OrderHistory>)read;
+
+        //List<? extends GenericEntity> list = getList(orderHistoryDAO, page, pagesCount, rowsPerPage);
+        //return (List<OrderHistory>) list;
     }
 
     public List<String> getOrderHistoryTitles() {
@@ -47,52 +62,63 @@ public class OrdersHistoryService extends AbstractService {
         return getById(MySQLDAOFactory.getFactory().getOrderHistoryDAO(), id);
     }
 
-    public void updateOrderHistoty(OrderHistory item) throws PersistException, TransactionException, ParseException {
-        //update(MySQLDAOFactory.getFactory().getOrderHistoryDAO(),item);
+    public void updateOrderHistoty(OrderHistory orderHistory) throws PersistException, TransactionException, ParseException {
         try {
             TransactionManager.beginTransaction();
             OrderDAO orderDAO = OrderDAO.getInstance();
             OrderHistoryDAO orderHistoryDAO = OrderHistoryDAO.getInstance();
-            Order order = orderDAO.read(item.getOrderId());
-            item.setActionDate(new Date(System.currentTimeMillis()));
-            switch (Action.valueOf(item.getAction())) {
+            Order order = orderDAO.read(orderHistory.getOrderId());
+            GuestBookDAO guestBookDAO = GuestBookDAO.getInstance();
+            orderHistory.setActionDate(new Date(System.currentTimeMillis()));
+            UserDAO userDAO = UserDAO.getInstance();
+            switch (Action.valueOf(orderHistory.getAction())) {
                 case ADD_COMMENT:
-                    item.setOldValue(order.getMemo());
-                    order.setMemo(item.getNewValue());
+                    orderHistory.setOldValue(order.getMemo());
+                    order.setMemo(orderHistory.getDecription());
+                    break;
+                case GUESTBOOK_COMMENT:
+                    GuestBook guestBook = new GuestBook();
+                    guestBook.setActionDate(new Date(System.currentTimeMillis()));
+                    guestBook.setDecription(Action.GUESTBOOK_COMMENT.name());
+                    guestBook.setMemo(orderHistory.getDecription());
+                    guestBook.setOrderId(orderHistory.getOrderId());
+                    guestBook.setUserName(userDAO.read(orderHistory.getUserId()).getName());
+                    guestBookDAO.create(guestBook);
+                    System.out.println(guestBook);
                     break;
                 case CHANGE_DATE:
                     Date expectedDate = order.getExpectedDate();
                     if (expectedDate != null)
-                        item.setOldValue(order.getExpectedDate().toString());
+                        orderHistory.setOldValue(order.getExpectedDate().toString());
                     DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-                    Date date = format.parse(item.getNewValue());
+                    Date date = format.parse(orderHistory.getNewValue());
                     order.setExpectedDate(date);
                     break;
                 case CHANGE_EMPLOYEE:
-                    item.setOldValue(String.valueOf(order.getEmployeeId()));
-                    order.setEmployeeId(Integer.valueOf(item.getNewValue()));
+                    orderHistory.setOldValue(String.valueOf(order.getEmployeeId()));
+                    order.setEmployeeId(Integer.valueOf(orderHistory.getNewValue()));
                     if (order.getStatus() == OrderStatus.NEW)
                         order.setStatus(OrderStatus.INWORK);
                     break;
                 case CHANGE_PRICE:
-                    item.setOldValue(String.valueOf(order.getPrice()));
-                    order.setPrice(Double.valueOf(item.getNewValue()));
+                    orderHistory.setOldValue(String.valueOf(order.getPrice()));
+                    order.setPrice(Double.valueOf(orderHistory.getNewValue()));
                     break;
                 case CHANGE_STATUS:
-                    item.setOldValue(order.getStatus().name());
-                    order.setStatus(OrderStatus.valueOf(item.getNewValue()));
+                    orderHistory.setOldValue(order.getStatus().name());
+                    order.setStatus(OrderStatus.valueOf(orderHistory.getNewValue()));
                     if (order.getStatus() == OrderStatus.CLOSE || order.getStatus() == OrderStatus.REJECT)
                         order.setEmployeeId(order.getUserId());
                     if (order.getStatus() == OrderStatus.NEW)
-                        order.setEmployeeId(item.getUserId());
+                        order.setEmployeeId(orderHistory.getUserId());
                     break;
             }
             if (order.isChanched()) {
                 orderDAO.update(order);
-                if (item.getId() != null && item.getId() != 0)
-                    orderHistoryDAO.update(item);
+                if (orderHistory.getId() != null && orderHistory.getId() != 0)
+                    orderHistoryDAO.update(orderHistory);
                 else
-                    orderHistoryDAO.create(item);
+                    orderHistoryDAO.create(orderHistory);
             }
             TransactionManager.endTransaction();
         } catch (NumberFormatException e){

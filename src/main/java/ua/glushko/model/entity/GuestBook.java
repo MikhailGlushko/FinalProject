@@ -6,9 +6,10 @@ import java.util.Date;
 public class GuestBook implements GenericEntity, Serializable{
     private int id;
     private int orderId;
-    private int userId;
+    private String userName;
     private String decription;
-    private Date date;
+    private Date actionDate;
+    private String memo;
 
     @Override
     public Integer getId() {
@@ -27,15 +28,7 @@ public class GuestBook implements GenericEntity, Serializable{
         this.orderId = orderId;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getDecription() {
+        public String getDecription() {
         return decription;
     }
 
@@ -43,12 +36,28 @@ public class GuestBook implements GenericEntity, Serializable{
         this.decription = decription;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getActionDate() {
+        return actionDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setActionDate(Date actionDate) {
+        this.actionDate = actionDate;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
     @Override
@@ -56,9 +65,10 @@ public class GuestBook implements GenericEntity, Serializable{
         return "GuestBook{" +
                 "id=" + id +
                 ", orderId=" + orderId +
-                ", userId=" + userId +
+                ", userName='" + userName + '\'' +
                 ", decription='" + decription + '\'' +
-                ", date=" + date +
+                ", actionDate=" + actionDate +
+                ", memo='" + memo + '\'' +
                 '}';
     }
 }

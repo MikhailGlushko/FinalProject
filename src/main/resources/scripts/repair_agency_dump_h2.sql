@@ -99,7 +99,14 @@ INSERT INTO `grants` VALUES
 (10,'setup','setup','MASTER','MRU','OWNER'),
 (11,'setup','setup','CUSTOMER','MRU','OWNER'),
 
-(12,'services','services','ADMIN','MCRUD','ALL');
+(12,'services','services','ADMIN','MCRUD','ALL'),
+
+(13, 'guestbook','guestbook', 'ADMIN',   'MCRUD','ALL'),
+(14, 'guestbook','guestbook', 'MANAGER', 'MR',   'ALL'),
+(15, 'guestbook','guestbook', 'MASTER',  'MR',   'ALL'),
+(16, 'guestbook','guestbook', 'CUSTOMER','MRC',  'ALL'),
+(17, 'guestbook','guestbook', 'GUEST',   'MRC',  'ALL'),
+;
 
 DROP TABLE IF EXISTS `repair_services`;
 CREATE TABLE `repair_services` (
@@ -232,7 +239,7 @@ CREATE TABLE `orders_history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `action` enum('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT') NOT NULL,
+  `action` enum('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL,
   `description` varchar(255) NOT NULL,
   `action_date` datetime NOT NULL,
   `old_value` varchar(45) NOT NULL,
@@ -243,11 +250,23 @@ CREATE TABLE `orders_history` (
 
 DROP TABLE IF EXISTS `guest_book`;
 CREATE TABLE `guest_book` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `order_id` varchar(45) DEFAULT NULL,
-  `date` varchar(45) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL,
+  `user_name` varchar(45) NOT NULL,
   `description` varchar(45) NOT NULL,
+  `action_date` datetime NOT NULL,
+  `memo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `guest_book` VALUES (1,1,'CUSTOMER','THANKS',NULL, 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (2,1,'CUSTOMER2','THANKS',NULL, 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (3,1,'CUSTOMER3','THANKS',NULL, 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (4,1,'CUSTOMER4','THANKS',NULL, 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (5,1,'CUSTOMER5','THANKS',NULL, 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (6,1,'CUSTOMER6','THANKS',NULL, 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (7,1,'CUSTOMER7','THANKS',NULL, 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (8,1,'CUSTOMER8','THANKS',NULL, 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (9,1,'CUSTOMER9','THANKS',NULL, 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (10,1,'CUSTOMER10','THANKS',NULL, 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (11,1,'CUSTOMER11','THANKS',NULL, 'SOME TEXT');

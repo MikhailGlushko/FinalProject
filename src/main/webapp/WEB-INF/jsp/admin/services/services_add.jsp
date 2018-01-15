@@ -16,13 +16,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ремонтное агенство::Добавление услуги</title>
-    <link href="../../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../../../../css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main">
     <div class="content">
-        <jsp:include page="../../jsp/header.jspx"/>
-        <jsp:include page="../../jsp/mainmenu.jspx"/>
+        <jsp:include page="../../../../jsp/header.jspx"/>
+        <jsp:include page="../../../../jsp/mainmenu.jspx"/>
         <BR>
         <p>&nbsp;</p>
             <div class="login_div" align="center">
@@ -65,7 +65,7 @@
                     </div>
                 </form>
             </div>
-        <jsp:include page="../../jsp/footer.jspx"/>
+        <jsp:include page="../../../../jsp/footer.jspx"/>
     </div>
 </div>
 </body>

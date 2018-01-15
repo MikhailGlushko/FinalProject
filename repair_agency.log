@@ -50,3 +50,55 @@ update users set role=?,name=?,login=?,password=?,email=?,phone=?,status=?,last_
 14.01.2018 17:26:30 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
 14.01.2018 17:26:30 [main] ERROR PersistException - MySQL Error Code: 23505 Unique index or primary key violation: "USER_LOGIN_UNIQUE_INDEX_4 ON REPAIR_AGENCY.USERS(LOGIN) VALUES ('customer5', 5)"; SQL statement:
 insert into users (role,name,login,password,email,phone,status,last_login) values ( ?,?,?,?,?,?,?,? ) [23505-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+15.01.2018 19:59:40 [main] INFO  UserDAO - before insert: User{id=5, role=CUSTOMER, name='Customer5', login='customer5', password='customer5', email='customer@mail.com', phone='03', status=ACTIVE, lastLogin=null}
+15.01.2018 19:59:40 [main] INFO  UserDAO - new instance: User{id=0, role=CUSTOMER, name='Test User', login='Test.Login', password='P@ssw0rd', email='email@email.com', phone='123456789', status=ACTIVE, lastLogin=null}
+15.01.2018 19:59:40 [main] INFO  UserDAO - after insert: User{id=41, role=CUSTOMER, name='Test User', login='Test.Login', password='P@ssw0rd', email='email@email.com', phone='123456789', status=ACTIVE, lastLogin=null}
+15.01.2018 19:59:40 [main] INFO  UserDAO - after commit: User{id=5, role=CUSTOMER, name='Customer5', login='customer5', password='customer5', email='customer@mail.com', phone='03', status=ACTIVE, lastLogin=null}
+15.01.2018 19:59:40 [main] ERROR PersistException - MySQL Error Code: 23505 Unique index or primary key violation: "USER_LOGIN_UNIQUE_INDEX_4 ON REPAIR_AGENCY.USERS(LOGIN) VALUES ('admin', 1)"; SQL statement:
+update users set role=?,name=?,login=?,password=?,email=?,phone=?,status=?,last_login=? where id=? [23505-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+15.01.2018 19:59:40 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: org.h2.jdbc.JdbcSQLException: Unique index or primary key violation: "USER_LOGIN_UNIQUE_INDEX_4 ON REPAIR_AGENCY.USERS(LOGIN) VALUES ('admin', 1)"; SQL statement:
+update users set role=?,name=?,login=?,password=?,email=?,phone=?,status=?,last_login=? where id=? [23505-196]
+15.01.2018 19:59:40 [main] INFO  UserDAO - User{id=1, role=ADMIN, name='Administrator1', login='admin', password='admin', email='mikhail.glushko@gmail.com', phone='066-3864046', status=ACTIVE, lastLogin=2018-01-15}
+15.01.2018 19:59:40 [main] INFO  UserDAO - threat 1 40
+15.01.2018 19:59:41 [Thread-1] INFO  UserDAO - thread 2 40
+15.01.2018 19:59:41 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:235) )
+15.01.2018 19:59:41 [main] ERROR PersistException - MySQL Error Code: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:235) ).
+15.01.2018 19:59:41 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+15.01.2018 19:59:41 [main] INFO  UserDAO - before insert: User{id=5, role=CUSTOMER, name='Customer5', login='customer5', password='customer5', email='customer@mail.com', phone='03', status=ACTIVE, lastLogin=null}
+15.01.2018 19:59:41 [main] INFO  UserDAO - new instance: User{id=0, role=CUSTOMER, name='Test User', login='Test.Login', password='P@ssw0rd', email='email@email.com', phone='123456789', status=ACTIVE, lastLogin=null}
+15.01.2018 19:59:41 [main] INFO  UserDAO - after insert: User{id=41, role=CUSTOMER, name='Test User', login='Test.Login', password='P@ssw0rd', email='email@email.com', phone='123456789', status=ACTIVE, lastLogin=null}
+15.01.2018 19:59:41 [main] INFO  UserDAO - after rollback: User{id=5, role=CUSTOMER, name='Customer5', login='customer5', password='customer5', email='customer@mail.com', phone='03', status=ACTIVE, lastLogin=null}
+15.01.2018 19:59:41 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:72) )
+15.01.2018 19:59:41 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:72) ).
+15.01.2018 19:59:41 [main] ERROR PersistException - MySQL Error Code: 0 ua.glushko.model.exception.PersistException: Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:72) ).
+15.01.2018 19:59:41 [main] ERROR PersistException - user already exist ( ua.glushko.services.RegisterServiceTest.registerExistLogin(RegisterServiceTest.java:28) )
+15.01.2018 19:59:41 [main] ERROR PersistException - MySQL Error Code: 0 user already exist ( ua.glushko.services.RegisterServiceTest.registerExistLogin(RegisterServiceTest.java:28) ).
+15.01.2018 19:59:41 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+15.01.2018 19:59:41 [main] ERROR PersistException - MySQL Error Code: 23505 Unique index or primary key violation: "USER_LOGIN_UNIQUE_INDEX_4 ON REPAIR_AGENCY.USERS(LOGIN) VALUES ('customer5', 5)"; SQL statement:
+insert into users (role,name,login,password,email,phone,status,last_login) values ( ?,?,?,?,?,?,?,? ) [23505-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+15.01.2018 20:12:06 [main] INFO  UserDAO - before insert: User{id=5, role=CUSTOMER, name='Customer5', login='customer5', password='customer5', email='customer@mail.com', phone='03', status=ACTIVE, lastLogin=null}
+15.01.2018 20:12:06 [main] INFO  UserDAO - new instance: User{id=0, role=CUSTOMER, name='Test User', login='Test.Login', password='P@ssw0rd', email='email@email.com', phone='123456789', status=ACTIVE, lastLogin=null}
+15.01.2018 20:12:06 [main] INFO  UserDAO - after insert: User{id=41, role=CUSTOMER, name='Test User', login='Test.Login', password='P@ssw0rd', email='email@email.com', phone='123456789', status=ACTIVE, lastLogin=null}
+15.01.2018 20:12:06 [main] INFO  UserDAO - after commit: User{id=5, role=CUSTOMER, name='Customer5', login='customer5', password='customer5', email='customer@mail.com', phone='03', status=ACTIVE, lastLogin=null}
+15.01.2018 20:12:06 [main] ERROR PersistException - MySQL Error Code: 23505 Unique index or primary key violation: "USER_LOGIN_UNIQUE_INDEX_4 ON REPAIR_AGENCY.USERS(LOGIN) VALUES ('admin', 1)"; SQL statement:
+update users set role=?,name=?,login=?,password=?,email=?,phone=?,status=?,last_login=? where id=? [23505-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+15.01.2018 20:12:06 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: org.h2.jdbc.JdbcSQLException: Unique index or primary key violation: "USER_LOGIN_UNIQUE_INDEX_4 ON REPAIR_AGENCY.USERS(LOGIN) VALUES ('admin', 1)"; SQL statement:
+update users set role=?,name=?,login=?,password=?,email=?,phone=?,status=?,last_login=? where id=? [23505-196]
+15.01.2018 20:12:06 [main] INFO  UserDAO - User{id=1, role=ADMIN, name='Administrator1', login='admin', password='admin', email='mikhail.glushko@gmail.com', phone='066-3864046', status=ACTIVE, lastLogin=2018-01-15}
+15.01.2018 20:12:06 [main] INFO  UserDAO - threat 1 40
+15.01.2018 20:12:07 [Thread-1] INFO  UserDAO - thread 2 40
+15.01.2018 20:12:07 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:235) )
+15.01.2018 20:12:07 [main] ERROR PersistException - MySQL Error Code: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:235) ).
+15.01.2018 20:12:07 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+15.01.2018 20:12:07 [main] INFO  UserDAO - before insert: User{id=5, role=CUSTOMER, name='Customer5', login='customer5', password='customer5', email='customer@mail.com', phone='03', status=ACTIVE, lastLogin=null}
+15.01.2018 20:12:07 [main] INFO  UserDAO - new instance: User{id=0, role=CUSTOMER, name='Test User', login='Test.Login', password='P@ssw0rd', email='email@email.com', phone='123456789', status=ACTIVE, lastLogin=null}
+15.01.2018 20:12:07 [main] INFO  UserDAO - after insert: User{id=41, role=CUSTOMER, name='Test User', login='Test.Login', password='P@ssw0rd', email='email@email.com', phone='123456789', status=ACTIVE, lastLogin=null}
+15.01.2018 20:12:07 [main] INFO  UserDAO - after rollback: User{id=5, role=CUSTOMER, name='Customer5', login='customer5', password='customer5', email='customer@mail.com', phone='03', status=ACTIVE, lastLogin=null}
+15.01.2018 20:12:07 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:72) )
+15.01.2018 20:12:07 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:72) ).
+15.01.2018 20:12:07 [main] ERROR PersistException - MySQL Error Code: 0 ua.glushko.model.exception.PersistException: Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:72) ).
+15.01.2018 20:12:07 [main] ERROR PersistException - user already exist ( ua.glushko.services.RegisterServiceTest.registerExistLogin(RegisterServiceTest.java:28) )
+15.01.2018 20:12:07 [main] ERROR PersistException - MySQL Error Code: 0 user already exist ( ua.glushko.services.RegisterServiceTest.registerExistLogin(RegisterServiceTest.java:28) ).
+15.01.2018 20:12:07 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+15.01.2018 20:12:07 [main] ERROR PersistException - MySQL Error Code: 23505 Unique index or primary key violation: "USER_LOGIN_UNIQUE_INDEX_4 ON REPAIR_AGENCY.USERS(LOGIN) VALUES ('customer5', 5)"; SQL statement:
+insert into users (role,name,login,password,email,phone,status,last_login) values ( ?,?,?,?,?,?,?,? ) [23505-196] ( org.h2.message.DbException.get(DbException.java:179) ).

@@ -3,16 +3,19 @@ package ua.glushko.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Пользователи системы
+ */
 public class User implements GenericEntity, Cloneable, Serializable {
 
     private int id;
-    private UserRole role = UserRole.CUSTOMER;
+    private UserRole role = UserRole.CUSTOMER;  // по умолчание система регистрирует клиента
     private String name;
     private String login;
     private String password;
     private String email;
     private String phone;
-    private UserStatus status = UserStatus.ACTIVE;
+    private UserStatus status = UserStatus.ACTIVE; // по умолчание пользователь сразу активирован
     private Date lastLogin;
 
     public Integer getId() {

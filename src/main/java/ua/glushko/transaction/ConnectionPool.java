@@ -6,6 +6,9 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ *
+ */
 public class ConnectionPool {
 
     private static final ConnectionPool CONNECTION_POOL = new ConnectionPool();

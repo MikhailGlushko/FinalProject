@@ -1,11 +1,14 @@
 package ua.glushko.services.impl;
 
 import ua.glushko.model.dao.MySQLDAOFactory;
+import ua.glushko.model.dao.impl.GuestBookDAO;
+import ua.glushko.model.entity.GenericEntity;
 import ua.glushko.model.entity.GuestBook;
 import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
+import ua.glushko.transaction.TransactionManager;
 
 import java.util.List;
 
@@ -26,10 +29,6 @@ public class GuestBookService extends AbstractService {
         return (List<GuestBook>) getList(MySQLDAOFactory.getFactory().getGuestBookDAO(),page,pagesCount,rowsPerPage);
     }
 
-    public List<GuestBook> getGuestBookList(int page, int pagesCount, int rowsPerPage, int userId) throws PersistException, TransactionException {
-        return (List<GuestBook>) getList(MySQLDAOFactory.getFactory().getGuestBookDAO(),page,pagesCount,rowsPerPage,userId);
-    }
-
     public List<String> getGuestBookTitles() {
         return  MySQLDAOFactory.getFactory().getGuestBookDAO().getTableHead();
     }
@@ -38,7 +37,7 @@ public class GuestBookService extends AbstractService {
         return getById(MySQLDAOFactory.getFactory().getGuestBookDAO(),id);
     }
 
-    public void updateGuestBookHistoty(GuestBook item) throws PersistException, TransactionException {
+    public void updateGuestBook(GuestBook item) throws PersistException, TransactionException {
         update(MySQLDAOFactory.getFactory().getGuestBookDAO(),item);
     }
 

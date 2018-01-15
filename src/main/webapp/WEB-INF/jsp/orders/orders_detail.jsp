@@ -17,13 +17,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ремонтное агенство::Редактирование pfrfpjd</title>
-    <link href="../../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main">
     <div class="content">
-        <jsp:include page="../../jsp/header.jspx"/>
-        <jsp:include page="../../jsp/mainmenu.jspx"/>
+        <jsp:include page="../../../jsp/header.jspx"/>
+        <jsp:include page="../../../jsp/mainmenu.jspx"/>
         <BR>
         <p>&nbsp;</p>
         <c:if test="${not empty orders_detail}">
@@ -97,19 +97,19 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend><fmt:message key="order.date"/></legend>
+                        <legend><fmt:message key="order.actionDate"/></legend>
                         <div class="row">
                             <div class="input-field">
-                                <input id="order_order_date" type="date" name="order_order_date"
+                                <input id="order_order_date" type="actionDate" name="order_order_date"
                                        value="${orders_detail.orderDate}" disabled/>
-                                <label for="order_order_date"><fmt:message key="order.order.date"/></label>
+                                <label for="order_order_date"><fmt:message key="order.order.actionDate"/></label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field">
-                                <input id="order_expected_date" type="date" name="order_expected_date"
+                                <input id="order_expected_date" type="actionDate" name="order_expected_date"
                                        value="${orders_detail.expectedDate}"/>
-                                <label for="order_expected_date"><fmt:message key="order.expected.date"/></label>
+                                <label for="order_expected_date"><fmt:message key="order.expected.actionDate"/></label>
                             </div>
                         </div>
                     </fieldset>
@@ -194,14 +194,14 @@
                                         <option value="CHANGE_EMPLOYEE"><fmt:message
                                                 key="order.change.employee"/></option>
                                         <option value="CHANGE_STATUS"><fmt:message key="order.change.status"/></option>
-                                        <option value="CHANGE_DATE"><fmt:message key="order.change.date"/></option>
+                                        <option value="CHANGE_DATE"><fmt:message key="order.change.actionDate"/></option>
                                         <option value="CHANGE_PRICE"><fmt:message key="order.change.price"/></option>
                                         <option value="CHANGE_COMMENT"><fmt:message
                                                 key="order.change.comment"/></option>
                                     </c:if>
                                     <c:if test="${role =='CUSTOMER'}">
-                                        <option value="CHANGE_COMMENT" selected><fmt:message
-                                                key="order.change.comment"/></option>
+                                        <option value="CHANGE_COMMENT" selected><fmt:message key="order.change.comment"/></option>
+                                        <option value="GUESTBOOK_COMMENT"><fmt:message key="order.change.guestbook"/></option>
                                     </c:if>
                                 </select>
                                 <label for="order_change_action"><fmt:message key="order.change.action"/></label>
@@ -257,9 +257,9 @@
                         </div>
                         <div class="row">
                             <div class="input-field">
-                                <input id="order_expected_date_change" type="date" name="order_expected_date_change"
+                                <input id="order_expected_date_change" type="actionDate" name="order_expected_date_change"
                                        value="${orders_detail.expectedDate}"/>
-                                <label for="order_expected_date_change"><fmt:message key="order.expected.date"/></label>
+                                <label for="order_expected_date_change"><fmt:message key="order.expected.actionDate"/></label>
                             </div>
                         </div>
                         <div class="row">
@@ -275,7 +275,7 @@
                 <customtags:ShowOrdersHistoryList head="${history_list_head}" list="${history_list}"/>
             </div>
         </c:if>
-        <jsp:include page="../../jsp/footer.jspx"/>
+        <jsp:include page="../../../jsp/footer.jspx"/>
     </div>
 </div>
 </body>

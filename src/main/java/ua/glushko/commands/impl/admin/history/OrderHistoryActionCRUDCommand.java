@@ -42,6 +42,8 @@ public class OrderHistoryActionCRUDCommand extends Command {
                     return "/do?command=" + COMMAND_NAME_HISTORY_CHANGE_PRICE;
                 case "CHANGE_COMMENT":
                     return "/do?command=" + COMMAND_NAME_HISTORY_CHANGE_COMMENT;
+                case "GUESTBOOK_COMMENT":
+                    return "/do?command=" + COMMAND_NAME_HISTORY_CHANGE_GUEST_BOOK;
                 default:
                     return "/do?command=" +COMMAND_NAME_ORDERS_READ;
             }

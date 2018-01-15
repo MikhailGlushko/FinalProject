@@ -82,7 +82,7 @@ public class OrderReadCommand extends Command {
             session.setAttribute(OrdersCommandHelper.PARAM_NAME_SERVICE_LIST, repairServiceList);
             // список истории
             OrdersHistoryService ordersHistoryService = OrdersHistoryService.getService();
-            List<OrderHistory> orderHistoryList = ordersHistoryService.getOrderHistoryList(pageNumber, pagesCount, rowsCount);
+            List<OrderHistory> orderHistoryList = ordersHistoryService.getOrderHistoryList(pageNumber, pagesCount, rowsCount,id);
             List<String> orderHistoryTitles = ordersHistoryService.getOrderHistoryTitles();
             session.setAttribute(PARAM_NAME_ORDERS_HISTORY_LIST,orderHistoryList);
             session.setAttribute(PARAM_NAME_ORDERS_HISTORY_LIST_TITLE,orderHistoryTitles);
