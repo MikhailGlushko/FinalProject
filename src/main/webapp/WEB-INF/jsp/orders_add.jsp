@@ -77,15 +77,7 @@
                             <label for="order_street"><fmt:message key="order.street"/></label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="input-field">
-                            <%--<input id="order_user_id" type="text" name="order_user_id" value="" required/>--%>
-                            <select id="order_user_id" name="order_user_id" disabled>
-                                <option value="${order_user_id}" selected>${order_user_name}</option>
-                            </select>
-                            <label for="order_user_id"><fmt:message key="order.user.id"/></label>
-                        </div>
-                    </div>
+                    <input type="hidden" name="order_user_id" value="${order_user_id}"/>
                 </fieldset>
                 <fieldset>
                     <legend><fmt:message key="order.date"/></legend>

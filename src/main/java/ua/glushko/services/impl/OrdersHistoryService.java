@@ -71,7 +71,7 @@ public class OrdersHistoryService extends AbstractService {
                 case CHANGE_EMPLOYEE:
                     item.setOldValue(String.valueOf(order.getEmployeeId()));
                     order.setEmployeeId(Integer.valueOf(item.getNewValue()));
-                    if(order.getStatus()==OrderStatus.NEW)
+                    if (order.getStatus() == OrderStatus.NEW)
                         order.setStatus(OrderStatus.INWORK);
                     break;
                 case CHANGE_PRICE:
@@ -81,9 +81,9 @@ public class OrdersHistoryService extends AbstractService {
                 case CHANGE_STATUS:
                     item.setOldValue(order.getStatus().name());
                     order.setStatus(OrderStatus.valueOf(item.getNewValue()));
-                    if(order.getStatus()==OrderStatus.CLOSE || order.getStatus()==OrderStatus.REJECT)
+                    if (order.getStatus() == OrderStatus.CLOSE || order.getStatus() == OrderStatus.REJECT)
                         order.setEmployeeId(order.getUserId());
-                    if(order.getStatus()==OrderStatus.NEW)
+                    if (order.getStatus() == OrderStatus.NEW)
                         order.setEmployeeId(item.getUserId());
                     break;
             }
@@ -95,6 +95,8 @@ public class OrdersHistoryService extends AbstractService {
                     orderHistoryDAO.create(item);
             }
             TransactionManager.endTransaction();
+        } catch (NumberFormatException e){
+            LOGGER.error(e);
         } finally {
             TransactionManager.rollBack();
         }

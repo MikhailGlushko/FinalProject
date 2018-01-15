@@ -30,7 +30,6 @@ public class ServiceCreateCommand extends Command {
     }
 
     private void storeUserDataToDatabase(HttpServletRequest request) throws PersistException, TransactionException {
-        String userLogin = null;
         RepairService repairService=null;
         try {
             int access = Authentification.checkAccess(request);

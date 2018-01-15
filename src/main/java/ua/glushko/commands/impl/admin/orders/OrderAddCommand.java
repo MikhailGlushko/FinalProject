@@ -28,7 +28,12 @@ public class OrderAddCommand extends Command {
         try {
             // готовим список доступных сервисов для выпадающего меню
             RepairServicesService repairServices = RepairServicesService.getService();
-            Integer userId = Integer.valueOf(request.getSession().getAttribute(Authentification.PARAM_NAME_ID).toString());
+            Integer userId = null;
+            try {
+                userId = Integer.valueOf(request.getSession().getAttribute(Authentification.PARAM_NAME_ID).toString());
+            } catch (NumberFormatException e){
+                LOGGER.error(e);
+            }
             UsersService usersService = UsersService.getService();
             List<RepairService> repairServiceList = repairServices.getRepairServiceList();
             List<Object[]> serviceList =  prepareList(repairServiceList);

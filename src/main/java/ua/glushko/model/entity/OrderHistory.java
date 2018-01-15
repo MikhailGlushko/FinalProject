@@ -12,6 +12,7 @@ public class OrderHistory implements GenericEntity, Serializable{
     private Date actionDate;
     private String oldValue;
     private String newValue;
+    private String userName;
 
     public void setId(int id) {
         this.id = id;
@@ -76,6 +77,14 @@ public class OrderHistory implements GenericEntity, Serializable{
     @Override
     public Integer getId() {
         return id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Override

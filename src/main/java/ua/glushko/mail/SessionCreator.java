@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import java.util.Properties;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-public class SessionCreator {
+class SessionCreator {
 
     private Logger logger = Logger.getLogger(MailThread.class.getSimpleName());
 

@@ -19,7 +19,6 @@ import static ua.glushko.model.entity.UserRole.CUSTOMER;
 public class UserDAO extends AbstractDAO<User> {
 
     private final String NAME_TABLE = "users";
-
     private final String NAME_FIELD_00 = "id";
     private final String NAME_FIELD_01 = "role";
     private final String NAME_FIELD_02 = "name";

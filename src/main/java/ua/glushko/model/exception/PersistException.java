@@ -16,7 +16,7 @@ public class PersistException extends SQLException {
         logger.error(message.concat(" ( ").concat(getStackTrace()[1].toString()).concat(" )"));
     }
 
-    public PersistException(String message, Throwable cause) {
+    private PersistException(String message, Throwable cause) {
         super(message, cause);
         logger.error(String.format(MessageManager.getMessage(PROPERTY_NAME_DAO_ERROR_CODE),
                 ((SQLException) cause).getErrorCode(),
@@ -36,17 +36,5 @@ public class PersistException extends SQLException {
                     "0",
                     "",
                     cause.getStackTrace()[1].toString()));
-    }
-
-    public String convert(String message) {
-        String result = message;
-        try {
-            String VARIABLE_CODE_PAGE = "ISO-8859-1";
-            result = new String(message.getBytes(VARIABLE_CODE_PAGE));
-            //result = new String(message.getBytes("Windows-1251"));
-        } catch (UnsupportedEncodingException e) {
-            logger.error(e);
-        }
-        return result;
     }
 }

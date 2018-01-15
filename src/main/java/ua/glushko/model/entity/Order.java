@@ -1,16 +1,7 @@
 package ua.glushko.model.entity;
 
-import ua.glushko.model.dao.Identified;
-import ua.glushko.model.entity.OrderStatus;
-import ua.glushko.model.entity.OrderType;
-import ua.glushko.model.entity.User;
-
 import java.io.Serializable;
 import java.util.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Objects;
 
 public class Order implements GenericEntity, Serializable {
     private boolean chanched = false;

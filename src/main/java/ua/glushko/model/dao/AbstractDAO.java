@@ -264,7 +264,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
                 " from " + getTableName();
     }
 
-    protected String getSelectQuery(int from, int limit) {
+    private String getSelectQuery(int from, int limit) {
         return "select id, " + getFieldList() +
                 " from " + getTableName() +
                 " limit ?,? ";

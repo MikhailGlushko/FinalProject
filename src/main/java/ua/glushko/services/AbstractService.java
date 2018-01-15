@@ -11,7 +11,7 @@ import ua.glushko.transaction.TransactionManager;
 import java.util.List;
 
 public class AbstractService {
-    public final Logger LOGGER = Logger.getLogger(AbstractService.class.getSimpleName());
+    protected final Logger LOGGER = Logger.getLogger(AbstractService.class.getSimpleName());
 
     protected List<? extends GenericEntity> getList(AbstractDAO<? extends GenericEntity> dao) throws PersistException, TransactionException {
         List<? extends GenericEntity> read;

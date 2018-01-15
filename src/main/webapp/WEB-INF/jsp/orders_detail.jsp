@@ -183,7 +183,7 @@
                 <form name="change" method="post" action="/do">
                     <input type="hidden" name="command" value="history_action"/>
                     <input type="hidden" name="order_id" value="${orders_detail.id}"/>
-                    <input type="hidden" name="order_user_id" value="${orders_detail.userId}"/>
+                    <input type="hidden" name="user_id" value="${userId}"/>
                     <fieldset>
                         <legend><fmt:message key="order.change.action"/></legend>
                         <div class="row">
@@ -271,6 +271,8 @@
                         </div>
                     </c:if>
                 </form>
+                <hr/>
+                <customtags:ShowOrdersHistoryList head="${history_list_head}" list="${history_list}"/>
             </div>
         </c:if>
         <jsp:include page="../../jsp/footer.jspx"/>

@@ -60,7 +60,7 @@ public class UsersListCommand extends Command {
                 session.setAttribute(PARAM_NAME_LAST_PAGE,count);
                 LOGGER.debug("users list were getted and try to show");
             }
-        } catch (NullPointerException e){
+        } catch (NullPointerException | NumberFormatException e){
             LOGGER.debug("users list were not get.");
             LOGGER.error(e);
         }

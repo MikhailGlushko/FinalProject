@@ -18,7 +18,6 @@ import java.util.List;
 public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
 
     private final String NAME_TABLE = "orders_history";
-
     private final String NAME_FIELD_00 = "id";
     private final String NAME_FIELD_01 = "order_id";
     private final String NAME_FIELD_02 = "user_id";
@@ -27,6 +26,7 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
     private final String NAME_FIELD_05 = "action_date";
     private final String NAME_FIELD_06 = "old_value";
     private final String NAME_FIELD_07 = "new_value";
+    private final String NAME_FIELD_08 = "user_name";
     private static final OrderHistoryDAO dao = new OrderHistoryDAO();
 
     private OrderHistoryDAO() {
@@ -95,6 +95,7 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
                 item.setActionDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_05).getTime()));
             item.setOldValue(resultSet.getString(NAME_FIELD_06));
             item.setNewValue(resultSet.getString(NAME_FIELD_07));
+            item.setUserName(resultSet.getString(NAME_FIELD_08));
             list.add(item);
         }
         return list;
@@ -106,7 +107,7 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
                 "FROM repair_agency.orders_history a\n" +
                 "left join users b on a.user_id=b.id \n" +
                 "where a.order_id=?\n"+
-                "order by order_date desc, status\n" +
+                "order by action_date desc\n" +
                 "limit ?,?;";
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
@@ -128,7 +129,7 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
         String sql = "SELECT a.*, b.name as `user_name`\n" +
                 "FROM repair_agency.orders_history a\n" +
                 "left join users b on a.user_id=b.id \n" +
-                "order by order_date desc, status;";
+                "order by action_date desc;";
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery();
@@ -146,7 +147,7 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
         String sql = "SELECT a.*, b.name as `user_name`\n" +
                 "FROM repair_agency.orders_history a\n" +
                 "left join users b on a.user_id=b.id \n" +
-                "order by order_date desc, status\n" +
+                "order by action_date desc\n" +
                 "limit ?,?;";
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
@@ -168,7 +169,7 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
                 "FROM repair_agency.orders_history a\n" +
                 "left join users b on a.user_id=b.id \n" +
                 "where a.id=?\n"+
-                "order by order_date desc, status";
+                "order by action_date desc";
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             prepareStatementForSelectById(statement, id);

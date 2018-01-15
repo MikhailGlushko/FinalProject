@@ -10,8 +10,8 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class OptGoupStaffTag extends TagSupport {
-    public List<User> list;
-    public int value;
+    private List<User> list;
+    private int value;
 
     public void setList(List<User> list){
         this.list = list;

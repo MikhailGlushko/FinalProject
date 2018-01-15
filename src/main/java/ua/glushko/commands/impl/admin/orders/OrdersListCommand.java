@@ -43,14 +43,22 @@ public class OrdersListCommand extends Command {
             HttpSession session = request.getSession();
             int access = Authentification.checkAccess(request);
             OrdersService ordersService = OrdersService.getService();
-            Integer pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
-            Integer rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
-            String parameter = request.getParameter(PARAM_NAME_PAGE);
-            Integer pageNumber;
-            if(parameter==null || parameter.isEmpty())
-                pageNumber = 1;
-            else
-                pageNumber = Integer.valueOf(request.getParameter(PARAM_NAME_PAGE));
+            Integer pagesCount = null;
+            Integer rowsCount = null;
+            Integer pageNumber = null;
+            Integer userId = null;
+            try {
+                pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
+                rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
+                String parameter = request.getParameter(PARAM_NAME_PAGE);
+                if (parameter == null || parameter.isEmpty())
+                    pageNumber = 1;
+                else
+                    pageNumber = Integer.valueOf(request.getParameter(PARAM_NAME_PAGE));
+                userId = Integer.valueOf(session.getAttribute(Authentification.PARAM_NAME_ID).toString());
+            } catch (NumberFormatException e){
+                LOGGER.debug(e);
+            }
             if ((access & R)== R) {
                 List<Order> items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount);
                 List<String> titles = ordersService.getOrderTitles();
@@ -60,7 +68,6 @@ public class OrdersListCommand extends Command {
                 session.setAttribute(PARAM_NAME_ORDERS_LIST, items);
                 session.setAttribute(PARAM_NAME_LAST_PAGE,count);
             } else if((access & Authentification.r) == Authentification.r) {
-                Integer userId = Integer.valueOf(session.getAttribute(Authentification.PARAM_NAME_ID).toString());
                 List<Order> items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount,userId);
                 List<String> titles = ordersService.getOrderTitles();
                 int count = ordersService.count(userId);

@@ -11,6 +11,11 @@ import ua.glushko.services.impl.OrdersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static ua.glushko.authentification.Authentification.C;
 import static ua.glushko.authentification.Authentification.c;
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_ORDERS;
@@ -37,13 +42,19 @@ public class OrderCreateCommand extends Command {
             // Получаем данные введенные на форме регистрации новой заявки
             String  orderDescriptionShort = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_DESC_SHORT);
             String  orderDescriptionDetail = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_DESC_DETAIL);
-            Integer  orderRepairService = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_SERVICE));
+            Integer  orderRepairService = null;
+            Integer  orderUserId = null;
+            try {
+                orderRepairService = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_SERVICE));
+                orderUserId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_USER_ID));
+            }catch (NumberFormatException e){
+                LOGGER.error(e);
+            }
             String  orderCity = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_CITY);
+
             String  orderStreet = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_STREET);
-            String  orderOrderDate = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_DATE);
             String  orderExpectedDate = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_EXPECTED_DATE);
             String  orderAppliance = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_APPL);
-            Integer  orderUserId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_MEMO));
             String  orderMemo = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_APPL);
 
             OrdersService ordersService = OrdersService.getService();
@@ -54,7 +65,13 @@ public class OrderCreateCommand extends Command {
             order.setCity(orderCity);
             order.setStreet(orderStreet);
             //order.setOrderDate(orderOrderDate);
-            //order.setExpectedDate(orderExpectedDate);
+            DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+            Date date = null;
+            try {
+                date = format.parse(orderExpectedDate);
+            } catch (ParseException e) {
+            }
+            order.setExpectedDate(date);
             order.setAppliance(orderAppliance);
             order.setUserId(orderUserId);
             order.setMemo(orderMemo);

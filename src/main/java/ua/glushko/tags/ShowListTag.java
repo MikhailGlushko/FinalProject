@@ -15,9 +15,9 @@ import static ua.glushko.authentification.Authentification.*;
 import static ua.glushko.commands.Command.*;
 
 @SuppressWarnings("serial")
-public abstract class ShowListTag extends TagSupport {
-    public List<String> head;
-    public List<Object> list;
+abstract class ShowListTag extends TagSupport {
+    private List<String> head;
+    List<Object> list;
 
     public void setList(List<Object> list){
         this.list = list;
@@ -75,13 +75,13 @@ public abstract class ShowListTag extends TagSupport {
 
             makeNavigator(builder, pagesCount, rowsCount, page);
             pageContext.getOut().write(builder.toString());
-        } catch (IOException e) {
+        } catch (IOException | NumberFormatException e) {
             throw new JspException(e.getMessage());
         }
         return SKIP_BODY;
     }
 
-    public void makeHeader(StringBuilder builder) {
+    void makeHeader(StringBuilder builder) {
         Iterator<String> headIterator = head.iterator();
         if (headIterator.hasNext()) {
             builder.append("<thead><tr>");
@@ -92,9 +92,9 @@ public abstract class ShowListTag extends TagSupport {
         }
     }
 
-    public abstract void makeBody(List<Object> list,StringBuilder builder, Integer rowsCount);
+    protected abstract void makeBody(List<Object> list, StringBuilder builder, Integer rowsCount);
 
-    private void makeNavigator(StringBuilder builder, Integer pagesCount, Integer rowsCount, Integer page) {
+    void makeNavigator(StringBuilder builder, Integer pagesCount, Integer rowsCount, Integer page) {
         // build navigator
         builder.append("<table class=\"navigator\"><tr>").append("<td>").append(MessageManager.getMessage("browser.pages")).append("</td>");
         for (int i=page-pagesCount; i<page+pagesCount; i++){

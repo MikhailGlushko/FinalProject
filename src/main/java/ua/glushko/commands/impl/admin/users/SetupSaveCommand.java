@@ -32,12 +32,16 @@ public class SetupSaveCommand extends Command {
     }
 
     private void updateUserDataIntoDatabase(HttpServletRequest request) throws PersistException, TransactionException {
-        Integer userId = Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_NAME_USER_ID));
-        UsersService usersService = UsersService.getService();
-        User user = usersService.getUserById(userId);
-        user = populateUserFromFequestData(request, user);
-        usersService.updateUser(user);
-        storeUserDataToSession(request,user);
+        try {
+            Integer userId = Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_NAME_USER_ID));
+            UsersService usersService = UsersService.getService();
+            User user = usersService.getUserById(userId);
+            user = populateUserFromFequestData(request, user);
+            usersService.updateUser(user);
+            storeUserDataToSession(request, user);
+        } catch (NumberFormatException e){
+            LOGGER.error(e);
+        }
     }
 
     private void storeUserDataToSession(HttpServletRequest request, User user){

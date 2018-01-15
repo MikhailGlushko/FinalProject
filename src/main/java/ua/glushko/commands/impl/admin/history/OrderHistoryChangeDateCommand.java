@@ -1,5 +1,6 @@
 package ua.glushko.commands.impl.admin.history;
 
+import ua.glushko.authentification.Authentification;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.impl.admin.orders.OrdersCommandHelper;
@@ -13,11 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.text.ParseException;
+import java.util.logging.Logger;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_ORDERS_READ;
 import static ua.glushko.commands.impl.admin.history.OrderHistoryCommandHelper.PARAM_NAME_ORDER_HISTORY_EXPECTED_DATE;
 import static ua.glushko.commands.impl.admin.history.OrderHistoryCommandHelper.PARAM_NAME_ORDER_HISTORY_MEMO;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_NAME_ORDERS_ID;
+import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.PARAM_NAME_USER_ID;
 
 public class OrderHistoryChangeDateCommand extends Command {
     @Override
@@ -33,8 +36,14 @@ public class OrderHistoryChangeDateCommand extends Command {
 
     private void storeHistoryDataToDatabase(HttpServletRequest request) throws PersistException, TransactionException, ParseException {
         OrdersHistoryService ordersHistoryService = OrdersHistoryService.getService();
-        Integer orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_ID));
-        Integer userId  = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_USER_ID));
+        Integer orderId = null;
+        Integer userId = null;
+        try {
+            orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_ID));
+            userId = Integer.valueOf(request.getSession().getAttribute(Authentification.PARAM_NAME_ID).toString());
+        } catch (NumberFormatException e){
+            LOGGER.error(e);
+        }
         String comment = request.getParameter(PARAM_NAME_ORDER_HISTORY_MEMO);
         OrderHistory orderHistory = new OrderHistory();
         orderHistory.setAction(Action.CHANGE_DATE.name());

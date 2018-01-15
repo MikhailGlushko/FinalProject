@@ -18,7 +18,6 @@ import java.util.List;
 public class OrderDAO extends AbstractDAO<Order> {
 
     private final String NAME_TABLE = "orders";
-
     private final String NAME_FIELD_00 = "id";
     private final String NAME_FIELD_01 = "description_short";
     private final String NAME_FIELD_02 = "description_detail";

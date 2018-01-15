@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static ua.glushko.authentification.Authentification.U;
 import static ua.glushko.authentification.Authentification.u;
@@ -47,13 +50,13 @@ public class OrderUpdateCommand extends Command {
             Integer  orderRepairService = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_SERVICE));
             String  orderCity = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_CITY);
             String  orderStreet = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_STREET);
-            String  orderOrderDate = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_DATE);
             String  orderExpectedDate = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_EXPECTED_DATE);
             String  orderAppliance = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_APPL);
-            Integer  orderUserId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_USER_ID));
+            Integer orderUserId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_USER_ID));
             String  orderMemo = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_APPL);
             Integer orderEmployeeId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_EMPLOYEE_ID));
             String  orderStatus = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_STATUS);
+            Double orderPrice = Double.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_PRICE));
 
             OrdersService ordersService= OrdersService.getService();
             // get user data from database
@@ -63,13 +66,19 @@ public class OrderUpdateCommand extends Command {
             item.setRepairService(orderRepairService);
             item.setCity(orderCity);
             item.setStreet(orderStreet);
-            //item.setOrderDate();
-            //item.setExpectedDate();
             item.setAppliance(orderAppliance);
             item.setUserId(orderUserId);
             item.setMemo(orderMemo);
             item.setStatus(orderStatus);
             item.setEmployeeId(orderEmployeeId);
+            item.setPrice(orderPrice);
+            DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+            Date date = null;
+            try {
+                date = format.parse(orderExpectedDate);
+            } catch (ParseException e) {
+            }
+            item.setExpectedDate(date);
             if ((access & U) == U || (access & u) == u) {
                 ordersService.updateOrder(item);
             }

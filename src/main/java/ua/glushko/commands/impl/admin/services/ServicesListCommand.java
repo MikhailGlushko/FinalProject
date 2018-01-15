@@ -55,7 +55,7 @@ public class ServicesListCommand extends Command {
                 session.setAttribute(PARAM_NAME_ACCESS,access);
                 session.setAttribute(PARAM_NAME_LAST_PAGE,count);
             }
-        } catch (NullPointerException e){
+        } catch (NullPointerException | NumberFormatException e){
             LOGGER.error(e);
         }
     }

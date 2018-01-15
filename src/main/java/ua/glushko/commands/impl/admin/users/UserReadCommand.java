@@ -34,15 +34,19 @@ public class UserReadCommand extends Command {
     }
 
     private void storeUserDetailsToSession(HttpServletRequest request) throws PersistException, TransactionException {
-        HttpSession session = request.getSession();
-        int access = Authentification.checkAccess(request);
-        Integer id = Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_NAME_USER_ID));
-        UsersService usersService = UsersService.getService();
-        if ((access & U) == U) {
-            User user = usersService.getUserById(id);
-            List<String> titles = usersService.getUsersTitles();
-            session.setAttribute(UsersCommandHelper.PARAM_NAME_USER_LIST_TITLE, titles);
-            session.setAttribute(UsersCommandHelper.PARAM_NAME_USER, user);
+        try {
+            HttpSession session = request.getSession();
+            int access = Authentification.checkAccess(request);
+            Integer id = Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_NAME_USER_ID));
+            UsersService usersService = UsersService.getService();
+            if ((access & U) == U) {
+                User user = usersService.getUserById(id);
+                List<String> titles = usersService.getUsersTitles();
+                session.setAttribute(UsersCommandHelper.PARAM_NAME_USER_LIST_TITLE, titles);
+                session.setAttribute(UsersCommandHelper.PARAM_NAME_USER, user);
+            }
+        } catch (NumberFormatException e){
+            LOGGER.error(e);
         }
     }
 }

@@ -10,7 +10,6 @@ import java.util.List;
 public class RepairServiceDAO extends AbstractDAO<RepairService> {
 
     private final String NAME_TABLE = "repair_services";
-
     private final String NAME_FIELD_00 = "id";
     private final String NAME_FIELD_01 = "name";
     private final String NAME_FIELD_02 = "name_ru";

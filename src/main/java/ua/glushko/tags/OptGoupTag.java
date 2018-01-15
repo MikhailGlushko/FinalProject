@@ -9,8 +9,8 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class OptGoupTag extends TagSupport {
-    public List<Object> list;
-    public int value;
+    private List<Object> list;
+    private int value;
 
     public void setList(List<Object> list){
         this.list = list;

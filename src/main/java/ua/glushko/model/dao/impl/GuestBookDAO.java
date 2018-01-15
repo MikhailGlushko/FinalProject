@@ -18,7 +18,6 @@ import java.util.List;
 public class GuestBookDAO extends AbstractDAO<GuestBook> {
 
     private final String NAME_TABLE = "guest_book";
-
     private final String NAME_FIELD_00 = "id";
     private final String NAME_FIELD_01 = "order_id";
     private final String NAME_FIELD_02 = "user_id";

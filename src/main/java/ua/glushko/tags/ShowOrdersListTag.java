@@ -32,7 +32,7 @@ public class ShowOrdersListTag extends ShowListTag {
                     .append("'; return false\">")
                     .append("<td><a href=\"/do?command=").append(command).append("_detail&order_id=").append(object.getId()).append("\">")
                     .append(object.getId())
-                    .append("</a></td>");;
+                    .append("</a></td>");
             builder.append("<td>").append(object.getDescriptionShort()).append("</td>");
             builder.append("<td>").append(object.getStatus()).append("</td>");
             builder.append("<td>").append(object.getOrderDate()).append("</td>");

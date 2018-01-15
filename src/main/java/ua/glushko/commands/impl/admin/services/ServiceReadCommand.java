@@ -33,7 +33,12 @@ public class ServiceReadCommand extends Command {
     private void storeRepairServiceDetailToSession(HttpServletRequest request) throws PersistException, TransactionException {
         HttpSession session = request.getSession();
         int access = Authentification.checkAccess(request);
-        Integer id = Integer.valueOf(request.getParameter(ServicesCommandHelper.PARAM_NAME_SERVICE_ID));
+        Integer id=null;
+        try {
+            id = Integer.valueOf(request.getParameter(ServicesCommandHelper.PARAM_NAME_SERVICE_ID));
+        }catch (NumberFormatException e){
+            LOGGER.error(e);
+        }
         RepairServicesService repairService = RepairServicesService.getService();
         if ((access & U) == U) {
             RepairService item = repairService.getRepairServiceById(id);

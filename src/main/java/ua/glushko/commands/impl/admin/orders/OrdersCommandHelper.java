@@ -24,6 +24,9 @@ public class OrdersCommandHelper {
     public static final String PARAM_NAME_ORDERS_LIST_TITLE = "orders_list_head";
     public static final String PARAM_NAME_SERVICE_LIST = "services_list";
     public static final String PARAM_NAME_EMPLOYEE_LIST = "employee_list";
+    public static final String PARAM_NAME_ORDERS_HISTORY_PAGE  = "history_page";
+    public static final String PARAM_NAME_ORDERS_HISTORY_LIST = "history_list";
+    public static final String PARAM_NAME_ORDERS_HISTORY_LIST_TITLE = "history_list_head";
 
     public static final String PATH_PAGE_ORDERS = "path.page.orders";
     public static final String PATH_PAGE_ORDERS_DETAIL = "path.page.ordersdetail";

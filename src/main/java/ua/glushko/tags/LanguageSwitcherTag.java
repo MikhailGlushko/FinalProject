@@ -16,7 +16,6 @@ public class LanguageSwitcherTag extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         try {
-            HttpSession session = pageContext.getSession();
             HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
             Cookie[] cookies = request.getCookies();
             String cookieName = null;
