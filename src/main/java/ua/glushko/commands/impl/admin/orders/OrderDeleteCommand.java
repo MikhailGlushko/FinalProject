@@ -4,11 +4,9 @@ import ua.glushko.authentification.Authentification;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.model.entity.Order;
-import ua.glushko.model.entity.RepairService;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.OrdersService;
-import ua.glushko.services.impl.RepairServicesService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import static ua.glushko.authentification.Authentification.D;
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_ORDERS;
 
-/** Удаление существующего пользователя */
+/** delete exist order */
 public class OrderDeleteCommand extends Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

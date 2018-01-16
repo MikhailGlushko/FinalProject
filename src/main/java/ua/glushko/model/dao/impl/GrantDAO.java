@@ -17,12 +17,12 @@ public class GrantDAO extends AbstractDAO<Grant> {
 
     private static final GrantDAO dao = new GrantDAO();
     private final String NAME_TABLE = "grants";
-    private final String NAME_FIELD_00 = "id";
-    private final String NAME_FIELD_01 = "command";
-    private final String NAME_FIELD_02 = "menu";
-    private final String NAME_FIELD_03 = "role";
-    private final String NAME_FIELD_04 = "action";
-    private final String NAME_FIELD_05 = "scope";
+    private final String NAME_FIELD_ID = "id";
+    private final String NAME_FIELD_COMMAND = "command";
+    private final String NAME_FIELD_MENU = "menu";
+    private final String NAME_FIELD_ROLE = "role";
+    private final String NAME_FIELD_ACTION = "action";
+    private final String NAME_FIELD_SCOPE = "scope";
 
     private GrantDAO() {
         super();
@@ -58,11 +58,11 @@ public class GrantDAO extends AbstractDAO<Grant> {
     protected String getFieldList() {
         StringBuilder builder = new StringBuilder();
         return builder
-                .append(NAME_FIELD_01).append(",")
-                .append(NAME_FIELD_02).append(",")
-                .append(NAME_FIELD_03).append(",")
-                .append(NAME_FIELD_04).append(",")
-                .append(NAME_FIELD_05).toString();
+                .append(NAME_FIELD_COMMAND).append(",")
+                .append(NAME_FIELD_MENU).append(",")
+                .append(NAME_FIELD_ROLE).append(",")
+                .append(NAME_FIELD_ACTION).append(",")
+                .append(NAME_FIELD_SCOPE).toString();
     }
 
     @Override
@@ -70,12 +70,12 @@ public class GrantDAO extends AbstractDAO<Grant> {
         List<Grant> list = new ArrayList<>();
         while (resultSet.next()) {
             Grant item = new Grant();
-            item.setId(resultSet.getInt(NAME_FIELD_00));
-            item.setCommand(resultSet.getString(NAME_FIELD_01));
-            item.setMenu(resultSet.getString(NAME_FIELD_02));
-            item.setRole(resultSet.getString(NAME_FIELD_03));
-            item.setAction(resultSet.getString(NAME_FIELD_04));
-            item.setScope(resultSet.getString(NAME_FIELD_05));
+            item.setId(resultSet.getInt(NAME_FIELD_ID));
+            item.setCommand(resultSet.getString(NAME_FIELD_COMMAND));
+            item.setMenu(resultSet.getString(NAME_FIELD_MENU));
+            item.setRole(resultSet.getString(NAME_FIELD_ROLE));
+            item.setAction(resultSet.getString(NAME_FIELD_ACTION));
+            item.setScope(resultSet.getString(NAME_FIELD_SCOPE));
             list.add(item);
         }
         return list;

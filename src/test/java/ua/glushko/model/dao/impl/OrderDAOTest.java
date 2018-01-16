@@ -49,18 +49,15 @@ public class OrderDAOTest {
     public void create() throws PersistException {
         Order order = new Order();
         dao.create(order);
-        System.out.println(order);
-
         order = new Order();
         order.setOrderDate(new Date(System.currentTimeMillis()-100000000));
         order.setExpectedDate(new Date(System.currentTimeMillis()+100000000));
         dao.create(order);
-        System.out.println(order);
     }
 
     @Test
     public void readLimit() throws PersistException {
         List<Order> read = dao.read(0, 2);
-        System.out.println(read);
+        assertTrue(read.size()==2);
     }
 }

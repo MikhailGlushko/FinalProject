@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_USERS;
-/** Сохранение учетных данных пользователя после изменения*/
+/** Saving user credentials after change */
 public class SetupSaveCommand extends Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

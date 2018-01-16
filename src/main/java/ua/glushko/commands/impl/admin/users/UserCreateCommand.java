@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import static ua.glushko.authentification.Authentification.*;
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_USERS;
 
-/** Создание нового пользователя */
+/** Creat new user */
 public class UserCreateCommand extends Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

@@ -9,18 +9,15 @@ import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.OrdersHistoryService;
-import ua.glushko.services.impl.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.text.ParseException;
 
-import static ua.glushko.commands.CommandFactory.COMMAND_NAME_ORDERS;
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_ORDERS_READ;
 import static ua.glushko.commands.impl.admin.history.OrderHistoryCommandHelper.PARAM_NAME_ORDER_HISTORY_MEMO;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_NAME_ORDERS_ID;
-import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.PARAM_NAME_USER_ID;
 
 public class OrderHistoryChangeCommentCommand extends Command {
     @Override

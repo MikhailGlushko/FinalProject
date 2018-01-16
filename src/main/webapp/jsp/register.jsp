@@ -43,31 +43,31 @@
                         <div class="input-field">
                             <input id="user_login" type="text" name="user_login" value="${sessionScope.user_login}"
                                    required/>
-                            <label for="user_login"><fmt:message key="app.welcome.login"/></label>
+                            <label for="user_login"><fmt:message key="app.welcome.login"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
                             <input id="user_password" type="password" name="user_password" value="" required/>
-                            <label for="user_password"><fmt:message key="app.welcome.password"/></label>
+                            <label for="user_password"><fmt:message key="app.welcome.password"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
                             <input id="user_password2" type="password" name="user_password2" value="" required>
-                            <label for="user_password2"><fmt:message key="app.welcome.password2"/></label>
+                            <label for="user_password2"><fmt:message key="app.welcome.password2"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
                             <input id="user_name" type="text" name="user_name" value="" required/>
-                            <label for="user_name"><fmt:message key="app.welcome.name"/></label>
+                            <label for="user_name"><fmt:message key="app.welcome.name"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
                             <input id="user_email" type="email" name="user_email" value="" required/>
-                            <label for="user_email"><fmt:message key="app.welcome.email"/></label>
+                            <label for="user_email"><fmt:message key="app.welcome.email"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">

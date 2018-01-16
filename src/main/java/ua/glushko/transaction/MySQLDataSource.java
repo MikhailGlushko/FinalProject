@@ -5,6 +5,9 @@ import ua.glushko.configaration.DBConfigurationManager;
 
 import javax.sql.DataSource;
 
+/**
+ * MySQL DataSource
+ */
 public class MySQLDataSource {
 
     private static final String PROPERTY_NAME_DB_URL = "jdbc:mysql://%s:%s/%s?useSSL=false";

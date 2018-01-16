@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import static ua.glushko.commands.CommandFactory.*;
 
 /**
- * Анализ полученой комманды и перенаправление на соответствующую комманду
+ * Analysis of the received command and redirection to the appropriate command
  * /do?command=<command>&action=<action>
  *
  * @see UserCreateCommand

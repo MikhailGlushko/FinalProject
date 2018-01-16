@@ -49,9 +49,6 @@ public class OrdersHistoryService extends AbstractService {
             TransactionManager.rollBack();
         }
         return (List<OrderHistory>)read;
-
-        //List<? extends GenericEntity> list = getList(orderHistoryDAO, page, pagesCount, rowsPerPage);
-        //return (List<OrderHistory>) list;
     }
 
     public List<String> getOrderHistoryTitles() {
@@ -82,9 +79,11 @@ public class OrdersHistoryService extends AbstractService {
                     guestBook.setDecription(Action.GUESTBOOK_COMMENT.name());
                     guestBook.setMemo(orderHistory.getDecription());
                     guestBook.setOrderId(orderHistory.getOrderId());
-                    guestBook.setUserName(userDAO.read(orderHistory.getUserId()).getName());
+                    int userId = orderHistory.getUserId();
+                    User user = userDAO.read(userId);
+                    String name = user.getName();
+                    guestBook.setUserName(name);
                     guestBookDAO.create(guestBook);
-                    System.out.println(guestBook);
                     break;
                 case CHANGE_DATE:
                     Date expectedDate = order.getExpectedDate();

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Перенаправляет на заданную страницу
+ * Route to new page
  */
 public class CommandRouter {
     private final Logger LOGGER = Logger.getLogger(GenericCommand.class.getSimpleName());

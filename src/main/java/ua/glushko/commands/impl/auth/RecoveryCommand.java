@@ -14,7 +14,7 @@ import ua.glushko.services.impl.UsersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Properties;
-/** Отправка пользователю инструкции по восстановлению пароля */
+/** Recovery password */
 public class RecoveryCommand extends Command {
 
     public static final String PARAM_NAME_MAIL_SETUP="mail_setup";

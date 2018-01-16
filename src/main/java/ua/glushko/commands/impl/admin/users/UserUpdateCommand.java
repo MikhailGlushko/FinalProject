@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import static ua.glushko.authentification.Authentification.*;
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_USERS;
 
-/** Обновление данных о пользователе после редактирования */
+/** Update user data */
 public class UserUpdateCommand extends Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

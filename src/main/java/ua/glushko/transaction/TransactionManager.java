@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Objects;
 
+/**
+ * Transaction Manager
+ */
 public class TransactionManager {
     private static final ThreadLocal<ConnectionWrapper> threadLocal = new ThreadLocal<>();
 
@@ -43,7 +46,6 @@ public class TransactionManager {
     public static void rollBack() throws PersistException {
         if (Objects.isNull(threadLocal.get()))
             return; // already closed
-            //throw new TransactionException();
         try {
             ConnectionWrapper wrapper = threadLocal.get();
             Connection connection = wrapper.getConnection();

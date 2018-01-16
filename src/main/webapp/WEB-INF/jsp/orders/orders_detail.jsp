@@ -38,7 +38,7 @@
                                         value="${orders_detail.repairService}" required>
                                     <customtags:OptGoup list="${services_list}" value="${orders_detail.repairService}"/>
                                 </select>
-                                <label for="order_repair_service"><fmt:message key="order.repair.service"/></label>
+                                <label for="order_repair_service"><fmt:message key="order.repair.service"/><em>*</em></label>
                             </div>
                         </div>
                     </c:if>
@@ -49,7 +49,7 @@
                                 <input id="order_description_short" type="text" name="order_description_short"
                                        value="${orders_detail.descriptionShort}" required/>
                                 <label for="order_description_short"><fmt:message
-                                        key="order.description.short"/></label>
+                                        key="order.description.short"/><em>*</em></label>
                             </div>
                         </div>
                         <div class="row">
@@ -57,7 +57,7 @@
                             <textarea id="order_description_detail" name="order_description_detail" required
                                       style="height: 100px">${orders_detail.descriptionDetail}</textarea>
                                 <label for="order_description_detail"><fmt:message
-                                        key="order.description.detail"/></label>
+                                        key="order.description.detail"/><em>*</em></label>
                             </div>
                         </div>
                         <div class="row">
@@ -65,7 +65,7 @@
                                     <%--<input id="order_appliance" type="text" name="order_appliance" value="${orders_detail.appliance}" required/>--%>
                                 <textarea id="order_appliance" name="order_appliance" required
                                           style="height: 50px">${orders_detail.appliance}</textarea>
-                                <label for="order_appliance"><fmt:message key="order.appliance"/></label>
+                                <label for="order_appliance"><fmt:message key="order.appliance"/><em>*</em></label>
                             </div>
                         </div>
                     </fieldset>
@@ -75,7 +75,7 @@
                             <div class="input-field">
                                 <input id="order_city" type="text" name="order_city" value="${orders_detail.city}"
                                        required/>
-                                <label for="order_city"><fmt:message key="order.city"/></label>
+                                <label for="order_city"><fmt:message key="order.city"/><em>*</em></label>
                             </div>
                         </div>
                         <div class="row">
@@ -83,7 +83,7 @@
                                     <%--<input id="order_street" type="text" name="order_street" value="${orders_detail.street}" required/>--%>
                                 <textarea id="order_street" name="order_street" required
                                           style="height: 50px">${orders_detail.street}</textarea>
-                                <label for="order_street"><fmt:message key="order.street"/></label>
+                                <label for="order_street"><fmt:message key="order.street"/><em>*</em></label>
                             </div>
                         </div>
                         <div class="row">
@@ -100,14 +100,14 @@
                         <legend><fmt:message key="order.actionDate"/></legend>
                         <div class="row">
                             <div class="input-field">
-                                <input id="order_order_date" type="actionDate" name="order_order_date"
+                                <input id="order_order_date" type="date" name="order_order_date"
                                        value="${orders_detail.orderDate}" disabled/>
                                 <label for="order_order_date"><fmt:message key="order.order.actionDate"/></label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field">
-                                <input id="order_expected_date" type="actionDate" name="order_expected_date"
+                                <input id="order_expected_date" type="date" name="order_expected_date"
                                        value="${orders_detail.expectedDate}"/>
                                 <label for="order_expected_date"><fmt:message key="order.expected.actionDate"/></label>
                             </div>
@@ -204,14 +204,14 @@
                                         <option value="GUESTBOOK_COMMENT"><fmt:message key="order.change.guestbook"/></option>
                                     </c:if>
                                 </select>
-                                <label for="order_change_action"><fmt:message key="order.change.action"/></label>
+                                <label for="order_change_action"><fmt:message key="order.change.action"/><em>*</em></label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field">
                             <textarea id="order_memo_change" type="text" name="order_memo_change"
                                       style="height: 50px" required></textarea>
-                                <label for="order_memo_change"><fmt:message key="order.memo.change"/></label>
+                                <label for="order_memo_change"><fmt:message key="order.memo.change"/><em>*</em></label>
                             </div>
                         </div>
                         <div class="row">

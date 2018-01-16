@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * Connection wrapper
+ */
 public class ConnectionWrapper implements AutoCloseable {
     private final Connection connection;
     private final boolean isTransaction;

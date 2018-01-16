@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import static ua.glushko.authentification.Authentification.D;
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_SERVICES;
 
-/** Удаление существующего пользователя */
+/** Delete entity from database */
 public class ServiceDeleteCommand extends Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

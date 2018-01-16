@@ -67,6 +67,9 @@ html, body {
     color: #a00;
 }
 
+em {
+    color: #aa0000;
+}
 .langbutton {
     border: 1px solid #6cf;
     display: inline-block;

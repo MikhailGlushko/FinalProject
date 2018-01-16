@@ -4,7 +4,6 @@ import ua.glushko.authentification.Authentification;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.configaration.ConfigurationManager;
-import ua.glushko.model.dao.impl.OrderHistoryDAO;
 import ua.glushko.model.entity.*;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
@@ -21,7 +20,7 @@ import java.util.List;
 import static ua.glushko.authentification.Authentification.*;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.*;
 
-/** Отображение информации о виде сервиса с возможностью редактирования или удаления */
+/** Display information about the type of service with the ability to edit or delete */
 public class OrderReadCommand extends Command {
 
     @Override
@@ -56,31 +55,31 @@ public class OrderReadCommand extends Command {
         }
         int access = Authentification.checkAccess(request);
 
-        // список заказов
+        // orders list
         OrdersService ordersService = OrdersService.getService();
         Order order = ordersService.getOrderById(id);
         List<String> titles = ordersService.getOrderTitles();
 
-        // данные по пользователю
+        // user data
         UsersService usersService = UsersService.getService();
         User client = usersService.getUserById(order.getUserId());
         Integer clientId = client.getId();
         String clientName = client.getName();
 
-        // получить список всех сотрудников
+        // get all users list
         List<User> stuffs = usersService.getUsersAsStuff(UserRole.CUSTOMER, false);
         if ((access & R) == R || (access & r) == r) {
-            // изменение всех заявок
+            // change all requests
             session.setAttribute(PARAM_NAME_ORDERS_USER_ID,clientId);
             session.setAttribute(PARAM_NAME_ORDERS_USER_NAME,clientName);
             session.setAttribute(OrdersCommandHelper.PARAM_NAME_ORDERS_LIST_TITLE, titles);
             session.setAttribute(OrdersCommandHelper.PARAM_NAME_ORDERS, order);
             session.setAttribute(OrdersCommandHelper.PARAM_NAME_EMPLOYEE_LIST,stuffs);
-            // список сервисов
+            // services list
             RepairServicesService repairServices = RepairServicesService.getService();
             List<RepairService> repairServiceList = repairServices.getRepairServiceList();
             session.setAttribute(OrdersCommandHelper.PARAM_NAME_SERVICE_LIST, repairServiceList);
-            // список истории
+            // history list
             OrdersHistoryService ordersHistoryService = OrdersHistoryService.getService();
             List<OrderHistory> orderHistoryList = ordersHistoryService.getOrderHistoryList(pageNumber, pagesCount, rowsCount,id);
             List<String> orderHistoryTitles = ordersHistoryService.getOrderHistoryTitles();

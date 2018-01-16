@@ -28,14 +28,14 @@ public class MailThread extends Thread {
         this.properties = properties;
     }
     private void init() {
-        // объект почтовой сессии
+        // mail session object
         String PARAM_NAME_SMTP_USER = "mail.user.name";
         Session mailSession = (new SessionCreator(properties)).createSession();
         mailSession.setDebug(true);
-        // создание объекта почтового сообщения
+        // create new mail
         message = new MimeMessage(mailSession);
         try {
-            // загрузка параметров в объект почтового сообщения
+            // fill mail data
             message.setSubject(mailSubject);
             message.setContent(mailText, "text/html");
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(sendToEmail));
@@ -49,11 +49,10 @@ public class MailThread extends Thread {
     public void run() {
         init();
         try {
-            // отправка почтового сообщения
+            // send mail
             Transport.send(message);
         } catch (MessagingException e) {
             logger.error("Ошибка при отправлении сообщения" + e);
-// in log file
         }
     }
 }

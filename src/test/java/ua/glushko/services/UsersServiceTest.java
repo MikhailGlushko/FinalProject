@@ -45,7 +45,7 @@ public class UsersServiceTest {
     @Test
     public void getUserById() throws PersistException, TransactionException {
         UsersService usersService = UsersService.getService();
-        User user = usersService.getUserById(3);
+        User user = usersService.getUserById(1);
         assertNotNull(user);
         user=usersService.getUserById(100);
         assertNull(user);
@@ -80,8 +80,8 @@ public class UsersServiceTest {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(5);
         assertNotNull(user);
-        Integer id = user.getId();
-        user.setId(0);
+        user.setId(100);
+        user.setLogin("blablabla");
         usersService.updateUser(user);
     }
 
@@ -121,9 +121,9 @@ public class UsersServiceTest {
     @Test
     public void deleteUser() throws PersistException, TransactionException {
         UsersService usersService = UsersService.getService();
-        User user = usersService.getUserById(1);
+        User user = usersService.getUserById(3);
         assertNotNull(user);
-        usersService.deleteUser(1);
+        usersService.deleteUser(3);
     }
 
     @Test
@@ -145,5 +145,22 @@ public class UsersServiceTest {
         }
         usersAsStuff = usersService.getUsersAsStuff(UserRole.CUSTOMER, true);
         assertNull(usersAsStuff);
+    }
+
+    @Test
+    public void getCount() throws PersistException, TransactionException {
+        UsersService usersService = UsersService.getService();
+        int count = usersService.count();
+        assertTrue(count!=0);
+        count = usersService.count(1);
+        assertTrue(count!=0);
+    }
+
+    @Test
+    public void getTitles() throws PersistException, TransactionException {
+        UsersService usersService = UsersService.getService();
+        usersService.getUsersList();
+        List<String> usersTitles = usersService.getUsersTitles();
+        assertNotNull(usersTitles);
     }
 }

@@ -12,28 +12,27 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public class OrderDAO extends AbstractDAO<Order> {
 
     private final String NAME_TABLE = "orders";
-    private final String NAME_FIELD_00 = "id";
-    private final String NAME_FIELD_01 = "description_short";
-    private final String NAME_FIELD_02 = "description_detail";
-    private final String NAME_FIELD_03 = "repair_service";
-    private final String NAME_FIELD_04 = "city";
-    private final String NAME_FIELD_05 = "street";
-    private final String NAME_FIELD_06 = "order_date";
-    private final String NAME_FIELD_07 = "expected_date";
-    private final String NAME_FIELD_08 = "appliance";
-    private final String NAME_FIELD_09 = "price";
-    private final String NAME_FIELD_10 = "user_id";
-    private final String NAME_FIELD_11 = "memo";
-    private final String NAME_FIELD_12 = "status";
-    private final String NAME_FIELD_13 = "employee_id";
-    private final String NAME_FIELD_14 = "user_name";
-    private final String NAME_FIELD_15 = "employee_name";
+    private final String NAME_FIELD_ID = "id";
+    private final String NAME_FIELD_DESCRIPTION_SHORT = "description_short";
+    private final String NAME_FIELD_DESCRIPTION_DETAIL = "description_detail";
+    private final String NAME_FIELD_REPAIR_SERVICE = "repair_service";
+    private final String NAME_FIELD_CITY = "city";
+    private final String NAME_FIELD_STREET = "street";
+    private final String NAME_FIELD_ORDER_DATE = "order_date";
+    private final String NAME_FIELD_ECPRCTED_DATE = "expected_date";
+    private final String NAME_FIELD_APPLIANCE = "appliance";
+    private final String NAME_FIELD_PRICE = "price";
+    private final String NAME_FIELD_USER_ID = "user_id";
+    private final String NAME_FIELD_MEMO = "memo";
+    private final String NAME_FIELD_STATUS = "status";
+    private final String NAME_FIELD_EMPLOYEE_ID = "employee_id";
+    private final String NAME_FIELD_USER_NAME = "user_name";
+    private final String NAME_FIELD_EMPLOYEE_NAME = "employee_name";
 
     private static final OrderDAO dao = new OrderDAO();
 
@@ -54,21 +53,19 @@ public class OrderDAO extends AbstractDAO<Order> {
     protected String getFieldList() {
         StringBuilder builder = new StringBuilder();
         return builder
-                .append(NAME_FIELD_01).append(",")
-                .append(NAME_FIELD_02).append(",")
-                .append(NAME_FIELD_03).append(",")
-                .append(NAME_FIELD_04).append(",")
-                .append(NAME_FIELD_05).append(",")
-                .append(NAME_FIELD_06).append(",")
-                .append(NAME_FIELD_07).append(",")
-                .append(NAME_FIELD_08).append(",")
-                .append(NAME_FIELD_09).append(",")
-                .append(NAME_FIELD_10).append(",")
-                .append(NAME_FIELD_11).append(",")
-                .append(NAME_FIELD_12).append(",")
-                //.append(NAME_FIELD_13).append(",")
-                //.append(NAME_FIELD_14).append(",")
-                .append(NAME_FIELD_13).toString();
+                .append(NAME_FIELD_DESCRIPTION_SHORT).append(",")
+                .append(NAME_FIELD_DESCRIPTION_DETAIL).append(",")
+                .append(NAME_FIELD_REPAIR_SERVICE).append(",")
+                .append(NAME_FIELD_CITY).append(",")
+                .append(NAME_FIELD_STREET).append(",")
+                .append(NAME_FIELD_ORDER_DATE).append(",")
+                .append(NAME_FIELD_ECPRCTED_DATE).append(",")
+                .append(NAME_FIELD_APPLIANCE).append(",")
+                .append(NAME_FIELD_PRICE).append(",")
+                .append(NAME_FIELD_USER_ID).append(",")
+                .append(NAME_FIELD_MEMO).append(",")
+                .append(NAME_FIELD_STATUS).append(",")
+                .append(NAME_FIELD_EMPLOYEE_ID).toString();
     }
 
     @Override
@@ -111,24 +108,24 @@ public class OrderDAO extends AbstractDAO<Order> {
         List<Order> list = new ArrayList<>();
         while (resultSet.next()) {
             Order item = new Order();
-            item.setId(resultSet.getInt(NAME_FIELD_00));
-            item.setDescriptionShort(resultSet.getString(NAME_FIELD_01));
-            item.setDescriptionDetail(resultSet.getString(NAME_FIELD_02));
-            item.setRepairService(resultSet.getInt(NAME_FIELD_03));
-            item.setCity(resultSet.getString(NAME_FIELD_04));
-            item.setStreet(resultSet.getString(NAME_FIELD_05));
-            if(resultSet.getDate(NAME_FIELD_06)!=null)
-                item.setOrderDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_06).getTime()));
-            if(resultSet.getDate(NAME_FIELD_07)!=null)
-                item.setExpectedDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_07).getTime()));
-            item.setAppliance(resultSet.getString(NAME_FIELD_08));
-            item.setPrice(resultSet.getDouble(NAME_FIELD_09));
-            item.setUserId(resultSet.getInt(NAME_FIELD_10));
-            item.setMemo(resultSet.getString(NAME_FIELD_11));
-            item.setStatus(resultSet.getString(NAME_FIELD_12));
-            item.setEmployeeId(resultSet.getInt(NAME_FIELD_13));
-            item.setUserName(resultSet.getString(NAME_FIELD_14));
-            item.setEmployeeName(resultSet.getString(NAME_FIELD_15));
+            item.setId(resultSet.getInt(NAME_FIELD_ID));
+            item.setDescriptionShort(resultSet.getString(NAME_FIELD_DESCRIPTION_SHORT));
+            item.setDescriptionDetail(resultSet.getString(NAME_FIELD_DESCRIPTION_DETAIL));
+            item.setRepairService(resultSet.getInt(NAME_FIELD_REPAIR_SERVICE));
+            item.setCity(resultSet.getString(NAME_FIELD_CITY));
+            item.setStreet(resultSet.getString(NAME_FIELD_STREET));
+            if(resultSet.getDate(NAME_FIELD_ORDER_DATE)!=null)
+                item.setOrderDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_ORDER_DATE).getTime()));
+            if(resultSet.getDate(NAME_FIELD_ECPRCTED_DATE)!=null)
+                item.setExpectedDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_ECPRCTED_DATE).getTime()));
+            item.setAppliance(resultSet.getString(NAME_FIELD_APPLIANCE));
+            item.setPrice(resultSet.getDouble(NAME_FIELD_PRICE));
+            item.setUserId(resultSet.getInt(NAME_FIELD_USER_ID));
+            item.setMemo(resultSet.getString(NAME_FIELD_MEMO));
+            item.setStatus(resultSet.getString(NAME_FIELD_STATUS));
+            item.setEmployeeId(resultSet.getInt(NAME_FIELD_EMPLOYEE_ID));
+            item.setUserName(resultSet.getString(NAME_FIELD_USER_NAME));
+            item.setEmployeeName(resultSet.getString(NAME_FIELD_EMPLOYEE_NAME));
             list.add(item);
         }
         return list;

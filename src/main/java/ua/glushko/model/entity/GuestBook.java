@@ -3,6 +3,9 @@ package ua.glushko.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * GuestBook
+ */
 public class GuestBook implements GenericEntity, Serializable{
     private int id;
     private int orderId;

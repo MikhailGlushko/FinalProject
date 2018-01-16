@@ -17,12 +17,12 @@ import java.util.List;
 public class GuestBookDAO extends AbstractDAO<GuestBook> {
 
     private final String NAME_TABLE = "guest_book";
-    private final String NAME_FIELD_00 = "id";
-    private final String NAME_FIELD_01 = "order_id";
-    private final String NAME_FIELD_02 = "user_name";
-    private final String NAME_FIELD_03 = "description";
-    private final String NAME_FIELD_04 = "action_date";
-    private final String NAME_FIELD_05 = "memo";
+    private final String NAME_FIELD_ID = "id";
+    private final String NAME_FIELD_ORDER_ID = "order_id";
+    private final String NAME_FIELD_USER_NAME = "user_name";
+    private final String NAME_FIELD_DESCRIPTION = "description";
+    private final String NAME_FIELD_ACTION_DATE = "action_date";
+    private final String NAME_FIELD_MEMO = "memo";
     private static final GuestBookDAO dao = new GuestBookDAO();
 
     private GuestBookDAO() {
@@ -42,11 +42,11 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
     protected String getFieldList() {
         StringBuilder builder = new StringBuilder();
         return builder
-                .append(NAME_FIELD_01).append(",")
-                .append(NAME_FIELD_02).append(",")
-                .append(NAME_FIELD_03).append(",")
-                .append(NAME_FIELD_04).append(",")
-                .append(NAME_FIELD_05).toString();
+                .append(NAME_FIELD_ORDER_ID).append(",")
+                .append(NAME_FIELD_USER_NAME).append(",")
+                .append(NAME_FIELD_DESCRIPTION).append(",")
+                .append(NAME_FIELD_ACTION_DATE).append(",")
+                .append(NAME_FIELD_MEMO).toString();
     }
 
     @Override
@@ -78,13 +78,13 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
         List<GuestBook> list = new ArrayList<>();
         while (resultSet.next()) {
             GuestBook item = new GuestBook();
-            item.setId(resultSet.getInt(NAME_FIELD_00));
-            item.setOrderId(resultSet.getInt(NAME_FIELD_01));
-            item.setUserName(resultSet.getString(NAME_FIELD_02));
-            item.setDecription(resultSet.getString(NAME_FIELD_03));
-            if(resultSet.getDate(NAME_FIELD_04)!=null)
-                item.setActionDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_04).getTime()));
-            item.setMemo(resultSet.getString(NAME_FIELD_05));
+            item.setId(resultSet.getInt(NAME_FIELD_ID));
+            item.setOrderId(resultSet.getInt(NAME_FIELD_ORDER_ID));
+            item.setUserName(resultSet.getString(NAME_FIELD_USER_NAME));
+            item.setDecription(resultSet.getString(NAME_FIELD_DESCRIPTION));
+            if(resultSet.getDate(NAME_FIELD_ACTION_DATE)!=null)
+                item.setActionDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_ACTION_DATE).getTime()));
+            item.setMemo(resultSet.getString(NAME_FIELD_MEMO));
             list.add(item);
         }
         return list;

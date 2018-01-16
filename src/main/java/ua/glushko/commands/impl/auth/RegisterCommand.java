@@ -5,7 +5,6 @@ import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
-import ua.glushko.model.entity.User;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
-/** Регистрация пользователя (клиента)в системе*/
+/** register new User */
 public class RegisterCommand extends Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

@@ -36,15 +36,15 @@
                     <div class="row">
                         <div class="input-field">
                             <input id="user_name" value="" name="user_name" required/>
-                            <label for="user_name">Автор сообщения</label>
+                            <label for="user_name">Автор сообщения<em>*</em></label>
                         </div>
                         <div class="input-field">
                             <input id="subject" value="" name="subject" required/>
-                            <label for="subject">Тема сообщения</label>
+                            <label for="subject">Тема сообщения<em>*</em></label>
                         </div>
                         <div class="input-field">
                             <textarea id="memo" name="memo" required></textarea>
-                            <label for="memo">Сообщение</label>
+                            <label for="memo">Сообщение<em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
@@ -63,7 +63,7 @@
                         <div class="row">
                             <div class="input-field">
                                 <input id="i1${item.id}" value="${item.userName}" disabled/>
-                                <label for="i1${item.id}">Автор сооьщения</label>
+                                <label for="i1${item.id}">Автор сообщения</label>
                             </div>
                             <div class="input-field">
                                 <input id="i2${item.id}" value="${item.decription}" disabled/>

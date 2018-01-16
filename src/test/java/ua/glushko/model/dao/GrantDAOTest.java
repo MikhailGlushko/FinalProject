@@ -12,6 +12,7 @@ import ua.glushko.transaction.ConnectionPool;
 import java.security.spec.ECField;
 import java.util.List;
 
+import static org.junit.Assert.assertNotNull;
 import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
 
 public class GrantDAOTest {
@@ -23,6 +24,24 @@ public class GrantDAOTest {
     public void init() {
             ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
             grantDAO = MySQLDAOFactory.getFactory().getGrantDao();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void readAll() throws PersistException {
+        List<Grant> grants = ((GrantDAO) grantDAO).read();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void deleteOne() throws PersistException {
+        grantDAO.delete(1);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void updateOne() throws PersistException {
+        List<Grant> grants = ((GrantDAO) grantDAO).read("ADMIN");
+        assertNotNull(grants);
+        Grant grant = grants.iterator().next();
+        ((GrantDAO) grantDAO).update(grant);
     }
 
     @Test

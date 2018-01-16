@@ -2,6 +2,9 @@ package ua.glushko.transaction;
 
 import org.h2.jdbcx.JdbcConnectionPool;
 
+/**
+ * H2 DataSource
+ */
 public class H2DataSource {
     private static final String URL = "jdbc:h2:mem:REPAIR_AGENCY;" +
             "MODE=MySQL;"

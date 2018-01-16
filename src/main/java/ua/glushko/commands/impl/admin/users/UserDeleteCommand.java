@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import static ua.glushko.authentification.Authentification.*;
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_USERS;
 
-/** Удаление существующего пользователя */
+/** Delete exist user */
 public class UserDeleteCommand extends Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

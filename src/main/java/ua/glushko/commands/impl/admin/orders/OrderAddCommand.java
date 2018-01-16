@@ -20,13 +20,13 @@ import java.util.List;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_NAME_ORDERS_USER_ID;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_NAME_ORDERS_USER_NAME;
 
-/** перенаправление на форму добавления нового пользователя при нажатии кнопки "+" на форме со списком пользователей*/
+/** redirect to the form of adding a new order by pressing the "+" button on the form with the list of users*/
 public class OrderAddCommand extends Command {
 
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
-            // готовим список доступных сервисов для выпадающего меню
+            // prepare list for menu
             RepairServicesService repairServices = RepairServicesService.getService();
             Integer userId = null;
             try {
@@ -38,12 +38,12 @@ public class OrderAddCommand extends Command {
             List<RepairService> repairServiceList = repairServices.getRepairServiceList();
             List<Object[]> serviceList =  prepareList(repairServiceList);
 
-            // готовим данніе о пользователе, которій инициировал новую заявку
+            // prepare user data who create request
             User client = usersService.getUserById(userId);
             Integer clientId = client.getId();
             String clientName = client.getName();
 
-            // Сохраняем данніе в сессию
+            // store data to the session
             request.getSession().setAttribute(PARAM_NAME_ORDERS_USER_ID,clientId);
             request.getSession().setAttribute(PARAM_NAME_ORDERS_USER_NAME,clientName);
             request.getSession().setAttribute(OrdersCommandHelper.PARAM_NAME_ORDERS, new Order());
@@ -53,7 +53,7 @@ public class OrderAddCommand extends Command {
             LOGGER.error(e);
         }
 
-        // Передаем управдение на форму ввода новой заявки
+        // forward to the form to create new request
         String page = ConfigurationManager.getProperty(OrdersCommandHelper.PATH_PAGE_ORDERS_ADD);
         return new CommandRouter(request, response, page);
     }

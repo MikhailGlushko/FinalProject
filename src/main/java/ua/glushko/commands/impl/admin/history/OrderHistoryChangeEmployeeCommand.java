@@ -17,10 +17,8 @@ import java.text.ParseException;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_ORDERS_READ;
 import static ua.glushko.commands.impl.admin.history.OrderHistoryCommandHelper.PARAM_NAME_ORDER_HISTORY_EMPLOYEE_ID;
-import static ua.glushko.commands.impl.admin.history.OrderHistoryCommandHelper.PARAM_NAME_ORDER_HISTORY_EXPECTED_DATE;
 import static ua.glushko.commands.impl.admin.history.OrderHistoryCommandHelper.PARAM_NAME_ORDER_HISTORY_MEMO;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_NAME_ORDERS_ID;
-import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.PARAM_NAME_USER_ID;
 
 public class OrderHistoryChangeEmployeeCommand extends Command {
     @Override

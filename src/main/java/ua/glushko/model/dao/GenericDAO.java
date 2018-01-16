@@ -5,42 +5,36 @@ import ua.glushko.model.exception.PersistException;
 
 import java.util.List;
 
-/**
- * Универсальный интерфейс управления объектами
- *
- * @param <T>  - объект
- * @author Mikhail Glushko
- * @version 1.0
- */
+
 public interface GenericDAO<T extends GenericEntity> {
 
     /**
-     * Создает новую запись
+     * Create new record
      */
     void create(T object) throws PersistException;
 
     /**
-     * Обновляет существующую запись
+     * Update record
      */
     void update(T object) throws PersistException;
 
     /**
-     * Удаляет запись из базы данных
+     * Delete record
      */
     T delete(int id) throws PersistException;
 
     /**
-     * Удаляет все записис из базы данных
+     * Delete all records
      */
     void deleteAll() throws PersistException;
 
     /**
-     * Получает запись из базы данных по ключу
+     * Get record by id
      */
     T read(int id) throws PersistException;
 
     /**
-     * Получает список всех записей из базы данных
+     * Get all records
      */
     List<T> read() throws PersistException;
 

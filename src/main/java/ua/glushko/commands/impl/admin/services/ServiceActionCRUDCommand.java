@@ -5,8 +5,6 @@ import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.impl.admin.users.UserCreateCommand;
 import ua.glushko.commands.impl.admin.users.UserDeleteCommand;
 import ua.glushko.commands.impl.admin.users.UserUpdateCommand;
-import ua.glushko.model.exception.PersistException;
-import ua.glushko.model.exception.TransactionException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import static ua.glushko.commands.CommandFactory.*;
 
 /**
- * Анализ полученой комманды и перенаправление на соответствующую комманду
+ * Analysis of the received command and redirection to the appropriate command
  * /do?command=<command>&action=<action>
  *     @see UserCreateCommand
  *     @see UserUpdateCommand

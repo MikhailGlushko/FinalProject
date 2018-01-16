@@ -1,10 +1,10 @@
 package ua.glushko.model.entity;
 
 /**
- * Роли пользователей
- * ADMIN , MANAGER , MASTER - работники
- * CUSTOMER - клиенты
- * GUEST - не авторизированные пользователи
+ * User roles
+ * ADMIN , MANAGER , MASTER - workers
+ * CUSTOMER - customers
+ * GUEST - guests
  */
 public enum UserRole {
     ADMIN , MANAGER , MASTER, CUSTOMER, GUEST

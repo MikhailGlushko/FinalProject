@@ -17,7 +17,13 @@ public class MessageManager {
     public static String getMessage(String key) {
         if (resourceBundle == null)
             resourceBundle = ResourceBundle.getBundle(FILE_NAME_MESSAGES);
-        return resourceBundle.getString(key);
+        String result;
+        try {
+            result = resourceBundle.getString(key);
+        } catch (MissingResourceException e){
+            result=key;
+        }
+        return result;
     }
 
     public static String getMessage(String key, String locale) {

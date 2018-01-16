@@ -5,11 +5,9 @@ import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.GuestBook;
-import ua.glushko.model.entity.Order;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.GuestBookService;
-import ua.glushko.services.impl.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +18,6 @@ import static ua.glushko.authentification.Authentification.R;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PARAM_NAME_GUEST_BOOK_LIST;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PARAM_NAME_GUEST_BOOK_LIST_TITLE;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PATH_PAGE_GUEST_BOOK;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.*;
 
 public class GuestBookListCommand extends Command {
 

@@ -34,13 +34,13 @@
                     <div class="row">
                         <div class="input-field">
                             <input id="user_name" type="text" name="user_name" value="${user_detail.name}" required/>
-                            <label for="user_name"><fmt:message key="app.welcome.name"/></label>
+                            <label for="user_name"><fmt:message key="app.welcome.name"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
                             <input id="user_email" type="email" name="user_email" value="${user_detail.email}" required/>
-                            <label for="user_email"><fmt:message key="app.welcome.email"/></label>
+                            <label for="user_email"><fmt:message key="app.welcome.email"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
@@ -58,7 +58,7 @@
                                 <option value="MASTER">MASTER</option>
                                 <option value="CUSTOMER">CUSTOMER</option>
                             </select>
-                            <label for="user_role"><fmt:message key="app.welcome.role"/></label>
+                            <label for="user_role"><fmt:message key="app.welcome.role"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
@@ -69,7 +69,7 @@
                                 <option value="CLOSE">CLOSE</option>
                                 <option value="BLOCKED">BLOCKED</option>
                             </select>
-                            <label for="user_status"><fmt:message key="app.welcome.status"/></label>
+                            <label for="user_status"><fmt:message key="app.welcome.status"/><em>*</em></label>
                         </div>
                     </div>
                         ${errorMessage}

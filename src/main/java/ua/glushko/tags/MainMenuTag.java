@@ -35,8 +35,7 @@ public class MainMenuTag extends TagSupport {
                     .append("</a>");
 
             Object attributeUserGrants = session.getAttribute(Authentification.PARAM_NAME_GRANTS);
-            //noinspection unchecked
-            @SuppressWarnings("unchecked")
+
             List<Grant> grants = (List<Grant>) attributeUserGrants;
             if(Objects.nonNull(grants))
             for (Grant grant:grants) {

@@ -4,11 +4,9 @@ import ua.glushko.authentification.Authentification;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.model.entity.Order;
-import ua.glushko.model.entity.RepairService;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.OrdersService;
-import ua.glushko.services.impl.RepairServicesService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +21,7 @@ import static ua.glushko.authentification.Authentification.U;
 import static ua.glushko.authentification.Authentification.u;
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_ORDERS;
 
-/** Обновление данных о пользователе после редактирования */
+/** Update data after editing */
 public class OrderUpdateCommand extends Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

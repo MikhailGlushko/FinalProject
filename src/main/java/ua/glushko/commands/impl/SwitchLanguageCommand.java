@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Переключение языка
+ * Switch language
  */
 public class SwitchLanguageCommand extends Command {
 

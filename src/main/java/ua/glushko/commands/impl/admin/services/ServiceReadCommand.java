@@ -16,7 +16,7 @@ import java.util.List;
 
 import static ua.glushko.authentification.Authentification.U;
 
-/** Отображение информации о виде сервиса с возможностью редактирования или удаления */
+/**  Display information about the type of service with the ability to edit or delete */
 public class ServiceReadCommand extends Command {
 
     @Override

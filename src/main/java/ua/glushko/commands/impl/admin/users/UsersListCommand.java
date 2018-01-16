@@ -3,9 +3,7 @@ import ua.glushko.authentification.Authentification;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.configaration.ConfigurationManager;
-import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.User;
-import ua.glushko.model.entity.UserRole;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
@@ -17,7 +15,7 @@ import java.util.List;
 
 import static ua.glushko.authentification.Authentification.*;
 
-/** Отображение списка пользователей*/
+/** Show users list */
 public class UsersListCommand extends Command {
 
     @Override

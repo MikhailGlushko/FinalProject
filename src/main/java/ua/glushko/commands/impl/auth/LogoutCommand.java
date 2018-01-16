@@ -7,7 +7,7 @@ import ua.glushko.configaration.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-/** Выход пользователя из системы */
+/** Logout */
 public class LogoutCommand extends Command {
     private final Logger LOGGER = Logger.getLogger(LogoutCommand.class.getSimpleName());
     @Override

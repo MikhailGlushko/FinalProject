@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
-/** Авторизация пользователя */
+/** User authorization */
 public class LoginCommand extends Command {
 
     @Override

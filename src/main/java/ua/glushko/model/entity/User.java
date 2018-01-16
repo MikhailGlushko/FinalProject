@@ -4,18 +4,18 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Пользователи системы
+ * Users
  */
 public class User implements GenericEntity, Cloneable, Serializable {
 
     private int id;
-    private UserRole role = UserRole.CUSTOMER;  // по умолчание система регистрирует клиента
-    private String name;
+    private UserRole role = UserRole.CUSTOMER;  // by default as CLIENT
+    private String name = "";
     private String login;
     private String password;
     private String email;
     private String phone;
-    private UserStatus status = UserStatus.ACTIVE; // по умолчание пользователь сразу активирован
+    private UserStatus status = UserStatus.ACTIVE; // by default as ACTIVE
     private Date lastLogin;
 
     public Integer getId() {

@@ -248,6 +248,8 @@ CREATE TABLE `orders_history` (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `orders_history` VALUES (1,1,1,'ADD_COMMENT','ADD_COMMENT',now(),'','');
+
 DROP TABLE IF EXISTS `guest_book`;
 CREATE TABLE `guest_book` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

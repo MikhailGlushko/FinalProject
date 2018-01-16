@@ -9,11 +9,11 @@ class Validator {
     }
 
     public static boolean validatePassword(String password) {
-        // что должно быть объязательно и сколько раз
+        // what should be required and how many times
         String pattern1 = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[~!@#%^+-=_.,])(?=\\S+$).{8,}$";
-        // что должно быть == чего не должно быть
+        // what should be == what should not be
         String pattern2 = "[a-zA-Z0-9~!@#%^+-=_.,]+";
-        //TODO не должно быть повторов
+        //TODO there should be no repetition
         String pattern3 = "([.])\\1{2}";
         return (Objects.nonNull(password)) && password.matches(pattern2)
                 && !password.matches(pattern3) && password.matches(pattern1);

@@ -111,7 +111,6 @@ public class UserDAOTest {
             //создаем нового пользователя
             TransactionManager.beginTransaction();
             User read = userDAO.read(5);
-            logger.info("before insert: " + read);
             User user = new User();
             user.setName("Test User");
             user.setLogin("Test.Login");
@@ -120,14 +119,11 @@ public class UserDAOTest {
             user.setPhone("123456789");
             //user.setRole(UserRole.ADMIN);
             //user.setStatus(UserStatus.BLOCK);
-            logger.info("new instance: " + user);
             userDAO.create(user);
             read = userDAO.read(user.getId());
-            logger.info("after insert: " + user);
             assertTrue("Пользоветель не добавлен в базу данных", user.getId() != 0);
             TransactionManager.rollBack();
             read = userDAO.read(5);
-            logger.info("after rollback: " + read);
             //добавляем пользователя в базу данных, должен измениться id
         } catch (SQLException e) {
             logger.error(e);
@@ -145,7 +141,6 @@ public class UserDAOTest {
             //создаем нового пользователя
             TransactionManager.beginTransaction();
             User read = userDAO.read(5);
-            logger.info("before insert: " + read);
             User user = new User();
             user.setName("Test User");
             user.setLogin("Test.Login");
@@ -154,10 +149,8 @@ public class UserDAOTest {
             user.setPhone("123456789");
             //user.setRole(UserRole.ADMIN);
             //user.setStatus(UserStatus.BLOCK);
-            logger.info("new instance: " + user);
             userDAO.create(user);
             read = userDAO.read(user.getId());
-            logger.info("after insert: " + user);
             assertTrue("Пользоветель не добавлен в базу данных", user.getId() != 0);
             TransactionManager.endTransaction();
         } catch (TransactionException e) {
@@ -167,7 +160,6 @@ public class UserDAOTest {
             logger.error(e);
         }
         User read = userDAO.read(5);
-        logger.info("after commit: " + read);
         //добавляем пользователя в базу данных, должен измениться id
     }
 
@@ -183,7 +175,6 @@ public class UserDAOTest {
             // вносим изменения по существующему пользователю, это уже разные сущности
             userDAO.update(u1);
             User u2 = userDAO.read(1);
-            logger.info(u2);
             assertNotSame("Пользователи должны отличаться", u2, u1);
             TransactionManager.rollBack();
         } catch (SQLException e) {
@@ -197,9 +188,11 @@ public class UserDAOTest {
     public void updateNoExistUser() throws PersistException {
         try {
             userDAO = MySQLDAOFactory.getFactory().getUserDao();
+            Integer count = userDAO.count();
             User u1 = userDAO.read(1);
             u1.setName(u1.getName() + u1.getId());
-            u1.setId(10);
+            u1.setId(50);
+            u1.setLogin(u1.getLogin()+"1");
             // пробуем внести изменения по не существующему пользователю, ожидаем исключение
             userDAO.update(u1);
         } catch (PersistException e) {
@@ -269,7 +262,7 @@ public class UserDAOTest {
             User u = userDAO.delete(1);
             // подсчитывем количество пользователей, ожидается на 1 меньше
             List<User> read2 = userDAO.read();
-            assertTrue("Пользователь не біл удален", read1.size() != read2.size());
+            assertTrue("Пользователь не был удален", read1.size() != read2.size());
             // добавляем удаленного пользователя
             userDAO.create(u);
             // подсчитываем количество пользователей, ожидаем на 1 больше
@@ -278,7 +271,7 @@ public class UserDAOTest {
             TransactionManager.rollBack();
             //подсчитывем количество пользователей, ожидаем старое значение
             userDAO.read();
-            assertTrue("Операции не біли отменені", read1.size() == read4.size());
+            assertTrue("Операции не были отменены", read1.size() == read4.size());
         } catch (SQLException e) {
             logger.error(e);
         } catch (TransactionException e) {
@@ -292,12 +285,11 @@ public class UserDAOTest {
             ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
             TransactionManager.beginTransaction();
             List<User> read1 = userDAO.read();
-            // откріваем транзакцию
+            // открываем транзакцию
             userDAO.delete(1);
             // пробуем прочитать данные до завершения транзакйии
             List<User> read2 = userDAO.read();
             assertEquals(read1.size() - 1, read2.size());
-            logger.info("threat 1 "+read2.size());
             // создаем вторую копию ДАО в другом потоке
             new Thread() {
                 @Override
@@ -307,7 +299,6 @@ public class UserDAOTest {
                         Thread.sleep(100);
                         GenericDAO<User> userDAO = MySQLDAOFactory.getFactory().getUserDao();
                         List<User> read3 = userDAO.read();
-                        logger.info("thread 2 "+read3.size());
                         Thread.sleep(100);
                     } catch (PersistException e) {
                         logger.error(e);

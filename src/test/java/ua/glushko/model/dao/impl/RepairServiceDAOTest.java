@@ -10,6 +10,8 @@ import ua.glushko.transaction.ConnectionPool;
 
 import java.util.List;
 
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
 
 public class RepairServiceDAOTest {
@@ -25,6 +27,24 @@ public class RepairServiceDAOTest {
     @Test
     public void readAll() throws PersistException {
         List<RepairService> list = reapirServiceDAO.read();
+    }
+
+    @Test
+    public void create() throws PersistException {
+        RepairService repairService = new RepairService();
+        reapirServiceDAO.create(repairService);
+        assertTrue(repairService.getId()!=0);
+    }
+
+    @Test
+    public void update() throws PersistException {
+        RepairService read = reapirServiceDAO.read(1);
+        String name = read.getName();
+        read.setName(name+"!");
+        reapirServiceDAO.update(read);
+        RepairService updated = reapirServiceDAO.read(1);
+        String updatedName = updated.getName();
+        assertNotEquals(name,updatedName);
     }
 
 }

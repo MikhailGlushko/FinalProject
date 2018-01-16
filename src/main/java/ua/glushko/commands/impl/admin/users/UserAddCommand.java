@@ -7,7 +7,7 @@ import ua.glushko.configaration.ConfigurationManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** перенаправление на форму добавления нового пользователя при нажатии кнопки "+" на форме со списком пользователей*/
+/** redirect to the form of adding a new user by pressing the "+" button on the form with the list of users */
 public class UserAddCommand extends Command {
 
     @Override

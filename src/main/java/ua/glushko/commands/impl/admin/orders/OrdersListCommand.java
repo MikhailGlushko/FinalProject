@@ -3,16 +3,11 @@ package ua.glushko.commands.impl.admin.orders;
 import ua.glushko.authentification.Authentification;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
-import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
-import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.Order;
-import ua.glushko.model.entity.RepairService;
-import ua.glushko.model.entity.UserRole;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.OrdersService;
-import ua.glushko.services.impl.RepairServicesService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static ua.glushko.authentification.Authentification.R;
-import static ua.glushko.authentification.Authentification.checkAccess;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_NAME_ORDERS_LIST;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_NAME_ORDERS_LIST_TITLE;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PATH_PAGE_ORDERS;

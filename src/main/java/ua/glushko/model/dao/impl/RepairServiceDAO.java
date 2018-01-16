@@ -10,10 +10,10 @@ import java.util.List;
 public class RepairServiceDAO extends AbstractDAO<RepairService> {
 
     private final String NAME_TABLE = "repair_services";
-    private final String NAME_FIELD_00 = "id";
-    private final String NAME_FIELD_01 = "name";
-    private final String NAME_FIELD_02 = "name_ru";
-    private final String NAME_FIELD_03 = "parent";
+    private final String NAME_FIELD_ID = "id";
+    private final String NAME_FIELD_NAME = "name";
+    private final String NAME_FIELD_NAME_RU = "name_ru";
+    private final String NAME_FIELD_PARENT = "parent";
 
     @Override
     protected String getSelectQuery() {
@@ -39,9 +39,9 @@ public class RepairServiceDAO extends AbstractDAO<RepairService> {
     protected String getFieldList() {
         StringBuilder builder = new StringBuilder();
         return builder
-                .append(NAME_FIELD_01).append(",")
-                .append(NAME_FIELD_02).append(",")
-                .append(NAME_FIELD_03).toString();
+                .append(NAME_FIELD_NAME).append(",")
+                .append(NAME_FIELD_NAME_RU).append(",")
+                .append(NAME_FIELD_PARENT).toString();
     }
 
     @Override
@@ -68,10 +68,10 @@ public class RepairServiceDAO extends AbstractDAO<RepairService> {
         List<RepairService> list = new ArrayList<>();
         while (resultSet.next()) {
             RepairService item = new RepairService();
-            item.setId(resultSet.getInt(NAME_FIELD_00));
-            item.setName(resultSet.getString(NAME_FIELD_01));
-            item.setNameRu(resultSet.getString(NAME_FIELD_02));
-            item.setParent(resultSet.getInt(NAME_FIELD_03));
+            item.setId(resultSet.getInt(NAME_FIELD_ID));
+            item.setName(resultSet.getString(NAME_FIELD_NAME));
+            item.setNameRu(resultSet.getString(NAME_FIELD_NAME_RU));
+            item.setParent(resultSet.getInt(NAME_FIELD_PARENT));
             list.add(item);
         }
         return list;

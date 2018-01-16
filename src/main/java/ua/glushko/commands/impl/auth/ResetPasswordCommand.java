@@ -11,7 +11,7 @@ import ua.glushko.services.impl.UsersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-/** Обновление данных пароля пользователя при восстановлении */
+/** Reset password */
 public class ResetPasswordCommand extends Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

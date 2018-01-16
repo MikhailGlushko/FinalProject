@@ -20,7 +20,7 @@ import static ua.glushko.authentification.Authentification.C;
 import static ua.glushko.authentification.Authentification.c;
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_ORDERS;
 
-/** Создание нового пользователя */
+/** Create new order */
 public class OrderCreateCommand extends Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
@@ -39,7 +39,7 @@ public class OrderCreateCommand extends Command {
         Order order = null;
         try {
             int access = Authentification.checkAccess(request);
-            // Получаем данные введенные на форме регистрации новой заявки
+            // getting data from form
             String  orderDescriptionShort = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_DESC_SHORT);
             String  orderDescriptionDetail = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_DESC_DETAIL);
             Integer  orderRepairService = null;
@@ -64,7 +64,7 @@ public class OrderCreateCommand extends Command {
             order.setRepairService(orderRepairService);
             order.setCity(orderCity);
             order.setStreet(orderStreet);
-            //order.setOrderDate(orderOrderDate);
+
             DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
             Date date = null;
             try {

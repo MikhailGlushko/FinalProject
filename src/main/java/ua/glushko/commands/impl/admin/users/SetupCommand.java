@@ -2,7 +2,6 @@ package ua.glushko.commands.impl.admin.users;
 import ua.glushko.authentification.Authentification;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
-import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.exception.PersistException;
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/** Отображение учетных данных пользователю для их изменения */
+/** Display credentials to the user to change them */
 public class SetupCommand extends Command {
 
     @Override

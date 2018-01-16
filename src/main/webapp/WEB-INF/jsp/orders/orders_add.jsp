@@ -34,7 +34,7 @@
                         <select id="order_repair_service" name="order_repair_service" value="" required>
                             <customtags:OptGoup list="${services_list}"/>
                         </select>
-                        <label for="order_repair_service"><fmt:message key="order.repair.service"/></label>
+                        <label for="order_repair_service"><fmt:message key="order.repair.service"/><em>*</em></label>
                     </div>
                 </div>
                 <fieldset>
@@ -43,14 +43,14 @@
                         <div class="input-field">
                             <input id="order_description_short" type="text" name="order_description_short" value=""
                                    required/>
-                            <label for="order_description_short"><fmt:message key="order.description.short"/></label>
+                            <label for="order_description_short"><fmt:message key="order.description.short"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
                         <textarea id="order_description_detail" name="order_description_detail" required
                                   style="height: 100px"></textarea>
-                            <label for="order_description_detail"><fmt:message key="order.description.detail"/></label>
+                            <label for="order_description_detail"><fmt:message key="order.description.detail"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
@@ -58,7 +58,7 @@
                             <%--<input id="order_appliance" type="text" name="order_appliance" value="" required/>--%>
                             <textarea id="order_appliance" name="order_appliance" required
                                       style="height: 50px">${orders_detail.appliance}</textarea>
-                            <label for="order_appliance"><fmt:message key="order.appliance"/></label>
+                            <label for="order_appliance"><fmt:message key="order.appliance"/><em>*</em></label>
                         </div>
                     </div>
                 </fieldset>
@@ -67,14 +67,14 @@
                     <div class="row">
                         <div class="input-field">
                             <input id="order_city" type="text" name="order_city" value="" required/>
-                            <label for="order_city"><fmt:message key="order.city"/></label>
+                            <label for="order_city"><fmt:message key="order.city"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
                             <%--<input id="order_street" type="text" name="order_street" value="" required/>--%>
                             <textarea id="order_street" name="order_street" required style="height: 50px"></textarea>
-                            <label for="order_street"><fmt:message key="order.street"/></label>
+                            <label for="order_street"><fmt:message key="order.street"/><em>*</em></label>
                         </div>
                     </div>
                     <input type="hidden" name="order_user_id" value="${order_user_id}"/>
@@ -83,28 +83,14 @@
                     <legend><fmt:message key="order.actionDate"/></legend>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_order_date" type="actionDate" name="order_order_date" value="" disabled/>
-                            <label for="order_order_date"><fmt:message key="order.order.actionDate"/></label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field">
-                            <input id="order_expected_date" type="actionDate" name="order_expected_date" value="" required/>
-                            <label for="order_expected_date"><fmt:message key="order.expected.actionDate"/></label>
+                            <input id="order_expected_date" type="date" name="order_expected_date" value="" required/>
+                            <label for="order_expected_date"><fmt:message key="order.expected.actionDate"/><em>*</em></label>
                         </div>
                     </div>
                 </fieldset>
                 <div class="row">
                     <div class="input-field">
-                        <input id="order_price" type="number" name="order_price" value="" disabled/>
-                        <label for="order_price"><fmt:message key="order.price"/></label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="input-field">
-                        <textarea id="order_memo" type="text" name="order_memo" value="" required
-                                  style="height: 100px"></textarea>
+                        <textarea id="order_memo" type="text" name="order_memo" value="" style="height: 100px"></textarea>
                         <label for="order_memo"><fmt:message key="order.memo"/></label>
                     </div>
                 </div>

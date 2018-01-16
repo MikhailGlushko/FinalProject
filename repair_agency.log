@@ -102,3 +102,127 @@ update users set role=?,name=?,login=?,password=?,email=?,phone=?,status=?,last_
 15.01.2018 20:12:07 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
 15.01.2018 20:12:07 [main] ERROR PersistException - MySQL Error Code: 23505 Unique index or primary key violation: "USER_LOGIN_UNIQUE_INDEX_4 ON REPAIR_AGENCY.USERS(LOGIN) VALUES ('customer5', 5)"; SQL statement:
 insert into users (role,name,login,password,email,phone,status,last_login) values ( ?,?,?,?,?,?,?,? ) [23505-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 10:44:19 [main] INFO  UserDAO - before insert: User{id=5, role=CUSTOMER, name='Customer5', login='customer5', password='customer5', email='customer@mail.com', phone='03', status=ACTIVE, lastLogin=null}
+16.01.2018 10:44:19 [main] INFO  UserDAO - new instance: User{id=0, role=CUSTOMER, name='Test User', login='Test.Login', password='P@ssw0rd', email='email@email.com', phone='123456789', status=ACTIVE, lastLogin=null}
+16.01.2018 10:44:19 [main] INFO  UserDAO - after insert: User{id=41, role=CUSTOMER, name='Test User', login='Test.Login', password='P@ssw0rd', email='email@email.com', phone='123456789', status=ACTIVE, lastLogin=null}
+16.01.2018 10:44:19 [main] INFO  UserDAO - after commit: User{id=5, role=CUSTOMER, name='Customer5', login='customer5', password='customer5', email='customer@mail.com', phone='03', status=ACTIVE, lastLogin=null}
+16.01.2018 10:44:19 [main] ERROR PersistException - MySQL Error Code: 23505 Unique index or primary key violation: "USER_LOGIN_UNIQUE_INDEX_4 ON REPAIR_AGENCY.USERS(LOGIN) VALUES ('admin', 1)"; SQL statement:
+update users set role=?,name=?,login=?,password=?,email=?,phone=?,status=?,last_login=? where id=? [23505-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 10:44:19 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: org.h2.jdbc.JdbcSQLException: Unique index or primary key violation: "USER_LOGIN_UNIQUE_INDEX_4 ON REPAIR_AGENCY.USERS(LOGIN) VALUES ('admin', 1)"; SQL statement:
+update users set role=?,name=?,login=?,password=?,email=?,phone=?,status=?,last_login=? where id=? [23505-196]
+16.01.2018 10:44:19 [main] INFO  UserDAO - User{id=1, role=ADMIN, name='Administrator1', login='admin', password='admin', email='mikhail.glushko@gmail.com', phone='066-3864046', status=ACTIVE, lastLogin=2018-01-16}
+16.01.2018 10:44:19 [main] INFO  UserDAO - threat 1 40
+16.01.2018 10:44:19 [Thread-2] INFO  UserDAO - thread 2 40
+16.01.2018 10:44:20 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:235) )
+16.01.2018 10:44:20 [main] ERROR PersistException - MySQL Error Code: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:235) ).
+16.01.2018 10:44:20 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+16.01.2018 10:44:20 [main] INFO  UserDAO - before insert: User{id=5, role=CUSTOMER, name='Customer5', login='customer5', password='customer5', email='customer@mail.com', phone='03', status=ACTIVE, lastLogin=null}
+16.01.2018 10:44:20 [main] INFO  UserDAO - new instance: User{id=0, role=CUSTOMER, name='Test User', login='Test.Login', password='P@ssw0rd', email='email@email.com', phone='123456789', status=ACTIVE, lastLogin=null}
+16.01.2018 10:44:20 [main] INFO  UserDAO - after insert: User{id=41, role=CUSTOMER, name='Test User', login='Test.Login', password='P@ssw0rd', email='email@email.com', phone='123456789', status=ACTIVE, lastLogin=null}
+16.01.2018 10:44:20 [main] INFO  UserDAO - after rollback: User{id=5, role=CUSTOMER, name='Customer5', login='customer5', password='customer5', email='customer@mail.com', phone='03', status=ACTIVE, lastLogin=null}
+16.01.2018 10:44:20 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:72) )
+16.01.2018 10:44:20 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:72) ).
+16.01.2018 10:44:20 [main] ERROR PersistException - MySQL Error Code: 0 ua.glushko.model.exception.PersistException: Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:72) ).
+16.01.2018 10:44:20 [main] ERROR PersistException - user already exist ( ua.glushko.services.RegisterServiceTest.registerExistLogin(RegisterServiceTest.java:28) )
+16.01.2018 10:44:20 [main] ERROR PersistException - MySQL Error Code: 0 user already exist ( ua.glushko.services.RegisterServiceTest.registerExistLogin(RegisterServiceTest.java:28) ).
+16.01.2018 10:44:20 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+16.01.2018 10:44:20 [main] ERROR PersistException - MySQL Error Code: 23505 Unique index or primary key violation: "USER_LOGIN_UNIQUE_INDEX_4 ON REPAIR_AGENCY.USERS(LOGIN) VALUES ('customer5', 5)"; SQL statement:
+insert into users (role,name,login,password,email,phone,status,last_login) values ( ?,?,?,?,?,?,?,? ) [23505-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 11:13:54 [main] ERROR PersistException - Can not update record. Operation aborted. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:209) )
+16.01.2018 11:13:54 [main] ERROR PersistException - MySQL Error Code: 0 Can not update record. Operation aborted. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:209) ).
+16.01.2018 11:13:54 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record. Operation aborted.
+16.01.2018 11:14:26 [main] ERROR PersistException - Can not update record. Operation aborted. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:14:26 [main] ERROR PersistException - MySQL Error Code: 0 Can not update record. Operation aborted. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) ).
+16.01.2018 11:14:26 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record. Operation aborted.
+16.01.2018 11:22:06 [main] ERROR PersistException - Can not update record - record not found. Operation aborted. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:22:06 [main] ERROR PersistException - MySQL Error Code: 0 Can not update record - record not found. Operation aborted. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) ).
+16.01.2018 11:22:06 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Operation aborted.
+16.01.2018 11:23:08 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:23:08 [main] ERROR PersistException - MySQL Error Code: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) ).
+16.01.2018 11:23:08 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+16.01.2018 11:23:13 [main] ERROR PersistException - Can not update record. Operation aborted. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:23:13 [main] ERROR PersistException - MySQL Error Code: 0 Can not update record. Operation aborted. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) ).
+16.01.2018 11:23:13 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record. Operation aborted.
+16.01.2018 11:23:16 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:23:16 [main] ERROR PersistException - MySQL Error Code: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) ).
+16.01.2018 11:23:16 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+16.01.2018 11:25:32 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:25:32 [main] ERROR PersistException - MySQL Error Code: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) ).
+16.01.2018 11:25:32 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+16.01.2018 11:26:13 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:26:13 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+16.01.2018 11:26:38 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:26:38 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException
+16.01.2018 11:26:51 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:26:51 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+16.01.2018 11:27:06 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:27:06 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+16.01.2018 11:27:22 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+16.01.2018 11:27:44 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:27:44 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException
+16.01.2018 11:28:01 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:28:01 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException
+16.01.2018 11:28:27 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:28:27 [main] ERROR PersistException - MySQL Error Code: 0 null ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) ).
+16.01.2018 11:28:27 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException
+16.01.2018 11:28:42 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:28:42 [main] ERROR PersistException - MySQL Error Code: 0 null ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) ).
+16.01.2018 11:28:42 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException
+16.01.2018 11:29:13 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:29:13 [main] ERROR PersistException - MySQL Error Code: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) ).
+16.01.2018 11:29:13 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+16.01.2018 11:29:25 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:29:25 [main] ERROR PersistException - MySQL Error Code: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) ).
+16.01.2018 11:29:25 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+16.01.2018 11:29:46 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) )
+16.01.2018 11:29:46 [main] ERROR PersistException - MySQL Error Code: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:208) ).
+16.01.2018 11:29:46 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+16.01.2018 11:30:00 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:206) )
+16.01.2018 11:30:00 [main] ERROR PersistException - MySQL Error Code: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:206) ).
+16.01.2018 11:30:00 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+16.01.2018 12:37:45 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 12:38:34 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 12:39:29 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 12:40:07 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 12:44:01 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 12:44:06 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 12:45:32 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 12:45:32 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 12:45:35 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 12:47:27 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 12:48:12 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 12:50:56 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 13:53:17 [main] ERROR PersistException - MySQL Error Code: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 16:00:02 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.services.AbstractService.delete(AbstractService.java:70) )
+16.01.2018 16:00:02 [main] ERROR PersistException - MySQL Error Code: 0 Can not delete record. Operation aborted ( ua.glushko.services.AbstractService.delete(AbstractService.java:70) ).
+16.01.2018 16:02:19 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.services.AbstractService.delete(AbstractService.java:70) )
+16.01.2018 16:02:19 [main] ERROR PersistException - MySQL Error Code: 0 Can not delete record. Operation aborted ( ua.glushko.services.AbstractService.delete(AbstractService.java:70) ).
+16.01.2018 17:16:11 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+16.01.2018 17:16:11 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) )
+16.01.2018 17:16:11 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) ).
+16.01.2018 17:16:11 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+16.01.2018 17:16:12 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) )
+16.01.2018 17:16:12 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) ).
+16.01.2018 17:16:12 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+16.01.2018 17:16:12 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:72) )
+16.01.2018 17:16:12 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:72) ).
+16.01.2018 17:16:12 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:72) ).
+16.01.2018 17:16:12 [main] ERROR PersistException - user already exist ( ua.glushko.services.RegisterServiceTest.registerExistLogin(RegisterServiceTest.java:28) )
+16.01.2018 17:16:12 [main] ERROR PersistException - Код ошибки MySQL: 0 user already exist ( ua.glushko.services.RegisterServiceTest.registerExistLogin(RegisterServiceTest.java:28) ).
+16.01.2018 17:16:12 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+16.01.2018 17:16:12 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+16.01.2018 17:16:12 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).

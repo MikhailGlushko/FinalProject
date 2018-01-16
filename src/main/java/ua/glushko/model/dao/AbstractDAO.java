@@ -11,11 +11,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Абстрактная реализация DAO.
- * Использованы паттерны ДАО и Шаблонный метод. Наследники реализуют специфичную им логику и поведение,
- * в то время как вся общая логика реализована в предке.
- */
 abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO<T> {
     protected static final Logger logger = Logger.getLogger(AbstractDAO.class.getSimpleName());
 
@@ -25,9 +20,9 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * создает новую запись в базе данных
-     * при успешном завершение устанавливает поле id в объекте значением из базы данных уникального ключа
-     * при неуспешном завершении - выбрасывает исключение
+     * Create new entity
+     * @param object
+     * @throws PersistException
      */
     @Override
     public void create(T object) throws PersistException {
@@ -37,7 +32,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
              PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             prepareStatementForCreate(statement, object);
             int effectedRows = statement.executeUpdate();
-            if (effectedRows == 0) {                        // должны быть записи но их нет
+            if (effectedRows == 0) {
                 throw new PersistException("Can not insert record to database. Operation aborted.");
             }
             generatedKeys = statement.getGeneratedKeys();
@@ -48,17 +43,17 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * получить сгенерированый базой ключь и внедрить его в объект
+     * Get generated key after create
      */
     protected abstract void setGeneratedKey(T object, ResultSet generatedKeys) throws SQLException;
 
     /**
-     * настроить стайтмент для запроса создания записи
+     * setup prepare statement for creation
      */
     protected abstract void prepareStatementForCreate(PreparedStatement statement, T object) throws SQLException;
 
     /**
-     * получить текст запроса на создание
+     * query string for create
      */
     private String getCreateQuery() {
         return "insert into " + getTableName() +
@@ -67,9 +62,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * обновляем запись в базе данных на основании объекта
-     * при успешном завершении возвращаем измененный объект
-     * при неуспешном завершении - выбрасываем исключение
+     * Update exist entity
      */
     @Override
     public void update(T object) throws PersistException {
@@ -79,7 +72,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             prepareStatementForUpdate(statement, object);
             int effectedRows = statement.executeUpdate();
             if (effectedRows != 1) {
-                throw new PersistException("Can not update record. Operation aborted.");
+                throw new PersistException("Can not update record - record not found. Unsuccessful operation.");
             }
         } catch (SQLException e) {
             throw new PersistException(e);
@@ -87,7 +80,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * готовим стейтмент для запроса по обновлению
+     * setup prepare statement for update
      */
     protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws SQLException;
 
@@ -101,9 +94,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * удаляем запись из базы даных по ключу
-     * при успешном удалении возвращаем запись которую удалили
-     * при неуспешном удалении - выбрасываем исключение
+     * delete exist entity
      */
 
     public T delete(int id) throws PersistException {
@@ -123,16 +114,14 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * готовим стейтмент для запроса на удаление
+     * setup prepare statement for delete
      */
     private void prepareStatementForDeleteByKey(PreparedStatement statement, Integer id) throws SQLException {
         statement.setInt(1, id);
     }
 
     /**
-     * удаляем все записи из таблицы.
-     * при успешном удалении - вовращаем список записей, клторые предстояло удалить
-     * при неуспешном - выбрасываем исключение
+     * Delete exist entity
      */
     @Override
     public void deleteAll() throws PersistException {
@@ -149,16 +138,14 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * получаем тест запроса на удаление
+     * query string for delete
      */
     private String getDeleteQuery() {
         return "delete from " + getTableName();
     }
 
     /**
-     * читаем одну запись с базы данных по ключу
-     * при успешном чтении - возвращаем полученную запись
-     * при неуспешном чтении - выбрасываем исключение
+     * Read entity from database by id
      */
     public T read(int id) throws PersistException {
         List<T> list = Collections.emptyList();
@@ -182,21 +169,19 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * заносим полученный результат в список сущностей
+     * Polulate result to list
      */
     protected abstract List<T> parseResultSet(ResultSet resultSet) throws SQLException;
 
     /**
-     * готовим стейтмент для запроса выборки по ключу
+     * Prepare statement for select
      */
     protected void prepareStatementForSelectById(PreparedStatement statement, Integer id) throws SQLException {
         statement.setInt(1, id);
     }
 
     /**
-     * получаем список записей по фильтру имени
-     * при успешном выполнении - возвращаем списое, полученных записей
-     * при неуспешном выполнении - выбрасываем исключение
+     * Get list by name
      */
     public List<T> read(String name) throws PersistException {
         List<T> list = Collections.emptyList();
@@ -215,16 +200,14 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * готовим стейтмент для запроса выборки
+     * Prepare statement for select
      */
     protected void prepareStatementForSelectByName(PreparedStatement statement, String name) throws SQLException {
         statement.setString(1, name);
     }
 
     /**
-     * получаем из базы данных список всех записей для указанной сущности
-     * при успешном выполнении возвращаем список объектов
-     * при не успешном выполнении - выбрасываем исключение
+     * Get list of all entities
      */
     public List<T> read() throws PersistException {
         List<T> list = Collections.emptyList();
@@ -240,6 +223,13 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
         return list;
     }
 
+    /**
+     * Get list of limited entities
+     * @param start
+     * @param limit
+     * @return
+     * @throws PersistException
+     */
     public List<T> read(int start, int limit) throws PersistException {
         List<T> list = Collections.emptyList();
         String sql = getSelectQuery(start, limit);
@@ -257,7 +247,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * получаем текст запроса выборки даных с таблицы
+     * query for select
      */
     protected String getSelectQuery() {
         return "select id, " + getFieldList() +
@@ -275,8 +265,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     protected abstract String getTableName();
 
     /**
-     * на основании списка полей строит списсок знаков вопросов для INSERT
-     * name, value -> ?,?
+     * Prepare field list for insert
      */
     private String getFieldListForInsert(String fieldList) {
         String[] fields = fieldList.split(",");
@@ -290,8 +279,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * на основании списка полей строит список параметров для UPDATE
-     * name, value -> name=?, value=?
+     * Prepare field list for update
      */
     private String getFieldListForUpdate(String fieldList) {
         return fieldList.replaceAll(",", "=?,") + "=?";

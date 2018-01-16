@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- *
+ * Connection Poll
  */
 public class ConnectionPool {
 

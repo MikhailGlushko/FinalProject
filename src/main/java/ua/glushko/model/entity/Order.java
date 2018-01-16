@@ -3,6 +3,9 @@ package ua.glushko.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Orders
+ */
 public class Order implements GenericEntity, Serializable {
     private boolean chanched = false;
     private int id;

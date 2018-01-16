@@ -5,9 +5,7 @@ import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.model.entity.RepairService;
 
 /**
- * Фабрика для получения экзепляров DAO
- * Использован шаблонабстрактная фабрика
- * Экземпляры DAO хранятся в HashMap
+ * DAO Factory
  */
 public class MySQLDAOFactory {
 

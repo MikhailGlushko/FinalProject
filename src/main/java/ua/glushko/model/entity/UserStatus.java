@@ -1,8 +1,8 @@
 package ua.glushko.model.entity;
 
 /**
- * Статусы пользователей
- * Доступ к системе предоставляется только пользователям со статусом ACTIVE
+ * User statuses
+ * Access to the system is granted only to users with the status ACTIVE
  */
 public enum UserStatus {
     ACTIVE, CLOSE, BLOCKED

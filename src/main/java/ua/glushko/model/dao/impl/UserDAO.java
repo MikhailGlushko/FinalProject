@@ -14,20 +14,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static ua.glushko.model.entity.UserRole.CUSTOMER;
-
 public class UserDAO extends AbstractDAO<User> {
 
     private final String NAME_TABLE = "users";
-    private final String NAME_FIELD_00 = "id";
-    private final String NAME_FIELD_01 = "role";
-    private final String NAME_FIELD_02 = "name";
-    private final String NAME_FIELD_03 = "login";
-    private final String NAME_FIELD_04 = "password";
-    private final String NAME_FIELD_05 = "email";
-    private final String NAME_FIELD_06 = "phone";
-    private final String NAME_FIELD_07 = "status";
-    private final String NAME_FIELD_08 = "last_login";
+    private final String NAME_FIELD_ID = "id";
+    private final String NAME_FIELD_ROLE = "role";
+    private final String NAME_FIELD_NAME = "name";
+    private final String NAME_FIELD_LOGIN = "login";
+    private final String NAME_FIELD_PASSWORD = "password";
+    private final String NAME_FIELD_EMAIL = "email";
+    private final String NAME_FIELD_PHONE = "phone";
+    private final String NAME_FIELD_STATUS = "status";
+    private final String NAME_FIELD_LAST_LOGIN = "last_login";
 
     private static final UserDAO dao = new UserDAO();
 
@@ -48,14 +46,14 @@ public class UserDAO extends AbstractDAO<User> {
     protected String getFieldList() {
         StringBuilder builder = new StringBuilder();
         return builder
-                .append(NAME_FIELD_01).append(",")
-                .append(NAME_FIELD_02).append(",")
-                .append(NAME_FIELD_03).append(",")
-                .append(NAME_FIELD_04).append(",")
-                .append(NAME_FIELD_05).append(",")
-                .append(NAME_FIELD_06).append(",")
-                .append(NAME_FIELD_07).append(",")
-                .append(NAME_FIELD_08).toString();
+                .append(NAME_FIELD_ROLE).append(",")
+                .append(NAME_FIELD_NAME).append(",")
+                .append(NAME_FIELD_LOGIN).append(",")
+                .append(NAME_FIELD_PASSWORD).append(",")
+                .append(NAME_FIELD_EMAIL).append(",")
+                .append(NAME_FIELD_PHONE).append(",")
+                .append(NAME_FIELD_STATUS).append(",")
+                .append(NAME_FIELD_LAST_LOGIN).toString();
     }
 
     @Override
@@ -90,16 +88,16 @@ public class UserDAO extends AbstractDAO<User> {
         List<User> list = new ArrayList<>();
         while (resultSet.next()) {
             User item = new User();
-            item.setId(resultSet.getInt(NAME_FIELD_00));
-            item.setRole(resultSet.getString(NAME_FIELD_01));
-            item.setName(resultSet.getString(NAME_FIELD_02));
-            item.setLogin(resultSet.getString(NAME_FIELD_03));
-            item.setPassword(resultSet.getString(NAME_FIELD_04));
-            item.setEmail(resultSet.getString(NAME_FIELD_05));
-            item.setPhone(resultSet.getString(NAME_FIELD_06));
-            item.setStatus(resultSet.getString(NAME_FIELD_07));
-            if (Objects.nonNull(resultSet.getTimestamp(NAME_FIELD_08)))
-                item.setLastLogin(new Date(resultSet.getTimestamp(NAME_FIELD_08).getTime()));
+            item.setId(resultSet.getInt(NAME_FIELD_ID));
+            item.setRole(resultSet.getString(NAME_FIELD_ROLE));
+            item.setName(resultSet.getString(NAME_FIELD_NAME));
+            item.setLogin(resultSet.getString(NAME_FIELD_LOGIN));
+            item.setPassword(resultSet.getString(NAME_FIELD_PASSWORD));
+            item.setEmail(resultSet.getString(NAME_FIELD_EMAIL));
+            item.setPhone(resultSet.getString(NAME_FIELD_PHONE));
+            item.setStatus(resultSet.getString(NAME_FIELD_STATUS));
+            if (Objects.nonNull(resultSet.getTimestamp(NAME_FIELD_LAST_LOGIN)))
+                item.setLastLogin(new Date(resultSet.getTimestamp(NAME_FIELD_LAST_LOGIN).getTime()));
             list.add(item);
         }
         return list;

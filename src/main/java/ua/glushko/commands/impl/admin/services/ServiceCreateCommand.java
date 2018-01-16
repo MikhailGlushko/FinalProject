@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import static ua.glushko.authentification.Authentification.C;
 import static ua.glushko.commands.CommandFactory.COMMAND_NAME_SERVICES;
 
-/** Создание нового пользователя */
+/** Create New entiry */
 public class ServiceCreateCommand extends Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

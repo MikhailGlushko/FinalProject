@@ -2,6 +2,9 @@ package ua.glushko.model.entity;
 
 import java.io.Serializable;
 
+/**
+ * Roles grants
+ */
 public class Grant implements GenericEntity, Serializable {
     private int id;
     private String command;

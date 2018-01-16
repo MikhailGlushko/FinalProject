@@ -1,7 +1,6 @@
 package ua.glushko.model.dao.impl;
 
 import ua.glushko.model.dao.AbstractDAO;
-import ua.glushko.model.entity.Order;
 import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.transaction.ConnectionWrapper;
@@ -18,15 +17,15 @@ import java.util.List;
 public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
 
     private final String NAME_TABLE = "orders_history";
-    private final String NAME_FIELD_00 = "id";
-    private final String NAME_FIELD_01 = "order_id";
-    private final String NAME_FIELD_02 = "user_id";
-    private final String NAME_FIELD_03 = "action";
-    private final String NAME_FIELD_04 = "description";
-    private final String NAME_FIELD_05 = "action_date";
-    private final String NAME_FIELD_06 = "old_value";
-    private final String NAME_FIELD_07 = "new_value";
-    private final String NAME_FIELD_08 = "user_name";
+    private final String NAME_FIELD_ID = "id";
+    private final String NAME_FIELD_ORDER_ID = "order_id";
+    private final String NAME_FIELD_USER_ID = "user_id";
+    private final String NAME_FIELD_ACTION = "action";
+    private final String NAME_FIELD_DESCRIPTION = "description";
+    private final String NAME_FIELD_ACTION_ADTE = "action_date";
+    private final String NAME_FIELD_OLD_VALUE = "old_value";
+    private final String NAME_FIELD_NEW_VALUE = "new_value";
+    private final String NAME_FIELD_USER_NAME = "user_name";
     private static final OrderHistoryDAO dao = new OrderHistoryDAO();
 
     private OrderHistoryDAO() {
@@ -46,13 +45,13 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
     protected String getFieldList() {
         StringBuilder builder = new StringBuilder();
         return builder
-                .append(NAME_FIELD_01).append(",")
-                .append(NAME_FIELD_02).append(",")
-                .append(NAME_FIELD_03).append(",")
-                .append(NAME_FIELD_04).append(",")
-                .append(NAME_FIELD_05).append(",")
-                .append(NAME_FIELD_06).append(",")
-                .append(NAME_FIELD_07).toString();
+                .append(NAME_FIELD_ORDER_ID).append(",")
+                .append(NAME_FIELD_USER_ID).append(",")
+                .append(NAME_FIELD_ACTION).append(",")
+                .append(NAME_FIELD_DESCRIPTION).append(",")
+                .append(NAME_FIELD_ACTION_ADTE).append(",")
+                .append(NAME_FIELD_OLD_VALUE).append(",")
+                .append(NAME_FIELD_NEW_VALUE).toString();
     }
 
     @Override
@@ -86,16 +85,16 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
         List<OrderHistory> list = new ArrayList<>();
         while (resultSet.next()) {
             OrderHistory item = new OrderHistory();
-            item.setId(resultSet.getInt(NAME_FIELD_00));
-            item.setOrderId(resultSet.getInt(NAME_FIELD_01));
-            item.setUserId(resultSet.getInt(NAME_FIELD_02));
-            item.setAction(resultSet.getString(NAME_FIELD_03));
-            item.setDecription(resultSet.getString(NAME_FIELD_04));
-            if(resultSet.getDate(NAME_FIELD_05)!=null)
-                item.setActionDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_05).getTime()));
-            item.setOldValue(resultSet.getString(NAME_FIELD_06));
-            item.setNewValue(resultSet.getString(NAME_FIELD_07));
-            item.setUserName(resultSet.getString(NAME_FIELD_08));
+            item.setId(resultSet.getInt(NAME_FIELD_ID));
+            item.setOrderId(resultSet.getInt(NAME_FIELD_ORDER_ID));
+            item.setUserId(resultSet.getInt(NAME_FIELD_USER_ID));
+            item.setAction(resultSet.getString(NAME_FIELD_ACTION));
+            item.setDecription(resultSet.getString(NAME_FIELD_DESCRIPTION));
+            if(resultSet.getDate(NAME_FIELD_ACTION_ADTE)!=null)
+                item.setActionDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_ACTION_ADTE).getTime()));
+            item.setOldValue(resultSet.getString(NAME_FIELD_OLD_VALUE));
+            item.setNewValue(resultSet.getString(NAME_FIELD_NEW_VALUE));
+            item.setUserName(resultSet.getString(NAME_FIELD_USER_NAME));
             list.add(item);
         }
         return list;
