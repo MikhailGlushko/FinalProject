@@ -2,8 +2,8 @@ package ua.glushko.commands;
 
 import org.apache.log4j.Logger;
 
-public abstract class Command implements GenericCommand {
-    public static final Logger LOGGER = Logger.getLogger(GenericCommand.class.getSimpleName());
+public abstract class Command implements ICommand {
+    public static final Logger LOGGER = Logger.getLogger(ICommand.class.getSimpleName());
 
     public static final String PARAM_NAME_COMMAND = "command";
     protected static final String PARAM_NAME_NULL_PAGE = "nullpage";

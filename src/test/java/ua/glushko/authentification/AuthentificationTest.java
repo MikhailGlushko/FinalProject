@@ -48,12 +48,12 @@ public class AuthentificationTest {
     @Test
     public void isUserLogIn() {
         boolean userLogIn = Authentification.isUserLogIn(session);
-        System.out.println(userLogIn);
+        assertFalse(userLogIn);
     }
 
     @Test
     public void checkAccess() {
         int access = Authentification.checkAccess(request);
-        System.out.println(access);
+        assertTrue(access!=0);
     }
 }

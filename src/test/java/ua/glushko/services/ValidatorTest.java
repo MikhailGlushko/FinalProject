@@ -35,4 +35,14 @@ public class ValidatorTest {
         b1 = Validator.validatePassword("Comp@q0101");
         assertTrue(b1);
     }
+
+    @Test
+    public void matchEmail(){
+        boolean b1 = Validator.validateEmail("test");
+        assertFalse(b1);
+        b1 = Validator.validateEmail("test@test");
+        assertFalse(b1);
+        b1 = Validator.validateEmail("test@test.com");
+        assertTrue(b1);
+    }
 }

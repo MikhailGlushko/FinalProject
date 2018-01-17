@@ -43,12 +43,15 @@ public class UsersListCommand extends Command {
             else
                 pageNumber = Integer.valueOf(request.getParameter(PARAM_NAME_PAGE));
 
+            //TODO вынести условие перед методом
             if ((access & R)== R) {
                 LOGGER.debug("getting users list to how");
+                //TODO перенести пагинацию в сервис
                 List<User> users    = usersService.getUsersList(pageNumber, pagesCount, rowsCount);
                 List<String> titles = usersService.getUsersTitles();
                 int count = usersService.count();
                 count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
+                //TODO передать параметром, убрать из сесии
                 session.setAttribute(PARAM_NAME_PAGES_COUNT, pagesCount);
                 session.setAttribute(PARAM_NAME_ROWS_COUNT, rowsCount);
                 session.setAttribute(PARAM_NAME_PAGE, pageNumber);

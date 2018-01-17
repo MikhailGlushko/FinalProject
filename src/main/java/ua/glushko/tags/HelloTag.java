@@ -19,10 +19,9 @@ public class HelloTag extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         try {
-
             HttpSession session = pageContext.getSession();
             String locale = (String) session.getAttribute(PARAM_NAME_LOCALE);
-            String currentUserName = (String) session.getAttribute(Authentification.PARAM_NAME_NAME);
+            String currentUserName = (String) pageContext.getSession().getAttribute(Authentification.PARAM_NAME_NAME);
             Timestamp currentUserLastLogin = (Timestamp) session.getAttribute(Authentification.PARAM_NAME_LAST_LOGIN);
             String PROPERTY_NAME_WELCOME = "app.welcome.message";
             String welcome = MessageManager.getMessage(PROPERTY_NAME_WELCOME,locale);

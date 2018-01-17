@@ -61,13 +61,13 @@ public class CommandFactory {
 
     private static final String COMMAND_NAME_SETUP = "setup";
     private static final String COMMAND_NAME_SETUP_SAVE = "setup_save";
-    private static final String COMMAND_NAME_WELCOME = "welcome";
-    private static final String COMMAND_NAME_LANG = "lang";
+    public static final String COMMAND_NAME_WELCOME = "welcome";
+    public static final String COMMAND_NAME_LANG = "lang";
 
     private static final Logger logger = Logger.getLogger(CommandFactory.class.getSimpleName());
     private static final CommandFactory COMMAND_FACTORY = new CommandFactory();
 
-    private final Map<String, GenericCommand> commandMap = new HashMap<>();
+    private final Map<String, ICommand> commandMap = new HashMap<>();
 
     private CommandFactory() {
         commandMap.put(COMMAND_NAME_LOGIN, new LoginCommand());
@@ -128,8 +128,8 @@ public class CommandFactory {
     /**
      * Получаем комманду из запроса
      */
-    public GenericCommand getCommand(HttpServletRequest req) {
-        GenericCommand emptyCommand = new EmptyCommand();
+    public ICommand getCommand(HttpServletRequest req) {
+        ICommand emptyCommand = new EmptyCommand();
         String command;
         Object attribute = req.getAttribute(PARAM_NAME_COMMAND);
         if(Objects.nonNull(attribute))
@@ -137,7 +137,7 @@ public class CommandFactory {
         else
             command = req.getParameter(PARAM_NAME_COMMAND);
         logger.debug("Getting command: " + command);
-        GenericCommand newCommand;
+        ICommand newCommand;
         if (command == null || command.isEmpty() || (newCommand = commandMap.get(command)) == null)
             return emptyCommand;
         return newCommand;

@@ -1,6 +1,6 @@
 package ua.glushko.servlets;
 
-import ua.glushko.commands.GenericCommand;
+import ua.glushko.commands.ICommand;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.CommandFactory;
 import ua.glushko.configaration.ConfigurationManager;
@@ -23,6 +23,7 @@ public class Controller extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+        //TODO Убрать!
         if (ConnectionPool.getConnectionPool().getDataSource() == null)
             switch (DATABASE_NAME) {
                 case "H2":
@@ -44,10 +45,11 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
+    //TODO private
     public void processRequest(HttpServletRequest req, HttpServletResponse resp) {
         CommandFactory commandFactory = CommandFactory.getInstance();
         // get command
-        GenericCommand command = commandFactory.getCommand(req);
+        ICommand command = commandFactory.getCommand(req);
         // execute command and get page to route
         CommandRouter commandRouter = command.execute(req, resp);
         // route to new page

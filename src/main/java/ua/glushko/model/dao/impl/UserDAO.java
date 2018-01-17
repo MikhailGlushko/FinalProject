@@ -136,7 +136,9 @@ public class UserDAO extends AbstractDAO<User> {
             resultSet = statement.executeQuery();
             users = parseResultSet(resultSet);
             if (users.size() == 0)
-                return null;
+                //TODO убрать ексепшн
+                throw new PersistException("user not fount");
+                //return null;
         } catch (Exception e) {
             throw new PersistException(e);
         }

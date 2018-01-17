@@ -11,7 +11,6 @@ import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 import ua.glushko.transaction.ConnectionPool;
-import ua.glushko.transaction.TransactionManager;
 
 import java.util.List;
 
@@ -59,7 +58,7 @@ public class UsersServiceTest {
             assertNotNull(user);
     }
 
-    @Test
+    @Test(expected = PersistException.class)
     public void getUserByLoginWrong() throws PersistException, TransactionException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserByLogin("adminadmin");

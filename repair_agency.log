@@ -729,3 +729,702 @@ insert into orders_history (order_id,user_id,action,description,action_date,old_
 17.01.2018 10:09:06 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
 17.01.2018 10:09:06 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
 17.01.2018 10:09:06 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 10:27:16 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 10:27:16 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 10:27:16 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) )
+17.01.2018 10:27:16 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) ).
+17.01.2018 10:27:16 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 10:27:17 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) )
+17.01.2018 10:27:17 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) ).
+17.01.2018 10:27:17 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 10:27:17 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 10:27:17 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 10:27:17 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 10:27:17 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 10:27:17 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+17.01.2018 10:27:17 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 10:27:17 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 10:38:46 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 10:40:08 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 10:40:08 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 10:40:08 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 10:40:08 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) )
+17.01.2018 10:40:08 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) ).
+17.01.2018 10:40:08 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 10:40:09 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) )
+17.01.2018 10:40:09 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) ).
+17.01.2018 10:40:09 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 10:40:09 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 10:40:09 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 10:40:09 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 10:40:09 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 10:40:09 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+17.01.2018 10:40:09 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 10:40:09 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 10:42:16 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 10:43:29 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 12:39:49 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 12:39:49 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 12:39:49 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) )
+17.01.2018 12:39:49 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) ).
+17.01.2018 12:39:49 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 12:39:50 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) )
+17.01.2018 12:39:50 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) ).
+17.01.2018 12:39:50 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 12:39:50 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 12:39:50 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 12:39:50 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 12:39:50 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 12:39:50 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+17.01.2018 12:39:50 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 12:39:50 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 12:40:37 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 12:40:37 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 12:40:37 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) )
+17.01.2018 12:40:37 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) ).
+17.01.2018 12:40:37 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 12:40:37 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) )
+17.01.2018 12:40:37 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) ).
+17.01.2018 12:40:37 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 12:40:37 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 12:40:37 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 12:40:37 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 12:40:37 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 12:40:37 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+17.01.2018 12:40:37 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 12:40:37 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 12:41:14 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 12:41:14 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 12:41:14 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) )
+17.01.2018 12:41:14 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) ).
+17.01.2018 12:41:14 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 12:41:15 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) )
+17.01.2018 12:41:15 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) ).
+17.01.2018 12:41:15 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 12:41:15 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 12:41:15 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 12:41:15 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 12:41:15 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 12:41:15 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+17.01.2018 12:41:15 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 12:41:15 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 12:43:59 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 12:43:59 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 12:43:59 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 12:43:59 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 12:43:59 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 12:43:59 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 12:43:59 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 12:43:59 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 12:43:59 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 12:43:59 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 12:43:59 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 12:43:59 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 12:43:59 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+17.01.2018 12:43:59 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 12:43:59 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 12:48:53 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 12:48:53 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 12:48:54 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 12:48:54 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 12:48:54 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 12:48:54 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 12:48:54 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 12:48:54 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 12:48:54 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 12:48:55 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 12:48:55 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 12:48:55 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 12:48:55 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+17.01.2018 12:48:55 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 12:48:55 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 12:54:08 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:147) )
+17.01.2018 12:54:08 [main] ERROR PersistException - MySQL Error Code: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:147) ).
+17.01.2018 12:54:08 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 12:54:25 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 12:54:25 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:109) )
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:109) ).
+17.01.2018 12:54:25 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 12:54:25 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 12:54:25 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:109) )
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:109) ).
+17.01.2018 12:54:25 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 12:54:25 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 12:54:25 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:147) )
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:147) ).
+17.01.2018 12:54:25 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 12:54:25 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 12:54:25 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 12:54:25 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 12:54:25 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 12:54:25 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 12:54:25 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+17.01.2018 12:54:25 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 12:54:25 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 12:54:25 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 12:55:37 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:109) )
+17.01.2018 12:55:37 [main] ERROR PersistException - MySQL Error Code: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:109) ).
+17.01.2018 12:55:37 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 12:55:37 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 12:55:37 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 12:59:00 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:109) )
+17.01.2018 12:59:00 [main] ERROR PersistException - MySQL Error Code: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:109) ).
+17.01.2018 12:59:00 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 12:59:00 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 12:59:00 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 12:59:53 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:109) )
+17.01.2018 12:59:53 [main] ERROR PersistException - MySQL Error Code: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:109) ).
+17.01.2018 13:00:30 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 13:00:30 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:00:30 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:00:37 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:109) )
+17.01.2018 13:00:37 [main] ERROR PersistException - MySQL Error Code: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:109) ).
+17.01.2018 13:00:37 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 13:00:37 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:00:37 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:04:17 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 13:04:17 [main] ERROR PersistException - MySQL Error Code: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 13:04:36 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:04:36 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:04:36 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 13:04:36 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 13:04:36 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 13:04:36 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 13:04:36 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 13:04:36 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 13:04:36 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 13:04:36 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 13:04:36 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 13:04:36 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 13:04:37 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 13:04:37 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 13:04:37 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 13:04:37 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 13:04:37 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 13:04:37 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 13:04:37 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 13:04:37 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:118) )
+17.01.2018 13:04:37 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:04:37 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:04:37 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 13:04:37 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 13:05:49 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:05:49 [main] ERROR PersistException - MySQL Error Code: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:06:40 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:06:40 [main] ERROR PersistException - MySQL Error Code: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:07:02 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:07:02 [main] ERROR PersistException - MySQL Error Code: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:07:16 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:07:16 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:07:16 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 13:07:16 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 13:07:16 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 13:07:16 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 13:07:16 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 13:07:16 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 13:07:16 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 13:07:16 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 13:07:16 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 13:07:16 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 13:07:17 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 13:07:17 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 13:07:17 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 13:07:17 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 13:07:17 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 13:07:17 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 13:07:17 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 13:07:17 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 13:07:17 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:07:17 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:07:17 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 13:07:17 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 13:52:22 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:52:22 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:52:22 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 13:52:22 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 13:52:22 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 13:52:22 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 13:52:22 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 13:52:22 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 13:52:22 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 13:52:22 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 13:52:22 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 13:52:22 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 13:52:22 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 13:52:22 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 13:52:22 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 13:52:22 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 13:52:22 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 13:52:22 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 13:52:22 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 13:52:22 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 13:52:22 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:52:22 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:52:22 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 13:52:22 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 13:55:03 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:55:03 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:55:03 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 13:55:03 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 13:55:03 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 13:55:03 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 13:55:03 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 13:55:03 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 13:55:03 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 13:55:03 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 13:55:03 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 13:55:03 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 13:55:04 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 13:55:04 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 13:55:04 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 13:55:04 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 13:55:04 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 13:55:04 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 13:55:04 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 13:55:04 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 13:55:04 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 13:55:04 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 13:55:04 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 13:55:04 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 14:00:34 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 14:00:34 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 14:00:34 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 14:00:34 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 14:00:34 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 14:00:34 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 14:00:34 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 14:00:34 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 14:00:34 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 14:00:34 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 14:00:34 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 14:00:34 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 14:00:34 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 14:00:34 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 14:00:34 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 14:00:34 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 14:00:34 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 14:00:34 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 14:00:34 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 14:00:34 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 14:00:34 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 14:00:34 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 14:00:34 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 14:00:34 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 14:52:17 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 14:52:17 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 14:52:17 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 14:52:17 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 14:52:17 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 14:52:17 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 14:52:17 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 14:52:17 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 14:52:17 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 14:52:17 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 14:52:17 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 14:52:17 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 14:52:17 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 14:52:17 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 14:52:17 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 14:52:17 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 14:52:17 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 14:52:17 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 14:52:17 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 14:52:17 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 14:52:17 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 14:52:17 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 14:52:17 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 14:52:17 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 17:21:27 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 17:21:27 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 17:21:27 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 17:21:27 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 17:21:27 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 17:21:27 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 17:21:27 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 17:21:27 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 17:21:27 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 17:21:27 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 17:21:27 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 17:21:27 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 17:21:27 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 17:21:27 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 17:21:27 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 17:21:27 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 17:21:27 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 17:21:27 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:21:27 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:21:27 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 17:21:27 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 17:21:27 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 17:21:27 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 17:21:27 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 17:25:56 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 17:25:56 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:28:47 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 17:28:47 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:29:06 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 17:29:06 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:29:06 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 17:29:06 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 17:29:06 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 17:29:06 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 17:29:06 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 17:29:06 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 17:29:06 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 17:29:06 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 17:29:06 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 17:29:06 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 17:29:06 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 17:29:06 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 17:29:06 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 17:29:06 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 17:29:06 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 17:29:07 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 17:29:07 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 17:29:07 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:29:07 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:29:07 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 17:29:07 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 17:29:07 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 17:29:07 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 17:29:07 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 17:30:34 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 17:30:34 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 17:30:34 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 17:30:34 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 17:30:34 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 17:30:34 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 17:30:34 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 17:30:34 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 17:30:34 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 17:30:34 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 17:30:34 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 17:30:34 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 17:30:34 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 17:30:34 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 17:30:34 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 17:30:34 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 17:30:34 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 17:30:34 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:30:34 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:30:35 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 17:30:35 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 17:30:35 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 17:30:35 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 17:30:35 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 17:30:53 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 17:30:53 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 17:30:53 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 17:30:53 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 17:30:53 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 17:30:53 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 17:30:53 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 17:30:53 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 17:30:53 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 17:30:53 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 17:30:53 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 17:30:53 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 17:30:53 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 17:30:53 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 17:30:53 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 17:30:53 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 17:30:53 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 17:30:53 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:30:53 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:30:53 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 17:30:53 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 17:30:53 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 17:30:53 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 17:30:53 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 17:31:39 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 17:31:39 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:31:49 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 17:31:49 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:32:02 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 17:32:02 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:32:03 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 17:32:03 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 17:32:03 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 17:32:03 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 17:32:03 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 17:32:03 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 17:32:03 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 17:32:03 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 17:32:03 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 17:32:03 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 17:32:03 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 17:32:03 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 17:32:03 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 17:32:03 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 17:32:03 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 17:32:03 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 17:32:03 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 17:32:03 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:32:03 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 17:32:03 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 17:32:03 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 17:32:03 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 17:32:03 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 17:32:03 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 18:14:26 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:14:26 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:16:09 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:16:09 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:16:09 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:16:09 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:16:09 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:16:09 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:17:44 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:17:44 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:17:44 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:17:44 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:17:44 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:17:44 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:07 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:15 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:15 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:18:15 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:18:15 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:15 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:15 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:31 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:31 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:18:31 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:18:31 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:31 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:31 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:31 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:31 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:18:31 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:18:31 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:31 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:31 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:18:31 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:18:31 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:18:31 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:18:31 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:18:31 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 18:18:31 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 18:18:31 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 18:18:31 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 18:18:31 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 18:18:31 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 18:18:31 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 18:18:31 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 18:18:31 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 18:18:31 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 18:18:31 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 18:18:31 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 18:18:31 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 18:18:31 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 18:18:31 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 18:18:31 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 18:18:31 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:18:31 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:18:31 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:18:31 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 18:18:31 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 18:18:31 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 18:18:31 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 18:18:31 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 18:18:51 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:18:51 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:19:04 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:19:04 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:19:31 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:19:31 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:19:31 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:19:31 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:19:31 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:19:31 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:20:18 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:20:23 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:20:23 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:20:51 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:20:51 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:20:51 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:20:51 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:20:51 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:20:51 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:20:51 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:20:51 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:20:51 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:20:58 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:20:58 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:20:58 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:20:58 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:20:58 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:20:58 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:21:05 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:23:52 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:24:58 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:24:58 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:27:02 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:27:02 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:27:53 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 18:29:19 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:29:19 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:30:35 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:30:35 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:31:07 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:31:07 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:31:07 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:31:07 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:31:07 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:31:07 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:31:07 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:31:07 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:31:07 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 18:31:07 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 18:31:07 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) )
+17.01.2018 18:31:07 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:111) ).
+17.01.2018 18:31:07 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 18:31:07 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 18:31:07 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) )
+17.01.2018 18:31:07 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:153) ).
+17.01.2018 18:31:07 [main] ERROR GenericCommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 18:31:07 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 18:31:07 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 18:31:07 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 18:31:08 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 18:31:08 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 18:31:08 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 18:31:08 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 18:31:08 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 18:31:08 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:31:08 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 18:31:08 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 18:31:08 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 18:31:08 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 18:31:08 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) )
+17.01.2018 18:31:08 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:58) ).
+17.01.2018 20:57:59 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 20:57:59 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 20:57:59 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 20:57:59 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 20:57:59 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 20:57:59 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 20:57:59 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 20:57:59 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 20:57:59 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 20:57:59 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 20:57:59 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:112) )
+17.01.2018 20:57:59 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:112) ).
+17.01.2018 20:57:59 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 20:57:59 [main] ERROR ICommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 20:57:59 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:154) )
+17.01.2018 20:57:59 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:154) ).
+17.01.2018 20:57:59 [main] ERROR ICommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 20:57:59 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) )
+17.01.2018 20:57:59 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:196) ).
+17.01.2018 20:57:59 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 20:57:59 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) )
+17.01.2018 20:57:59 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:227) ).
+17.01.2018 20:57:59 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 20:57:59 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 20:57:59 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 20:57:59 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 20:57:59 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 20:57:59 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 20:57:59 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 20:57:59 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 20:57:59 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:59) )
+17.01.2018 20:57:59 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:59) ).
+17.01.2018 23:05:24 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 23:05:24 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 23:05:24 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 23:05:24 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 23:05:24 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 23:05:24 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 23:05:24 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 23:05:24 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 23:05:24 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 23:05:24 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 23:05:24 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:112) )
+17.01.2018 23:05:24 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:112) ).
+17.01.2018 23:05:24 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 23:05:24 [main] ERROR ICommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 23:05:24 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:154) )
+17.01.2018 23:05:24 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:154) ).
+17.01.2018 23:05:24 [main] ERROR ICommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 23:05:24 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:198) )
+17.01.2018 23:05:24 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:198) ).
+17.01.2018 23:05:24 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 23:05:25 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:229) )
+17.01.2018 23:05:25 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:229) ).
+17.01.2018 23:05:25 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 23:05:25 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 23:05:25 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 23:05:25 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 23:05:25 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 23:05:25 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 23:05:25 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 23:05:25 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 23:05:25 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:59) )
+17.01.2018 23:05:25 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:59) ).
+17.01.2018 23:05:34 [main] ERROR GenericCommand - java.lang.NullPointerException
+17.01.2018 23:05:39 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 23:05:39 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 23:05:39 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 23:05:39 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 23:05:39 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 23:05:39 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 23:05:39 [main] ERROR PersistException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 23:05:39 [main] ERROR PersistException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 23:05:39 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 23:05:39 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 23:05:39 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:112) )
+17.01.2018 23:05:39 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:112) ).
+17.01.2018 23:05:39 [main] ERROR PersistException - user already exist ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:32) )
+17.01.2018 23:05:39 [main] ERROR ICommand - ua.glushko.model.exception.PersistException: user already exist
+17.01.2018 23:05:39 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:154) )
+17.01.2018 23:05:39 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:154) ).
+17.01.2018 23:05:39 [main] ERROR ICommand - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: user not fount
+17.01.2018 23:05:39 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:198) )
+17.01.2018 23:05:39 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:198) ).
+17.01.2018 23:05:39 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not update record - record not found. Unsuccessful operation.
+17.01.2018 23:05:39 [main] ERROR PersistException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:229) )
+17.01.2018 23:05:39 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:229) ).
+17.01.2018 23:05:39 [main] ERROR UserDAO - ua.glushko.model.exception.PersistException: ua.glushko.model.exception.PersistException: Can not delete record. Operation aborted
+17.01.2018 23:05:39 [main] ERROR PersistException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+17.01.2018 23:05:39 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) )
+17.01.2018 23:05:39 [main] ERROR PersistException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 23:05:39 [main] ERROR PersistException - Код ошибки MySQL: 0 ua.glushko.model.exception.PersistException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:74) ).
+17.01.2018 23:05:39 [main] ERROR PersistException - Не корректный пароли и/или логин. ( ua.glushko.services.UsersServiceTest.updateUserNullLogin(UsersServiceTest.java:117) )
+17.01.2018 23:05:39 [main] ERROR PersistException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) )
+17.01.2018 23:05:39 [main] ERROR PersistException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:55) ).
+17.01.2018 23:05:39 [main] ERROR PersistException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:59) )
+17.01.2018 23:05:39 [main] ERROR PersistException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.services.AbstractService.update(AbstractService.java:59) ).

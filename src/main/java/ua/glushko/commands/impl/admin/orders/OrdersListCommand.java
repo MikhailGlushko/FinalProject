@@ -74,7 +74,9 @@ public class OrdersListCommand extends Command {
                 session.setAttribute(PARAM_NAME_ROWS_COUNT, rowsCount);
                 session.setAttribute(PARAM_NAME_PAGE, pageNumber);
                 session.setAttribute(PARAM_NAME_ACCESS,access);
+                LOGGER.debug("Orders list were getted and try to show");
         } catch (NullPointerException e){
+            LOGGER.debug("Orders list were not get.");
             LOGGER.error(e);
         }
     }

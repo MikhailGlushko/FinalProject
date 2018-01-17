@@ -65,6 +65,7 @@ public class UserDAOTest {
         try {
             User user = userDAO.read(1);
             assertNotNull("Пользователь с ключом 1 не найден", user);
+            assertTrue(user.getId()==1);
         } catch (PersistException e) {
             logger.error(e);
         }
@@ -86,6 +87,7 @@ public class UserDAOTest {
         try {
             // получаем пользователя с существующим именем
             List<User> list = ((UserDAO) userDAO).read("Manager");
+            //TODO
             assertTrue("Пользователь с именем Manager не найден", list.size() != 0);
         } catch (PersistException e) {
             logger.error(e);
@@ -193,7 +195,6 @@ public class UserDAOTest {
             u1.setName(u1.getName() + u1.getId());
             u1.setId(50);
             u1.setLogin(u1.getLogin()+"1");
-            // пробуем внести изменения по не существующему пользователю, ожидаем исключение
             userDAO.update(u1);
         } catch (PersistException e) {
             logger.error(e);

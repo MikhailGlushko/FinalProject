@@ -75,36 +75,4 @@ public class GuestBookServiceTest {
         assertTrue(count!=0);
         count = service.count(1);
     }
-
-    @Test
-    public void count1() {
-    }
-
-    @Test
-    public void getList() {
-    }
-
-    @Test
-    public void getList1() {
-    }
-
-    @Test
-    public void getById() {
-    }
-
-    @Test
-    public void update() {
-    }
-
-    @Test
-    public void delete() {
-    }
-
-    @Test
-    public void count2() {
-    }
-
-    @Test
-    public void count3() {
-    }
 }

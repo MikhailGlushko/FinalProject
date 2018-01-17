@@ -75,6 +75,7 @@ public class UsersService extends AbstractService {
             if (Objects.nonNull(user)) {
                 grants = ((GrantDAO) grantDAO).read(user.getRole().name());
                 try {
+                    //TODO убрать клонирование
                     User tmp = (User) user.clone();
                     tmp.setLastLogin(new Date(System.currentTimeMillis()));
                     userDAO.update(tmp);
@@ -106,7 +107,13 @@ public class UsersService extends AbstractService {
             throw new NullPointerException("some parameters are null");
 
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
-        if (Objects.isNull(((UserDAO) userDao).getUserByLogin(login))) {
+        User userByLogin = null;
+        try {
+            userByLogin = ((UserDAO) userDao).getUserByLogin(login);
+        } catch (PersistException e){
+            // user not found. It's OK. Let's go to register it.
+        }
+        if (Objects.isNull(userByLogin)) {
             User user = new User();
             try {
                 TransactionManager.beginTransaction();

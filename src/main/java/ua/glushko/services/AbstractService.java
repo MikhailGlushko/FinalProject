@@ -42,6 +42,7 @@ public class AbstractService {
     protected <T extends GenericEntity> T getById(AbstractDAO<T> dao, int id) throws PersistException, TransactionException {
         T read;
         try{
+            //TODO убрать транзакции при чтении
             TransactionManager.beginTransaction();
             read = dao.read(id);
             TransactionManager.endTransaction();

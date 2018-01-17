@@ -53,10 +53,16 @@ public class RecoveryCommandTest {
     @Test
     public void resetPassword() throws ServletException {
         when(request.getParameter(UsersCommandHelper.PARAM_NAME_USER_LOGIN)).thenReturn("admin");
-        when(request.getParameter(UsersCommandHelper.PARAM_NAME_USER_PASSWORD)).thenReturn("admin");
+        MailServlet controller = new MailServlet();
+        controller.init();
+        //controller.processRequest(request,response);
+    }
+
+    @Test
+    public void resetPasswordNoExistUser() throws ServletException {
+        when(request.getParameter(UsersCommandHelper.PARAM_NAME_USER_LOGIN)).thenReturn("administrator");
         MailServlet controller = new MailServlet();
         controller.init();
         controller.processRequest(request,response);
     }
-
 }

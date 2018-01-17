@@ -74,7 +74,9 @@ public class GuestBookListCommand extends Command {
                 session.setAttribute(PARAM_NAME_ROWS_COUNT, rowsCount);
                 session.setAttribute(PARAM_NAME_PAGE, pageNumber);
                 session.setAttribute(PARAM_NAME_ACCESS,access);
+                LOGGER.debug("GuestBook items list were getted and try to show");
         } catch (NullPointerException e){
+            LOGGER.debug("GuestBook items  list were not get.");
             LOGGER.error(e);
         }
     }

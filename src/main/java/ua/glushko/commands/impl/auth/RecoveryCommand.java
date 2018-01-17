@@ -23,10 +23,11 @@ public class RecoveryCommand extends Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         String page;
         String locale = null;
+        String userLogin = null;
         try {
             locale = (String) request.getSession().getAttribute(PARAM_NAME_LOCALE);
             Properties properties = (Properties)request.getAttribute(PARAM_NAME_MAIL_SETUP);
-            String userLogin = request.getParameter(UsersCommandHelper.PARAM_NAME_USER_LOGIN);
+            userLogin = request.getParameter(UsersCommandHelper.PARAM_NAME_USER_LOGIN);
             LOGGER.debug("user "+userLogin+" try to recovery password");
             UsersService recoveryService = UsersService.getService();
             User userData = recoveryService.getUserByLogin(userLogin);
@@ -36,7 +37,7 @@ public class RecoveryCommand extends Command {
             LOGGER.debug("secret key for user "+userLogin+" was sent to his email");
             request.setAttribute(PARAM_NAME_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_PASSWORD_WAS_SEND, locale));
         } catch (PersistException | TransactionException | NullPointerException e) {
-            LOGGER.error(e);
+            LOGGER.debug("Password for user "+userLogin+" was not change. User not exist.");
             page = ConfigurationManager.getProperty(PATH_PAGE_RECOVER);
             request.setAttribute(PARAM_NAME_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_NOT_EXIST, locale));
             return new CommandRouter(request, response, page);

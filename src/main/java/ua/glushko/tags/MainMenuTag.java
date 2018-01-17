@@ -49,7 +49,7 @@ public class MainMenuTag extends TagSupport {
             }
             builder.append("</div>");
             builder.append("<div style=\"float: left; width: 30%;\" align=\"right\">");
-            Object userName = session.getAttribute(Authentification.PARAM_NAME_NAME);
+            Object userName = pageContext.getSession().getAttribute(Authentification.PARAM_NAME_NAME);
             if(Objects.nonNull(userName)){
                 builder.append("<a class=\"mainmenubutton\" href=\"/do?command=")
                         .append(COMMAND_NAME_LOGOUT)

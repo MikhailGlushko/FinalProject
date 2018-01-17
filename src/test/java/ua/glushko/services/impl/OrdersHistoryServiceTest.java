@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
 public class OrdersHistoryServiceTest {
 
     OrdersHistoryService service;
+
     @Before
     @Test
     public void getService() {
@@ -67,7 +68,7 @@ public class OrdersHistoryServiceTest {
         service.updateOrderHistoty(orderHistoryById);
         orderHistoryById = service.getOrderHistoryById(1);
         String updated = orderHistoryById.getAction();
-        assertNotEquals(action,updated);
+        assertNotEquals(action, updated);
         orderHistoryById.setNewValue(OrderStatus.NEW.name());
         orderHistoryById.setAction(Action.CHANGE_STATUS.name());
         service.updateOrderHistoty(orderHistoryById);
@@ -93,40 +94,8 @@ public class OrdersHistoryServiceTest {
     @Test
     public void count() throws PersistException, TransactionException {
         int count = service.count();
-        assertTrue(count!=0);
+        assertTrue(count != 0);
         count = service.count(1);
-        assertTrue(count!=0);
-    }
-
-    @Test
-    public void count1() {
-    }
-
-    @Test
-    public void getList() {
-    }
-
-    @Test
-    public void getList1() {
-    }
-
-    @Test
-    public void getById() {
-    }
-
-    @Test
-    public void update() {
-    }
-
-    @Test
-    public void delete() {
-    }
-
-    @Test
-    public void count2() {
-    }
-
-    @Test
-    public void count3() {
+        assertTrue(count != 0);
     }
 }

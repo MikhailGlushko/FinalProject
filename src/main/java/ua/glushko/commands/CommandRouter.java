@@ -11,7 +11,7 @@ import java.io.IOException;
  * Route to new page
  */
 public class CommandRouter {
-    private final Logger LOGGER = Logger.getLogger(GenericCommand.class.getSimpleName());
+    private final Logger LOGGER = Logger.getLogger(ICommand.class.getSimpleName());
     public static final boolean FORWARD = true;
     public static final boolean REDIRECT = false;
 

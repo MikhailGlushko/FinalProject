@@ -54,8 +54,10 @@ public class ServicesListCommand extends Command {
                 session.setAttribute(PARAM_NAME_PAGE, pageNumber);
                 session.setAttribute(PARAM_NAME_ACCESS,access);
                 session.setAttribute(PARAM_NAME_LAST_PAGE,count);
+                LOGGER.debug("RepairServices list were getted and try to show");
             }
         } catch (NullPointerException | NumberFormatException e){
+            LOGGER.debug("RepairServices list were not get.");
             LOGGER.error(e);
         }
     }

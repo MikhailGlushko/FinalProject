@@ -49,7 +49,7 @@ public class Authentification {
      * Checks if there is information about the user in the session
      */
     public static boolean isUserLogIn(HttpSession session) {
-        return Objects.nonNull(session.getAttribute(UsersCommandHelper.PARAM_NAME_USER_LOGIN));
+        return Objects.nonNull(session.getAttribute(Authentification.PARAM_NAME_LOGIN));
     }
 
     /**

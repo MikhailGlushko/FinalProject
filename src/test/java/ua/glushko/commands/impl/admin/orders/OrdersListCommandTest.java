@@ -1,7 +1,9 @@
-package ua.glushko.commands.impl.admin.users;
+package ua.glushko.commands.impl.admin.orders;
 
 import org.junit.Before;
 import org.junit.Test;
+import ua.glushko.authentification.Authentification;
+import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
@@ -16,10 +18,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -27,11 +29,10 @@ import static ua.glushko.authentification.Authentification.PARAM_NAME_GRANTS;
 import static ua.glushko.authentification.Authentification.PARAM_NAME_ROLE;
 import static ua.glushko.commands.Command.PARAM_NAME_COMMAND;
 import static ua.glushko.commands.Command.PARAM_NAME_LOCALE;
-import static ua.glushko.commands.CommandFactory.COMMAND_NAME_USERS;
+import static ua.glushko.commands.CommandFactory.COMMAND_NAME_ORDERS;
 import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
 
-public class UsersListCommandTest {
-
+public class OrdersListCommandTest {
     HttpSession session = mock(HttpSession.class);
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response=mock(HttpServletResponse.class);
@@ -44,9 +45,9 @@ public class UsersListCommandTest {
         ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
         when(request.getSession()).thenReturn(session);
         when(request.getSession().getAttribute(PARAM_NAME_LOCALE)).thenReturn("ru");
-        when(request.getParameter(PARAM_NAME_COMMAND)).thenReturn(COMMAND_NAME_USERS);
+        when(request.getParameter(PARAM_NAME_COMMAND)).thenReturn(COMMAND_NAME_ORDERS);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-   }
+    }
 
     @Test
     public void getUsersListForUserAdmin() throws ServletException, PersistException, TransactionException {
@@ -56,6 +57,7 @@ public class UsersListCommandTest {
         when(session.getAttribute(UsersCommandHelper.PARAM_NAME_USER_LOGIN)).thenReturn("admin");
         when(session.getAttribute(PARAM_NAME_ROLE)).thenReturn(UserRole.ADMIN);
         when(session.getAttribute(PARAM_NAME_GRANTS)).thenReturn(grants);
+        when(session.getAttribute(Authentification.PARAM_NAME_ID)).thenReturn(1);
 
         Controller controller = new Controller();
         controller.init();
@@ -70,6 +72,7 @@ public class UsersListCommandTest {
         when(session.getAttribute(UsersCommandHelper.PARAM_NAME_USER_LOGIN)).thenReturn("manager");
         when(session.getAttribute(PARAM_NAME_ROLE)).thenReturn(UserRole.MANAGER);
         when(session.getAttribute(PARAM_NAME_GRANTS)).thenReturn(grants);
+        when(session.getAttribute(Authentification.PARAM_NAME_ID)).thenReturn(2);
 
         Controller controller = new Controller();
         controller.init();
@@ -84,6 +87,7 @@ public class UsersListCommandTest {
         when(session.getAttribute(UsersCommandHelper.PARAM_NAME_USER_LOGIN)).thenReturn("master");
         when(session.getAttribute(PARAM_NAME_ROLE)).thenReturn(UserRole.MASTER);
         when(session.getAttribute(PARAM_NAME_GRANTS)).thenReturn(grants);
+        when(session.getAttribute(Authentification.PARAM_NAME_ID)).thenReturn(3);
 
         Controller controller = new Controller();
         controller.init();
@@ -98,6 +102,7 @@ public class UsersListCommandTest {
         when(session.getAttribute(UsersCommandHelper.PARAM_NAME_USER_LOGIN)).thenReturn("customer");
         when(session.getAttribute(PARAM_NAME_ROLE)).thenReturn(UserRole.CUSTOMER);
         when(session.getAttribute(PARAM_NAME_GRANTS)).thenReturn(grants);
+        when(session.getAttribute(Authentification.PARAM_NAME_ID)).thenReturn(4);
 
         Controller controller = new Controller();
         controller.init();
@@ -129,4 +134,5 @@ public class UsersListCommandTest {
         controller.init();
         controller.processRequest(request,response);
     }
+
 }
