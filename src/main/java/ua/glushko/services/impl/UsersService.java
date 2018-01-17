@@ -11,6 +11,7 @@ import ua.glushko.model.entity.UserRole;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
+import ua.glushko.services.Validator;
 import ua.glushko.transaction.TransactionManager;
 
 import java.util.*;
@@ -61,7 +62,8 @@ public class UsersService extends AbstractService {
 
     public Map<User, List<Grant>> authenticateUser(String login, String password) throws TransactionException, PersistException {
         if (login == null || password == null || login.isEmpty() || password.isEmpty())
-            return null;
+            //TODO return null;
+            throw new NullPointerException("Login or password is null");
         User user;
         Map<User, List<Grant>> userWithGrants = new HashMap<>();
         List<Grant> grants = Collections.emptyList();
@@ -92,7 +94,15 @@ public class UsersService extends AbstractService {
     public User register(String login, String password, String password2, String name, String email, String phone)
             throws PersistException, TransactionException, NullPointerException {
 
-        if (Objects.isNull(login) || Objects.isNull(password) || login.isEmpty() || password.isEmpty() || !password.equals(password2))
+        if (Objects.isNull(login)
+                || Objects.isNull(password)
+                || login.isEmpty()
+                || password.isEmpty()
+                || !password.equals(password2)
+                || !Validator.validateLogin(login)
+                || !Validator.validatePassword(password)
+                || !Validator.validateEmail(email)
+                || !Validator.validatePhone(phone))
             throw new NullPointerException("some parameters are null");
 
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
@@ -107,6 +117,7 @@ public class UsersService extends AbstractService {
                 user.setEmail(email);
                 userDao.create(user);
                 TransactionManager.endTransaction();
+                LOGGER.debug("New user registered");
             } finally {
                 TransactionManager.rollBack();
             }
@@ -119,8 +130,15 @@ public class UsersService extends AbstractService {
     public User changePassword(String login, String password, String password2, String userSecret, String session)
             throws PersistException, TransactionException {
 
-        if (login == null || password == null || login.isEmpty() || password.isEmpty() ||
-                !password.equals(password2) || !session.equals(userSecret))
+        if (Objects.isNull(login)
+                || Objects.isNull(password)
+                || login.isEmpty()
+                || password.isEmpty()
+                || !password.equals(password2)
+                || !Validator.validatePassword(password)
+                || Objects.isNull(userSecret)
+                || Objects.isNull(session)
+                || !session.equals(userSecret))
             throw new NullPointerException("some parameters are null");
 
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
@@ -131,6 +149,7 @@ public class UsersService extends AbstractService {
             TransactionManager.beginTransaction();
             userDao.update(user);
             TransactionManager.endTransaction();
+            LOGGER.debug("Password changed");
         } finally {
             TransactionManager.rollBack();
         }

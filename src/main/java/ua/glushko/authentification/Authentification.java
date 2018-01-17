@@ -31,9 +31,6 @@ public class Authentification {
         CRUD(int value) {
             this.value = value;
         }
-        public int getValue() {
-            return value;
-        }
     }
 
     public static final int C = 128;
@@ -85,12 +82,12 @@ public class Authentification {
      */
     private static int calculateAccess(Grant grant) {
         int userAccess = 0;
-        String grantActionon = grant.getAction();   // allowed action
-        Scope grantScopepe = grant.getScope();      // scope
-        char[] actionCharArray = grantActionon.toCharArray();
+        String grantAction = grant.getAction();   // allowed action
+        Scope grantScope = grant.getScope();      // scope
+        char[] actionCharArray = grantAction.toCharArray();
         for (char oneChar : actionCharArray) {
             CRUD crud = CRUD.valueOf(String.valueOf(oneChar));
-            switch (grantScopepe) {
+            switch (grantScope) {
                 case ALL:
                     userAccess |= crud.value;
                 case OWNER:

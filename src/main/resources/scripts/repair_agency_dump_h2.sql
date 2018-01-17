@@ -31,7 +31,8 @@ CREATE TABLE `users` (
   UNIQUE KEY `user_login_UNIQUE` (`login`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-INSERT INTO `users` VALUES (1,'ADMIN','Administrator','admin','admin','mikhail.glushko@gmail.com','066-3864046','ACTIVE','INTERNAL',NULL),
+INSERT INTO `users` VALUES
+  (1,'ADMIN','Administrator','admin','admin','mikhail.glushko@gmail.com','066-3864046','ACTIVE','INTERNAL',NULL),
   (2,'MANAGER','Manager','manager','manager','manager@mail.com','01','ACTIVE','INTERNAL',NULL),
   (3,'MASTER','Master','master','master','master@mail.com','02','ACTIVE','INTERNAL',NULL),
   (4,'CUSTOMER','Customer','customer','customer','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
@@ -40,7 +41,7 @@ INSERT INTO `users` VALUES (1,'ADMIN','Administrator','admin','admin','mikhail.g
   (7,'CUSTOMER','Customer7','customer7','customer7','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
   (8,'CUSTOMER','Customer8','customer8','customer8','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
   (9,'CUSTOMER','Customer9','customer9','customer9','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (10,'CUSTOMER','Customer10','customer10','customer10','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (10,'CUSTOMER','Customer10','customer10','customer10','customer@mail.com','03','BLOCKED','EXTERNAL',NULL),
   (11,'CUSTOMER','Customer11','customer11','customer11','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
   (12,'CUSTOMER','Customer12','customer12','customer12','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
   (13,'CUSTOMER','Customer13','customer13','customer13','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),

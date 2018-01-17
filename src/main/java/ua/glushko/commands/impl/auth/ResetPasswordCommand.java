@@ -24,21 +24,19 @@ public class ResetPasswordCommand extends Command {
         try {
             UsersService resetPasswordService = UsersService.getService();
             User user = resetPasswordService.changePassword(userLogin, userPassword, userPassword2, userSecret, request.getSession().getId());
-            if(user!=null){
-                LOGGER.debug("New password for user : "+userLogin+" was changed.");
-                request.setAttribute(PARAM_NAME_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_PASSWORD_WAS_CHANGED, locale));
-                page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
-            } else {
-                LOGGER.debug("User "+userLogin+" input incorrect data for new password.");
-                request.setAttribute(PARAM_NAME_ERROR_MESSAGE,
-                        MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_INCORRECT_DATA, locale));
-                page = ConfigurationManager.getProperty(PATH_PAGE_RESET_PASSWORD);
-            }
+            LOGGER.debug("New password for user : "+userLogin+" changeed.");
+            request.setAttribute(PARAM_NAME_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_PASSWORD_WAS_CHANGED, locale));
+            page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
         } catch (SQLException | TransactionException e) {
             LOGGER.error(e);
-            LOGGER.debug("Password for user "+userLogin+" did not change.");
+            LOGGER.debug("Password for user "+userLogin+" was not change.");
             request.setAttribute(PARAM_NAME_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_NOT_EXIST, locale));
             page = ConfigurationManager.getProperty(PATH_PAGE_REGISTER);
+        } catch (NullPointerException e){
+            LOGGER.debug("User "+userLogin+" input incorrect data for new password.");
+            request.setAttribute(PARAM_NAME_ERROR_MESSAGE,
+                    MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_INCORRECT_DATA, locale));
+            page = ConfigurationManager.getProperty(PATH_PAGE_RESET_PASSWORD);
         }
         return new CommandRouter(request, response, page);
     }

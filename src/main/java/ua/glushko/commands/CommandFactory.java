@@ -20,7 +20,7 @@ import static ua.glushko.commands.Command.*;
 public class CommandFactory {
     public static final String COMMAND_NAME_LOGIN = "login";
     public static final String COMMAND_NAME_REGISTER = "register";
-    private static final String COMMAND_NAME_RESET_PASSWORD = "resetpassword";
+    public static final String COMMAND_NAME_RESET_PASSWORD = "resetpassword";
     public static final String COMMAND_NAME_LOGOUT = "logout";
     // for users setup
     public static final String COMMAND_NAME_USERS = "users";

@@ -17,19 +17,16 @@ public class SetupCommand extends Command {
 
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
-        String userLogin = (String) session.getAttribute(Authentification.PARAM_NAME_LOGIN);
-        if(userLogin!=null) {
-            User user;
+        if(Authentification.isUserLogIn(request.getSession())) {
+            String userLogin = (String) request.getSession().getAttribute(Authentification.PARAM_NAME_LOGIN);
             UsersService usersService = UsersService.getService();
             try {
-                user = usersService.getUserByLogin(userLogin);
-                session.setAttribute(UsersCommandHelper.PARAM_NAME_USER, user);
+                User user = usersService.getUserByLogin(userLogin);
+                request.getSession().setAttribute(UsersCommandHelper.PARAM_NAME_USER, user);
             } catch (PersistException | TransactionException e) {
                 LOGGER.error(e);
             }
         }
-
         String page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS_SETUP);
         return new CommandRouter(request, response, page);
     }

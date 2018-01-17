@@ -44,7 +44,7 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
-    private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
+    public void processRequest(HttpServletRequest req, HttpServletResponse resp) {
         CommandFactory commandFactory = CommandFactory.getInstance();
         // get command
         GenericCommand command = commandFactory.getCommand(req);

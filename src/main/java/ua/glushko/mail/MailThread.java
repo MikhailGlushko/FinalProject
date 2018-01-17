@@ -51,6 +51,7 @@ public class MailThread extends Thread {
         try {
             // send mail
             Transport.send(message);
+            logger.debug("Mail was send to user: "+sendToEmail);
         } catch (MessagingException e) {
             logger.error("Ошибка при отправлении сообщения" + e);
         }

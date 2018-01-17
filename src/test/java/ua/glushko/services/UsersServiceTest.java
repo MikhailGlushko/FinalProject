@@ -85,7 +85,7 @@ public class UsersServiceTest {
         usersService.updateUser(user);
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void updateUserResetPass() throws PersistException, TransactionException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(5);

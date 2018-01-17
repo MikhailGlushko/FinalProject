@@ -39,7 +39,7 @@ public class MailServlet extends HttpServlet{
         processRequest(req, resp);
     }
 
-    private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
+    public void processRequest(HttpServletRequest req, HttpServletResponse resp) {
         req.setAttribute(RecoveryCommand.PARAM_NAME_MAIL_SETUP,properties);
         String login = req.getParameter(UsersCommandHelper.PARAM_NAME_USER_LOGIN);
         RecoveryCommand recoveryCommand = new RecoveryCommand();

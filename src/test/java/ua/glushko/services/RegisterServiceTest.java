@@ -22,7 +22,7 @@ public class RegisterServiceTest {
         registerService = UsersService.getService();
     }
 
-    @Test (expected = PersistException.class)
+    @Test (expected = NullPointerException.class)
     public void registerExistLogin() throws PersistException {
         try {
             User user = registerService.register("admin", "admin", "admin", "admin", "admin","admin");
@@ -34,7 +34,7 @@ public class RegisterServiceTest {
         }
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void registerNewUser() throws PersistException, TransactionException {
         try {
             User user = registerService.register("test10", "test10", "test10", "test10", "test10","test10");

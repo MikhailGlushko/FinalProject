@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 /** User authorization */
 public class LoginCommand extends Command {
@@ -31,17 +32,17 @@ public class LoginCommand extends Command {
             UsersService loginService = UsersService.getService();
             Map<User, List<Grant>> userAuthenticateData = loginService.authenticateUser(currentUserLogin, currentUserPassword);
             if (isUserActive(getCurrentUser(userAuthenticateData))) {
+                LOGGER.debug("user "+currentUserLogin+" was login");
                 saveAttributesToSession(request.getSession(), getCurrentUser(userAuthenticateData), getCurrentUserGrants(userAuthenticateData));
                 page = ConfigurationManager.getProperty(PATH_PAGE_MAIN);
             } else if (isUserNotActive(getCurrentUser(userAuthenticateData))) {
                 request.setAttribute(PARAM_NAME_ERROR_MESSAGE,
                         MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_STATUS + getCurrentUser(userAuthenticateData).getStatus(), locale));
                 page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
+                LOGGER.debug("user "+currentUserLogin+" is "+getCurrentUser(userAuthenticateData).getStatus());
             }
-            LOGGER.debug("user "+currentUserLogin+" was login");
         } catch (PersistException | TransactionException | NullPointerException e) {
             LOGGER.debug("user "+currentUserLogin + " rejected");
-            LOGGER.error(e);
             request.setAttribute(PARAM_NAME_ERROR_MESSAGE,
                     MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_INCORRECT_LOGIN_OR_PASSWORD, locale));
             page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
@@ -49,40 +50,20 @@ public class LoginCommand extends Command {
         return new CommandRouter(request, response, page);
     }
 
-    private List<Grant> getCurrentUserGrants(Map<User, List<Grant>> useDataAndGrantsSet) throws NullPointerException {
-        try {
-            return useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
-        } catch (NullPointerException e) {
-            LOGGER.error(e);
-            throw new NullPointerException("useDataAndGrantsSet is null");
-        }
+    private List<Grant> getCurrentUserGrants(Map<User, List<Grant>> useDataAndGrantsSet){
+        return useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
     }
 
-    private User getCurrentUser(Map<User, List<Grant>> useDataAndGrantsSet) throws NullPointerException {
-        try {
-            return useDataAndGrantsSet.keySet().iterator().next();
-        } catch (NullPointerException e) {
-            LOGGER.error(e);
-            throw new NullPointerException("useDataAndGrantsSet is null");
-        }
+    private User getCurrentUser(Map<User, List<Grant>> useDataAndGrantsSet){
+        return useDataAndGrantsSet.keySet().iterator().next();
     }
 
-    private boolean isUserNotActive(User currentUser) throws NullPointerException {
-        try {
-            return currentUser != null && currentUser.getStatus() != UserStatus.ACTIVE;
-        } catch (NullPointerException e) {
-            LOGGER.error(e);
-            throw new NullPointerException("currentUser is null");
-        }
+    private boolean isUserNotActive(User currentUser){
+        return currentUser != null && currentUser.getStatus() != UserStatus.ACTIVE;
     }
 
-    private boolean isUserActive(User currentUser) throws NullPointerException {
-        try {
-            return currentUser != null && currentUser.getStatus() == UserStatus.ACTIVE;
-        } catch (NullPointerException e) {
-            LOGGER.error(e);
-            throw new NullPointerException("currentUser is null");
-        }
+    private boolean isUserActive(User currentUser) {
+        return currentUser != null && currentUser.getStatus() == UserStatus.ACTIVE;
     }
 
     private void saveAttributesToSession(HttpSession session, User currentUser, List<Grant> userGrants) throws NullPointerException {
@@ -93,7 +74,6 @@ public class LoginCommand extends Command {
             session.setAttribute(Authentification.PARAM_NAME_ID, currentUser.getId());
             session.setAttribute(Authentification.PARAM_NAME_GRANTS, userGrants);
         } catch (NullPointerException e) {
-            LOGGER.debug(e);
             throw new NullPointerException("some parameters of userGrants is null");
         }
     }
