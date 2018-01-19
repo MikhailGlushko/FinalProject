@@ -1,66 +1,64 @@
 package ua.glushko.commands.impl.admin.users;
 
 import ua.glushko.authentification.Authentification;
-import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
+import ua.glushko.commands.Command;
+import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.User;
+import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import static ua.glushko.authentification.Authentification.*;
-import static ua.glushko.commands.CommandFactory.COMMAND_NAME_USERS;
+import static ua.glushko.authentification.Authentification.U;
+import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS_READ;
+import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
+import static ua.glushko.commands.CommandFactory.COMMAND_USERS_READ;
+import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.PARAM_USER_ID;
+import static ua.glushko.services.Validator.getValidatedUserBeforeUpdateDetails;
 
-/** Update user data */
-public class UserUpdateCommand extends Command {
+/**
+ * Update user data
+ */
+public class UserUpdateCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-
+        String page = null;
+        String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
+        User userNew = new User();
         try {
-            storeUserDataToDatabase(request);
+            int access = Authentification.checkAccess(request);
+            if ((access & U) == U) {
+                userNew = getValidatedUserBeforeUpdateDetails(request);
+                UsersService usersService = UsersService.getService();
+                User userOld = usersService.getUserById(userNew.getId());
+                populateUser(userNew, userOld);
+                usersService.updateUser(userOld);
+            }
+            page = "/do?command=" + COMMAND_USERS + "&page=" + request.getAttribute(PARAM_PAGE);
+            return new CommandRouter(request, response, page);
         } catch (TransactionException | PersistException e) {
             LOGGER.error(e);
+            page = "/do?command=" + COMMAND_USERS_READ + "&user_id=" + request.getParameter(PARAM_USER_ID);
+            return new CommandRouter(request, response, page);
+        } catch (ParameterException e) {
+            LOGGER.error(e);
+            request.setAttribute(PARAM_ERROR_MESSAGE,
+                    MessageManager.getMessage(e.getMessage(), locale));
+            page = "/do?command=" + COMMAND_USERS_READ + "&user_id=" + request.getParameter(PARAM_USER_ID);
+            return new CommandRouter(request, response, page);
         }
-        String page = "/do?command=" + COMMAND_NAME_USERS+"&page=" + request.getSession().getAttribute(PARAM_NAME_PAGE);
-        return new CommandRouter(request, response, page);
-
     }
 
-    private void storeUserDataToDatabase(HttpServletRequest request) throws PersistException, TransactionException {
-        Integer userId = null;
-        try {
-            HttpSession session = request.getSession();
-            int access = Authentification.checkAccess(request);
-            userId = Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_NAME_USER_ID));
-            String userName = request.getParameter(UsersCommandHelper.PARAM_NAME_USER_NAME);
-            String userEmail = request.getParameter(UsersCommandHelper.PARAM_NAME_USER_EMAIL);
-            String userPhone = request.getParameter(UsersCommandHelper.PARAM_NAME_USER_PHONE);
-            String userStatus = request.getParameter(UsersCommandHelper.PARAM_NAME_USER_STATUS);
-            String userRole = request.getParameter(UsersCommandHelper.PARAM_NAME_USER_ROLE);
-            UsersService usersService = UsersService.getService();
-            // get user data drom database
-            User user = usersService.getUserById(userId);
-            user.setId(userId);
-            user.setRole(userRole);
-            user.setName(userName);
-            user.setEmail(userEmail);
-            user.setPhone(userPhone);
-            user.setStatus(userStatus);
-            if ((access & U) == U) {
-                LOGGER.debug("updating user " + userId);
-                // update user data into database
-                usersService.updateUser(user);
-                LOGGER.debug("user " + userId+" was updated");
-            }
-            session.setAttribute(UsersCommandHelper.PARAM_NAME_USER, user);
-            request.setAttribute(PARAM_NAME_COMMAND, COMMAND_NAME_USERS);
-        } catch (NullPointerException | NumberFormatException e) {
-            LOGGER.debug("user " + userId+" was not update");
-            LOGGER.error(e);
-        }
+    private void populateUser(User userFrom, User userTo) {
+        userTo.setId(userFrom.getId());
+        userTo.setName(userFrom.getName());
+        userTo.setEmail(userFrom.getEmail());
+        userTo.setPhone(userFrom.getPhone());
+        userTo.setRole(userFrom.getRole());
+        userTo.setStatus(userFrom.getStatus());
     }
 }

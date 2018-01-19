@@ -1,19 +1,23 @@
 package ua.glushko.services.impl;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.dao.GenericDAO;
 import ua.glushko.model.dao.MySQLDAOFactory;
 import ua.glushko.model.dao.impl.GrantDAO;
 import ua.glushko.model.dao.impl.UserDAO;
+import ua.glushko.model.entity.GenericEntity;
 import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
+import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.services.Validator;
 import ua.glushko.transaction.TransactionManager;
 
+import java.security.MessageDigest;
 import java.util.*;
 
 public class UsersService extends AbstractService {
@@ -26,28 +30,63 @@ public class UsersService extends AbstractService {
     }
 
     public List<User> getUsersList() throws PersistException, TransactionException {
-        return (List<User>) getList(MySQLDAOFactory.getFactory().getUserDao());
+        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        List<User> read;
+        try {
+            TransactionManager.beginTransaction();
+            read = userDao.read();
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return read;
     }
 
     public List<User> getUsersList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
-        return (List<User>) getList(MySQLDAOFactory.getFactory().getUserDao(), page, pagesCount, rowsPerPage);
+        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        int start = (page - 1) * rowsPerPage;
+        int limit = pagesCount * rowsPerPage;
+        List<User> read;
+        try {
+            TransactionManager.beginTransaction();
+            read = userDao.read(start, limit);
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return read;
     }
 
     public List<String> getUsersTitles() {
         return MySQLDAOFactory.getFactory().getUserDao().getTableHead();
     }
 
-    public User getUserById(int id) throws PersistException, TransactionException {
-        return getById(MySQLDAOFactory.getFactory().getUserDao(), id);
+    public User getUserById(int id) throws PersistException {
+        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        return userDao.read(id);
     }
 
     public void updateUser(User user) throws PersistException, TransactionException {
-        if (user.getLogin() == null || user.getLogin().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty())
-            throw new PersistException(MessageManager.getMessage("user.incorrectLoginOrPassword"));
-        update(MySQLDAOFactory.getFactory().getUserDao(), user);
+        //if (user.getLogin() == null || user.getLogin().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty())
+        //    throw new PersistException(MessageManager.getMessage("user.incorrectLoginOrPassword"));
+        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        try {
+            if(user.getPassword()!=null) {
+                String m5HexPassword = DigestUtils.md5Hex(user.getPassword());
+                user.setPassword(m5HexPassword);
+            }
+            TransactionManager.beginTransaction();
+            if (user.getId() != null && user.getId() != 0)
+                userDao.update(user);
+            else
+                userDao.create(user);
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
     }
 
-    public User getUserByLogin(String userLogin) throws PersistException, TransactionException {
+    public User getUserByLogin(String userLogin) throws PersistException, TransactionException, ParameterException {
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         User user;
         try {
@@ -61,27 +100,20 @@ public class UsersService extends AbstractService {
     }
 
     public Map<User, List<Grant>> authenticateUser(String login, String password) throws TransactionException, PersistException {
-        if (login == null || password == null || login.isEmpty() || password.isEmpty())
-            //TODO return null;
-            throw new NullPointerException("Login or password is null");
         User user;
         Map<User, List<Grant>> userWithGrants = new HashMap<>();
         List<Grant> grants = Collections.emptyList();
         GenericDAO<User> userDAO = MySQLDAOFactory.getFactory().getUserDao();
         GenericDAO<Grant> grantDAO = MySQLDAOFactory.getFactory().getGrantDao();
         try {
+            String m5HexPassword = DigestUtils.md5Hex(password);
             TransactionManager.beginTransaction();
-            user = ((UserDAO) userDAO).checkUserAuth(login, password);
+            user = ((UserDAO) userDAO).checkUserAuth(login, m5HexPassword);
             if (Objects.nonNull(user)) {
                 grants = ((GrantDAO) grantDAO).read(user.getRole().name());
-                try {
-                    //TODO убрать клонирование
-                    User tmp = (User) user.clone();
-                    tmp.setLastLogin(new Date(System.currentTimeMillis()));
-                    userDAO.update(tmp);
-                } catch (CloneNotSupportedException e) {
-                    LOGGER.error(e);
-                }
+                User tmp = (User) user.clone();
+                tmp.setLastLogin(new Date(System.currentTimeMillis()));
+                userDAO.update(tmp);
             }
             TransactionManager.endTransaction();
         } finally {
@@ -92,33 +124,23 @@ public class UsersService extends AbstractService {
         return userWithGrants;
     }
 
-    public User register(String login, String password, String password2, String name, String email, String phone)
-            throws PersistException, TransactionException, NullPointerException {
-
-        if (Objects.isNull(login)
-                || Objects.isNull(password)
-                || login.isEmpty()
-                || password.isEmpty()
-                || !password.equals(password2)
-                || !Validator.validateLogin(login)
-                || !Validator.validatePassword(password)
-                || !Validator.validateEmail(email)
-                || !Validator.validatePhone(phone))
-            throw new NullPointerException("some parameters are null");
-
+    public User register(String login, String password, String name, String email, String phone)
+            throws PersistException, TransactionException, ParameterException {
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         User userByLogin = null;
         try {
             userByLogin = ((UserDAO) userDao).getUserByLogin(login);
-        } catch (PersistException e){
+        } catch (PersistException e) {
             // user not found. It's OK. Let's go to register it.
         }
         if (Objects.isNull(userByLogin)) {
             User user = new User();
             try {
+                String m5HexPassword = DigestUtils.md5Hex(password);
+                user.setPassword(m5HexPassword);
                 TransactionManager.beginTransaction();
                 user.setLogin(login);
-                user.setPassword(password);
+                user.setPassword(m5HexPassword);
                 user.setName(name);
                 user.setPhone(phone);
                 user.setEmail(email);
@@ -134,25 +156,15 @@ public class UsersService extends AbstractService {
         }
     }
 
-    public User changePassword(String login, String password, String password2, String userSecret, String session)
-            throws PersistException, TransactionException {
-
-        if (Objects.isNull(login)
-                || Objects.isNull(password)
-                || login.isEmpty()
-                || password.isEmpty()
-                || !password.equals(password2)
-                || !Validator.validatePassword(password)
-                || Objects.isNull(userSecret)
-                || Objects.isNull(session)
-                || !session.equals(userSecret))
-            throw new NullPointerException("some parameters are null");
+    public User changePassword(String login, String password)
+            throws PersistException, TransactionException, ParameterException {
 
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         User user;
         try {
+            String m5HexPassword = DigestUtils.md5Hex(password);
             user = ((UserDAO) userDao).getUserByLogin(login);
-            user.setPassword(password);
+            user.setPassword(m5HexPassword);
             TransactionManager.beginTransaction();
             userDao.update(user);
             TransactionManager.endTransaction();
@@ -164,15 +176,24 @@ public class UsersService extends AbstractService {
     }
 
     public void deleteUser(Integer userId) throws PersistException, TransactionException {
-        delete(MySQLDAOFactory.getFactory().getUserDao(), userId);
+        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        try {
+            TransactionManager.beginTransaction();
+            userDao.delete(userId);
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
     }
 
-    public int count() throws PersistException, TransactionException {
-        return this.count(MySQLDAOFactory.getFactory().getUserDao());
+    public int count() {
+        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        return userDao.count();
     }
 
-    public int count(int id) throws PersistException, TransactionException {
-        return this.count(MySQLDAOFactory.getFactory().getUserDao(),id);
+    public int count(int id) {
+        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        return ((UserDAO) userDao).count(id);
     }
 
     public List<User> getUsersAsStuff(UserRole role, boolean flag) throws PersistException, TransactionException {

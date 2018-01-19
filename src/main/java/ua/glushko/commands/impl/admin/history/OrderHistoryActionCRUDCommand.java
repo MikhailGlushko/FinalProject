@@ -1,7 +1,7 @@
 package ua.glushko.commands.impl.admin.history;
 
-import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
+import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.users.UserCreateCommand;
 import ua.glushko.commands.impl.admin.users.UserDeleteCommand;
 import ua.glushko.commands.impl.admin.users.UserUpdateCommand;
@@ -19,37 +19,33 @@ import static ua.glushko.commands.CommandFactory.*;
  * @see UserUpdateCommand
  * @see UserDeleteCommand
  */
-public class OrderHistoryActionCRUDCommand extends Command {
+public class OrderHistoryActionCRUDCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-
-        String page = getActionAndPrepareCommand(request);
-        return new CommandRouter(request, response, page);
-
-    }
-
-    private String getActionAndPrepareCommand(HttpServletRequest request) {
-        try {
-            String action = request.getParameter("order_change_action");
-            switch (action) {
-                case "CHANGE_EMPLOYEE":
-                    return "/do?command=" + COMMAND_NAME_HISTORY_CHANGE_EMPLOYEE;
-                case "CHANGE_STATUS":
-                    return "/do?command=" + COMMAND_NAME_HISTORY_CHANGE_STATUS;
-                case "CHANGE_DATE":
-                    return "/do?command=" + COMMAND_NAME_HISTORY_CHANGE_DATE;
-                case "CHANGE_PRICE":
-                    return "/do?command=" + COMMAND_NAME_HISTORY_CHANGE_PRICE;
-                case "CHANGE_COMMENT":
-                    return "/do?command=" + COMMAND_NAME_HISTORY_CHANGE_COMMENT;
-                case "GUESTBOOK_COMMENT":
-                    return "/do?command=" + COMMAND_NAME_HISTORY_CHANGE_GUEST_BOOK;
-                default:
-                    return "/do?command=" +COMMAND_NAME_ORDERS_READ;
-            }
-        } catch (NullPointerException | NumberFormatException e) {
-            LOGGER.error(e);
+        String page = null;
+        String action = request.getParameter("order_change_action");
+        switch (action) {
+            case "CHANGE_EMPLOYEE":
+                page= "/do?command=" + COMMAND_HISTORY_CHANGE_EMPLOYEE;
+                break;
+            case "CHANGE_STATUS":
+                page= "/do?command=" + COMMAND_HISTORY_CHANGE_STATUS;
+                break;
+            case "CHANGE_DATE":
+                page= "/do?command=" + COMMAND_HISTORY_CHANGE_DATE;
+                break;
+            case "CHANGE_PRICE":
+                page= "/do?command=" + COMMAND_HISTORY_CHANGE_PRICE;
+                break;
+            case "CHANGE_COMMENT":
+                page= "/do?command=" + COMMAND_HISTORY_CHANGE_COMMENT;
+                break;
+            case "GUESTBOOK_COMMENT":
+                page= "/do?command=" + COMMAND_HISTORY_CHANGE_GUEST_BOOK;
+                break;
+            default:
+                page= "/do?command=" + COMMAND_ORDERS_READ;
         }
-        return null;
+        return new CommandRouter(request, response, page);
     }
 }

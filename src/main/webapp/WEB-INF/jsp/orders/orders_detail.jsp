@@ -24,13 +24,12 @@
     <div class="content">
         <jsp:include page="../../../jsp/header.jspx"/>
         <jsp:include page="../../../jsp/mainmenu.jspx"/>
-        <BR>
-        <p>&nbsp;</p>
         <c:if test="${not empty orders_detail}">
             <div class="login_div" align="center" style="width: 550px; display: table-cell">
                 <form name="edit" method="post" action="/do">
                     <input type="hidden" name="command" value="orders_action"/>
-                    <input type="hidden" name="order_id" value="${orders_detail.id}">
+                    <input type="hidden" name="order_id" value="${orders_detail.id}"/>
+                    <input type="hidden" name="page" value="${param.page}"/>
                     <c:if test="${role =='ADMIN'}">
                         <div class="row">
                             <div class="input-field">
@@ -42,6 +41,34 @@
                             </div>
                         </div>
                     </c:if>
+                    <div class="row">
+                        <div class="input-field">
+                            <select id="order_status" name="order_status">
+                                <option value="${orders_detail.status}">${orders_detail.status}</option>
+                                <c:if test="${role =='ADMIN'}">
+                                    <option value="NEW">NEW</option>
+                                    <option value="CLOSE">CLOSE</option>
+                                    <option value="COMPLETE">COMPLETE</option>
+                                    <option value="SUSPEND">SUSPEND</option>
+                                    <option value="INWORK">INWORK</option>
+                                    <option value="REJECT">REJECT</option>
+                                </c:if>
+                            </select>
+                            <label for="order_status"><fmt:message key="order.status"/></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                                <%--<input id="order_user_id" type="text" name="order_user_id" value="" required/>--%>
+                            <select id="order_employee_id" name="order_employee_id">
+                                    <%--<option value="${order_employee_id}" selected>${order_employee_name}</option>--%>
+                                <option value="" disabled selected>${orders_detail.employeeName}</option>
+                                <option value="${orders_detail.userId}">${order_user_name}</option>
+                                <customtags:OptGoupStuff list="${employee_list}" value="${orders_detail.employeeId}"/>
+                            </select>
+                            <label for="order_employee_id"><fmt:message key="order.employee.id"/></label>
+                        </div>
+                    </div>
                     <fieldset>
                         <legend><fmt:message key="order.description"/></legend>
                         <div class="row">
@@ -66,6 +93,23 @@
                                 <textarea id="order_appliance" name="order_appliance" required
                                           style="height: 50px">${orders_detail.appliance}</textarea>
                                 <label for="order_appliance"><fmt:message key="order.appliance"/><em>*</em></label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend><fmt:message key="order.actionDate"/></legend>
+                        <div class="row">
+                            <div class="input-field">
+                                <input id="order_order_date" type="date" name="order_order_date"
+                                       value="${orders_detail.orderDate}" disabled/>
+                                <label for="order_order_date"><fmt:message key="order.order.actionDate"/></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+                                <input id="order_expected_date" type="date" name="order_expected_date"
+                                       value="${orders_detail.expectedDate}"/>
+                                <label for="order_expected_date"><fmt:message key="order.expected.actionDate"/></label>
                             </div>
                         </div>
                     </fieldset>
@@ -96,23 +140,6 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset>
-                        <legend><fmt:message key="order.actionDate"/></legend>
-                        <div class="row">
-                            <div class="input-field">
-                                <input id="order_order_date" type="date" name="order_order_date"
-                                       value="${orders_detail.orderDate}" disabled/>
-                                <label for="order_order_date"><fmt:message key="order.order.actionDate"/></label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field">
-                                <input id="order_expected_date" type="date" name="order_expected_date"
-                                       value="${orders_detail.expectedDate}"/>
-                                <label for="order_expected_date"><fmt:message key="order.expected.actionDate"/></label>
-                            </div>
-                        </div>
-                    </fieldset>
                     <div class="row">
                         <div class="input-field">
                             <input id="order_price" type="number" name="order_price"
@@ -125,33 +152,6 @@
                             <textarea id="order_memo" type="text" name="order_memo"
                                       style="height: 100px">${orders_detail.memo}</textarea>
                             <label for="order_memo"><fmt:message key="order.memo"/></label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field">
-                            <select id="order_status" name="order_status">
-                                <option value="${orders_detail.status}">${orders_detail.status}</option>
-                                <c:if test="${role =='ADMIN'}">
-                                    <option value="NEW">NEW</option>
-                                    <option value="CLOSE">CLOSE</option>
-                                    <option value="COMPLETE">COMPLETE</option>
-                                    <option value="SUSPEND">SUSPEND</option>
-                                    <option value="INWORK">INWORK</option>
-                                    <option value="REJECT">REJECT</option>
-                                </c:if>
-                            </select>
-                            <label for="order_status"><fmt:message key="order.status"/></label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field">
-                                <%--<input id="order_user_id" type="text" name="order_user_id" value="" required/>--%>
-                            <select id="order_employee_id" name="order_employee_id">
-                                    <%--<option value="${order_employee_id}" selected>${order_employee_name}</option>--%>
-                                <option value="${orders_detail.userId}">${order_user_name}</option>
-                                <customtags:OptGoupStuff list="${employee_list}" value="${orders_detail.employeeId}"/>
-                            </select>
-                            <label for="order_employee_id"><fmt:message key="order.employee.id"/></label>
                         </div>
                     </div>
                         ${errorMessage}
@@ -226,9 +226,10 @@
                                     <%--<input id="order_user_id" type="text" name="order_user_id" value="" required/>--%>
                                 <select id="order_employee_id_change" name="order_employee_id_change">
                                         <%--<option value="${order_employee_id}" selected>${order_employee_name}</option>--%>
-                                    <option value="${orders_detail.userId}">${order_user_name}</option>
+                                    <option value="${orders_detail.userId}" disabled>${order_user_name}</option>
                                     <customtags:OptGoupStuff list="${employee_list}"
                                                              value="${orders_detail.employeeId}"/>
+                                    <option value="" selected></option>
                                 </select>
                                 <label for="order_employee_id_change"><fmt:message key="order.employee.id"/></label>
                             </div>

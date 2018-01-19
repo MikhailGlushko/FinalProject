@@ -30,7 +30,8 @@
                 <form name="edit" method="post" action="/do">
                     <br/>
                     <input type="hidden" name="command" value="users_action"/>
-                    <input type="hidden" name="user_id" value="${user_detail.id}">
+                    <input type="hidden" name="user_id" value="${user_detail.id}"/>
+                    <input type="hidden" name="page" value="${param.page}"/>
                     <div class="row">
                         <div class="input-field">
                             <input id="user_name" type="text" name="user_name" value="${user_detail.name}" required/>
@@ -83,7 +84,7 @@
                             <button class="mainmenubutton" type="submit" name="action" value="save">
                                 <fmt:message key='app.welcome.save'/>
                             </button>
-                            <button class="mainmenubutton" type="button" name="action" value="cancel" onClick="window.location.href='/do?command=users&page=${page}'">
+                            <button class="mainmenubutton" type="button" name="action" value="cancel" onClick="window.location.href='/do?command=users&page=${param.page}'">
                                 <fmt:message key='app.welcome.cancel'/>
                             </button>
                             <button class="mainmenubutton" type="submit" name="action" value="delete">

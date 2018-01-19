@@ -1,10 +1,11 @@
 package ua.glushko.commands.impl.admin.services;
 
 import ua.glushko.authentification.Authentification;
-import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
+import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.RepairService;
+import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.RepairServicesService;
@@ -16,7 +17,7 @@ import java.util.List;
 
 import static ua.glushko.authentification.Authentification.R;
 
-public class ServicesListCommand extends Command {
+public class ServicesListCommand implements Command {
 
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
@@ -36,27 +37,28 @@ public class ServicesListCommand extends Command {
             RepairServicesService service = RepairServicesService.getService();
             Integer pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
             Integer rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
-            String parameter = request.getParameter(PARAM_NAME_PAGE);
+            String parameter = request.getParameter(PARAM_PAGE);
+            System.out.println(parameter);
             Integer pageNumber;
-            if(parameter==null || parameter.isEmpty())
+            if(parameter==null || parameter.isEmpty() || parameter.equals("null"))
                 pageNumber = 1;
             else
-                pageNumber = Integer.valueOf(request.getParameter(PARAM_NAME_PAGE));
+                pageNumber = Integer.valueOf(request.getParameter(PARAM_PAGE));
             if ((access & R)== R) {
                 List<RepairService> items = service.getRepairServiceList(pageNumber, pagesCount, rowsCount);
                 List<String> titles = service.getRepairServiceTitles();
                 int count = service.count();
                 count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
-                session.setAttribute(ServicesCommandHelper.PARAM_NAME_SERVICE_LIST_TITLE, titles);
-                session.setAttribute(ServicesCommandHelper.PARAM_NAME_SERVICE_LIST, items);
-                session.setAttribute(PARAM_NAME_PAGES_COUNT, pagesCount);
-                session.setAttribute(PARAM_NAME_ROWS_COUNT, rowsCount);
-                session.setAttribute(PARAM_NAME_PAGE, pageNumber);
-                session.setAttribute(PARAM_NAME_ACCESS,access);
-                session.setAttribute(PARAM_NAME_LAST_PAGE,count);
+                request.setAttribute(ServicesCommandHelper.PARAM_SERVICE_LIST_TITLE, titles);
+                request.setAttribute(ServicesCommandHelper.PARAM_SERVICE_LIST, items);
+                request.setAttribute(PARAM_PAGES_COUNT, pagesCount);
+                request.setAttribute(PARAM_ROWS_COUNT, rowsCount);
+                request.setAttribute(PARAM_PAGE, pageNumber);
+                request.setAttribute(PARAM_ACCESS,access);
+                request.setAttribute(PARAM_LAST_PAGE,count);
                 LOGGER.debug("RepairServices list were getted and try to show");
             }
-        } catch (NullPointerException | NumberFormatException e){
+        } catch (ParameterException e){
             LOGGER.debug("RepairServices list were not get.");
             LOGGER.error(e);
         }

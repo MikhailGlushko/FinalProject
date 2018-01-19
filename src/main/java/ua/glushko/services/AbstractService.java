@@ -2,6 +2,7 @@ package ua.glushko.services;
 
 import org.apache.log4j.Logger;
 import ua.glushko.model.dao.AbstractDAO;
+import ua.glushko.model.dao.GenericDAO;
 import ua.glushko.model.dao.impl.OrderDAO;
 import ua.glushko.model.entity.GenericEntity;
 import ua.glushko.model.exception.PersistException;
@@ -13,8 +14,8 @@ import java.util.List;
 public class AbstractService {
     protected final Logger LOGGER = Logger.getLogger(AbstractService.class.getSimpleName());
 
-    protected List<? extends GenericEntity> getList(AbstractDAO<? extends GenericEntity> dao) throws PersistException, TransactionException {
-        List<? extends GenericEntity> read;
+    protected List<GenericEntity> getList(GenericDAO<GenericEntity> dao) throws PersistException, TransactionException {
+        List<GenericEntity> read;
         try{
             TransactionManager.beginTransaction();
             read = dao.read();

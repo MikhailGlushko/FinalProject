@@ -2,7 +2,6 @@ package ua.glushko.tags;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
@@ -23,7 +22,7 @@ public class LanguageSwitcherTag extends TagSupport {
             if(Objects.nonNull(cookies))
             for (Cookie cookie:cookies) {
                 cookieName = cookie.getName();
-                if(Objects.nonNull(cookieName) && COOKIE_NAME_LOCALE.equals(cookieName) ) {
+                if(Objects.nonNull(cookieName) && COOKIE_LOCALE.equals(cookieName) ) {
                     cookieValue = cookie.getValue();
                 }
             }

@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="input-field">
                         <%--<input id="order_repair_service" type="text" name="order_repair_service" value="" required/>--%>
-                        <select id="order_repair_service" name="order_repair_service" value="" required>
+                        <select id="order_repair_service" name="order_repair_service" value="${param.order_repair_service}" required>
                             <customtags:OptGoup list="${services_list}"/>
                         </select>
                         <label for="order_repair_service"><fmt:message key="order.repair.service"/><em>*</em></label>
@@ -41,7 +41,7 @@
                     <legend><fmt:message key="order.description"/></legend>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_description_short" type="text" name="order_description_short" value=""
+                            <input id="order_description_short" type="text" name="order_description_short" value="${param.order_description_short}"
                                    required/>
                             <label for="order_description_short"><fmt:message key="order.description.short"/><em>*</em></label>
                         </div>
@@ -49,7 +49,7 @@
                     <div class="row">
                         <div class="input-field">
                         <textarea id="order_description_detail" name="order_description_detail" required
-                                  style="height: 100px"></textarea>
+                                  style="height: 100px">${param.order_description_detail}</textarea>
                             <label for="order_description_detail"><fmt:message key="order.description.detail"/><em>*</em></label>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                         <div class="input-field">
                             <%--<input id="order_appliance" type="text" name="order_appliance" value="" required/>--%>
                             <textarea id="order_appliance" name="order_appliance" required
-                                      style="height: 50px">${orders_detail.appliance}</textarea>
+                                      style="height: 50px">${param.appliance}</textarea>
                             <label for="order_appliance"><fmt:message key="order.appliance"/><em>*</em></label>
                         </div>
                     </div>
@@ -66,14 +66,14 @@
                     <legend><fmt:message key="order.address"/></legend>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_city" type="text" name="order_city" value="" required/>
+                            <input id="order_city" type="text" name="order_city" value="${param.order_city}" required/>
                             <label for="order_city"><fmt:message key="order.city"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
                             <%--<input id="order_street" type="text" name="order_street" value="" required/>--%>
-                            <textarea id="order_street" name="order_street" required style="height: 50px"></textarea>
+                            <textarea id="order_street" name="order_street" required style="height: 50px">${param.order_street}</textarea>
                             <label for="order_street"><fmt:message key="order.street"/><em>*</em></label>
                         </div>
                     </div>
@@ -83,14 +83,14 @@
                     <legend><fmt:message key="order.actionDate"/></legend>
                     <div class="row">
                         <div class="input-field">
-                            <input id="order_expected_date" type="date" name="order_expected_date" value="" required/>
+                            <input id="order_expected_date" type="date" name="order_expected_date" value="${param.order_expected_date}" required/>
                             <label for="order_expected_date"><fmt:message key="order.expected.actionDate"/><em>*</em></label>
                         </div>
                     </div>
                 </fieldset>
                 <div class="row">
                     <div class="input-field">
-                        <textarea id="order_memo" type="text" name="order_memo" value="" style="height: 100px"></textarea>
+                        <textarea id="order_memo" type="text" name="order_memo" value="" style="height: 100px">${param.order_memo}</textarea>
                         <label for="order_memo"><fmt:message key="order.memo"/></label>
                     </div>
                 </div>

@@ -22,11 +22,31 @@ public class RepairServicesService extends AbstractService {
     }
 
     public List<RepairService> getRepairServiceList() throws PersistException, TransactionException {
-        return (List<RepairService>) getList(MySQLDAOFactory.getFactory().getRepairServiceDao());
+        RepairServiceDAO repairServiceDao = MySQLDAOFactory.getFactory().getRepairServiceDao();
+        List<RepairService> read;
+        try{
+            TransactionManager.beginTransaction();
+            read = repairServiceDao.read();
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return read;
     }
 
     public List<RepairService> getRepairServiceList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
-        return (List<RepairService>) getList(MySQLDAOFactory.getFactory().getRepairServiceDao(),page,pagesCount,rowsPerPage);
+        RepairServiceDAO repairServiceDao = MySQLDAOFactory.getFactory().getRepairServiceDao();
+        int start = (page - 1) * rowsPerPage;
+        int limit = pagesCount * rowsPerPage;
+        List<RepairService> read;
+        try {
+            TransactionManager.beginTransaction();
+            read = repairServiceDao.read(start, limit);
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return read;
     }
 
     public List<String> getRepairServiceTitles() {

@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.dao.H2DataSource;
 import ua.glushko.model.entity.User;
+import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
@@ -22,32 +23,34 @@ public class RegisterServiceTest {
         registerService = UsersService.getService();
     }
 
-    @Test (expected = NullPointerException.class)
+    @Test (expected = PersistException.class)
     public void registerExistLogin() throws PersistException {
         try {
-            User user = registerService.register("admin", "admin", "admin", "admin", "admin","admin");
+            User user = registerService.register("admin", "admin", "admin", "admin","admin");
             assertNotNull("Должно было сработать исключение",user);
         } catch (PersistException e) {
             throw new PersistException(e);
         } catch (TransactionException e) {
             e.printStackTrace();
+        } catch (ParameterException e) {
+            e.printStackTrace();
         }
     }
 
-    @Test(expected = NullPointerException.class)
-    public void registerNewUser() throws PersistException, TransactionException {
+    @Test
+    public void registerNewUser() throws PersistException, TransactionException, ParameterException {
         try {
-            User user = registerService.register("test10", "test10", "test10", "test10", "test10","test10");
+            User user = registerService.register("test10", "test10", "test10", "test10","test10");
             assertNotNull("",user);
         } catch (PersistException e) {
           throw new PersistException(e);
         }
     }
 
-    @Test (expected = NullPointerException.class)
-    public void registerUserWithNullParameters() throws TransactionException, PersistException {
+    @Test (expected = ParameterException.class)
+    public void registerUserWithNullParameters() throws TransactionException, PersistException, ParameterException {
         try {
-            User user = registerService.register(null, "test10", "test10", "test10", "test10","test10");
+            User user = registerService.register(null, "test10", "test10", "test10","test10");
             assertNotNull("",user);
         } catch (PersistException e) {
             throw new PersistException(e);

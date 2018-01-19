@@ -14,9 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import static ua.glushko.commands.Command.PARAM_NAME_COMMAND;
-import static ua.glushko.commands.Command.PARAM_NAME_LOCALE;
-import static ua.glushko.commands.CommandFactory.COMMAND_NAME_LOGOUT;
+import static ua.glushko.commands.Command.PARAM_COMMAND;
+import static ua.glushko.commands.Command.PARAM_LOCALE;
 import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
 
 public class SwitchLanguageCommandTest {
@@ -29,15 +28,15 @@ public class SwitchLanguageCommandTest {
     public void setUp(){
         ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
         when(request.getSession()).thenReturn(session);
-        when(request.getSession().getAttribute(PARAM_NAME_LOCALE)).thenReturn("ru");
-        when(request.getParameter(PARAM_NAME_COMMAND)).thenReturn(CommandFactory.COMMAND_NAME_LANG);
+        when(request.getSession().getAttribute(PARAM_LOCALE)).thenReturn("ru");
+        when(request.getParameter(PARAM_COMMAND)).thenReturn(CommandFactory.COMMAND_LANG);
         when(request.getHeader(SwitchLanguageCommand.REFERRER)).thenReturn(null);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
     }
 
     @Test
     public void switchToRu() throws ServletException {
-        when(request.getParameter(PARAM_NAME_LOCALE)).thenReturn("ru");
+        when(request.getParameter(PARAM_LOCALE)).thenReturn("ru");
         Controller controller = new Controller();
         controller.init();
         controller.processRequest(request,response);
@@ -45,7 +44,7 @@ public class SwitchLanguageCommandTest {
 
     @Test
     public void switchToEn() throws ServletException {
-        when(request.getParameter(PARAM_NAME_LOCALE)).thenReturn("en");
+        when(request.getParameter(PARAM_LOCALE)).thenReturn("en");
         Controller controller = new Controller();
         controller.init();
         controller.processRequest(request,response);

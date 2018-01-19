@@ -31,7 +31,7 @@ abstract class ShowListTag extends TagSupport {
     public int doStartTag() throws JspException {
         try {
             HttpSession session = pageContext.getSession();
-            String locale = (String) session.getAttribute(PARAM_NAME_LOCALE);
+            String locale = (String) session.getAttribute(PARAM_LOCALE);
             StringBuilder builder = new StringBuilder();
 
             String property;
@@ -50,13 +50,15 @@ abstract class ShowListTag extends TagSupport {
                     rowsCount = 5;
             }
 
-            if (pageContext.getRequest().getParameter(PARAM_NAME_PAGE) != null)
-                page = Integer.valueOf(pageContext.getRequest().getParameter(PARAM_NAME_PAGE));
+            if (pageContext.getRequest().getParameter(PARAM_PAGE) != null
+                    && pageContext.getRequest().getParameter(PARAM_PAGE)!=""
+                    && !pageContext.getRequest().getParameter(PARAM_PAGE).equals("null"))
+                page = Integer.valueOf(pageContext.getRequest().getParameter(PARAM_PAGE));
             else
                 page = 1;
 
             // build head of table
-            Integer access = Integer.valueOf(pageContext.getSession().getAttribute(PARAM_NAME_ACCESS).toString());
+            Integer access = Integer.valueOf(pageContext.getRequest().getAttribute(PARAM_ACCESS).toString());
             if((access & C) == C || (access & c) == c ) {
                 builder.append("<div class='addbutton' align=\"right\">")
                         .append("<button class='addbutton' type='button' name='button' value='add' onClick=\"window.location.href='/do?command=")
@@ -103,7 +105,7 @@ abstract class ShowListTag extends TagSupport {
                 pageCount++;
             if(i >0 && i-page<pageCount){
                 if(page!=i){
-                    String command = pageContext.getRequest().getParameter(PARAM_NAME_COMMAND);
+                    String command = pageContext.getRequest().getParameter(PARAM_COMMAND);
                     builder.append("<td>").append("<a href=\"/do?command=").append(command).append("&page=").append(i).append("\">").append(i).append("</a>").append("</td>");
                 } else {
                     builder.append("<td>").append(" [ ").append(i).append(" ] ").append("</td>");

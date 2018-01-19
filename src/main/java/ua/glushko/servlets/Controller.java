@@ -1,6 +1,6 @@
 package ua.glushko.servlets;
 
-import ua.glushko.commands.ICommand;
+import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.CommandFactory;
 import ua.glushko.configaration.ConfigurationManager;
@@ -49,7 +49,7 @@ public class Controller extends HttpServlet {
     public void processRequest(HttpServletRequest req, HttpServletResponse resp) {
         CommandFactory commandFactory = CommandFactory.getInstance();
         // get command
-        ICommand command = commandFactory.getCommand(req);
+        Command command = commandFactory.getCommand(req);
         // execute command and get page to route
         CommandRouter commandRouter = command.execute(req, resp);
         // route to new page

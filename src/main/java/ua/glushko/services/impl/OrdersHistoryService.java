@@ -27,11 +27,33 @@ public class OrdersHistoryService extends AbstractService {
     }
 
     public List<OrderHistory> getOrderHistoryList() throws PersistException, TransactionException {
-        return (List<OrderHistory>) getList(MySQLDAOFactory.getFactory().getOrderHistoryDAO());
+        OrderHistoryDAO orderHistoryDAO = MySQLDAOFactory.getFactory().getOrderHistoryDAO();
+        List<OrderHistory> read;
+        try{
+            TransactionManager.beginTransaction();
+            read = orderHistoryDAO.read();
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return read;
+
     }
 
     public List<OrderHistory> getOrderHistoryList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
-        return (List<OrderHistory>) getList(MySQLDAOFactory.getFactory().getOrderHistoryDAO(), page, pagesCount, rowsPerPage);
+        OrderHistoryDAO orderHistoryDAO = MySQLDAOFactory.getFactory().getOrderHistoryDAO();
+        int start = (page - 1) * rowsPerPage;
+        int limit = pagesCount * rowsPerPage;
+        List<OrderHistory> read;
+        try {
+            TransactionManager.beginTransaction();
+            read = orderHistoryDAO.read(start, limit);
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return read;
+
     }
 
     public List<OrderHistory> getOrderHistoryList(int page, int pagesCount, int rowsPerPage, Integer id) throws PersistException, TransactionException {
@@ -40,7 +62,7 @@ public class OrdersHistoryService extends AbstractService {
 
         int start = (page - 1) * rowsPerPage;
         int limit = pagesCount * rowsPerPage;
-        List<? extends GenericEntity> read;
+        List<OrderHistory> read;
         try {
             TransactionManager.beginTransaction();
             read = orderHistoryDAO.read(start, limit,id);
@@ -48,7 +70,7 @@ public class OrdersHistoryService extends AbstractService {
         } finally {
             TransactionManager.rollBack();
         }
-        return (List<OrderHistory>)read;
+        return read;
     }
 
     public List<String> getOrderHistoryTitles() {

@@ -42,25 +42,25 @@
                     <input type="hidden" name="command" value="resetpassword"/>
                     <div class="row">
                         <div class="input-field">
-                            <input id="user_login" type="text" name="user_login" value="${sessionScope.user_login}" required/>
+                            <input id="user_login" type="text" name="user_login" value="${param.user_login}" required/>
                             <label for="user_login"><fmt:message key="app.welcome.login"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="user_password" type="password" name="user_password" value="" required/>
+                            <input id="user_password" type="password" name="user_password" value="${param.user_password}" required/>
                             <label for="user_password"><fmt:message key="app.welcome.password"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="user_password2" type="password" name="user_password2" value="" required>
+                            <input id="user_password2" type="password" name="user_password2" value="${param.user_password2}" required>
                             <label for="user_password2"><fmt:message key="app.welcome.password2"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="user_secret" type="text" name="user_secret" value="" required>
+                            <input id="user_secret" type="text" name="user_secret" value="${param.user_secret}" required>
                             <label for="user_secret"><fmt:message key="app.welcome.secret"/><em>*</em></label>
                         </div>
                     </div>

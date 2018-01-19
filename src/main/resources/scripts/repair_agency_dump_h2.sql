@@ -32,46 +32,46 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 INSERT INTO `users` VALUES
-  (1,'ADMIN','Administrator','admin','admin','mikhail.glushko@gmail.com','066-3864046','ACTIVE','INTERNAL',NULL),
-  (2,'MANAGER','Manager','manager','manager','manager@mail.com','01','ACTIVE','INTERNAL',NULL),
-  (3,'MASTER','Master','master','master','master@mail.com','02','ACTIVE','INTERNAL',NULL),
-  (4,'CUSTOMER','Customer','customer','customer','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (5,'CUSTOMER','Customer5','customer5','customer5','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (6,'CUSTOMER','Customer6','customer6','customer6','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (7,'CUSTOMER','Customer7','customer7','customer7','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (8,'CUSTOMER','Customer8','customer8','customer8','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (9,'CUSTOMER','Customer9','customer9','customer9','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (10,'CUSTOMER','Customer10','customer10','customer10','customer@mail.com','03','BLOCKED','EXTERNAL',NULL),
-  (11,'CUSTOMER','Customer11','customer11','customer11','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (12,'CUSTOMER','Customer12','customer12','customer12','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (13,'CUSTOMER','Customer13','customer13','customer13','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (14,'CUSTOMER','Customer14','customer14','customer14','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (15,'CUSTOMER','Customer15','customer15','customer15','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (16,'CUSTOMER','Customer16','customer16','customer16','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (17,'CUSTOMER','Customer17','customer17','customer17','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (18,'CUSTOMER','Customer18','customer18','customer18','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (19,'CUSTOMER','Customer19','customer19','customer19','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (20,'CUSTOMER','Customer20','customer20','customer20','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (21,'CUSTOMER','Customer21','customer21','customer21','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (22,'CUSTOMER','Customer22','customer22','customer22','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (23,'CUSTOMER','Customer23','customer23','customer23','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (24,'CUSTOMER','Customer24','customer24','customer24','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (25,'CUSTOMER','Customer25','customer25','customer25','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (26,'CUSTOMER','Customer26','customer26','customer26','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (27,'CUSTOMER','Customer27','customer27','customer27','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (28,'CUSTOMER','Customer28','customer28','customer28','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (29,'CUSTOMER','Customer29','customer29','customer29','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (30,'CUSTOMER','Customer30','customer30','customer30','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (31,'CUSTOMER','Customer31','customer31','customer31','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (32,'CUSTOMER','Customer32','customer32','customer32','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (33,'CUSTOMER','Customer33','customer33','customer33','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (34,'CUSTOMER','Customer34','customer34','customer34','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (35,'CUSTOMER','Customer35','customer35','customer35','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (36,'CUSTOMER','Customer36','customer36','customer36','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (37,'CUSTOMER','Customer37','customer37','customer37','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (38,'CUSTOMER','Customer38','customer38','customer38','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (39,'CUSTOMER','Customer39','customer39','customer39','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (40,'CUSTOMER','Customer40','customer40','customer40','customer@mail.com','03','ACTIVE','EXTERNAL',NULL)
+  (1,'ADMIN','Administrator','admin','21232f297a57a5a743894a0e4a801fc3','mikhail.glushko@gmail.com','066-3864046','ACTIVE','INTERNAL',NULL),
+  (2,'MANAGER','Manager','manager','1d0258c2440a8d19e716292b231e3190','manager@mail.com','01','ACTIVE','INTERNAL',NULL),
+  (3,'MASTER','Master','master','eb0a191797624dd3a48fa681d3061212','master@mail.com','02','ACTIVE','INTERNAL',NULL),
+  (4,'CUSTOMER','Customer','customer','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (5,'CUSTOMER','Customer5','customer5','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (6,'CUSTOMER','Customer6','customer6','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (7,'CUSTOMER','Customer7','customer7','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (8,'CUSTOMER','Customer8','customer8','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (9,'CUSTOMER','Customer9','customer9','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (10,'CUSTOMER','Customer10','customer10','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','BLOCKED','EXTERNAL',NULL),
+  (11,'CUSTOMER','Customer11','customer11','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (12,'CUSTOMER','Customer12','customer12','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (13,'CUSTOMER','Customer13','customer13','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (14,'CUSTOMER','Customer14','customer14','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (15,'CUSTOMER','Customer15','customer15','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (16,'CUSTOMER','Customer16','customer16','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (17,'CUSTOMER','Customer17','customer17','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (18,'CUSTOMER','Customer18','customer18','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (19,'CUSTOMER','Customer19','customer19','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (20,'CUSTOMER','Customer20','customer20','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (21,'CUSTOMER','Customer21','customer21','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (22,'CUSTOMER','Customer22','customer22','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (23,'CUSTOMER','Customer23','customer23','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (24,'CUSTOMER','Customer24','customer24','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (25,'CUSTOMER','Customer25','customer25','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (26,'CUSTOMER','Customer26','customer26','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (27,'CUSTOMER','Customer27','customer27','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (28,'CUSTOMER','Customer28','customer28','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (29,'CUSTOMER','Customer29','customer29','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (30,'CUSTOMER','Customer30','customer30','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (31,'CUSTOMER','Customer31','customer31','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (32,'CUSTOMER','Customer32','customer32','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (33,'CUSTOMER','Customer33','customer33','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (34,'CUSTOMER','Customer34','customer34','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (35,'CUSTOMER','Customer35','customer35','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (36,'CUSTOMER','Customer36','customer36','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (37,'CUSTOMER','Customer37','customer37','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (38,'CUSTOMER','Customer38','customer38','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (39,'CUSTOMER','Customer39','customer39','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (40,'CUSTOMER','Customer40','customer40','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL)
   ;
 
 DROP TABLE IF EXISTS `grants`;
@@ -223,17 +223,17 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-INSERT INTO `orders` VALUES (1,'Сломался холодилник1','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,4,NULL,'NEW',2 );
-INSERT INTO `orders` VALUES (2,'Сломался холодилник2','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,4,NULL,'NEW',NULL );
-INSERT INTO `orders` VALUES (3,'Сломался холодилни3','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,4,NULL,'NEW',NULL );
+INSERT INTO `orders` VALUES (1,'Сломался холодилник1','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-01',NULL,'Холодильник',0.00,4,NULL,'NEW',2 );
+INSERT INTO `orders` VALUES (2,'Сломался холодилник2','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-02',NULL,'Холодильник',0.00,4,NULL,'NEW',NULL );
+INSERT INTO `orders` VALUES (3,'Сломался холодилни3','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-03',NULL,'Холодильник',0.00,4,NULL,'NEW',NULL );
 
-INSERT INTO `orders` VALUES (4,'Сломался холодилник4','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',NULL );
-INSERT INTO `orders` VALUES (5,'Сломался холодилник5','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',2 );
-INSERT INTO `orders` VALUES (6,'Сломался холодилни6','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',3 );
+INSERT INTO `orders` VALUES (4,'Сломался холодилник4','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-04',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL );
+INSERT INTO `orders` VALUES (5,'Сломался холодилник5','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-05',NULL,'Холодильник',0.00,5,NULL,'NEW',2 );
+INSERT INTO `orders` VALUES (6,'Сломался холодилни6','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-06',NULL,'Холодильник',0.00,5,NULL,'NEW',3 );
 
-INSERT INTO `orders` VALUES (7,'Сломался холодилник7','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',NULL );
-INSERT INTO `orders` VALUES (8,'Сломался холодилник8','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',2 );
-INSERT INTO `orders` VALUES (9,'Сломался холодилни9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44',NULL,NULL,'Холодильник',0.00,5,NULL,'NEW',3 );
+INSERT INTO `orders` VALUES (7,'Сломался холодилник7','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-07',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL );
+INSERT INTO `orders` VALUES (8,'Сломался холодилник8','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-08',NULL,'Холодильник',0.00,5,NULL,'NEW',2 );
+INSERT INTO `orders` VALUES (9,'Сломался холодилни9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',3 );
 
 DROP TABLE IF EXISTS `orders_history`;
 CREATE TABLE `orders_history` (

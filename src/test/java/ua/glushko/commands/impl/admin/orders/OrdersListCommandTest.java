@@ -21,15 +21,14 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ua.glushko.authentification.Authentification.PARAM_NAME_GRANTS;
-import static ua.glushko.authentification.Authentification.PARAM_NAME_ROLE;
-import static ua.glushko.commands.Command.PARAM_NAME_COMMAND;
-import static ua.glushko.commands.Command.PARAM_NAME_LOCALE;
-import static ua.glushko.commands.CommandFactory.COMMAND_NAME_ORDERS;
+import static ua.glushko.authentification.Authentification.PARAM_GRANTS;
+import static ua.glushko.authentification.Authentification.PARAM_ROLE;
+import static ua.glushko.commands.Command.PARAM_COMMAND;
+import static ua.glushko.commands.Command.PARAM_LOCALE;
+import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
 
 public class OrdersListCommandTest {
@@ -44,8 +43,8 @@ public class OrdersListCommandTest {
     public void setUp(){
         ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
         when(request.getSession()).thenReturn(session);
-        when(request.getSession().getAttribute(PARAM_NAME_LOCALE)).thenReturn("ru");
-        when(request.getParameter(PARAM_NAME_COMMAND)).thenReturn(COMMAND_NAME_ORDERS);
+        when(request.getSession().getAttribute(PARAM_LOCALE)).thenReturn("ru");
+        when(request.getParameter(PARAM_COMMAND)).thenReturn(COMMAND_ORDERS);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
     }
 
@@ -54,10 +53,10 @@ public class OrdersListCommandTest {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("admin", "admin");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
-        when(session.getAttribute(UsersCommandHelper.PARAM_NAME_USER_LOGIN)).thenReturn("admin");
-        when(session.getAttribute(PARAM_NAME_ROLE)).thenReturn(UserRole.ADMIN);
-        when(session.getAttribute(PARAM_NAME_GRANTS)).thenReturn(grants);
-        when(session.getAttribute(Authentification.PARAM_NAME_ID)).thenReturn(1);
+        when(session.getAttribute(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("admin");
+        when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.ADMIN);
+        when(session.getAttribute(PARAM_GRANTS)).thenReturn(grants);
+        when(session.getAttribute(Authentification.PARAM_ID)).thenReturn(1);
 
         Controller controller = new Controller();
         controller.init();
@@ -69,10 +68,10 @@ public class OrdersListCommandTest {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("manager", "manager");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
-        when(session.getAttribute(UsersCommandHelper.PARAM_NAME_USER_LOGIN)).thenReturn("manager");
-        when(session.getAttribute(PARAM_NAME_ROLE)).thenReturn(UserRole.MANAGER);
-        when(session.getAttribute(PARAM_NAME_GRANTS)).thenReturn(grants);
-        when(session.getAttribute(Authentification.PARAM_NAME_ID)).thenReturn(2);
+        when(session.getAttribute(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("manager");
+        when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.MANAGER);
+        when(session.getAttribute(PARAM_GRANTS)).thenReturn(grants);
+        when(session.getAttribute(Authentification.PARAM_ID)).thenReturn(2);
 
         Controller controller = new Controller();
         controller.init();
@@ -84,10 +83,10 @@ public class OrdersListCommandTest {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("master", "master");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
-        when(session.getAttribute(UsersCommandHelper.PARAM_NAME_USER_LOGIN)).thenReturn("master");
-        when(session.getAttribute(PARAM_NAME_ROLE)).thenReturn(UserRole.MASTER);
-        when(session.getAttribute(PARAM_NAME_GRANTS)).thenReturn(grants);
-        when(session.getAttribute(Authentification.PARAM_NAME_ID)).thenReturn(3);
+        when(session.getAttribute(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("master");
+        when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.MASTER);
+        when(session.getAttribute(PARAM_GRANTS)).thenReturn(grants);
+        when(session.getAttribute(Authentification.PARAM_ID)).thenReturn(3);
 
         Controller controller = new Controller();
         controller.init();
@@ -99,10 +98,10 @@ public class OrdersListCommandTest {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("customer", "customer");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
-        when(session.getAttribute(UsersCommandHelper.PARAM_NAME_USER_LOGIN)).thenReturn("customer");
-        when(session.getAttribute(PARAM_NAME_ROLE)).thenReturn(UserRole.CUSTOMER);
-        when(session.getAttribute(PARAM_NAME_GRANTS)).thenReturn(grants);
-        when(session.getAttribute(Authentification.PARAM_NAME_ID)).thenReturn(4);
+        when(session.getAttribute(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("customer");
+        when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.CUSTOMER);
+        when(session.getAttribute(PARAM_GRANTS)).thenReturn(grants);
+        when(session.getAttribute(Authentification.PARAM_ID)).thenReturn(4);
 
         Controller controller = new Controller();
         controller.init();
@@ -114,8 +113,8 @@ public class OrdersListCommandTest {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser(null, null);
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
-        when(session.getAttribute(PARAM_NAME_ROLE)).thenReturn(UserRole.CUSTOMER);
-        when(session.getAttribute(PARAM_NAME_GRANTS)).thenReturn(grants);
+        when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.CUSTOMER);
+        when(session.getAttribute(PARAM_GRANTS)).thenReturn(grants);
 
         Controller controller = new Controller();
         controller.init();
@@ -127,8 +126,8 @@ public class OrdersListCommandTest {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("test", "test");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
-        when(session.getAttribute(PARAM_NAME_ROLE)).thenReturn(UserRole.CUSTOMER);
-        when(session.getAttribute(PARAM_NAME_GRANTS)).thenReturn(grants);
+        when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.CUSTOMER);
+        when(session.getAttribute(PARAM_GRANTS)).thenReturn(grants);
 
         Controller controller = new Controller();
         controller.init();

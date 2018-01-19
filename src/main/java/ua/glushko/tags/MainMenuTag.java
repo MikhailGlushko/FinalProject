@@ -1,7 +1,6 @@
 package ua.glushko.tags;
 
 import ua.glushko.authentification.Authentification;
-import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.Grant;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static ua.glushko.commands.Command.*;
-import static ua.glushko.commands.CommandFactory.COMMAND_NAME_LOGOUT;
+import static ua.glushko.commands.CommandFactory.COMMAND_LOGOUT;
 
 @SuppressWarnings("serial")
 public class MainMenuTag extends TagSupport {
@@ -24,7 +23,7 @@ public class MainMenuTag extends TagSupport {
         try {
 
             HttpSession session = pageContext.getSession();
-            String locale = (String) session.getAttribute(PARAM_NAME_LOCALE);
+            String locale = (String) session.getAttribute(PARAM_LOCALE);
             StringBuilder builder = new StringBuilder();
 
             builder.append("<div style=\"float: left; width: 70%\">")
@@ -34,7 +33,7 @@ public class MainMenuTag extends TagSupport {
                     .append(MessageManager.getMessage("main.home",locale))
                     .append("</a>");
 
-            Object attributeUserGrants = session.getAttribute(Authentification.PARAM_NAME_GRANTS);
+            Object attributeUserGrants = session.getAttribute(Authentification.PARAM_GRANTS);
 
             List<Grant> grants = (List<Grant>) attributeUserGrants;
             if(Objects.nonNull(grants))
@@ -52,7 +51,7 @@ public class MainMenuTag extends TagSupport {
             Object userName = pageContext.getSession().getAttribute(Authentification.PARAM_NAME_NAME);
             if(Objects.nonNull(userName)){
                 builder.append("<a class=\"mainmenubutton\" href=\"/do?command=")
-                        .append(COMMAND_NAME_LOGOUT)
+                        .append(COMMAND_LOGOUT)
                         .append("\" style=\"margin-right: 0;\">")
                         .append(MessageManager.getMessage("main.logout",locale))
                         .append("</a>");

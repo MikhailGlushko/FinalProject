@@ -29,22 +29,23 @@
                 <form name="edit" method="post" action="/do">
                     <br/>
                     <input type="hidden" name="command" value="services_action"/>
+                    <input type="hidden" name="last_page" value="${param.last_page}">
                     <div class="row">
                         <div class="input-field">
-                            <input id="service_name" type="text" name="service_name" value="" required/>
+                            <input id="service_name" type="text" name="service_name" value="${param.service_name}" required/>
                             <label for="service_name"><fmt:message key="service.name"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="service_name_ru" type="text" name="service_name_ru" value="" required/>
+                            <input id="service_name_ru" type="text" name="service_name_ru" value="${param.service_name_ru}" required/>
                             <label for="service_name_ru"><fmt:message key="service.name.ru"/><em>*</em></label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field">
-                            <input id="service_parent" type="number" name="service_parent" value="0" required/>
+                            <input id="service_parent" type="number" name="service_parent" value="${param.service_parent}" required/>
                             <label for="service_parent"><fmt:message key="service.parent"/><em>*</em></label>
                         </div>
                     </div>

@@ -1,9 +1,11 @@
 package ua.glushko.commands.impl.admin.orders;
 
 import ua.glushko.authentification.Authentification;
-import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
+import ua.glushko.commands.Command;
+import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.Order;
+import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.OrdersService;
@@ -18,10 +20,10 @@ import java.util.Date;
 
 import static ua.glushko.authentification.Authentification.C;
 import static ua.glushko.authentification.Authentification.c;
-import static ua.glushko.commands.CommandFactory.COMMAND_NAME_ORDERS;
+import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 
 /** Create new order */
-public class OrderCreateCommand extends Command {
+public class OrderCreateCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
 
@@ -30,7 +32,7 @@ public class OrderCreateCommand extends Command {
         } catch (TransactionException | PersistException e) {
             LOGGER.error(e);
         }
-        String page = "/do?command=" + COMMAND_NAME_ORDERS + "&page=" + request.getSession().getAttribute(PARAM_NAME_LAST_PAGE);
+        String page = "/do?command=" + COMMAND_ORDERS + "&page=" + request.getAttribute(PARAM_LAST_PAGE);
         return new CommandRouter(request, response, page);
 
     }
@@ -40,22 +42,22 @@ public class OrderCreateCommand extends Command {
         try {
             int access = Authentification.checkAccess(request);
             // getting data from form
-            String  orderDescriptionShort = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_DESC_SHORT);
-            String  orderDescriptionDetail = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_DESC_DETAIL);
+            String  orderDescriptionShort = request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_SHORT);
+            String  orderDescriptionDetail = request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_DETAIL);
             Integer  orderRepairService = null;
             Integer  orderUserId = null;
             try {
-                orderRepairService = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_SERVICE));
-                orderUserId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_USER_ID));
+                orderRepairService = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_SERVICE));
+                orderUserId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_USER_ID));
             }catch (NumberFormatException e){
                 LOGGER.error(e);
             }
-            String  orderCity = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_CITY);
+            String  orderCity = request.getParameter(OrdersCommandHelper.PARAM_ORDER_CITY);
 
-            String  orderStreet = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_STREET);
-            String  orderExpectedDate = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_EXPECTED_DATE);
-            String  orderAppliance = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_APPL);
-            String  orderMemo = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_APPL);
+            String  orderStreet = request.getParameter(OrdersCommandHelper.PARAM_ORDER_STREET);
+            String  orderExpectedDate = request.getParameter(OrdersCommandHelper.PARAM_ORDER_EXPECTED_DATE);
+            String  orderAppliance = request.getParameter(OrdersCommandHelper.PARAM_ORDER_APPL);
+            String  orderMemo = request.getParameter(OrdersCommandHelper.PARAM_ORDER_APPL);
 
             OrdersService ordersService = OrdersService.getService();
             order = new Order();
@@ -80,8 +82,13 @@ public class OrderCreateCommand extends Command {
                 // update user data into database
                 ordersService.updateOrder(order);
                 LOGGER.debug("new order "+order+" was created");
+                int count = ordersService.count();
+                Integer pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
+                Integer rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
+                count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
+                request.setAttribute(PARAM_LAST_PAGE,count);
             }
-        } catch (NullPointerException | NumberFormatException e) {
+        } catch (ParameterException e) {
             LOGGER.debug("new order "+order+" did not create");
             LOGGER.error(e);
         }

@@ -1,8 +1,8 @@
 package ua.glushko.commands.impl.admin.orders;
 
 import ua.glushko.authentification.Authentification;
-import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
+import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.Order;
 import ua.glushko.model.entity.RepairService;
@@ -17,20 +17,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedList;
 import java.util.List;
 
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_NAME_ORDERS_USER_ID;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_NAME_ORDERS_USER_NAME;
+import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDER_USER_ID;
+import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDER_USER_NAME;
 
 /** redirect to the form of adding a new order by pressing the "+" button on the form with the list of users*/
-public class OrderAddCommand extends Command {
+public class OrderAddCommand implements Command {
 
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
+
             // prepare list for menu
             RepairServicesService repairServices = RepairServicesService.getService();
             Integer userId = null;
             try {
-                userId = Integer.valueOf(request.getSession().getAttribute(Authentification.PARAM_NAME_ID).toString());
+                userId = Integer.valueOf(request.getSession().getAttribute(Authentification.PARAM_ID).toString());
             } catch (NumberFormatException e){
                 LOGGER.error(e);
             }
@@ -44,11 +45,11 @@ public class OrderAddCommand extends Command {
             String clientName = client.getName();
 
             // store data to the session
-            request.getSession().setAttribute(PARAM_NAME_ORDERS_USER_ID,clientId);
-            request.getSession().setAttribute(PARAM_NAME_ORDERS_USER_NAME,clientName);
-            request.getSession().setAttribute(OrdersCommandHelper.PARAM_NAME_ORDERS, new Order());
-            request.getSession().setAttribute(OrdersCommandHelper.PARAM_NAME_SERVICE_LIST, repairServiceList);
-            request.getSession().setAttribute("serviceList",serviceList);
+            request.setAttribute(PARAM_ORDER_USER_ID,clientId);
+            request.setAttribute(PARAM_ORDER_USER_NAME,clientName);
+            request.setAttribute(OrdersCommandHelper.PARAM_ORDER, new Order());
+            request.setAttribute(OrdersCommandHelper.PARAM_SERVICES_LIST, repairServiceList);
+            request.setAttribute("serviceList",serviceList);
         } catch (PersistException | TransactionException e) {
             LOGGER.error(e);
         }

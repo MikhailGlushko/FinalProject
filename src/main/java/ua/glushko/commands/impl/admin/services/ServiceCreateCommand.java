@@ -1,9 +1,11 @@
 package ua.glushko.commands.impl.admin.services;
 
 import ua.glushko.authentification.Authentification;
-import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
+import ua.glushko.commands.Command;
+import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.RepairService;
+import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.RepairServicesService;
@@ -12,10 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static ua.glushko.authentification.Authentification.C;
-import static ua.glushko.commands.CommandFactory.COMMAND_NAME_SERVICES;
+import static ua.glushko.commands.CommandFactory.COMMAND_SERVICES;
 
-/** Create New entiry */
-public class ServiceCreateCommand extends Command {
+/** Create New entity */
+public class ServiceCreateCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
 
@@ -24,7 +26,7 @@ public class ServiceCreateCommand extends Command {
         } catch (TransactionException | PersistException e) {
             LOGGER.error(e);
         }
-        String page = "/do?command=" + COMMAND_NAME_SERVICES + "&page=" + request.getSession().getAttribute(PARAM_NAME_LAST_PAGE);
+        String page = "/do?command=" + COMMAND_SERVICES + "&page=" + request.getAttribute(PARAM_LAST_PAGE);
         return new CommandRouter(request, response, page);
 
     }
@@ -34,9 +36,9 @@ public class ServiceCreateCommand extends Command {
         try {
             int access = Authentification.checkAccess(request);
 
-            String name = request.getParameter(ServicesCommandHelper.PARAM_NAME_SERVICE_NAME);
-            String nameRu = request.getParameter(ServicesCommandHelper.PARAM_NAME_SERVICE_NAME_RU);
-            Integer parent = Integer.valueOf(request.getParameter(ServicesCommandHelper.PARAM_NAME_SERVICE_PARENT));
+            String name = request.getParameter(ServicesCommandHelper.PARAM_SERVICE_NAME);
+            String nameRu = request.getParameter(ServicesCommandHelper.PARAM_SERVICE_NAME_RU);
+            Integer parent = Integer.valueOf(request.getParameter(ServicesCommandHelper.PARAM_SERVICE_PARENT));
 
             RepairServicesService service = RepairServicesService.getService();
             repairService = new RepairService();
@@ -48,8 +50,14 @@ public class ServiceCreateCommand extends Command {
                 // update user data into database
                 service.updateRepairService(repairService);
                 LOGGER.debug("new service "+repairService+" was created");
+                int count = service.count();
+                Integer pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
+                Integer rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
+                count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
+                request.setAttribute(PARAM_LAST_PAGE,count);
+
             }
-        } catch (NullPointerException | NumberFormatException e) {
+        } catch (ParameterException e) {
             LOGGER.debug("new service "+repairService+" did not create");
             LOGGER.error(e);
         }

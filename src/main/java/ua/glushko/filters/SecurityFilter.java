@@ -2,13 +2,12 @@ package ua.glushko.filters;
 
 import ua.glushko.authentification.Authentification;
 import ua.glushko.model.entity.User;
+import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession();
-        Object attribute = session.getAttribute(Authentification.PARAM_NAME_LOGIN);
+        Object attribute = session.getAttribute(Authentification.PARAM_LOGIN);
         String login = null;
         if(Objects.nonNull(attribute))
             login = (String)attribute;
@@ -36,7 +35,7 @@ public class SecurityFilter implements Filter {
             User currentUser = null;
             try {
                 currentUser = usersService.getUserByLogin(login);
-            } catch (PersistException | TransactionException e) {
+            } catch (PersistException | TransactionException | ParameterException e) {
             }
             if(Objects.nonNull(currentUser)){
                 request.setAttribute(Authentification.PARAM_NAME_NAME, currentUser.getName());

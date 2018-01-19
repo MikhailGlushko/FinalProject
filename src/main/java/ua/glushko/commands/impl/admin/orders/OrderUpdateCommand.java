@@ -1,9 +1,10 @@
 package ua.glushko.commands.impl.admin.orders;
 
 import ua.glushko.authentification.Authentification;
-import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
+import ua.glushko.commands.Command;
 import ua.glushko.model.entity.Order;
+import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.OrdersService;
@@ -19,10 +20,10 @@ import java.util.Date;
 
 import static ua.glushko.authentification.Authentification.U;
 import static ua.glushko.authentification.Authentification.u;
-import static ua.glushko.commands.CommandFactory.COMMAND_NAME_ORDERS;
+import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 
 /** Update data after editing */
-public class OrderUpdateCommand extends Command {
+public class OrderUpdateCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
 
@@ -31,7 +32,7 @@ public class OrderUpdateCommand extends Command {
         } catch (TransactionException | PersistException e) {
             LOGGER.error(e);
         }
-        String page = "/do?command=" + COMMAND_NAME_ORDERS+"&page=" + request.getSession().getAttribute(PARAM_NAME_PAGE);
+        String page = "/do?command=" + COMMAND_ORDERS +"&page=" + request.getAttribute(PARAM_PAGE);
         return new CommandRouter(request, response, page);
 
     }
@@ -41,20 +42,20 @@ public class OrderUpdateCommand extends Command {
         try {
             HttpSession session = request.getSession();
             int access = Authentification.checkAccess(request);
-            orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_ID));
+            orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
 
-            String  orderDescriptionShort = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_DESC_SHORT);
-            String  orderDescriptionDetail = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_DESC_DETAIL);
-            Integer  orderRepairService = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_SERVICE));
-            String  orderCity = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_CITY);
-            String  orderStreet = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_STREET);
-            String  orderExpectedDate = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_EXPECTED_DATE);
-            String  orderAppliance = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_APPL);
-            Integer orderUserId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_USER_ID));
-            String  orderMemo = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_APPL);
-            Integer orderEmployeeId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_EMPLOYEE_ID));
-            String  orderStatus = request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_STATUS);
-            Double orderPrice = Double.valueOf(request.getParameter(OrdersCommandHelper.PARAM_NAME_ORDERS_PRICE));
+            String  orderDescriptionShort = request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_SHORT);
+            String  orderDescriptionDetail = request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_DETAIL);
+            Integer  orderRepairService = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_SERVICE));
+            String  orderCity = request.getParameter(OrdersCommandHelper.PARAM_ORDER_CITY);
+            String  orderStreet = request.getParameter(OrdersCommandHelper.PARAM_ORDER_STREET);
+            String  orderExpectedDate = request.getParameter(OrdersCommandHelper.PARAM_ORDER_EXPECTED_DATE);
+            String  orderAppliance = request.getParameter(OrdersCommandHelper.PARAM_ORDER_APPL);
+            Integer orderUserId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_USER_ID));
+            String  orderMemo = request.getParameter(OrdersCommandHelper.PARAM_ORDER_APPL);
+            Integer orderEmployeeId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_EMPLOYEE_ID));
+            String  orderStatus = request.getParameter(OrdersCommandHelper.PARAM_ORDER_STATUS);
+            Double orderPrice = Double.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_PRICE));
 
             OrdersService ordersService= OrdersService.getService();
             // get user data from database
@@ -80,10 +81,10 @@ public class OrderUpdateCommand extends Command {
             if ((access & U) == U || (access & u) == u) {
                 ordersService.updateOrder(item);
             }
-            session.setAttribute(OrdersCommandHelper.PARAM_NAME_ORDERS, item);
-            request.setAttribute(PARAM_NAME_COMMAND, COMMAND_NAME_ORDERS);
+            request.setAttribute(OrdersCommandHelper.PARAM_ORDER, item);
+            request.setAttribute(PARAM_COMMAND, COMMAND_ORDERS);
             LOGGER.debug("order " + orderId+" was updated");
-        } catch (NullPointerException | NumberFormatException e) {
+        } catch (ParameterException e) {
             LOGGER.debug("order " + orderId+" was not update");
             LOGGER.error(e);
         }

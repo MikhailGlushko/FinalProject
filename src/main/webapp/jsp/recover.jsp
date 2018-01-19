@@ -32,7 +32,7 @@
                         <div class="input-field">
                             <label for="icon_prefix"><fmt:message key="app.welcome.login"/></label>
                             <input id="icon_prefix" type="text" name="user_login"
-                                   value="${sessionScope.user_login}" required/>
+                                   value="${param.user_login}" required/>
                         </div>
                     </div>
                     <br/>

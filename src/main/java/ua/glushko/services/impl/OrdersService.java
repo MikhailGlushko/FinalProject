@@ -24,11 +24,31 @@ public class OrdersService extends AbstractService {
     }
 
     public List<Order> getOrderList() throws PersistException, TransactionException {
-        return (List<Order>) getList(MySQLDAOFactory.getFactory().getOrderDao());
+        OrderDAO orderDao = MySQLDAOFactory.getFactory().getOrderDao();
+        List<Order> read;
+        try{
+            TransactionManager.beginTransaction();
+            read = orderDao.read();
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return read;
     }
 
     public List<Order> getOrderList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
-        return (List<Order>) getList(MySQLDAOFactory.getFactory().getOrderDao(),page,pagesCount,rowsPerPage);
+        OrderDAO orderDao = MySQLDAOFactory.getFactory().getOrderDao();
+        int start = (page - 1) * rowsPerPage;
+        int limit = pagesCount * rowsPerPage;
+        List<Order> read;
+        try {
+            TransactionManager.beginTransaction();
+            read = orderDao.read(start, limit);
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return read;
     }
 
     public List<String> getOrderTitles() {

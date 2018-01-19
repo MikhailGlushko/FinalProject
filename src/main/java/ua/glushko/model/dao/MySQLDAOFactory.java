@@ -3,6 +3,7 @@ package ua.glushko.model.dao;
 import ua.glushko.model.dao.impl.*;
 import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.model.entity.RepairService;
+import ua.glushko.model.entity.User;
 
 /**
  * DAO Factory

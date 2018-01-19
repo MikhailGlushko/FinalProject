@@ -1,5 +1,6 @@
 package ua.glushko.services;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.dao.H2DataSource;
@@ -43,6 +44,8 @@ public class LoginServiceTest {
     @Test
     public void loginOk() throws PersistException {
         try {
+            //String md5Hex = DigestUtils.md5Hex("admin");
+            //System.out.println(md5Hex);
             Map<User, List<Grant>> userListMap = loginService.authenticateUser("admin", "admin");
             User user = userListMap.keySet().iterator().next();
             List<Grant> grants = userListMap.get(user);

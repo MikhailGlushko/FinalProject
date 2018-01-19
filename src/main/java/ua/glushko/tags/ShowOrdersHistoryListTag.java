@@ -13,12 +13,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static ua.glushko.authentification.Authentification.C;
-import static ua.glushko.authentification.Authentification.c;
 import static ua.glushko.commands.Command.*;
-import static ua.glushko.commands.Command.PARAM_NAME_ACCESS;
-import static ua.glushko.commands.Command.PARAM_NAME_PAGE;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_NAME_ORDERS_HISTORY_PAGE;
+import static ua.glushko.commands.Command.PARAM_PAGE;
+import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDER_HISTORY_PAGE;
 
 @SuppressWarnings("serial")
 public class ShowOrdersHistoryListTag extends ShowListTag {
@@ -44,8 +41,8 @@ public class ShowOrdersHistoryListTag extends ShowListTag {
                     rowsCount = 5;
             }
 
-            if (pageContext.getRequest().getParameter(PARAM_NAME_ORDERS_HISTORY_PAGE) != null)
-                page = Integer.valueOf(pageContext.getRequest().getParameter(PARAM_NAME_ORDERS_HISTORY_PAGE));
+            if (pageContext.getRequest().getParameter(PARAM_ORDER_HISTORY_PAGE) != null)
+                page = Integer.valueOf(pageContext.getRequest().getParameter(PARAM_ORDER_HISTORY_PAGE));
             else
                 page = 1;
 
@@ -68,11 +65,11 @@ public class ShowOrdersHistoryListTag extends ShowListTag {
     protected void makeBody(List<Object> list, StringBuilder builder, Integer rowsCount) {
         // build bode if table
         String command = null;
-        Object attribute = pageContext.getRequest().getAttribute(PARAM_NAME_COMMAND);
+        Object attribute = pageContext.getRequest().getAttribute(PARAM_COMMAND);
         if (Objects.nonNull(attribute))
             command = (String) attribute;
         else
-            command = pageContext.getRequest().getParameter(PARAM_NAME_COMMAND);
+            command = pageContext.getRequest().getParameter(PARAM_COMMAND);
         Iterator<Object> iterator = list.iterator();
         for (int i = 0; i < rowsCount; i++) {
             OrderHistory object = null;
@@ -100,10 +97,10 @@ public class ShowOrdersHistoryListTag extends ShowListTag {
 
     @Override
     void makeNavigator(StringBuilder builder, Integer pagesCount, Integer rowsCount, Integer page) {
-        String currentPage = pageContext.getRequest().getParameter(PARAM_NAME_PAGE);
+        String currentPage = pageContext.getRequest().getParameter(PARAM_PAGE);
         if (currentPage==null || currentPage.isEmpty())
             currentPage = "1";
-        Object orderObg = pageContext.getSession().getAttribute(OrdersCommandHelper.PARAM_NAME_ORDERS);
+        Object orderObg = pageContext.getRequest().getAttribute(OrdersCommandHelper.PARAM_ORDER);
         Integer id = null;
         if(orderObg!=null && orderObg instanceof Order) {
             id = ((Order) orderObg).getId();
@@ -116,7 +113,7 @@ public class ShowOrdersHistoryListTag extends ShowListTag {
                 pageCount++;
             if(i >0 && i-page<pageCount){
                 if(page!=i){
-                    String command = pageContext.getRequest().getParameter(PARAM_NAME_COMMAND);
+                    String command = pageContext.getRequest().getParameter(PARAM_COMMAND);
                     builder.append("<td>").append("<a href=\"/do?command=").append(command)
                             .append("&order_id="+id)
                             .append("&page="+currentPage)

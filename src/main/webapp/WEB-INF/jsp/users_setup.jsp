@@ -39,13 +39,14 @@
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="user_password" type="password" name="user_password" value="${user_detail.password}" required/>
+                            <input type="hidden" name="user_password_md5Hex" value="${user_detail.password}">
+                            <input id="user_password" type="password" name="user_password" value="${param.password}" onclick="this.required=true"/>
                             <label for="user_password"><fmt:message key="app.welcome.password"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="user_password2" type="password" name="user_password2" value="${user_detail.password}" required>
+                            <input id="user_password2" type="password" name="user_password2" value="${param.password2}">
                             <label for="user_password2"><fmt:message key="app.welcome.password2"/><em>*</em></label>
                         </div>
                     </div>

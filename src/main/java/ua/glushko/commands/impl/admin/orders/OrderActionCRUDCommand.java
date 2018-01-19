@@ -1,7 +1,7 @@
 package ua.glushko.commands.impl.admin.orders;
 
-import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
+import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.users.UserCreateCommand;
 import ua.glushko.commands.impl.admin.users.UserDeleteCommand;
 import ua.glushko.commands.impl.admin.users.UserUpdateCommand;
@@ -18,29 +18,23 @@ import static ua.glushko.commands.CommandFactory.*;
  *     @see UserUpdateCommand
  *     @see UserDeleteCommand
  */
-public class OrderActionCRUDCommand extends Command {
+public class OrderActionCRUDCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-
-        String page = getActionAndPrepareCommand(request);
-        return new CommandRouter(request, response, page);
-
-    }
-
-    private String getActionAndPrepareCommand(HttpServletRequest request){
-        try {
-            String action = request.getParameter("action");
-            switch (action) {
-                case "save":
-                    return "/do?command=" + COMMAND_NAME_ORDERS_UPDATE;
-                case "add":
-                    return "/do?command=" + COMMAND_NAME_ORDERS_CREATE;
-                case "delete":
-                    return "/do?command=" + COMMAND_NAME_ORDERS_DELETE;
-            }
-        } catch (NullPointerException | NumberFormatException e) {
-            LOGGER.error(e);
+        String page = null;
+        String action = request.getParameter("action");
+        request.setAttribute(PARAM_PAGE,request.getParameter(PARAM_PAGE));
+        switch (action) {
+            case "save":
+                page= "/do?command=" + COMMAND_ORDER_UPDATE;
+                break;
+            case "add":
+                page= "/do?command=" + COMMAND_ORDER_CREATE;
+                break;
+            case "delete":
+                page= "/do?command=" + COMMAND_ORDER_DELETE;
+                break;
         }
-        return null;
+        return new CommandRouter(request, response, page);
     }
 }

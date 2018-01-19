@@ -2,8 +2,10 @@ package ua.glushko.model.dao.impl;
 
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.dao.AbstractDAO;
+import ua.glushko.model.dao.GenericDAO;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
+import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
@@ -123,9 +125,9 @@ public class UserDAO extends AbstractDAO<User> {
         return users.iterator().next();
     }
 
-    public User getUserByLogin(String login) throws PersistException, NullPointerException {
+    public User getUserByLogin(String login) throws PersistException, ParameterException {
         if(login==null || login.isEmpty())
-            throw new NullPointerException("login is null");
+            throw new ParameterException("login is null");
         String sql = getSelectQuery() +
                 " where login=?";
         List<User> users = Collections.emptyList();
@@ -136,9 +138,7 @@ public class UserDAO extends AbstractDAO<User> {
             resultSet = statement.executeQuery();
             users = parseResultSet(resultSet);
             if (users.size() == 0)
-                //TODO убрать ексепшн
                 throw new PersistException("user not fount");
-                //return null;
         } catch (Exception e) {
             throw new PersistException(e);
         }

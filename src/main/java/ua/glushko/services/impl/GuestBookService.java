@@ -22,11 +22,31 @@ public class GuestBookService extends AbstractService {
     }
 
     public List<GuestBook> getGuestBookList() throws PersistException, TransactionException {
-        return (List<GuestBook>) getList(MySQLDAOFactory.getFactory().getGuestBookDAO());
+        GuestBookDAO guestBookDAO = MySQLDAOFactory.getFactory().getGuestBookDAO();
+        List<GuestBook> read;
+        try{
+            TransactionManager.beginTransaction();
+            read = guestBookDAO.read();
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return read;
     }
 
     public List<GuestBook> getGuestBookList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
-        return (List<GuestBook>) getList(MySQLDAOFactory.getFactory().getGuestBookDAO(),page,pagesCount,rowsPerPage);
+        GuestBookDAO guestBookDAO = MySQLDAOFactory.getFactory().getGuestBookDAO();
+        int start = (page - 1) * rowsPerPage;
+        int limit = pagesCount * rowsPerPage;
+        List<GuestBook> read;
+        try {
+            TransactionManager.beginTransaction();
+            read = guestBookDAO.read(start, limit);
+            TransactionManager.endTransaction();
+        } finally {
+            TransactionManager.rollBack();
+        }
+        return read;
     }
 
     public List<String> getGuestBookTitles() {

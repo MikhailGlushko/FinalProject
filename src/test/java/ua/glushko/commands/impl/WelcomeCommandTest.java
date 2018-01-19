@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ua.glushko.commands.Command.PARAM_NAME_COMMAND;
-import static ua.glushko.commands.Command.PARAM_NAME_LOCALE;
+import static ua.glushko.commands.Command.PARAM_COMMAND;
+import static ua.glushko.commands.Command.PARAM_LOCALE;
 import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
 
 public class WelcomeCommandTest {
@@ -29,8 +29,8 @@ public class WelcomeCommandTest {
     public void setUp(){
         ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
         when(request.getSession()).thenReturn(session);
-        when(request.getSession().getAttribute(PARAM_NAME_LOCALE)).thenReturn("ru");
-        when(request.getParameter(PARAM_NAME_COMMAND)).thenReturn(CommandFactory.COMMAND_NAME_WELCOME);
+        when(request.getSession().getAttribute(PARAM_LOCALE)).thenReturn("ru");
+        when(request.getParameter(PARAM_COMMAND)).thenReturn(CommandFactory.COMMAND_WELCOME);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
     }
 

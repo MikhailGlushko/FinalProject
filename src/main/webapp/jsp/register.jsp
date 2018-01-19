@@ -41,38 +41,38 @@
                     <input type="hidden" name="command" value="register"/>
                     <div class="row">
                         <div class="input-field">
-                            <input id="user_login" type="text" name="user_login" value="${sessionScope.user_login}"
+                            <input id="user_login" type="text" name="user_login" value="${param.user_login}"
                                    required/>
                             <label for="user_login"><fmt:message key="app.welcome.login"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="user_password" type="password" name="user_password" value="" required/>
+                            <input id="user_password" type="password" name="user_password" value="${param.user_password}" required/>
                             <label for="user_password"><fmt:message key="app.welcome.password"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="user_password2" type="password" name="user_password2" value="" required>
+                            <input id="user_password2" type="password" name="user_password2" value="${param.user_password2}" required>
                             <label for="user_password2"><fmt:message key="app.welcome.password2"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="user_name" type="text" name="user_name" value="" required/>
+                            <input id="user_name" type="text" name="user_name" value="${param.user_name}" required/>
                             <label for="user_name"><fmt:message key="app.welcome.name"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="user_email" type="email" name="user_email" value="" required/>
+                            <input id="user_email" type="email" name="user_email" value="${param.user_email}" required/>
                             <label for="user_email"><fmt:message key="app.welcome.email"/><em>*</em></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field">
-                            <input id="user_phone" type="tel" name="user_phone"/>
+                            <input id="user_phone" type="tel" name="user_phone" value="${param.user_phone}"/>
                             <label for="user_phone"><fmt:message key="app.welcome.phone"/></label>
                         </div>
                     </div>

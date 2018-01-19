@@ -1,29 +1,30 @@
-package ua.glushko.commands.impl.admin.users;
+package ua.glushko.commands.impl.admin.setup;
 import ua.glushko.authentification.Authentification;
-import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
+import ua.glushko.commands.Command;
+import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.User;
+import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /** Display credentials to the user to change them */
-public class SetupCommand extends Command {
+public class SetupCommand implements Command {
 
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         if(Authentification.isUserLogIn(request.getSession())) {
-            String userLogin = (String) request.getSession().getAttribute(Authentification.PARAM_NAME_LOGIN);
+            String userLogin = (String) request.getSession().getAttribute(Authentification.PARAM_LOGIN);
             UsersService usersService = UsersService.getService();
             try {
                 User user = usersService.getUserByLogin(userLogin);
                 request.getSession().setAttribute(UsersCommandHelper.PARAM_NAME_USER, user);
-            } catch (PersistException | TransactionException e) {
+            } catch (PersistException | TransactionException | ParameterException e) {
                 LOGGER.error(e);
             }
         }

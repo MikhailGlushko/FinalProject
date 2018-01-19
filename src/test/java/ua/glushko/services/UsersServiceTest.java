@@ -7,6 +7,7 @@ import ua.glushko.model.dao.H2DataSource;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
 import ua.glushko.model.entity.UserStatus;
+import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
@@ -51,15 +52,15 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void getUserByLogin() throws PersistException, TransactionException {
+    public void getUserByLogin() throws PersistException, TransactionException, ParameterException {
 
             UsersService usersService = UsersService.getService();
             User user = usersService.getUserByLogin("admin");
             assertNotNull(user);
     }
 
-    @Test(expected = PersistException.class)
-    public void getUserByLoginWrong() throws PersistException, TransactionException {
+    @Test (expected = PersistException.class)
+    public void getUserByLoginWrong() throws PersistException, TransactionException, ParameterException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserByLogin("adminadmin");
         assertNull(user);
@@ -84,34 +85,18 @@ public class UsersServiceTest {
         usersService.updateUser(user);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void updateUserResetPass() throws PersistException, TransactionException {
+    @Test
+    public void updateUserResetPass() throws PersistException, TransactionException, ParameterException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(5);
         assertNotNull(user);
-        User update = usersService.changePassword(user.getLogin(), "pass1", "pass1", "", "");
+        User update = usersService.changePassword(user.getLogin(), "P@ssw0rd");
     }
 
-    @Test(expected = NullPointerException.class)
-    public void updateUserWrongPass() throws PersistException, TransactionException {
-        UsersService usersService = UsersService.getService();
-        User user = usersService.getUserById(1);
-        assertNotNull(user);
-        User update = usersService.changePassword(user.getLogin(), "pass1", "pass2", "", "");
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void updateUserWrongKey() throws PersistException, TransactionException {
-        UsersService usersService = UsersService.getService();
-        User user = usersService.getUserById(1);
-        assertNotNull(user);
-        User update = usersService.changePassword(user.getLogin(), "pass1", "pass1", "1", "2");
-    }
-
-    @Test(expected = PersistException.class)
+    @Test
     public void updateUserNullLogin() throws PersistException, TransactionException {
         UsersService usersService = UsersService.getService();
-        User user = usersService.getUserById(5);
+        User user = usersService.getUserById(6);
         assertNotNull(user);
         user.setLogin(null);
         usersService.updateUser(user);

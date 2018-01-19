@@ -5,7 +5,6 @@ import ua.glushko.commands.impl.auth.RecoveryCommand;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,8 +39,8 @@ public class MailServlet extends HttpServlet{
     }
 
     public void processRequest(HttpServletRequest req, HttpServletResponse resp) {
-        req.setAttribute(RecoveryCommand.PARAM_NAME_MAIL_SETUP,properties);
-        String login = req.getParameter(UsersCommandHelper.PARAM_NAME_USER_LOGIN);
+        req.setAttribute(RecoveryCommand.PARAM_MAIL_SETUP,properties);
+        String login = req.getParameter(UsersCommandHelper.PARAM_USER_LOGIN);
         RecoveryCommand recoveryCommand = new RecoveryCommand();
         CommandRouter commandRouter = recoveryCommand.execute(req, resp);
         commandRouter.route();

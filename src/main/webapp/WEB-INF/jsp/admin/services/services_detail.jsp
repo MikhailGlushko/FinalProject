@@ -30,7 +30,8 @@
                 <form name="edit" method="post" action="/do">
                     <br/>
                     <input type="hidden" name="command" value="services_action"/>
-                    <input type="hidden" name="service_id" value="${service_detail.id}">
+                    <input type="hidden" name="service_id" value="${service_detail.id}"/>
+                    <input type="hidden" name="page" value="${param.page}"/>
                     <div class="row">
                         <div class="input-field">
                             <input id="service_name" type="text" name="service_name" value="${service_detail.name}" required/>
@@ -61,7 +62,7 @@
                             <button name="action" class="mainmenubutton" type="submit" value="save">
                                 <fmt:message key='app.welcome.save'/>
                             </button>
-                            <button name="action" class="mainmenubutton" type="button" value="cancel" onClick="window.location.href='/do?command=services&page=${page}'">
+                            <button name="action" class="mainmenubutton" type="button" value="cancel" onClick="window.location.href='/do?command=services&page=${param.page}'">
                                 <fmt:message key='app.welcome.cancel'/>
                             </button>
                             <button name="action" class="mainmenubutton" type="submit" value="delete">
