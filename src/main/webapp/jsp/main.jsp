@@ -17,6 +17,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ремонтное агенство::Вход</title>
     <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/login.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="../dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="main">

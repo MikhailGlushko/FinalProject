@@ -14,6 +14,7 @@ public class UsersCommandHelper {
     public static final String PARAM_USER_ID = "user_id";
     public static final String PARAM_USER_LOGIN = "user_login";
     public static final String PARAM_USER_PASSWORD = "user_password";
+    public static final String PARAM_USER_PASSWORD_MD5HEX = "user_password_md5hex";
     public static final String PARAM_USER_PASSWORD2 = "user_password2";
     public static final String PARAM_USER_SECRET = "user_secret";
     public static final String PARAM_USER_NAME = "user_name";

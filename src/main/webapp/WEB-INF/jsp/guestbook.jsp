@@ -19,6 +19,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ремонтное агенство::Заказы</title>
     <link href="../../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main">
@@ -33,7 +35,7 @@
                 <fieldset>
                     <input type="hidden" name="command" value="gestbook_new">
                     <legend>Новое сообщение</legend>
-                    <div class="row">
+                    <div class="input-row">
                         <div class="input-field">
                             <input id="user_name" value="" name="user_name" required/>
                             <label for="user_name">Автор сообщения<em>*</em></label>
@@ -47,7 +49,7 @@
                             <label for="memo">Сообщение<em>*</em></label>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="input-row">
                         <button name="action" class="mainmenubutton" type="submit" value="add">
                             <fmt:message key='app.welcome.save'/>
                         </button>
@@ -60,7 +62,7 @@
                 <c:forEach items="${guestbook_list}" var="item">
                     <fieldset>
                         <legend>${item.id}</legend>
-                        <div class="row">
+                        <div class="input-row">
                             <div class="input-field">
                                 <input id="i1${item.id}" value="${item.userName}" disabled/>
                                 <label for="i1${item.id}">Автор сообщения</label>

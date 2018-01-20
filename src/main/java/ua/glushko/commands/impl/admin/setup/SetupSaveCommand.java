@@ -13,6 +13,8 @@ import ua.glushko.services.impl.UsersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.Objects;
+
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import static ua.glushko.services.Validator.getValidatedUserBeforeSetup;
 

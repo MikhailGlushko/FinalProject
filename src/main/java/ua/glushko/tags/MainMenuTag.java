@@ -26,20 +26,37 @@ public class MainMenuTag extends TagSupport {
             String locale = (String) session.getAttribute(PARAM_LOCALE);
             StringBuilder builder = new StringBuilder();
 
-            builder.append("<div style=\"float: left; width: 70%\">")
-                    .append("<a class=\"mainmenubutton\" href=\"")
+            builder.append("<div style=\"float: left; width: 75%\">")
+                    .append("<a class=\"btn btn-default col-lg-2\" href=\"")
                     .append(ConfigurationManager.getProperty(PATH_PAGE_INDEX))
                     .append("\">")
                     .append(MessageManager.getMessage("main.home",locale))
                     .append("</a>");
 
             Object attributeUserGrants = session.getAttribute(Authentification.PARAM_GRANTS);
-
             List<Grant> grants = (List<Grant>) attributeUserGrants;
+
+//            if(Objects.nonNull(grants)) {
+//                builder.append("<div class=\"dropdown\" \"col-lg-9\">")
+//                        .append("<button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">")
+//                        .append("Выпадающий список<span class=\"caret\"></span></button>")
+//                        .append("<ul class=\"dropdown-menu\">");
+//                for (Grant grant : grants) {
+//                    if (Objects.nonNull(grant) && grant.getAction().contains("M")) {
+//                        builder.append("<li><a href=\"/do?command=")
+//                                .append(grant.getCommand())
+//                                .append("\">")
+//                                .append(MessageManager.getMessage("menu." + grant.getMenu(), locale))
+//                                .append("</a></li>");
+//                    }
+//                }
+//                builder.append("</ul></div>");
+//            }
+
             if(Objects.nonNull(grants))
             for (Grant grant:grants) {
                 if (Objects.nonNull(grant) && grant.getAction().contains("M")){
-                    builder.append("<a class=\"mainmenubutton\" href=\"/do?command=")
+                    builder.append("<a class=\"btn btn-default col-lg-2 \" href=\"/do?command=")
                             .append(grant.getCommand())
                             .append("\">")
                             .append(MessageManager.getMessage("menu."+grant.getMenu(),locale))
@@ -47,21 +64,21 @@ public class MainMenuTag extends TagSupport {
                 }
             }
             builder.append("</div>");
-            builder.append("<div style=\"float: left; width: 30%;\" align=\"right\">");
+            builder.append("<div style=\"float: left; width: 25%;\" align=\"right\">");
             Object userName = pageContext.getSession().getAttribute(Authentification.PARAM_NAME_NAME);
             if(Objects.nonNull(userName)){
-                builder.append("<a class=\"mainmenubutton\" href=\"/do?command=")
+                builder.append("<a class=\"btn btn-default col-lg-6 col-lg-offset-6\" href=\"/do?command=")
                         .append(COMMAND_LOGOUT)
                         .append("\" style=\"margin-right: 0;\">")
                         .append(MessageManager.getMessage("main.logout",locale))
                         .append("</a>");
             } else {
-                builder.append("<a class=\"mainmenubutton\" href=\"")
+                builder.append("<a class=\"btn btn-default col-lg-6\" href=\"")
                         .append(ConfigurationManager.getProperty(PATH_PAGE_LOGIN))
                         .append("\" style=\"margin-right: 0;\">")
                         .append(MessageManager.getMessage("main.login",locale))
                         .append("</a>")
-                        .append("<a class=\"mainmenubutton\" href=\"")
+                        .append("<a class=\"btn btn-default col-lg-6\" href=\"")
                         .append(ConfigurationManager.getProperty(PATH_PAGE_REGISTER))
                         .append("\" style=\"margin-right: 0;\">")
                         .append(MessageManager.getMessage("main.register",locale))

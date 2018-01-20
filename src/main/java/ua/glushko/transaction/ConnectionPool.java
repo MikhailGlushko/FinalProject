@@ -25,7 +25,7 @@ public class ConnectionPool {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new PersistException("No Database");
         }
     }
 

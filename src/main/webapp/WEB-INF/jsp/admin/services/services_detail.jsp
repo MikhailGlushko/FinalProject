@@ -17,6 +17,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ремонтное агенство::Редактирование услуги</title>
     <link href="../../../../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../../../../dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../../css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main">
@@ -32,20 +34,20 @@
                     <input type="hidden" name="command" value="services_action"/>
                     <input type="hidden" name="service_id" value="${service_detail.id}"/>
                     <input type="hidden" name="page" value="${param.page}"/>
-                    <div class="row">
+                    <div class="input-row">
                         <div class="input-field">
                             <input id="service_name" type="text" name="service_name" value="${service_detail.name}" required/>
                             <label for="service_name"><fmt:message key="service.name"/><em>*</em></label>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="input-row">
                         <div class="input-field">
                             <input id="service_name_ru" type="text" name="service_name_ru" value="${service_detail.nameRu}" required/>
                             <label for="service_name_ru"><fmt:message key="service.name.ru"/><em>*</em></label>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="input-row">
                         <div class="input-field">
                             <input id="service_parent" type="number" name="service_parent" value="${service_detail.parent}" required/>
                             <label for="service_parent"><fmt:message key="service.parent"/><em>*</em></label>
@@ -58,7 +60,7 @@
                         ${nullPage}
                     <hr/>
                     <br/>
-                    <div class="row">
+                    <div class="input-row">
                             <button name="action" class="mainmenubutton" type="submit" value="save">
                                 <fmt:message key='app.welcome.save'/>
                             </button>

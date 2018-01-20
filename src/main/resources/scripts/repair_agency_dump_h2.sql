@@ -106,7 +106,7 @@ INSERT INTO `grants` VALUES
 (14, 'guestbook','guestbook', 'MANAGER', 'MR',   'ALL'),
 (15, 'guestbook','guestbook', 'MASTER',  'MR',   'ALL'),
 (16, 'guestbook','guestbook', 'CUSTOMER','MRC',  'ALL'),
-(17, 'guestbook','guestbook', 'GUEST',   'MRC',  'ALL'),
+(17, 'guestbook','guestbook', 'GUEST',   'MRC',  'ALL')
 ;
 
 DROP TABLE IF EXISTS `repair_services`;
@@ -262,14 +262,14 @@ CREATE TABLE `guest_book` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `guest_book` VALUES (1,1,'CUSTOMER','THANKS',NULL, 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (2,1,'CUSTOMER2','THANKS',NULL, 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (3,1,'CUSTOMER3','THANKS',NULL, 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (4,1,'CUSTOMER4','THANKS',NULL, 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (5,1,'CUSTOMER5','THANKS',NULL, 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (6,1,'CUSTOMER6','THANKS',NULL, 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (7,1,'CUSTOMER7','THANKS',NULL, 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (8,1,'CUSTOMER8','THANKS',NULL, 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (9,1,'CUSTOMER9','THANKS',NULL, 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (10,1,'CUSTOMER10','THANKS',NULL, 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (11,1,'CUSTOMER11','THANKS',NULL, 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (1,1,'CUSTOMER','THANKS',now(), 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (2,1,'CUSTOMER2','THANKS',now(), 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (3,1,'CUSTOMER3','THANKS',now(), 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (4,1,'CUSTOMER4','THANKS',now(), 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (5,1,'CUSTOMER5','THANKS',now(), 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (6,1,'CUSTOMER6','THANKS',now(), 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (7,1,'CUSTOMER7','THANKS',now(), 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (8,1,'CUSTOMER8','THANKS',now(), 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (9,1,'CUSTOMER9','THANKS',now(), 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (10,1,'CUSTOMER10','THANKS',now(), 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (11,1,'CUSTOMER11','THANKS',now(), 'SOME TEXT');

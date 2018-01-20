@@ -141,6 +141,7 @@ public class Validator {
         String userLogin = request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN);
         String userPassword = request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD);
         String userPassword2 = request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2);
+        String userPasswordMd5hex = request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD_MD5HEX);
         String userName  = request.getParameter(UsersCommandHelper.PARAM_USER_NAME);
         String userEmail = request.getParameter(UsersCommandHelper.PARAM_USER_EMAIL);
         String userPhone = request.getParameter(UsersCommandHelper.PARAM_USER_PHONE);

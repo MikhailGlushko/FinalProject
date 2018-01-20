@@ -15,6 +15,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ремонтное агенство::Вход</title>
     <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main">
@@ -37,51 +39,66 @@
             Другие символы - запрещены.
             </div>
             <div class="login_div" align="center">
-                <p class="title"><fmt:message key="app.welcome.resetpassword"/></p>
-                <form name="register" method="post" action="/do">
+                <h2 class="form-signin-heading"><fmt:message key="app.welcome.resetpassword"/></h2>
+                <form class="form-signin" name="register" method="post" action="/do">
                     <input type="hidden" name="command" value="resetpassword"/>
-                    <div class="row">
+                    <div class="input-row">
                         <div class="input-field">
-                            <input id="user_login" type="text" name="user_login" value="${param.user_login}" required/>
-                            <label for="user_login"><fmt:message key="app.welcome.login"/><em>*</em></label>
+                            <label class="sr-only" for="user_login"><fmt:message key="app.welcome.login"/><em>*</em></label>
+                            <input class="form-control" id="user_login" type="text" name="user_login"
+                                   placeholder="<fmt:message key="app.welcome.login"/>"
+                                   value="${param.user_login}" required/>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="input-row">
                         <div class="input-field">
-                            <input id="user_password" type="password" name="user_password" value="${param.user_password}" required/>
-                            <label for="user_password"><fmt:message key="app.welcome.password"/><em>*</em></label>
+                            <label class="sr-only" for="user_password"><fmt:message key="app.welcome.password"/><em>*</em></label>
+                            <input class="form-control" id="user_password" type="password" name="user_password"
+                                   placeholder="<fmt:message key="app.welcome.password"/>"
+                                   value="${param.user_password}" required/>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="input-row">
                         <div class="input-field">
-                            <input id="user_password2" type="password" name="user_password2" value="${param.user_password2}" required>
-                            <label for="user_password2"><fmt:message key="app.welcome.password2"/><em>*</em></label>
+                            <label class="sr-only" for="user_password2"><fmt:message key="app.welcome.password2"/><em>*</em></label>
+                            <input class="form-control" id="user_password2" type="password" name="user_password2"
+                                   placeholder="<fmt:message key="app.welcome.password2"/>"
+                                   value="${param.user_password2}" required>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="input-row">
                         <div class="input-field">
-                            <input id="user_secret" type="text" name="user_secret" value="${param.user_secret}" required>
-                            <label for="user_secret"><fmt:message key="app.welcome.secret"/><em>*</em></label>
+                            <label class="sr-only" for="user_secret"><fmt:message key="app.welcome.secret"/><em>*</em></label>
+                            <input class="form-control" id="user_secret" type="text" name="user_secret"
+                                   placeholder="<fmt:message key="app.welcome.secret"/>"
+                                   value="${param.user_secret}" required>
                         </div>
                     </div>
-                      ${errorMessage}
-                    <br/>                        ${wrongAction}
-                    <br/>                        ${nullPage}
-                    <hr/>
-                    <br/>
-                    <div class="row">
+                    <c:if test="${not empty errorMessage}">
+                        ${errorMessage}
+                    </c:if>
+                    <c:if test="${not empty wrongAction}">
+                        <br/>                        ${wrongAction}
+                    </c:if>
+                    <c:if test="${not empty nullPage}">
+                        <br/>                        ${nullPage}
+                    </c:if>
+                    <div class="input-row">
                         <div class="input-field">
-                            <button class="mainmenubutton" type="submit" name="action" value="register">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit" name="action" value="register">
                                 <fmt:message key='app.welcome.enter'/>
                             </button>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="input-field">
-                            <button class="mainmenubutton" type="" name="action" value="cancel" onclick="window.location.href='/jsp/login.jsp'">
-                                <fmt:message key='app.welcome.cancel'/>
-                            </button>
-                        </div>
+                    <div class="input-row">
+                        <button class="btn btn-sm btn-link" type="button" style="float: left"
+                                onClick="window.location.href='/jsp/login.jsp'">
+                            <fmt:message key='app.welcome.login'/>
+                        </button>
+                        <button class="btn btn-sm btn-link" type="button" style="float: right"
+                                onClick="window.location.href='/jsp/register.jsp'">
+                            <fmt:message key='app.welcome.register'/>
+                        </button>
                     </div>
                 </form>
             </div>

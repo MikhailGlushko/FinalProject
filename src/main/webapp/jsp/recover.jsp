@@ -15,6 +15,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ремонтное агенство::Вход</title>
     <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main">
@@ -25,40 +27,33 @@
         <p>&nbsp;</p>
         <c:if test="${empty user_login}">
             <div class="login_div" align="center">
-                <p class="title"><fmt:message key="app.welcome.pleaseLogin"/></p>
-                <form name="recoveryForm" method="post" action="/MailServlet">
+                <h2 class="form-signin-heading"><fmt:message key="app.welcome.pleaseLogin"/></h2>
+                <form name="recoveryForm" method="post" action="/MailServlet" class="form-signin">
                     <input type="hidden" name="command" value="recovery"/>
-                    <div class="row">
+                    <div class="input-row">
                         <div class="input-field">
-                            <label for="icon_prefix"><fmt:message key="app.welcome.login"/></label>
-                            <input id="icon_prefix" type="text" name="user_login"
+                            <label class="sr-only" for="user_login"><fmt:message key="app.welcome.login"/></label>
+                            <input class="form-control" id="user_login" type="text" name="user_login"
+                                   placeholder="<fmt:message key="app.welcome.login"/>"
                                    value="${param.user_login}" required/>
                         </div>
                     </div>
-                    <br/>
-                    <br/>                        ${errorMessage}
-                    <br/>                        ${wrongAction}
-                    <br/>                        ${nullPage}
-                    <hr/>
-                    <br/>
-                    <div class="row">
+                    <c:if test="${not empty errorMessage}">
+                                                    ${errorMessage}
+                    </c:if>
+                    <c:if test="${not empty wrongAction}">
+                        <br/>                        ${wrongAction}
+                    </c:if>
+                    <c:if test="${not empty nullPage}">
+                        <br/>                        ${nullPage}
+                    </c:if>
+                    <div class="input-row">
                         <div class="input-field">
-                            <button class="mainmenubutton" type="submit" name="action">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit" name="action">
                                 <fmt:message key='app.welcome.enter'/>
                             </button>
                         </div>
                     </div>
-                    <c:if test="${not empty errorMessage}">
-                        <br/>
-                        <br/>
-                        <div class="row">
-                            <div class="input-field">
-                                <button class="mainmenubutton" type="button" onClick="window.location.href='/jsp/recover.jsp'">
-                                    <fmt:message key='app.welcome.recover'/>
-                                </button>
-                            </div>
-                        </div>
-                    </c:if>
                 </form>
             </div>
         </c:if>

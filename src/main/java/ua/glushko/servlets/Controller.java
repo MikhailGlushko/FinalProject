@@ -8,31 +8,34 @@ import ua.glushko.transaction.ConnectionPool;
 import ua.glushko.transaction.H2DataSource;
 import ua.glushko.transaction.MySQLDataSource;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 @WebServlet("/do")
 public class Controller extends HttpServlet {
 
-    private final String PROPERTY_NAME_DATABASE = "database";
-    private final String DATABASE_NAME = ConfigurationManager.getProperty(PROPERTY_NAME_DATABASE);
+    private final String DATA_SOURCE = ConfigurationManager.getProperty("jdbc/repair_agency");
+    private final String JNDI_NAME   = ConfigurationManager.getProperty("java:/comp/env");
 
     @Override
     public void init() throws ServletException {
         super.init();
-        //TODO Убрать!
-        if (ConnectionPool.getConnectionPool().getDataSource() == null)
-            switch (DATABASE_NAME) {
-                case "H2":
-                    ConnectionPool.getConnectionPool().setDataSource(H2DataSource.H2_CONNECTION_POOL);
-                    break;
-                case "MYSQL":
-                    ConnectionPool.getConnectionPool().setDataSource(MySQLDataSource.getDatasource());
-                    break;
+        if (ConnectionPool.getConnectionPool().getDataSource() == null){
+            try {
+                Context context = (Context)(new InitialContext().lookup(JNDI_NAME));
+                DataSource dataSource = (DataSource) context.lookup(DATA_SOURCE);
+                ConnectionPool.getConnectionPool().setDataSource(dataSource);
+            } catch (NamingException e) {
+                e.printStackTrace();
             }
+        }
     }
 
     @Override

@@ -1,12 +1,10 @@
 package ua.glushko.services.impl;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.dao.GenericDAO;
 import ua.glushko.model.dao.MySQLDAOFactory;
 import ua.glushko.model.dao.impl.GrantDAO;
 import ua.glushko.model.dao.impl.UserDAO;
-import ua.glushko.model.entity.GenericEntity;
 import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
@@ -14,10 +12,8 @@ import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
-import ua.glushko.services.Validator;
 import ua.glushko.transaction.TransactionManager;
 
-import java.security.MessageDigest;
 import java.util.*;
 
 public class UsersService extends AbstractService {
@@ -71,13 +67,19 @@ public class UsersService extends AbstractService {
         //    throw new PersistException(MessageManager.getMessage("user.incorrectLoginOrPassword"));
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         try {
-            if(user.getPassword()!=null) {
-                String m5HexPassword = DigestUtils.md5Hex(user.getPassword());
-                user.setPassword(m5HexPassword);
-            }
             TransactionManager.beginTransaction();
-            if (user.getId() != null && user.getId() != 0)
-                userDao.update(user);
+            if (user.getId() != null && user.getId() != 0) {
+                User oldUser = userDao.read(user.getId());
+                if(Objects.isNull(oldUser))
+                    throw new PersistException("user.not.found");
+                oldUser.setName(user.getName());
+                oldUser.setLogin(user.getLogin());
+                oldUser.setPhone(user.getPhone());
+                oldUser.setEmail(user.getEmail());
+                if(user.getPassword()!=null && user.getPassword()!="")
+                    oldUser.setPassword(DigestUtils.md5Hex(user.getPassword()));
+                userDao.update(oldUser);
+            }
             else
                 userDao.create(user);
             TransactionManager.endTransaction();
@@ -117,6 +119,7 @@ public class UsersService extends AbstractService {
             }
             TransactionManager.endTransaction();
         } finally {
+            LOGGER.info("ROLLBACK");
             TransactionManager.rollBack();
         }
 
