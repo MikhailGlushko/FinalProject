@@ -23,8 +23,8 @@ import java.util.Map;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ua.glushko.authentification.Authentification.PARAM_GRANTS;
-import static ua.glushko.authentification.Authentification.PARAM_ROLE;
+import static ua.glushko.authentification.Authentication.PARAM_GRANTS;
+import static ua.glushko.authentification.Authentication.PARAM_ROLE;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_LOCALE;
 import static ua.glushko.commands.CommandFactory.COMMAND_SERVICES;
@@ -50,7 +50,7 @@ public class ServicesListCommandTest {
     @Test
     public void getUsersListForUserAdmin() throws ServletException, PersistException, TransactionException {
         UsersService usersService = UsersService.getService();
-        useDataAndGrantsSet = usersService.authenticateUser("admin", "admin");
+        useDataAndGrantsSet = usersService.authenticateUser("admin", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
         when(session.getAttribute(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("admin");
         when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.ADMIN);
@@ -64,7 +64,7 @@ public class ServicesListCommandTest {
     @Test
     public void getUsersListForUserManager() throws ServletException, PersistException, TransactionException {
         UsersService usersService = UsersService.getService();
-        useDataAndGrantsSet = usersService.authenticateUser("manager", "manager");
+        useDataAndGrantsSet = usersService.authenticateUser("manager", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
         when(session.getAttribute(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("manager");
         when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.MANAGER);
@@ -78,7 +78,7 @@ public class ServicesListCommandTest {
     @Test
     public void getUsersListForUserMaster() throws ServletException, PersistException, TransactionException {
         UsersService usersService = UsersService.getService();
-        useDataAndGrantsSet = usersService.authenticateUser("master", "master");
+        useDataAndGrantsSet = usersService.authenticateUser("master", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
         when(session.getAttribute(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("master");
         when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.MASTER);
@@ -92,7 +92,7 @@ public class ServicesListCommandTest {
     @Test
     public void getUsersListForUserCustomer() throws ServletException, PersistException, TransactionException {
         UsersService usersService = UsersService.getService();
-        useDataAndGrantsSet = usersService.authenticateUser("customer", "customer");
+        useDataAndGrantsSet = usersService.authenticateUser("customer", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
         when(session.getAttribute(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("customer");
         when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.CUSTOMER);
@@ -103,7 +103,7 @@ public class ServicesListCommandTest {
         controller.processRequest(request,response);
     }
 
-    @Test (expected = NullPointerException.class)
+    @Test (expected = PersistException.class)
     public void getUsersListForGuest() throws ServletException, PersistException, TransactionException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser(null, null);

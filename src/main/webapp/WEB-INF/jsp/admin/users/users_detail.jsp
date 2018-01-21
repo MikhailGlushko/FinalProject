@@ -33,34 +33,37 @@
                     <input type="hidden" name="command" value="users_action"/>
                     <input type="hidden" name="user_id" value="${user_detail.id}"/>
                     <input type="hidden" name="page" value="${param.page}"/>
-                    <%--<div class="input-row">--%>
+                    <div class="row">
                         <div class="form-group">
                             <label for="user_name" style="float: left"><fmt:message key="app.welcome.name"/><em>*</em></label>
-                            <input class="form-control" id="user_name" type="text" name="user_name"
+                            <input class="input-sm" style="float: right" id="user_name" type="text" name="user_name"
                                    placeholder="<fmt:message key="app.welcome.name"/>"
                                    value="${user_detail.name}" required/>
                         </div>
-                    <%--</div>--%>
-                    <div class="input-row">
+                    </div>
+                    <br>
+                    <div class="row">
                         <div class="form-group">
                             <label for="user_email" style="float: left"><fmt:message key="app.welcome.email"/><em>*</em></label>
-                            <input class="form-control" id="user_email" type="email" name="user_email"
+                            <input class="input-sm" style="float: right" id="user_email" type="email" name="user_email"
                                    placeholder="<fmt:message key="app.welcome.email"/>"
                                    value="${user_detail.email}" required/>
                         </div>
                     </div>
-                    <div class="input-row">
+                    <br>
+                    <div class="row">
                         <div class="form-group">
                             <label for="user_phone" style="float: left"><fmt:message key="app.welcome.phone"/></label>
-                            <input class="form-control" id="user_phone" type="tel" name="user_phone"
+                            <input class="input-sm" style="float: right" id="user_phone" type="tel" name="user_phone"
                                    placeholder="<fmt:message key="app.welcome.phone"/>"
                                    value="${user_detail.phone}"/>
                         </div>
                     </div>
-                    <div class="input-row">
+                    <br>
+                    <div class="row">
                         <div class="form-group">
                             <label for="user_role" style="float: left"><fmt:message key="app.welcome.role"/><em>*</em></label>
-                            <select class="form-control" id="user_role" name="user_role">
+                            <select class="input-sm" style="float: right" id="user_role" name="user_role">
                                 <option value="${user_detail.role}">${user_detail.role}</option>
                                 <option value="ADMIN">ADMIN</option>
                                 <option value="MANAGER">MANAGER</option>
@@ -69,10 +72,11 @@
                             </select>
                         </div>
                     </div>
-                    <div class="input-row">
+                    <br>
+                    <div class="row">
                         <div class="form-group">
                             <label for="user_status" style="float: left"><fmt:message key="app.welcome.status"/><em>*</em></label>
-                            <select class="form-control" id="user_status" name="user_status">
+                            <select class="input-sm" style="float: right" id="user_status" name="user_status">
                                 <option value="${user_detail.status}">${user_detail.status}</option>
                                 <option value="ACTIVE">ACTIVE</option>
                                 <option value="CLOSE">CLOSE</option>
@@ -80,6 +84,7 @@
                             </select>
                         </div>
                     </div>
+                    <br>
                     <c:if test="${not empty errorMessage}">
                         ${errorMessage}
                     </c:if>
@@ -89,6 +94,7 @@
                     <c:if test="${not empty nullPage}">
                         <br/>                        ${nullPage}
                     </c:if>
+                    <br>
                     <div class="input-row">
                             <button class="btn btn-lg btn-primary btn-block" type="submit" name="action" value="save">
                                 <fmt:message key='app.welcome.save'/>

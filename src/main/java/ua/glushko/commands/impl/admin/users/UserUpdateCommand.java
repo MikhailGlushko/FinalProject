@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.users;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.MessageManager;
@@ -13,8 +13,7 @@ import ua.glushko.services.impl.UsersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static ua.glushko.authentification.Authentification.U;
-import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS_READ;
+import static ua.glushko.authentification.Authentication.U;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS_READ;
 import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.PARAM_USER_ID;
@@ -30,7 +29,7 @@ public class UserUpdateCommand implements Command {
         String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
         User userNew = new User();
         try {
-            int access = Authentification.checkAccess(request);
+            int access = Authentication.checkAccess(request);
             if ((access & U) == U) {
                 userNew = getValidatedUserBeforeUpdateDetails(request);
                 UsersService usersService = UsersService.getService();
@@ -60,5 +59,6 @@ public class UserUpdateCommand implements Command {
         userTo.setPhone(userFrom.getPhone());
         userTo.setRole(userFrom.getRole());
         userTo.setStatus(userFrom.getStatus());
+        userTo.setPassword(null);
     }
 }

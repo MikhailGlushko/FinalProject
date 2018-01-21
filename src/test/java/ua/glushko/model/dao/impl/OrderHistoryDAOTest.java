@@ -3,7 +3,6 @@ package ua.glushko.model.dao.impl;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.entity.Action;
-import ua.glushko.model.entity.GuestBook;
 import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.model.exception.PersistException;
 import ua.glushko.transaction.ConnectionPool;
@@ -61,7 +60,7 @@ public class OrderHistoryDAOTest {
         orderHistory.setUserId(1);
         orderHistory.setOrderId(1);
         orderHistory.setAction(Action.ADD_COMMENT.name());
-        orderHistory.setDecription(Action.ADD_COMMENT.name());
+        orderHistory.setDescription(Action.ADD_COMMENT.name());
         orderHistory.setActionDate(new Date(System.currentTimeMillis()));
         orderHistory.setOldValue(Action.ADD_COMMENT.name());
         orderHistory.setNewValue(Action.ADD_COMMENT.name());

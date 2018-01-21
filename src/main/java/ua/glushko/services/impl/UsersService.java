@@ -14,6 +14,7 @@ import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class UsersService extends AbstractService {
@@ -77,7 +78,9 @@ public class UsersService extends AbstractService {
                 oldUser.setPhone(user.getPhone());
                 oldUser.setEmail(user.getEmail());
                 if(user.getPassword()!=null && user.getPassword()!="")
-                    oldUser.setPassword(DigestUtils.md5Hex(user.getPassword()));
+                    oldUser.setPassword(DigestUtils.md5Hex(user.getLogin()+user.getPassword()));
+                oldUser.setStatus(user.getStatus());
+                oldUser.setRole(user.getRole());
                 userDao.update(oldUser);
             }
             else
@@ -108,7 +111,7 @@ public class UsersService extends AbstractService {
         GenericDAO<User> userDAO = MySQLDAOFactory.getFactory().getUserDao();
         GenericDAO<Grant> grantDAO = MySQLDAOFactory.getFactory().getGrantDao();
         try {
-            String m5HexPassword = DigestUtils.md5Hex(password);
+            String m5HexPassword = DigestUtils.md5Hex(login+password);
             TransactionManager.beginTransaction();
             user = ((UserDAO) userDAO).checkUserAuth(login, m5HexPassword);
             if (Objects.nonNull(user)) {
@@ -139,7 +142,7 @@ public class UsersService extends AbstractService {
         if (Objects.isNull(userByLogin)) {
             User user = new User();
             try {
-                String m5HexPassword = DigestUtils.md5Hex(password);
+                String m5HexPassword = DigestUtils.md5Hex(login+password);
                 user.setPassword(m5HexPassword);
                 TransactionManager.beginTransaction();
                 user.setLogin(login);
@@ -165,7 +168,7 @@ public class UsersService extends AbstractService {
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         User user;
         try {
-            String m5HexPassword = DigestUtils.md5Hex(password);
+            String m5HexPassword = DigestUtils.md5Hex(login+password);
             user = ((UserDAO) userDao).getUserByLogin(login);
             user.setPassword(m5HexPassword);
             TransactionManager.beginTransaction();
@@ -189,12 +192,12 @@ public class UsersService extends AbstractService {
         }
     }
 
-    public int count() {
+    public int count() throws SQLException {
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         return userDao.count();
     }
 
-    public int count(int id) {
+    public int count(int id) throws SQLException {
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         return ((UserDAO) userDao).count(id);
     }

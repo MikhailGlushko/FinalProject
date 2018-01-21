@@ -15,7 +15,7 @@ import static ua.glushko.commands.Command.*;
 /**
  * Checking the rights of the current user
  */
-public class Authentification {
+public class Authentication {
 
     public static final String PARAM_ID = "id";
     public static final String PARAM_LOGIN = "login";
@@ -42,19 +42,19 @@ public class Authentification {
     public static final int D = 16;
     public static final int d = 1;
 
-    private Authentification() {
+    private Authentication() {
     }
 
     /**
      * Checks if there is information about the user in the session
      */
     public static boolean isUserLogIn(HttpSession session) {
-        return Objects.nonNull(session.getAttribute(Authentification.PARAM_LOGIN));
+        return Objects.nonNull(session.getAttribute(Authentication.PARAM_LOGIN));
     }
 
 
     public static String getCurrentUserLogin(HttpSession session) {
-        Object attribute = session.getAttribute(Authentification.PARAM_LOGIN);
+        Object attribute = session.getAttribute(Authentication.PARAM_LOGIN);
         if (Objects.isNull(attribute))
             return null;
         return attribute.toString();
@@ -69,16 +69,18 @@ public class Authentification {
      */
     public static int checkAccess(HttpServletRequest request) throws ParameterException {
         int userAccess = 0;
-        List<Grant> currentUserGrantList = (List<Grant>) request.getSession().getAttribute(PARAM_GRANTS);
+        List currentUserGrantList = null;
+        if(request.getSession().getAttribute(PARAM_GRANTS) instanceof List)
+            currentUserGrantList = (List) request.getSession().getAttribute(PARAM_GRANTS);
         if (Objects.isNull(currentUserGrantList))
             throw new ParameterException("grants.is.null");
         UserRole currentUserRole = (UserRole) request.getSession().getAttribute(PARAM_ROLE);
         if (Objects.isNull(currentUserRole))
             throw new ParameterException("role.is.null");
         String command = request.getParameter(PARAM_COMMAND);
-        for (Grant grant : currentUserGrantList) {
-            if (currentUserRole == grant.getRole() && command.startsWith(grant.getCommand())) // считаем доступ только для нужной нам комманды
-                userAccess |= calculateAccess(grant);
+        for (Object grant : currentUserGrantList) {
+            if (grant instanceof Grant && currentUserRole == ((Grant)grant).getRole() && command.startsWith(((Grant)grant).getCommand())) // считаем доступ только для нужной нам комманды
+                userAccess |= calculateAccess((Grant)grant);
         }
 
         LOGGER.debug(userAccess);

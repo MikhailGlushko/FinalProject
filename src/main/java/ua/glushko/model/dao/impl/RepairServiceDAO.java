@@ -77,7 +77,7 @@ public class RepairServiceDAO extends AbstractDAO<RepairService> {
         return list;
     }
 
-    protected String getCountSqury(int userId) {
+    protected String getCountQuery(int userId) {
         return "select count(*) AS total from " + getTableName();
     }
 }

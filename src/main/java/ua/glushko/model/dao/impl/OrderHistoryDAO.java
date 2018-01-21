@@ -22,7 +22,7 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
     private final String NAME_FIELD_USER_ID = "user_id";
     private final String NAME_FIELD_ACTION = "action";
     private final String NAME_FIELD_DESCRIPTION = "description";
-    private final String NAME_FIELD_ACTION_ADTE = "action_date";
+    private final String NAME_FIELD_ACTION_DATE = "action_date";
     private final String NAME_FIELD_OLD_VALUE = "old_value";
     private final String NAME_FIELD_NEW_VALUE = "new_value";
     private final String NAME_FIELD_USER_NAME = "user_name";
@@ -49,7 +49,7 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
                 .append(NAME_FIELD_USER_ID).append(",")
                 .append(NAME_FIELD_ACTION).append(",")
                 .append(NAME_FIELD_DESCRIPTION).append(",")
-                .append(NAME_FIELD_ACTION_ADTE).append(",")
+                .append(NAME_FIELD_ACTION_DATE).append(",")
                 .append(NAME_FIELD_OLD_VALUE).append(",")
                 .append(NAME_FIELD_NEW_VALUE).toString();
     }
@@ -65,7 +65,7 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
         statement.setInt(1, entity.getOrderId());
         statement.setInt(2, entity.getUserId());
         statement.setString(3, entity.getAction());
-        statement.setString(4, entity.getDecription());
+        statement.setString(4, entity.getDescription());
         if(entity.getActionDate()!=null)
             statement.setTimestamp(5, new Timestamp(entity.getActionDate().getTime()));
         else
@@ -89,9 +89,9 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
             item.setOrderId(resultSet.getInt(NAME_FIELD_ORDER_ID));
             item.setUserId(resultSet.getInt(NAME_FIELD_USER_ID));
             item.setAction(resultSet.getString(NAME_FIELD_ACTION));
-            item.setDecription(resultSet.getString(NAME_FIELD_DESCRIPTION));
-            if(resultSet.getDate(NAME_FIELD_ACTION_ADTE)!=null)
-                item.setActionDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_ACTION_ADTE).getTime()));
+            item.setDescription(resultSet.getString(NAME_FIELD_DESCRIPTION));
+            if(resultSet.getDate(NAME_FIELD_ACTION_DATE)!=null)
+                item.setActionDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_ACTION_DATE).getTime()));
             item.setOldValue(resultSet.getString(NAME_FIELD_OLD_VALUE));
             item.setNewValue(resultSet.getString(NAME_FIELD_NEW_VALUE));
             item.setUserName(resultSet.getString(NAME_FIELD_USER_NAME));
@@ -186,7 +186,7 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
         return list.iterator().next();
     }
 
-    protected String getCountSqury(int orderId) {
+    protected String getCountQuery(int orderId) {
         return "select count(*) AS total from " + getTableName()+
                 " where order_Id = "+orderId;
     }

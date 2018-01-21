@@ -18,7 +18,7 @@ public class GuestBookNewCommand implements Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
 
         try {
-            storedataToDatabase(request);
+            storeDataToDatabase(request);
         } catch (TransactionException | PersistException e) {
             LOGGER.error(e);
         }
@@ -27,14 +27,14 @@ public class GuestBookNewCommand implements Command {
 
     }
 
-    private void storedataToDatabase(HttpServletRequest request) throws PersistException, TransactionException {
+    private void storeDataToDatabase(HttpServletRequest request) throws PersistException, TransactionException {
             String userName = request.getParameter(GuestBookCommandHelper.PARAM_GUEST_BOOK_USER_NAME);
             String description = request.getParameter(GuestBookCommandHelper.PARAM_GUEST_BOOK_SUBJECT);
             String memo = request.getParameter(GuestBookCommandHelper.PARAM_GUEST_BOOK_MEMO);
 
             GuestBook guestBook = new GuestBook();
             guestBook.setUserName(userName);
-            guestBook.setDecription(description);
+            guestBook.setDescription(description);
             guestBook.setMemo(memo);
 
             GuestBookService guestBookService = GuestBookService.getService();

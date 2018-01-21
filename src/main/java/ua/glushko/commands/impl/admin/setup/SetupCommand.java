@@ -1,5 +1,5 @@
 package ua.glushko.commands.impl.admin.setup;
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
@@ -18,8 +18,8 @@ public class SetupCommand implements Command {
 
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-        if(Authentification.isUserLogIn(request.getSession())) {
-            String userLogin = (String) request.getSession().getAttribute(Authentification.PARAM_LOGIN);
+        if(Authentication.isUserLogIn(request.getSession())) {
+            String userLogin = (String) request.getSession().getAttribute(Authentication.PARAM_LOGIN);
             UsersService usersService = UsersService.getService();
             try {
                 User user = usersService.getUserByLogin(userLogin);

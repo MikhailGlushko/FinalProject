@@ -10,8 +10,8 @@ import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.transaction.ConnectionPool;
 
+import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -65,34 +65,34 @@ public class OrdersHistoryServiceTest {
         String action = orderHistoryById.getAction();
         orderHistoryById.setAction(Action.GUESTBOOK_COMMENT.name());
         orderHistoryById.setUserId(1);
-        service.updateOrderHistoty(orderHistoryById);
+        service.updateOrderHistory(orderHistoryById);
         orderHistoryById = service.getOrderHistoryById(1);
         String updated = orderHistoryById.getAction();
         assertNotEquals(action, updated);
         orderHistoryById.setNewValue(OrderStatus.NEW.name());
         orderHistoryById.setAction(Action.CHANGE_STATUS.name());
-        service.updateOrderHistoty(orderHistoryById);
+        service.updateOrderHistory(orderHistoryById);
         orderHistoryById.setNewValue(String.valueOf(100));
         orderHistoryById.setAction(Action.CHANGE_PRICE.name());
-        service.updateOrderHistoty(orderHistoryById);
+        service.updateOrderHistory(orderHistoryById);
         orderHistoryById.setNewValue("1");
         orderHistoryById.setAction(Action.CHANGE_EMPLOYEE.name());
-        service.updateOrderHistoty(orderHistoryById);
+        service.updateOrderHistory(orderHistoryById);
         orderHistoryById.setNewValue("2018-01-01");
         orderHistoryById.setAction(Action.CHANGE_DATE.name());
-        service.updateOrderHistoty(orderHistoryById);
+        service.updateOrderHistory(orderHistoryById);
     }
 
     @Test
     public void deleteOrder() throws PersistException, TransactionException, ParseException {
         OrderHistory orderHistoryById = service.getOrderHistoryById(1);
         orderHistoryById.setId(0);
-        service.updateOrderHistoty(orderHistoryById);
+        service.updateOrderHistory(orderHistoryById);
         service.deleteOrder(2);
     }
 
     @Test
-    public void count() throws PersistException, TransactionException {
+    public void count() throws SQLException, TransactionException {
         int count = service.count();
         assertTrue(count != 0);
         count = service.count(1);

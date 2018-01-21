@@ -68,7 +68,7 @@
                                 <label for="i1${item.id}">Автор сообщения</label>
                             </div>
                             <div class="input-field">
-                                <input id="i2${item.id}" value="${item.decription}" disabled/>
+                                <input id="i2${item.id}" value="${item.description}" disabled/>
                                 <label for="i2${item.id}">Тема сообщения</label>
                             </div>
                             <div class="input-field">

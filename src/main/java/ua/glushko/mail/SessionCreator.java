@@ -7,8 +7,6 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 class SessionCreator {
 
-    private Logger logger = Logger.getLogger(MailThread.class.getSimpleName());
-
     private final String userName;
     private final String userPassword;
     private final Properties sessionProperties;

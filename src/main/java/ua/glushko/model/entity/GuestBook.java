@@ -31,11 +31,11 @@ public class GuestBook implements GenericEntity, Serializable{
         this.orderId = orderId;
     }
 
-        public String getDecription() {
+        public String getDescription() {
         return decription;
     }
 
-    public void setDecription(String decription) {
+    public void setDescription(String decription) {
         this.decription = decription;
     }
 
@@ -69,7 +69,7 @@ public class GuestBook implements GenericEntity, Serializable{
                 "id=" + id +
                 ", orderId=" + orderId +
                 ", userName='" + userName + '\'' +
-                ", decription='" + decription + '\'' +
+                ", description='" + decription + '\'' +
                 ", actionDate=" + actionDate +
                 ", memo='" + memo + '\'' +
                 '}';

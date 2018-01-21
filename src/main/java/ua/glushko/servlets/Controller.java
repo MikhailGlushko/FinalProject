@@ -48,7 +48,6 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
-    //TODO private
     public void processRequest(HttpServletRequest req, HttpServletResponse resp) {
         CommandFactory commandFactory = CommandFactory.getInstance();
         // get command

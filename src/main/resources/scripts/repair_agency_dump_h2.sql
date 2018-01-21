@@ -32,10 +32,10 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 INSERT INTO `users` VALUES
-  (1,'ADMIN','Administrator','admin','21232f297a57a5a743894a0e4a801fc3','mikhail.glushko@gmail.com','066-3864046','ACTIVE','INTERNAL',NULL),
-  (2,'MANAGER','Manager','manager','1d0258c2440a8d19e716292b231e3190','manager@mail.com','01','ACTIVE','INTERNAL',NULL),
-  (3,'MASTER','Master','master','eb0a191797624dd3a48fa681d3061212','master@mail.com','02','ACTIVE','INTERNAL',NULL),
-  (4,'CUSTOMER','Customer','customer','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
+  (1,'ADMIN','Administrator','admin','e9ef7606634776f071dda30ae9c2c00c','mikhail.glushko@gmail.com','066-3864046','ACTIVE','INTERNAL',NULL),
+  (2,'MANAGER','Manager','manager','3a5f48003cf4eeaadd78137c9aad2470','manager@mail.com','01','ACTIVE','INTERNAL',NULL),
+  (3,'MASTER','Master','master','0f9f011f6b84f6a4e731a148a541f526','master@mail.com','02','ACTIVE','INTERNAL',NULL),
+  (4,'CUSTOMER','Customer','customer','a6303e07036fb4d952fc663165b58381','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
   (5,'CUSTOMER','Customer5','customer5','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
   (6,'CUSTOMER','Customer6','customer6','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
   (7,'CUSTOMER','Customer7','customer7','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
@@ -71,8 +71,7 @@ INSERT INTO `users` VALUES
   (37,'CUSTOMER','Customer37','customer37','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
   (38,'CUSTOMER','Customer38','customer38','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
   (39,'CUSTOMER','Customer39','customer39','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL),
-  (40,'CUSTOMER','Customer40','customer40','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL)
-  ;
+  (40,'CUSTOMER','Customer40','customer40','91ec1f9324753048c0096d036a694f86','customer@mail.com','03','ACTIVE','EXTERNAL',NULL);
 
 DROP TABLE IF EXISTS `grants`;
 CREATE TABLE `grants` (
@@ -258,18 +257,21 @@ CREATE TABLE `guest_book` (
   `user_name` varchar(45) NOT NULL,
   `description` varchar(45) NOT NULL,
   `action_date` datetime NOT NULL,
-  `memo` varchar(255) DEFAULT NULL,
+  `memo` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `guest_book` VALUES (1,1,'CUSTOMER','THANKS',now(), 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (2,1,'CUSTOMER2','THANKS',now(), 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (3,1,'CUSTOMER3','THANKS',now(), 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (4,1,'CUSTOMER4','THANKS',now(), 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (5,1,'CUSTOMER5','THANKS',now(), 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (6,1,'CUSTOMER6','THANKS',now(), 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (7,1,'CUSTOMER7','THANKS',now(), 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (8,1,'CUSTOMER8','THANKS',now(), 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (9,1,'CUSTOMER9','THANKS',now(), 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (10,1,'CUSTOMER10','THANKS',now(), 'SOME TEXT');
-INSERT INTO `guest_book` VALUES (11,1,'CUSTOMER11','THANKS',now(), 'SOME TEXT');
+INSERT INTO `guest_book` VALUES (1,1,'CUSTOMER1','Огромное спасибо!',now(), 'Более 2-х лет обращаюсь в этот сервис и всю работу доводят до конца с положительным реультатом,даже если ситуация сложная,то всегда пытаются найти решение проблемы.Это очень хороший пример другим сервис компаниям как нужно работать.Надеюсь,что качество услуг будет на таком же уровне долгое время.Спасибо!');
+INSERT INTO `guest_book` VALUES (2,2,'CUSTOMER2','Не советую!',now(), 'К сожалению, мое впечатление от работы этой компании мягко говоря негативное...., мало того что заменили оригинальный дисплей айфона на некачественную подделку, хотя по стоимости дисплей прошел как оригинал. И сама замена была сделан некачественно - по краям дисплей отходил от корпуса.. и не прошло и трех недель как стекло на дисплее лопнуло..В последующем официальные представители компании Apple подтвердили "качество" выполненной работы! Ребята обращайтесь к официальным дилерам, а не к серым конторкам типа OOO Эпл, которые не только срубят с вас лишние деньги за "оригинал", но и испортят вам настроение');
+INSERT INTO `guest_book` VALUES (3,3,'CUSTOMER3','Спасибо!',now(), 'В апреле мне делали ремонт macbook air 11 - меняли клавиатуру и трэкпад, под который попала жидкость, и началась коррозия. Спустя 4 месяца могу с ответственностью сказать, что ремонт сделали очень качественно. Спасибо! Сейчас у меня возникла новая проблема - жестко разбился дисплей Iphone. Сразу вспомнила о вас) Планирую к вам обратиться.');
+
+DROP TABLE IF EXISTS `news`;
+CREATE TABLE `news` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(45) NOT NULL,
+  `action_date` datetime NOT NULL,
+  `memo` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `news` VALUES (1,'News 1',now(),'Многие люди, учитывая нынешнюю обстановку в Украине, стараются экономить.<br>И вместо того, чтобы выбросить сломавшийся бытовой прибор, отправляются в мастерскую,<br>чтобы профессионал его отремонтировал. В большинстве случаев ремонт обходится дешевле,<br>чем покупка новой бытовой техники.<br>Наше агентство предлагает «вдохнуть вторую жизнь» в любой прибор, облегчающий быт людей.');

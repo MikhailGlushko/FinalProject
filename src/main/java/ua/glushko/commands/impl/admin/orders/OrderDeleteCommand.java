@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.orders;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.model.entity.Order;
@@ -12,7 +12,7 @@ import ua.glushko.services.impl.OrdersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static ua.glushko.authentification.Authentification.D;
+import static ua.glushko.authentification.Authentication.D;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 
 /** delete exist order */
@@ -33,7 +33,7 @@ public class OrderDeleteCommand implements Command {
         Integer Id = null;
         Order order = null;
         try {
-            int access = Authentification.checkAccess(request);
+            int access = Authentication.checkAccess(request);
             OrdersService ordersService = OrdersService.getService();
             Id = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
             if ((access & D) == D) {

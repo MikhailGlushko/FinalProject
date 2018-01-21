@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.services;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static ua.glushko.authentification.Authentification.U;
+import static ua.glushko.authentification.Authentication.U;
 
 /**  Display information about the type of service with the ability to edit or delete */
 public class ServiceReadCommand implements Command {
@@ -34,8 +34,7 @@ public class ServiceReadCommand implements Command {
     }
 
     private void storeRepairServiceDetailToSession(HttpServletRequest request) throws PersistException, TransactionException, ParameterException {
-        HttpSession session = request.getSession();
-        int access = Authentification.checkAccess(request);
+        int access = Authentication.checkAccess(request);
         Integer id=null;
         try {
             id = Integer.valueOf(request.getParameter(ServicesCommandHelper.PARAM_SERVICE_ID));

@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.services;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
@@ -13,9 +13,10 @@ import ua.glushko.services.impl.RepairServicesService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.List;
 
-import static ua.glushko.authentification.Authentification.R;
+import static ua.glushko.authentification.Authentication.R;
 
 public class ServicesListCommand implements Command {
 
@@ -23,22 +24,20 @@ public class ServicesListCommand implements Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             storeRepairServicesListToSession(request);
-        }catch (TransactionException | PersistException e) {
+        }catch (TransactionException | SQLException e) {
            LOGGER.error(e);
         }
         String page = ConfigurationManager.getProperty(ServicesCommandHelper.PATH_PAGE_SERVICES);
         return new CommandRouter(request, response, page);
     }
 
-    private void storeRepairServicesListToSession(HttpServletRequest request) throws PersistException, TransactionException {
+    private void storeRepairServicesListToSession(HttpServletRequest request) throws SQLException, TransactionException {
         try{
-            HttpSession session = request.getSession();
-            int access = Authentification.checkAccess(request);
+            int access = Authentication.checkAccess(request);
             RepairServicesService service = RepairServicesService.getService();
             Integer pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
             Integer rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
             String parameter = request.getParameter(PARAM_PAGE);
-            System.out.println(parameter);
             Integer pageNumber;
             if(parameter==null || parameter.isEmpty() || parameter.equals("null"))
                 pageNumber = 1;
@@ -56,7 +55,7 @@ public class ServicesListCommand implements Command {
                 request.setAttribute(PARAM_PAGE, pageNumber);
                 request.setAttribute(PARAM_ACCESS,access);
                 request.setAttribute(PARAM_LAST_PAGE,count);
-                LOGGER.debug("RepairServices list were getted and try to show");
+                LOGGER.debug("RepairServices list were got and try to show");
             }
         } catch (ParameterException e){
             LOGGER.debug("RepairServices list were not get.");

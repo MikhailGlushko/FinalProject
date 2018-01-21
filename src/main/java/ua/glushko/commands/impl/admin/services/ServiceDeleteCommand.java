@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.services;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.model.entity.RepairService;
@@ -12,7 +12,7 @@ import ua.glushko.services.impl.RepairServicesService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static ua.glushko.authentification.Authentification.D;
+import static ua.glushko.authentification.Authentication.D;
 import static ua.glushko.commands.CommandFactory.COMMAND_SERVICES;
 
 /** Delete entity from database */
@@ -33,7 +33,7 @@ public class ServiceDeleteCommand implements Command {
         Integer Id = null;
         RepairService repairService = null;
         try {
-            int access = Authentification.checkAccess(request);
+            int access = Authentication.checkAccess(request);
             RepairServicesService service = RepairServicesService.getService();
             Id = Integer.valueOf(request.getParameter(ServicesCommandHelper.PARAM_SERVICE_ID));
             if ((access & D) == D) {

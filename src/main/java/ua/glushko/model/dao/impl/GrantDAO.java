@@ -50,8 +50,8 @@ public class GrantDAO extends AbstractDAO<Grant> {
     }
 
     @Override
-    protected String getCountSqury(int userid) {
-        return getCountSqury();
+    protected String getCountQuery(int userId) {
+        return getCountQuery();
     }
 
     @Override

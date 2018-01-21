@@ -26,88 +26,106 @@
         <BR>
         <p>&nbsp;</p>
         <div align="center">
-            Внимание!
-            Пароли должны удовлетворять следующим минимальным требованиям:<BR/>
-            - Пароль не может содержать имя учетной записи пользователя или какую-либо его часть.<BR/>
-            - Пароль должен состоять не менее чем из восьми символов.<BR/>
-            - В пароле должны присутствовать символы из следующих четырех категорий:<BR/>
-            прописные буквы английского алфавита от A до Z;<BR/>
-            строчные буквы английского алфавита от a до z;<BR/>
-            десятичные цифры (от 0 до 9);<BR/>
-            неалфавитные символы (например, ~, !, @, #, @, %, ^, +, -, =, _, ., ,).<BR/>
         </div>
         <div class="login_div" align="center">
             <p class="title"><fmt:message key="app.welcome.pleaseregister"/></p>
-            <form name="register" method="post" action="/do">
+            <form class="form-signin" name="register" method="post" action="/do">
                 <input type="hidden" name="command" value="users_action"/>
                 <input type="hidden" name="page" value="${param.last_page}">
-                <div class="input-row">
-                    <div class="input-field">
-                        <input id="user_login" type="text" name="user_login" value="${param.user_login}" required/>
-                        <label for="user_login"><fmt:message key="app.welcome.login"/><em>*</em></label>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="user_login" style="float: left"><fmt:message key="app.welcome.login"/><em>*</em></label>
+                        <input class="input-sm" style="float: right" id="user_login" type="text" name="user_login"
+                               placeholder="<fmt:message key="app.welcome.login"/>"
+                               value="${param.user_login}" required/>
                     </div>
                 </div>
-                <div class="input-row">
-                    <div class="input-field">
-                        <input id="user_password" type="password" name="user_password" value="${param.user_password}" required/>
-                        <label for="user_password"><fmt:message key="app.welcome.password"/><em>*</em></label>
+                <br>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="user_password" style="float: left"><fmt:message key="app.welcome.password"/><em>*</em></label>
+                        <input class="input-sm" style="float: right" id="user_password" type="password" name="user_password"
+                               placeholder="<fmt:message key="app.welcome.password"/>"
+                               value="${param.user_password}" required/>
                     </div>
                 </div>
-                <div class="input-row">
-                    <div class="input-field">
-                        <input id="user_password2" type="password" name="user_password2" value="${param.user_password2}" required>
-                        <label for="user_password2"><fmt:message key="app.welcome.password2"/><em>*</em></label>
+                <br>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="user_password2" style="float: left"><fmt:message key="app.welcome.password2"/><em>*</em></label>
+                        <input class="input-sm" style="float: right" id="user_password2" type="password" name="user_password2"
+                               placeholder="<fmt:message key="app.welcome.password2"/>"
+                               value="${param.user_password2}" required>
                     </div>
                 </div>
-                <div class="input-row">
-                    <div class="input-field">
-                        <input id="user_name" type="text" name="user_name" value="${param.user_name}" required/>
-                        <label for="user_name"><fmt:message key="app.welcome.name"/><em>*</em></label>
+                <br>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="user_name" style="float: left"><fmt:message key="app.welcome.name"/><em>*</em></label>
+                        <input class="input-sm" style="float: right" id="user_name" type="text" name="user_name"
+                               placeholder="<fmt:message key="app.welcome.name"/>"
+                               value="${param.user_name}" required/>
                     </div>
                 </div>
-                <div class="input-row">
-                    <div class="input-field">
-                        <input id="user_email" type="email" name="user_email" value="${param.user_email}" required/>
-                        <label for="user_email"><fmt:message key="app.welcome.email"/><em>*</em></label>
+                <br>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="user_email" style="float: left"><fmt:message key="app.welcome.email"/><em>*</em></label>
+                        <input class="input-sm" style="float: right" id="user_email" type="email" name="user_email"
+                               placeholder="<fmt:message key="app.welcome.email"/>"
+                               value="${param.user_email}" required/>
                     </div>
                 </div>
-                <div class="input-row">
-                    <div class="input-field">
-                        <input id="user_phone" type="tel" name="user_phone" value="${param.user_phone}"/>
-                        <label for="user_phone"><fmt:message key="app.welcome.phone"/></label>
+                <br>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="user_phone" style="float: left"><fmt:message key="app.welcome.phone"/></label>
+                        <input class="input-sm" style="float: right" id="user_phone" type="tel" name="user_phone"
+                               placeholder="<fmt:message key="app.welcome.phone"/>"
+                               value="${param.user_phone}"/>
                     </div>
                 </div>
-                <div class="input-row">
-                    <div class="input-field">
-                        <select id="user_role" name="user_role">
+                <br>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="user_role" style="float: left"><fmt:message key="app.welcome.role"/><em>*</em></label>
+                        <select class="input-sm" style="float: right" id="user_role" name="user_role">
                             <option value="ADMIN">ADMIN</option>
                             <option value="MANAGER" selected>MANAGER</option>
                             <option value="MASTER">MASTER</option>
                             <option value="CUSTOMER" disabled>CUSTOMER</option>
                         </select>
-                        <label for="user_role"><fmt:message key="app.welcome.role"/><em>*</em></label>
                     </div>
                 </div>
-                <div class="input-row">
-                    <div class="input-field">
-                        <select id="user_status" name="user_status">
+                <br>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="user_status" style="float: left"><fmt:message key="app.welcome.status"/><em>*</em></label>
+                        <select class="input-sm" style="float: right" id="user_status" name="user_status">
                             <option value="ACTIVE">ACTIVE</option>
                             <option value="CLOSE">CLOSE</option>
                             <option value="BLOCKED" selected>BLOCKED</option>
                         </select>
-                        <label for="user_status"><fmt:message key="app.welcome.status"/><em>*</em></label>
                     </div>
                 </div>
+                <br>
+                <c:if test="${not empty errorMessage}">
                     ${errorMessage}
-                <br/> ${wrongAction}
-                <br/> ${nullPage}
-                <hr/>
-                <br/>
+                </c:if>
+                <c:if test="${not empty wrongAction}">
+                    <br/>                        ${wrongAction}
+                </c:if>
+                <c:if test="${not empty nullPage}">
+                    <br/>                        ${nullPage}
+                </c:if>
+                <br>
                 <div class="input-row">
-                    <button class="mainmenubutton" type="submit" name="action" value="add">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" name="action" value="add">
                         <fmt:message key='app.welcome.register'/>
                     </button>
-                    <button class="mainmenubutton" type="button" name="action" value="cancel"
+                </div>
+                <div class="ibput-row">
+                    <button class="btn btn-sm btn-link" type="button" name="action" value="cancel"
                             onclick="window.location.href='/do?command=users'">
                         <fmt:message key='app.welcome.cancel'/>
                     </button>

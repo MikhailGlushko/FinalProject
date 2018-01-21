@@ -1,6 +1,7 @@
 package ua.glushko.commands.impl.auth;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
+import ua.glushko.commands.CommandFactory;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
@@ -40,7 +41,8 @@ public class LoginCommand implements Command {
             if (isUserStatusActive(userAfterLogin)) {
                 LOGGER.debug("user " + userAfterLogin.getLogin() + " was login");
                 storeUserAuthenticateData(request.getSession(), userAfterLogin, currentUserGrants);
-                page = ConfigurationManager.getProperty(PATH_PAGE_MAIN);
+                request.setAttribute(PARAM_COMMAND,CommandFactory.COMMAND_WELCOME);
+                page ="/do";
             } else if (isUserStatusNotActive(userAfterLogin)) {
                 LOGGER.debug("user " + userAfterLogin.getLogin() + " is " + userAfterLogin.getStatus());
                 request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_STATUS + userAfterLogin.getStatus(), locale));
@@ -60,10 +62,10 @@ public class LoginCommand implements Command {
     }
 
     private void storeUserAuthenticateData(HttpSession session, User currentUser, List<Grant> userGrants) {
-        session.setAttribute(Authentification.PARAM_LOGIN, currentUser.getLogin());
-        session.setAttribute(Authentification.PARAM_NAME_NAME, currentUser.getName());
-        session.setAttribute(Authentification.PARAM_ROLE, currentUser.getRole());
-        session.setAttribute(Authentification.PARAM_ID, currentUser.getId());
-        session.setAttribute(Authentification.PARAM_GRANTS, userGrants);
+        session.setAttribute(Authentication.PARAM_LOGIN, currentUser.getLogin());
+        session.setAttribute(Authentication.PARAM_NAME_NAME, currentUser.getName());
+        session.setAttribute(Authentication.PARAM_ROLE, currentUser.getRole());
+        session.setAttribute(Authentication.PARAM_ID, currentUser.getId());
+        session.setAttribute(Authentication.PARAM_GRANTS, userGrants);
     }
 }

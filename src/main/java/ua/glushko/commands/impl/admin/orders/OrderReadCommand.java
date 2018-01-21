@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.orders;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static ua.glushko.authentification.Authentification.*;
+import static ua.glushko.authentification.Authentication.*;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.*;
 
 /** Display information about the type of service with the ability to edit or delete */
@@ -38,7 +38,6 @@ public class OrderReadCommand implements Command {
     }
 
     private void storeOrderDetailToSession(HttpServletRequest request) throws PersistException, TransactionException, ParameterException {
-        HttpSession session = request.getSession();
         Integer pagesCount = null;
         Integer rowsCount = null;
         Integer pageNumber = null;
@@ -56,7 +55,7 @@ public class OrderReadCommand implements Command {
         } catch (NumberFormatException e){
             LOGGER.error(e);
         }
-        int access = Authentification.checkAccess(request);
+        int access = Authentication.checkAccess(request);
 
         // orders list
         OrdersService ordersService = OrdersService.getService();

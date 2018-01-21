@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.orders;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
@@ -13,13 +13,14 @@ import ua.glushko.services.impl.OrdersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static ua.glushko.authentification.Authentification.C;
-import static ua.glushko.authentification.Authentification.c;
+import static ua.glushko.authentification.Authentication.C;
+import static ua.glushko.authentification.Authentication.c;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 
 /** Create new order */
@@ -29,7 +30,7 @@ public class OrderCreateCommand implements Command {
 
         try {
             storeOrderDataToDatabase(request);
-        } catch (TransactionException | PersistException e) {
+        } catch (TransactionException | SQLException e) {
             LOGGER.error(e);
         }
         String page = "/do?command=" + COMMAND_ORDERS + "&page=" + request.getAttribute(PARAM_LAST_PAGE);
@@ -37,10 +38,10 @@ public class OrderCreateCommand implements Command {
 
     }
 
-    private void storeOrderDataToDatabase(HttpServletRequest request) throws PersistException, TransactionException {
+    private void storeOrderDataToDatabase(HttpServletRequest request) throws SQLException, TransactionException {
         Order order = null;
         try {
-            int access = Authentification.checkAccess(request);
+            int access = Authentication.checkAccess(request);
             // getting data from form
             String  orderDescriptionShort = request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_SHORT);
             String  orderDescriptionDetail = request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_DETAIL);
@@ -83,7 +84,6 @@ public class OrderCreateCommand implements Command {
                 ordersService.updateOrder(order);
                 LOGGER.debug("new order "+order+" was created");
                 int count = ordersService.count();
-                Integer pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
                 Integer rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
                 count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
                 request.setAttribute(PARAM_LAST_PAGE,count);

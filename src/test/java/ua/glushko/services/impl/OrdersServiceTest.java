@@ -9,6 +9,7 @@ import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.transaction.ConnectionPool;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -68,7 +69,7 @@ public class OrdersServiceTest {
     }
 
     @Test
-    public void count() throws PersistException, TransactionException {
+    public void count() throws SQLException, TransactionException {
         int count = service.count();
         assertTrue(count!=0);
         count = service.count(1);

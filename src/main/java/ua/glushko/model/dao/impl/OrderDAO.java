@@ -24,7 +24,7 @@ public class OrderDAO extends AbstractDAO<Order> {
     private final String NAME_FIELD_CITY = "city";
     private final String NAME_FIELD_STREET = "street";
     private final String NAME_FIELD_ORDER_DATE = "order_date";
-    private final String NAME_FIELD_ECPRCTED_DATE = "expected_date";
+    private final String NAME_FIELD_EXPECTED_DATE = "expected_date";
     private final String NAME_FIELD_APPLIANCE = "appliance";
     private final String NAME_FIELD_PRICE = "price";
     private final String NAME_FIELD_USER_ID = "user_id";
@@ -59,7 +59,7 @@ public class OrderDAO extends AbstractDAO<Order> {
                 .append(NAME_FIELD_CITY).append(",")
                 .append(NAME_FIELD_STREET).append(",")
                 .append(NAME_FIELD_ORDER_DATE).append(",")
-                .append(NAME_FIELD_ECPRCTED_DATE).append(",")
+                .append(NAME_FIELD_EXPECTED_DATE).append(",")
                 .append(NAME_FIELD_APPLIANCE).append(",")
                 .append(NAME_FIELD_PRICE).append(",")
                 .append(NAME_FIELD_USER_ID).append(",")
@@ -116,8 +116,8 @@ public class OrderDAO extends AbstractDAO<Order> {
             item.setStreet(resultSet.getString(NAME_FIELD_STREET));
             if(resultSet.getDate(NAME_FIELD_ORDER_DATE)!=null)
                 item.setOrderDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_ORDER_DATE).getTime()));
-            if(resultSet.getDate(NAME_FIELD_ECPRCTED_DATE)!=null)
-                item.setExpectedDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_ECPRCTED_DATE).getTime()));
+            if(resultSet.getDate(NAME_FIELD_EXPECTED_DATE)!=null)
+                item.setExpectedDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_EXPECTED_DATE).getTime()));
             item.setAppliance(resultSet.getString(NAME_FIELD_APPLIANCE));
             item.setPrice(resultSet.getDouble(NAME_FIELD_PRICE));
             item.setUserId(resultSet.getInt(NAME_FIELD_USER_ID));
@@ -222,7 +222,7 @@ public class OrderDAO extends AbstractDAO<Order> {
         return list.iterator().next();
     }
 
-    protected String getCountSqury(int userId) {
+    protected String getCountQuery(int userId) {
         return "select count(*) AS total from " + getTableName()+
                 " where user_id="+userId+" or employee_id="+userId;
     }

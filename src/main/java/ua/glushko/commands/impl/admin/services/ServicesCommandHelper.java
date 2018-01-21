@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.services;
 
-class ServicesCommandHelper {
+public class ServicesCommandHelper {
 
     public static final String PARAM_SERVICE_ID = "service_id";
     public static final String PARAM_SERVICE_NAME = "service_name";

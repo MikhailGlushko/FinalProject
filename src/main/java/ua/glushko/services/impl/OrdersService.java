@@ -12,6 +12,7 @@ import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class OrdersService extends AbstractService {
@@ -67,11 +68,11 @@ public class OrdersService extends AbstractService {
         delete(MySQLDAOFactory.getFactory().getOrderDao(),serviceId);
     }
 
-    public int count() throws PersistException, TransactionException {
+    public int count() throws SQLException, TransactionException {
         return this.count(MySQLDAOFactory.getFactory().getOrderDao());
     }
 
-    public int count(int id) throws PersistException, TransactionException {
+    public int count(int id) throws SQLException, TransactionException {
         return this.count(MySQLDAOFactory.getFactory().getOrderDao(),id);
     }
 
@@ -80,7 +81,7 @@ public class OrdersService extends AbstractService {
 
         int start = (page - 1) * rowsPerPage;
         int limit = pagesCount * rowsPerPage;
-        List<? extends GenericEntity> read;
+        List<Order> read;
         try {
             TransactionManager.beginTransaction();
             read = orderDAO.read(start, limit,id);
@@ -88,6 +89,6 @@ public class OrdersService extends AbstractService {
         } finally {
             TransactionManager.rollBack();
         }
-        return (List<Order>)read;
+        return read;
     }
 }

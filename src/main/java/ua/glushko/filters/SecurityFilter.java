@@ -1,6 +1,6 @@
 package ua.glushko.filters;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.exception.ParameterException;
 import ua.glushko.model.exception.PersistException;
@@ -8,12 +8,14 @@ import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
 
-//@WebFilter(urlPatterns = { "/*"})
+@WebFilter(urlPatterns = { "/do"})
 public class SecurityFilter implements Filter {
 
     @Override
@@ -22,25 +24,8 @@ public class SecurityFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpSession session = request.getSession();
-        Object attribute = session.getAttribute(Authentification.PARAM_LOGIN);
-        String login = null;
-        if(Objects.nonNull(attribute))
-            login = (String)attribute;
-
-        //Object attribute = servletRequest.getAttribute(Authentification.PARAM_NAME_NAME);
-        if(Objects.isNull(attribute) && Objects.nonNull(login)){
-            UsersService usersService = UsersService.getService();
-            User currentUser = null;
-            try {
-                currentUser = usersService.getUserByLogin(login);
-            } catch (PersistException | TransactionException | ParameterException e) {
-            }
-            if(Objects.nonNull(currentUser)){
-                request.setAttribute(Authentification.PARAM_NAME_NAME, currentUser.getName());
-            }
-        }
+        if (!Authentication.isUserLogIn(((HttpServletRequest)servletRequest).getSession()))
+            ((HttpServletResponse)servletResponse).setStatus(HttpServletResponse.SC_FORBIDDEN);
         filterChain.doFilter(servletRequest,servletResponse);
     }
 

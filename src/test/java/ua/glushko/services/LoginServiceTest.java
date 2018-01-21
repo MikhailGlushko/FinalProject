@@ -41,7 +41,7 @@ public class LoginServiceTest {
         }
     }
 
-    @Test
+    @Test( expected = PersistException.class)
     public void loginOk() throws PersistException {
         try {
             //String md5Hex = DigestUtils.md5Hex("admin");

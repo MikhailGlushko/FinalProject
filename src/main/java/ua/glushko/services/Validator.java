@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Validator {
     private static final boolean isLoginValidation = Boolean.valueOf(ConfigurationManager.getProperty("validation.login"));
     private static final boolean isPasswordValidation = Boolean.valueOf(ConfigurationManager.getProperty("validation.password"));
-    private static final boolean isEmailValidation = Boolean.valueOf(ConfigurationManager.getProperty("valodation.email"));
+    private static final boolean isEmailValidation = Boolean.valueOf(ConfigurationManager.getProperty("validation.email"));
     private static final boolean isPhoneValidation = Boolean.valueOf(ConfigurationManager.getProperty("validation.phone"));
 
     /** Check userId*/
@@ -232,7 +232,7 @@ public class Validator {
         if(Objects.isNull(userLogin) || userLogin.isEmpty())
             throw new ParameterException("user.login.not.present");
         if(Objects.isNull(userPassword) || userPassword.isEmpty())
-            throw new ParameterException("user.password.not.presemt");
+            throw new ParameterException("user.password.not.present");
         if(Objects.isNull(userPassword2) || userPassword2.isEmpty() || !userPassword2.equals(userPassword))
             throw new ParameterException("user.password.not.match");
         if(!Validator.validatePassword(userPassword))
@@ -251,15 +251,15 @@ public class Validator {
         String userSecret    = request.getParameter(UsersCommandHelper.PARAM_USER_SECRET);
         String sessionId     = request.getSession().getId();
         if(Objects.isNull(sessionId) || sessionId.isEmpty())
-            throw new ParameterException("user.session.expaired");
+            throw new ParameterException("user.session.expired");
         if(Objects.isNull(userLogin) || userLogin.isEmpty())
             throw new ParameterException("user.login.not.present");
         if(Objects.isNull(userPassword) || userPassword.isEmpty())
-            throw new ParameterException("user.password.not.presemt");
+            throw new ParameterException("user.password.not.present");
         if(Objects.isNull(userPassword2) || userPassword2.isEmpty() || !userPassword2.equals(userPassword))
             throw new ParameterException("user.password.not.match");
         if(Objects.isNull(userSecret) || userSecret.isEmpty() || !userSecret.equals(sessionId))
-            throw new ParameterException("user.secretkey.not.match");
+            throw new ParameterException("user.secret.key.not.match");
         if(!Validator.validatePassword(userPassword))
             throw new ParameterException("user.password.incorrect");
         User user = new User();

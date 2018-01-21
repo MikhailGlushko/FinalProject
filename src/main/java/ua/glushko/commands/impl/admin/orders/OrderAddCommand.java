@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.orders;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
@@ -31,7 +31,7 @@ public class OrderAddCommand implements Command {
             RepairServicesService repairServices = RepairServicesService.getService();
             Integer userId = null;
             try {
-                userId = Integer.valueOf(request.getSession().getAttribute(Authentification.PARAM_ID).toString());
+                userId = Integer.valueOf(request.getSession().getAttribute(Authentication.PARAM_ID).toString());
             } catch (NumberFormatException e){
                 LOGGER.error(e);
             }

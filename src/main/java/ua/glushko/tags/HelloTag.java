@@ -1,6 +1,6 @@
 package ua.glushko.tags;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.configaration.MessageManager;
 
 import javax.servlet.http.HttpSession;
@@ -20,8 +20,8 @@ public class HelloTag extends TagSupport {
         try {
             HttpSession session = pageContext.getSession();
             String locale = (String) session.getAttribute(PARAM_LOCALE);
-            String currentUserName = (String) pageContext.getSession().getAttribute(Authentification.PARAM_NAME_NAME);
-            Timestamp currentUserLastLogin = (Timestamp) session.getAttribute(Authentification.PARAM_NAME_LAST_LOGIN);
+            String currentUserName = (String) pageContext.getSession().getAttribute(Authentication.PARAM_NAME_NAME);
+            Timestamp currentUserLastLogin = (Timestamp) session.getAttribute(Authentication.PARAM_NAME_LAST_LOGIN);
             String PROPERTY_NAME_WELCOME = "app.welcome.message";
             String welcome = MessageManager.getMessage(PROPERTY_NAME_WELCOME,locale);
             String PROPERTY_NAME_LAST_LOGIN = "user.lastLogin";

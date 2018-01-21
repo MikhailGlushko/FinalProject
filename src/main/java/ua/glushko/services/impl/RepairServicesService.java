@@ -10,6 +10,7 @@ import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class RepairServicesService extends AbstractService {
@@ -65,7 +66,7 @@ public class RepairServicesService extends AbstractService {
         delete(MySQLDAOFactory.getFactory().getRepairServiceDao(),serviceId);
     }
 
-    public int count() throws PersistException, TransactionException {
+    public int count() throws SQLException, TransactionException {
         return this.count(MySQLDAOFactory.getFactory().getRepairServiceDao());
     }
 }

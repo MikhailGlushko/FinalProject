@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.services;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.model.entity.RepairService;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static ua.glushko.authentification.Authentification.U;
+import static ua.glushko.authentification.Authentication.U;
 import static ua.glushko.commands.CommandFactory.COMMAND_SERVICES;
 
 /** Update data data after editing */
@@ -34,8 +34,7 @@ public class ServiceUpdateCommand implements Command {
     private void storeServiceDataToDatabase(HttpServletRequest request) throws PersistException, TransactionException {
         Integer serviceId = null;
         try {
-            HttpSession session = request.getSession();
-            int access = Authentification.checkAccess(request);
+            int access = Authentication.checkAccess(request);
             serviceId = Integer.valueOf(request.getParameter(ServicesCommandHelper.PARAM_SERVICE_ID));
             String name = request.getParameter(ServicesCommandHelper.PARAM_SERVICE_NAME);
             String nameRu = request.getParameter(ServicesCommandHelper.PARAM_SERVICE_NAME_RU);

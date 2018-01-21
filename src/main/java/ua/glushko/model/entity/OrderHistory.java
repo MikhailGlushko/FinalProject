@@ -11,7 +11,7 @@ public class OrderHistory implements GenericEntity, Serializable{
     private int orderId;
     private int userId;
     private String action;
-    private String decription;
+    private String description;
     private Date actionDate;
     private String oldValue;
     private String newValue;
@@ -45,12 +45,12 @@ public class OrderHistory implements GenericEntity, Serializable{
         this.action = action;
     }
 
-    public String getDecription() {
-        return decription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDecription(String decription) {
-        this.decription = decription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getActionDate() {
@@ -97,7 +97,7 @@ public class OrderHistory implements GenericEntity, Serializable{
                 ", orderId=" + orderId +
                 ", userId=" + userId +
                 ", action='" + action + '\'' +
-                ", decription='" + decription + '\'' +
+                ", description='" + description + '\'' +
                 ", actionDate=" + actionDate +
                 ", oldValue='" + oldValue + '\'' +
                 ", newValue='" + newValue + '\'' +

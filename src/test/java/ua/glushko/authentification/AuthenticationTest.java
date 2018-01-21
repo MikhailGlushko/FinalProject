@@ -19,13 +19,13 @@ import java.util.Map;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ua.glushko.authentification.Authentification.PARAM_GRANTS;
-import static ua.glushko.authentification.Authentification.PARAM_ROLE;
+import static ua.glushko.authentification.Authentication.PARAM_GRANTS;
+import static ua.glushko.authentification.Authentication.PARAM_ROLE;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
 
-public class AuthentificationTest {
+public class AuthenticationTest {
 
     HttpSession session;
     HttpServletRequest request;
@@ -33,7 +33,7 @@ public class AuthentificationTest {
     public void setUp() throws Exception {
         ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
         UsersService usersService = UsersService.getService();
-        Map<User, List<Grant>> useDataAndGrantsSet = usersService.authenticateUser("admin", "admin");
+        Map<User, List<Grant>> useDataAndGrantsSet = usersService.authenticateUser("admin", "P@ssw0rd");
         User user = useDataAndGrantsSet.keySet().iterator().next();
         List<Grant> grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
         session = mock(HttpSession.class);
@@ -47,13 +47,13 @@ public class AuthentificationTest {
 
     @Test
     public void isUserLogIn() {
-        boolean userLogIn = Authentification.isUserLogIn(session);
+        boolean userLogIn = Authentication.isUserLogIn(session);
         assertFalse(userLogIn);
     }
 
     @Test
     public void checkAccess() throws ParameterException {
-        int access = Authentification.checkAccess(request);
+        int access = Authentication.checkAccess(request);
         assertTrue(access!=0);
     }
 }

@@ -10,6 +10,7 @@ import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class GuestBookService extends AbstractService {
@@ -65,11 +66,11 @@ public class GuestBookService extends AbstractService {
         delete(MySQLDAOFactory.getFactory().getGuestBookDAO(),serviceId);
     }
 
-    public int count() throws PersistException, TransactionException {
+    public int count() throws SQLException, TransactionException {
         return this.count(MySQLDAOFactory.getFactory().getGuestBookDAO());
     }
 
-    public int count(int id) throws PersistException, TransactionException {
+    public int count(int id) throws SQLException, TransactionException {
         return this.count(MySQLDAOFactory.getFactory().getGuestBookDAO(),id);
     }
 }

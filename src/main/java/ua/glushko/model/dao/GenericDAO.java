@@ -3,6 +3,7 @@ package ua.glushko.model.dao;
 import ua.glushko.model.entity.GenericEntity;
 import ua.glushko.model.exception.PersistException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -42,5 +43,5 @@ public interface GenericDAO<T extends GenericEntity> {
 
     List<String> getTableHead();
 
-    Integer count();
+    Integer count() throws SQLException;
 }

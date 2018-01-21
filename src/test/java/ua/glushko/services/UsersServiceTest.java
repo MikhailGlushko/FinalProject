@@ -13,6 +13,7 @@ import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 import ua.glushko.transaction.ConnectionPool;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -111,7 +112,7 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void count() throws PersistException, TransactionException {
+    public void count() throws SQLException, TransactionException {
         UsersService usersService = UsersService.getService();
         int count = usersService.count();
         usersService.deleteUser(2);
@@ -132,7 +133,7 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void getCount() throws PersistException, TransactionException {
+    public void getCount() throws SQLException, TransactionException {
         UsersService usersService = UsersService.getService();
         int count = usersService.count();
         assertTrue(count!=0);

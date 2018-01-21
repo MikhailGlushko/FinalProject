@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.services;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
@@ -13,7 +13,9 @@ import ua.glushko.services.impl.RepairServicesService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static ua.glushko.authentification.Authentification.C;
+import java.sql.SQLException;
+
+import static ua.glushko.authentification.Authentication.C;
 import static ua.glushko.commands.CommandFactory.COMMAND_SERVICES;
 
 /** Create New entity */
@@ -23,7 +25,7 @@ public class ServiceCreateCommand implements Command {
 
         try {
             storeUserDataToDatabase(request);
-        } catch (TransactionException | PersistException e) {
+        } catch (TransactionException | SQLException e) {
             LOGGER.error(e);
         }
         String page = "/do?command=" + COMMAND_SERVICES + "&page=" + request.getAttribute(PARAM_LAST_PAGE);
@@ -31,10 +33,10 @@ public class ServiceCreateCommand implements Command {
 
     }
 
-    private void storeUserDataToDatabase(HttpServletRequest request) throws PersistException, TransactionException {
+    private void storeUserDataToDatabase(HttpServletRequest request) throws SQLException, TransactionException {
         RepairService repairService=null;
         try {
-            int access = Authentification.checkAccess(request);
+            int access = Authentication.checkAccess(request);
 
             String name = request.getParameter(ServicesCommandHelper.PARAM_SERVICE_NAME);
             String nameRu = request.getParameter(ServicesCommandHelper.PARAM_SERVICE_NAME_RU);
@@ -51,7 +53,6 @@ public class ServiceCreateCommand implements Command {
                 service.updateRepairService(repairService);
                 LOGGER.debug("new service "+repairService+" was created");
                 int count = service.count();
-                Integer pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
                 Integer rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
                 count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
                 request.setAttribute(PARAM_LAST_PAGE,count);

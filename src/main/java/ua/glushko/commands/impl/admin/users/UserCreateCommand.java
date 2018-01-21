@@ -1,6 +1,5 @@
 package ua.glushko.commands.impl.admin.users;
 
-import ua.glushko.authentification.Authentification;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
@@ -13,16 +12,14 @@ import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import static ua.glushko.authentification.Authentification.*;
+import java.sql.SQLException;
+
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
-import static ua.glushko.commands.CommandFactory.COMMAND_USERS_ADD;
 import static ua.glushko.services.Validator.getValidatedUserBeforeCreate;
-import static ua.glushko.services.Validator.getValidatedUserBeforeRegistration;
 
 /**
- * Creat new user
+ * Create new user
  */
 public class UserCreateCommand implements Command {
     @Override
@@ -35,14 +32,13 @@ public class UserCreateCommand implements Command {
             UsersService registerService = UsersService.getService();
             registerService.updateUser(newUser);
             int count = registerService.count();
-            Integer pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
             Integer rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
             count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
             request.setAttribute(PARAM_LAST_PAGE,count);
             LOGGER.debug("New user : "+newUser.getLogin()+" was registered.");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_IS_REGISTERED, locale));
             page = "/do?command=" + COMMAND_USERS + "&page=" + request.getAttribute(PARAM_LAST_PAGE);
-        } catch (PersistException | TransactionException e) {
+        } catch (SQLException | TransactionException e) {
             LOGGER.error(e);
             LOGGER.debug("User already exist :"+newUser.getLogin()+" Registration rejected.");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_ALREADY_EXIST, locale));

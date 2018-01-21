@@ -59,7 +59,7 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
     protected void prepareStatementForCreate(PreparedStatement statement, GuestBook entity) throws SQLException {
         statement.setInt(1, entity.getOrderId());
         statement.setString(2, entity.getUserName());
-        statement.setString(3, entity.getDecription());
+        statement.setString(3, entity.getDescription());
         if(entity.getActionDate()!=null)
             statement.setTimestamp(4, new Timestamp(entity.getActionDate().getTime()));
         else
@@ -81,7 +81,7 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
             item.setId(resultSet.getInt(NAME_FIELD_ID));
             item.setOrderId(resultSet.getInt(NAME_FIELD_ORDER_ID));
             item.setUserName(resultSet.getString(NAME_FIELD_USER_NAME));
-            item.setDecription(resultSet.getString(NAME_FIELD_DESCRIPTION));
+            item.setDescription(resultSet.getString(NAME_FIELD_DESCRIPTION));
             if(resultSet.getDate(NAME_FIELD_ACTION_DATE)!=null)
                 item.setActionDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_ACTION_DATE).getTime()));
             item.setMemo(resultSet.getString(NAME_FIELD_MEMO));
@@ -90,7 +90,7 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
         return list;
     }
 
-    protected String getCountSqury(int orderId) {
+    protected String getCountQuery(int orderId) {
         return "select count(*) AS total from " + getTableName()+
                 " where order_id="+orderId;
     }

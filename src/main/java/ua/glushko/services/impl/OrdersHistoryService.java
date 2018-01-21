@@ -11,6 +11,7 @@ import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -81,7 +82,7 @@ public class OrdersHistoryService extends AbstractService {
         return getById(MySQLDAOFactory.getFactory().getOrderHistoryDAO(), id);
     }
 
-    public void updateOrderHistoty(OrderHistory orderHistory) throws PersistException, TransactionException, ParseException {
+    public void updateOrderHistory(OrderHistory orderHistory) throws PersistException, TransactionException, ParseException {
         try {
             TransactionManager.beginTransaction();
             OrderDAO orderDAO = OrderDAO.getInstance();
@@ -93,13 +94,13 @@ public class OrdersHistoryService extends AbstractService {
             switch (Action.valueOf(orderHistory.getAction())) {
                 case ADD_COMMENT:
                     orderHistory.setOldValue(order.getMemo());
-                    order.setMemo(orderHistory.getDecription());
+                    order.setMemo(orderHistory.getDescription());
                     break;
                 case GUESTBOOK_COMMENT:
                     GuestBook guestBook = new GuestBook();
                     guestBook.setActionDate(new Date(System.currentTimeMillis()));
-                    guestBook.setDecription(Action.GUESTBOOK_COMMENT.name());
-                    guestBook.setMemo(orderHistory.getDecription());
+                    guestBook.setDescription(Action.GUESTBOOK_COMMENT.name());
+                    guestBook.setMemo(orderHistory.getDescription());
                     guestBook.setOrderId(orderHistory.getOrderId());
                     int userId = orderHistory.getUserId();
                     User user = userDAO.read(userId);
@@ -134,7 +135,7 @@ public class OrdersHistoryService extends AbstractService {
                         order.setEmployeeId(orderHistory.getUserId());
                     break;
             }
-            if (order.isChanched()) {
+            if (order.isChanged()) {
                 orderDAO.update(order);
                 if (orderHistory.getId() != null && orderHistory.getId() != 0)
                     orderHistoryDAO.update(orderHistory);
@@ -153,11 +154,11 @@ public class OrdersHistoryService extends AbstractService {
         delete(MySQLDAOFactory.getFactory().getOrderHistoryDAO(), serviceId);
     }
 
-    public int count() throws PersistException, TransactionException {
+    public int count() throws SQLException, TransactionException {
         return this.count(MySQLDAOFactory.getFactory().getOrderHistoryDAO());
     }
 
-    public int count(int id) throws PersistException, TransactionException {
+    public int count(int id) throws SQLException, TransactionException {
         return this.count(MySQLDAOFactory.getFactory().getOrderHistoryDAO(), id);
     }
 }

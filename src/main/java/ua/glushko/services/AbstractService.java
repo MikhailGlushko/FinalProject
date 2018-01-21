@@ -9,6 +9,7 @@ import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.transaction.TransactionManager;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class AbstractService {
@@ -40,17 +41,8 @@ public class AbstractService {
         return read;
     }
 
-    protected <T extends GenericEntity> T getById(AbstractDAO<T> dao, int id) throws PersistException, TransactionException {
-        T read;
-        try{
-            //TODO убрать транзакции при чтении
-            TransactionManager.beginTransaction();
-            read = dao.read(id);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
+    protected <T extends GenericEntity> T getById(AbstractDAO<T> dao, int id) throws PersistException {
+        return dao.read(id);
     }
 
     protected <T extends GenericEntity> void update(AbstractDAO<T> dao, T item) throws PersistException, TransactionException {
@@ -76,7 +68,7 @@ public class AbstractService {
         }
     }
 
-    protected <T extends GenericEntity> Integer count(AbstractDAO<T> dao) throws PersistException, TransactionException {
+    protected <T extends GenericEntity> Integer count(AbstractDAO<T> dao) throws SQLException, TransactionException {
         Integer count;
         try{
             TransactionManager.beginTransaction();
@@ -88,7 +80,7 @@ public class AbstractService {
         return count;
     }
 
-    protected <T extends GenericEntity> Integer count(AbstractDAO<T> dao, int userId) throws PersistException, TransactionException {
+    protected <T extends GenericEntity> Integer count(AbstractDAO<T> dao, int userId) throws SQLException, TransactionException {
         Integer count;
         try{
             TransactionManager.beginTransaction();

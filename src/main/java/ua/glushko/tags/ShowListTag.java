@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static ua.glushko.authentification.Authentification.*;
+import static ua.glushko.authentification.Authentication.*;
 import static ua.glushko.commands.Command.*;
 
 @SuppressWarnings("serial")

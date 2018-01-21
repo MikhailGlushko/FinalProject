@@ -12,6 +12,8 @@
 <html>
 <head><title>Error Page</title>
     <link href="../../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../css/login.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>

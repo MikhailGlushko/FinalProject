@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO<T> {
-    protected static final Logger logger = Logger.getLogger(AbstractDAO.class.getSimpleName());
 
     private List<String> titles;
     protected AbstractDAO() {
@@ -169,7 +168,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * Polulate result to list
+     * Populate result to list
      */
     protected abstract List<T> parseResultSet(ResultSet resultSet) throws SQLException;
 
@@ -299,32 +298,32 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
         this.titles = titles;
     }
 
-    public Integer count(){
-        String sql = getCountSqury();
+    public Integer count() throws SQLException {
+        String sql = getCountQuery();
         try(ConnectionWrapper con = TransactionManager.getConnection();
         PreparedStatement statement = con.prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next())
                 return resultSet.getInt("total");
-        } catch (Exception e){}
+        }
         return null;
     }
 
-    public Integer count(int userId){
-        String sql = getCountSqury(userId);
+    public Integer count(int userId) throws SQLException {
+        String sql = getCountQuery(userId);
         try(ConnectionWrapper con = TransactionManager.getConnection();
             PreparedStatement statement = con.prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next())
                 return resultSet.getInt("total");
-        } catch (Exception e){}
+        }
         return null;
     }
 
-    protected String getCountSqury() {
+    protected String getCountQuery() {
         return "select count(*) AS total from " + getTableName();
     }
 
-    abstract protected String getCountSqury(int userid);
+    abstract protected String getCountQuery(int userId);
 }
 

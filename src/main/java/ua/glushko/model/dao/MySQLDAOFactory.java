@@ -1,6 +1,7 @@
 package ua.glushko.model.dao;
 
 import ua.glushko.model.dao.impl.*;
+import ua.glushko.model.entity.News;
 import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.model.entity.RepairService;
 import ua.glushko.model.entity.User;
@@ -41,5 +42,9 @@ public class MySQLDAOFactory {
 
     public GuestBookDAO getGuestBookDAO(){
         return GuestBookDAO.getInstance();
+    }
+
+    public NewsDAO getNewsDAO(){
+        return NewsDAO.getInstance();
     }
 }

@@ -26,7 +26,7 @@ public class ResetPasswordCommand implements Command {
             user = getValidatedUserBeforeResetPassword(request);
             UsersService resetPasswordService = UsersService.getService();
             resetPasswordService.changePassword(user.getLogin(), user.getPassword());
-            LOGGER.debug("New password for user : "+user.getLogin()+" changeed.");
+            LOGGER.debug("New password for user : "+user.getLogin()+" changed.");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_PASSWORD_WAS_CHANGED, locale));
             page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
         } catch (SQLException | TransactionException e) {

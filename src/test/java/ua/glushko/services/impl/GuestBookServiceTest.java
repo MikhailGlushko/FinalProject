@@ -8,6 +8,7 @@ import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.transaction.ConnectionPool;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -52,11 +53,11 @@ public class GuestBookServiceTest {
     public void updateGuestBook() throws PersistException, TransactionException {
         GuestBook book = service.getGuestBookById(1);
         assertNotNull(book);
-        String decription = book.getDecription();
-        book.setDecription(decription+"!");
+        String decription = book.getDescription();
+        book.setDescription(decription+"!");
         service.updateGuestBook(book);
         book = service.getGuestBookById(1);
-        String updated = book.getDecription();
+        String updated = book.getDescription();
         assertNotNull(decription,updated);
     }
 
@@ -70,7 +71,7 @@ public class GuestBookServiceTest {
     }
 
     @Test
-    public void count() throws PersistException, TransactionException {
+    public void count() throws SQLException, TransactionException {
         int count = service.count();
         assertTrue(count!=0);
         count = service.count(1);

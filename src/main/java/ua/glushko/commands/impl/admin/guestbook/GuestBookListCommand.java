@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.guestbook;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
@@ -13,9 +13,10 @@ import ua.glushko.services.impl.GuestBookService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.List;
 
-import static ua.glushko.authentification.Authentification.R;
+import static ua.glushko.authentification.Authentication.R;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PARAM_GUEST_BOOKS_LIST;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PARAM_GUEST_BOOKS_LIST_TITLE;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PATH_PAGE_GUEST_BOOK;
@@ -26,7 +27,7 @@ public class GuestBookListCommand implements Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             storeGuestBookListToSession(request);
-        }catch (TransactionException | PersistException e) {
+        }catch (TransactionException | SQLException e) {
            LOGGER.error(e);
         } catch (ParameterException e) {
             LOGGER.error(e);
@@ -35,9 +36,9 @@ public class GuestBookListCommand implements Command {
         return new CommandRouter(request, response, page);
     }
 
-    private void storeGuestBookListToSession(HttpServletRequest request) throws PersistException, TransactionException, ParameterException {
+    private void storeGuestBookListToSession(HttpServletRequest request) throws SQLException, TransactionException, ParameterException {
             HttpSession session = request.getSession();
-            int access = Authentification.checkAccess(request);
+            int access = Authentication.checkAccess(request);
             GuestBookService guestBookService = GuestBookService.getService();
             Integer pagesCount = null;
             Integer rowsCount = null;
@@ -51,7 +52,7 @@ public class GuestBookListCommand implements Command {
                     pageNumber = 1;
                 else
                     pageNumber = Integer.valueOf(request.getParameter(PARAM_PAGE));
-                userId = Integer.valueOf(session.getAttribute(Authentification.PARAM_ID).toString());
+                userId = Integer.valueOf(session.getAttribute(Authentication.PARAM_ID).toString());
             } catch (NumberFormatException e){
                 LOGGER.debug(e);
             }
@@ -63,7 +64,7 @@ public class GuestBookListCommand implements Command {
                 request.setAttribute(PARAM_GUEST_BOOKS_LIST_TITLE, titles);
                 request.setAttribute(PARAM_GUEST_BOOKS_LIST, items);
                 request.setAttribute(PARAM_LAST_PAGE,count);
-            } else if((access & Authentification.r) == Authentification.r) {
+            } else if((access & Authentication.r) == Authentication.r) {
                 List<GuestBook> items = guestBookService.getGuestBookList(pageNumber, pagesCount, rowsCount);
                 List<String> titles = guestBookService.getGuestBookTitles();
                 int count = guestBookService.count(userId);
@@ -76,6 +77,6 @@ public class GuestBookListCommand implements Command {
                 request.setAttribute(PARAM_ROWS_COUNT, rowsCount);
                 request.setAttribute(PARAM_PAGE, pageNumber);
                 request.setAttribute(PARAM_ACCESS,access);
-                LOGGER.debug("GuestBook items list were getted and try to show");
+                LOGGER.debug("GuestBook items list were got and try to show");
     }
 }

@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.orders;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.model.entity.Order;
@@ -18,8 +18,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static ua.glushko.authentification.Authentification.U;
-import static ua.glushko.authentification.Authentification.u;
+import static ua.glushko.authentification.Authentication.U;
+import static ua.glushko.authentification.Authentication.u;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 
 /** Update data after editing */
@@ -40,8 +40,7 @@ public class OrderUpdateCommand implements Command {
     private void storeOrderToDatabase(HttpServletRequest request) throws PersistException, TransactionException {
         Integer orderId = null;
         try {
-            HttpSession session = request.getSession();
-            int access = Authentification.checkAccess(request);
+            int access = Authentication.checkAccess(request);
             orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
 
             String  orderDescriptionShort = request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_SHORT);

@@ -36,64 +36,71 @@
                     <div class="row">
                         <div class="form-group">
                             <label for="user_login" style="float: left"><fmt:message key="app.welcome.login"/><em>*</em></label>
-                            <input class="form-control" id="user_login" type="text" name="user_login"
+                            <input class="input-sm" style="float: right" id="user_login" type="text" name="user_login"
                                    placeholder="<fmt:message key="app.welcome.login"/>"
                                    value="${user_detail.login}" required/>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
-                        <div class="input-group">
+                        <div class="form-group">
                             <label for="user_password_old" style="float: left"><fmt:message
                                     key="app.welcome.password.old"/><em>*</em></label>
-                            <input class="form-control" id="user_password_old" type="password" name="user_password_old"
+                            <input class="input-sm" style="float: right" id="user_password_old" type="password" name="user_password_old"
                                    placeholder="<fmt:message key="app.welcome.password.old"/>"
                                    value="${param.user_password_old}"/>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
-                        <div class="input-group">
+                        <div class="form-group">
                             <label for="user_password" style="float: left"><fmt:message
                                     key="app.welcome.password"/><em>*</em></label>
-                            <input class="form-control" id="user_password" type="password" name="user_password"
+                            <input class="input-sm" style="float: right" id="user_password" type="password" name="user_password"
                                    placeholder="<fmt:message key="app.welcome.password"/>"
                                    value="${param.user_password}"/>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
-                        <div class="input-field">
-                            <label class="sr-only" for="user_password2"><fmt:message
+                        <div class="form-group">
+                            <label for="user_password2" style="float: left"><fmt:message
                                     key="app.welcome.password2"/><em>*</em></label>
-                            <input class="form-control" id="user_password2" type="password" name="user_password2"
+                            <input class="input-sm" style="float: right" id="user_password2" type="password" name="user_password2"
                                    placeholder="<fmt:message key="app.welcome.password2"/>"
                                    value="${param.user_password2}"/>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
                         <div class="form-group">
                             <label for="user_name" style="float: left"><fmt:message
                                     key="app.welcome.name"/><em>*</em></label>
-                            <input class="form-control" id="user_name" type="text" name="user_name"
+                            <input class="input-sm" style="float: right" id="user_name" type="text" name="user_name"
                                    placeholder="<fmt:message key="app.welcome.name"/>"
                                    value="${user_detail.name}" required/>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
                         <div class="form-group">
                             <label for="user_email" style="float: left"><fmt:message
                                     key="app.welcome.email"/><em>*</em></label>
-                            <input class="form-control" id="user_email" type="email" name="user_email"
+                            <input class="input-sm" style="float: right" id="user_email" type="email" name="user_email"
                                    placeholder="<fmt:message key="app.welcome.email"/>"
                                    value="${user_detail.email}" required/>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
                         <div class="form-group">
                             <label for="user_phone" style="float: left"><fmt:message key="app.welcome.phone"/></label>
-                            <input class="form-control" id="user_phone" type="tel" name="user_phone"
+                            <input class="input-sm" style="float: right" id="user_phone" type="tel" name="user_phone"
                                    placeholder="<fmt:message key="app.welcome.phone"/>"
                                    value="${user_detail.phone}"/>
                         </div>
                     </div>
+                    <br>
                     <c:if test="${not empty errorMessage}">
                         ${errorMessage}
                     </c:if>
@@ -103,6 +110,7 @@
                     <c:if test="${not empty nullPage}">
                         <br/>                        ${nullPage}
                     </c:if>
+                    <br>
                     <div class="row">
                         <button class="btn btn-lg btn-primary btn-block" type="submit" name="button" value="save">
                             <fmt:message key='app.welcome.save'/>

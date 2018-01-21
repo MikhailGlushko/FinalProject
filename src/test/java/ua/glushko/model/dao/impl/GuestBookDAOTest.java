@@ -60,11 +60,11 @@ public class GuestBookDAOTest {
     @Test
     public void update() throws PersistException {
         GuestBook guestBook = instance.read(1);
-        String decription = guestBook.getDecription();
-        guestBook.setDecription(decription+"!");
+        String decription = guestBook.getDescription();
+        guestBook.setDescription(decription+"!");
         instance.update(guestBook);
         GuestBook read = instance.read(1);
-        String readDecription = read.getDecription();
+        String readDecription = read.getDescription();
         assertNotEquals(decription,readDecription);
     }
 }

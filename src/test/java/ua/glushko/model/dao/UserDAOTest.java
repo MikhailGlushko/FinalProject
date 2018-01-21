@@ -87,7 +87,6 @@ public class UserDAOTest {
         try {
             // получаем пользователя с существующим именем
             List<User> list = ((UserDAO) userDAO).read("Manager");
-            //TODO
             assertTrue("Пользователь с именем Manager не найден", list.size() != 0);
         } catch (PersistException e) {
             logger.error(e);
@@ -187,7 +186,7 @@ public class UserDAOTest {
     }
 
     @Test(expected = PersistException.class)
-    public void updateNoExistUser() throws PersistException {
+    public void updateNoExistUser() throws SQLException {
         try {
             userDAO = MySQLDAOFactory.getFactory().getUserDao();
             Integer count = userDAO.count();
@@ -321,7 +320,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void count() throws PersistException{
+    public void count() throws SQLException {
         userDAO = MySQLDAOFactory.getFactory().getUserDao();
         Integer count = userDAO.count();
         assertNotNull(count);

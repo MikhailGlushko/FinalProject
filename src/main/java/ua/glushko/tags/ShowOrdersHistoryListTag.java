@@ -22,7 +22,6 @@ public class ShowOrdersHistoryListTag extends ShowListTag {
 
     public int doStartTag() throws JspException {
         try {
-            HttpSession session = pageContext.getSession();
             StringBuilder builder = new StringBuilder();
 
             String property;
@@ -64,12 +63,6 @@ public class ShowOrdersHistoryListTag extends ShowListTag {
 
     protected void makeBody(List<Object> list, StringBuilder builder, Integer rowsCount) {
         // build bode if table
-        String command = null;
-        Object attribute = pageContext.getRequest().getAttribute(PARAM_COMMAND);
-        if (Objects.nonNull(attribute))
-            command = (String) attribute;
-        else
-            command = pageContext.getRequest().getParameter(PARAM_COMMAND);
         Iterator<Object> iterator = list.iterator();
         for (int i = 0; i < rowsCount; i++) {
             OrderHistory object = null;
@@ -82,7 +75,7 @@ public class ShowOrdersHistoryListTag extends ShowListTag {
             builder.append("<tr >")
                     .append("<td>").append(object.getId()).append("</td>");
             builder.append("<td>").append(object.getAction()).append("</td>");
-            builder.append("<td>").append(object.getDecription()).append("</td>");
+            builder.append("<td>").append(object.getDescription()).append("</td>");
             builder.append("<td>").append(object.getActionDate()).append("</td>");
             builder.append("<td>").append(object.getUserName()).append("</td>");
             builder.append("</tr>");

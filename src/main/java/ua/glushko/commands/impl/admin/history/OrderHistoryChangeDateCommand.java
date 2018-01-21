@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.history;
 
-import ua.glushko.authentification.Authentification;
+import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.orders.OrdersCommandHelper;
@@ -38,13 +38,13 @@ public class OrderHistoryChangeDateCommand implements Command {
         String parameter = request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID);
         if(Objects.isNull(parameter))
             throw new ParameterException("order.id.is.null");
-        Object attribute = request.getSession().getAttribute(Authentification.PARAM_ID);
+        Object attribute = request.getSession().getAttribute(Authentication.PARAM_ID);
         if(Objects.isNull(attribute))
             throw new ParameterException("id.is.null");
 
         OrdersHistoryService ordersHistoryService = OrdersHistoryService.getService();
         Integer orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
-        Integer userId = Integer.valueOf(request.getSession().getAttribute(Authentification.PARAM_ID).toString());
+        Integer userId = Integer.valueOf(request.getSession().getAttribute(Authentication.PARAM_ID).toString());
 
         String comment = request.getParameter(PARAM_NAME_ORDER_HISTORY_MEMO);
         OrderHistory orderHistory = new OrderHistory();
@@ -53,7 +53,7 @@ public class OrderHistoryChangeDateCommand implements Command {
         orderHistory.setNewValue(requestParameter);
         orderHistory.setUserId(userId);
         orderHistory.setOrderId(orderId);
-        orderHistory.setDecription(comment);
-        ordersHistoryService.updateOrderHistoty(orderHistory);
+        orderHistory.setDescription(comment);
+        ordersHistoryService.updateOrderHistory(orderHistory);
     }
 }
