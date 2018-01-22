@@ -1,0 +1,27 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns="http://www.w3.org/1999/xhtml" version="2.1"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+          xmlns:customtags="customtags">
+
+    <c:if test="${empty cookie.locale.value or cookie.locale.value.equals('en')}">
+        <fmt:setLocale value="en" scope="session"/>
+    </c:if>
+    <c:if test="${not empty cookie.locale.value and cookie.locale.value.equals('ru')}">
+        <fmt:setLocale value="ru" scope="session"/>
+    </c:if>
+    <!-- приветствие пользователю и кнопки переключения языка-->
+    <fmt:setBundle basename="messages"/>
+    <fmt:message key="app.welcome.message" var="app_welcome_message"/>
+    <div class="welcome" align="right">
+        <customtags:Hello/>
+        <customtags:Language/>
+    </div>
+    <!-- приветствие пользователю и кнопки переключения языка-->
+
+    <!-- основное меню и кнопка выхода из системы-->
+    <div class="mainmenu" style="width: 100%">
+        <customtags:MainMenu/>
+    </div>
+    <!-- основное меню и кнопка выхода из системы-->
+</jsp:root>

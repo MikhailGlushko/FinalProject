@@ -1,0 +1,8 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns="http://www.w3.org/1999/xhtml" version="2.1">
+        <div class="header">
+            <div class="logo" align="left">
+                <img src="../images/remont_logo.png" alt="Место для логотипа" name="logo" width="1000" height="100"/>
+            </div>
+        </div>
+</jsp:root>
