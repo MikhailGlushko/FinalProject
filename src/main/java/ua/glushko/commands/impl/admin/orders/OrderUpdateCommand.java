@@ -1,11 +1,9 @@
 package ua.glushko.commands.impl.admin.orders;
 
-import ua.glushko.authentification.Authentication;
+import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.model.entity.Order;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +14,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static ua.glushko.authentification.Authentication.U;
-import static ua.glushko.authentification.Authentication.u;
+import static ua.glushko.services.utils.Authentication.U;
+import static ua.glushko.services.utils.Authentication.u;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 
 /** Update data after editing */

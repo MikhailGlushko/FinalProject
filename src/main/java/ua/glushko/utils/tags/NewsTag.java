@@ -1,11 +1,10 @@
-package ua.glushko.tags;
+package ua.glushko.utils.tags;
 
 import ua.glushko.model.entity.News;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 

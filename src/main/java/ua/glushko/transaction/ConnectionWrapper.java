@@ -1,6 +1,6 @@
 package ua.glushko.transaction;
 
-import ua.glushko.model.exception.DaoException;
+import ua.glushko.exception.DaoException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

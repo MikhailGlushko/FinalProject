@@ -1,15 +1,16 @@
-package ua.glushko.tags;
+package ua.glushko.utils.tags;
 
-import ua.glushko.model.entity.User;
+import ua.glushko.model.entity.Order;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static ua.glushko.commands.Command.*;
+import static ua.glushko.commands.Command.PARAM_COMMAND;
+import static ua.glushko.commands.Command.PARAM_PAGE;
 
 @SuppressWarnings("serial")
-public class ShowUsersListTag extends ShowListTag {
+public class ShowOrdersListTag extends ShowListTag {
     public void makeBody(List<Object> list, StringBuilder builder, Integer rowsCount) {
         // build bode if table
         String command = null;
@@ -28,32 +29,37 @@ public class ShowUsersListTag extends ShowListTag {
 
         Iterator<Object> iterator = list.iterator();
         for (int i = 0; i < rowsCount; i++) {
-            User object = null;
+            Order object = null;
             if (!iterator.hasNext())
                 continue;
             Object next = iterator.next();
-            if (next instanceof User) {
-                object = (User) next;
+            if (next instanceof Order) {
+                object = (Order) next;
             }
             builder.append("<tr onClick=\"window.location.href='")
                     .append("/do?command=").append(command).append("_detail")
                     .append("&page=").append(page)
-                    .append("&user_id=").append(Objects.requireNonNull(object).getId())
+                    .append("&order_id=").append(Objects.requireNonNull(object).getId())
                     .append("'; return false\">")
                     .append("<td><a href=\"/do?command=").append(command).append("_detail")
                     .append("&page=").append(page)
-                    .append("&user_id=").append(object.getId()).append("\">")
+                    .append("&order_id=").append(object.getId()).append("\">")
                     .append(object.getId())
                     .append("</a></td>");
-            builder.append("<td>").append(object.getRole()).append("</td>");
-            builder.append("<td>").append(object.getName()).append("</td>");
-            builder.append("<td>").append(object.getLogin()).append("</td>");
-            builder.append("<td>").append(object.getPassword()).append("</td>");
-            builder.append("<td>").append(object.getEmail()).append("</td>");
-            builder.append("<td>").append(object.getPhone()).append("</td>");
+            builder.append("<td>").append(object.getDescriptionShort()).append("</td>");
             builder.append("<td>").append(object.getStatus()).append("</td>");
-            builder.append("<td>").append(object.getLastLogin()).append("</td>");
+            builder.append("<td>").append(object.getOrderDate()).append("</td>");
+            builder.append("<td>").append(object.getExpectedDate()).append("</td>");
+            builder.append("<td>").append(object.getUserName()).append("</td>");
+            builder.append("<td>").append(object.getEmployeeName()).append("</td>");
             builder.append("</tr>");
         }
+    }
+
+    public void makeHeader(StringBuilder builder) {
+            builder.append("<thead><tr>");
+            builder.append("<th>ID</th>").append("<th>DESCRIPTION</th>").append("<th>STATUS</th>").append("<th>ORDER DATE</th>")
+            .append("<th>EXPECTED DAY</th>").append("<th>CUSTOMER</th>").append("<th>EMPLOYEE</th>");
+            builder.append("</tr></thead>");
     }
 }

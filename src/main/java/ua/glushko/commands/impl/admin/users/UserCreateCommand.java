@@ -5,8 +5,8 @@ import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.User;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
-import static ua.glushko.services.Validator.getValidatedUserBeforeCreate;
+import static ua.glushko.services.utils.Validator.getValidatedUserBeforeCreate;
 
 /**
  * Create new user

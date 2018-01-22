@@ -6,12 +6,12 @@
     <uri>customtags</uri>
     <tag>
         <name>Hello</name>
-        <tag-class>ua.glushko.tags.HelloTag</tag-class>
+        <tag-class>ua.glushko.utils.tags.HelloTag</tag-class>
         <body-content>empty</body-content>
     </tag>
     <tag>
         <name>GuestBook</name>
-        <tag-class>ua.glushko.tags.GuestBookTag</tag-class>
+        <tag-class>ua.glushko.utils.tags.GuestBookTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>list</name>
@@ -31,7 +31,7 @@
     </tag>
     <tag>
         <name>Services</name>
-        <tag-class>ua.glushko.tags.ServicesTag</tag-class>
+        <tag-class>ua.glushko.utils.tags.ServicesTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>list</name>
@@ -41,7 +41,7 @@
     </tag>
     <tag>
         <name>News</name>
-        <tag-class>ua.glushko.tags.NewsTag</tag-class>
+        <tag-class>ua.glushko.utils.tags.NewsTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>list</name>
@@ -61,17 +61,17 @@
     </tag>
     <tag>
         <name>Language</name>
-        <tag-class>ua.glushko.tags.LanguageSwitcherTag</tag-class>
+        <tag-class>ua.glushko.utils.tags.LanguageSwitcherTag</tag-class>
         <body-content>empty</body-content>
     </tag>
     <tag>
         <name>MainMenu</name>
-        <tag-class>ua.glushko.tags.MainMenuTag</tag-class>
+        <tag-class>ua.glushko.utils.tags.MainMenuTag</tag-class>
         <body-content>empty</body-content>
     </tag>
     <tag>
         <name>ShowUsersList</name>
-        <tag-class>ua.glushko.tags.ShowUsersListTag</tag-class>
+        <tag-class>ua.glushko.utils.tags.ShowUsersListTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>head</name>
@@ -86,7 +86,7 @@
     </tag>
     <tag>
         <name>ShowServicesList</name>
-        <tag-class>ua.glushko.tags.ShowServicesListTag</tag-class>
+        <tag-class>ua.glushko.utils.tags.ShowServicesListTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>head</name>
@@ -101,7 +101,7 @@
     </tag>
     <tag>
         <name>ShowOrdersList</name>
-        <tag-class>ua.glushko.tags.ShowOrdersListTag</tag-class>
+        <tag-class>ua.glushko.utils.tags.ShowOrdersListTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>head</name>
@@ -116,7 +116,7 @@
     </tag>
     <tag>
         <name>ShowOrdersHistoryList</name>
-        <tag-class>ua.glushko.tags.ShowOrdersHistoryListTag</tag-class>
+        <tag-class>ua.glushko.utils.tags.ShowOrdersHistoryListTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>head</name>
@@ -131,7 +131,7 @@
     </tag>
     <tag>
         <name>OptGoup</name>
-        <tag-class>ua.glushko.tags.OptGoupTag</tag-class>
+        <tag-class>ua.glushko.utils.tags.OptGoupTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>list</name>
@@ -146,7 +146,7 @@
     </tag>
     <tag>
         <name>OptGoupStuff</name>
-        <tag-class>ua.glushko.tags.OptGoupStaffTag</tag-class>
+        <tag-class>ua.glushko.utils.tags.OptGoupStaffTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>list</name>

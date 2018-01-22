@@ -1,15 +1,14 @@
 package ua.glushko.commands.impl.admin.history;
 
-import ua.glushko.authentification.Authentication;
+import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.orders.OrdersCommandHelper;
 import ua.glushko.model.entity.Action;
 import ua.glushko.model.entity.OrderHistory;
-import ua.glushko.model.exception.DaoException;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.OrdersHistoryService;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package ua.glushko.mail;
+package ua.glushko.utils.mail;
 
 import org.apache.log4j.Logger;
 

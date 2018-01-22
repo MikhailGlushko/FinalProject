@@ -1,4 +1,4 @@
-package ua.glushko.model.exception;
+package ua.glushko.exception;
 
 public class TransactionException extends Exception {
     public TransactionException() {

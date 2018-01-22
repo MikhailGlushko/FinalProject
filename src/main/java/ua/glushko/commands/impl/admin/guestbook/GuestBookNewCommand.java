@@ -3,8 +3,8 @@ package ua.glushko.commands.impl.admin.guestbook;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.model.entity.GuestBook;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.GuestBookService;
 
 import javax.servlet.http.HttpServletRequest;

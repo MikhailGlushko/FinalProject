@@ -1,6 +1,6 @@
 package ua.glushko.transaction;
 
-import ua.glushko.model.exception.DatabaseException;
+import ua.glushko.exception.DatabaseException;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

@@ -4,8 +4,8 @@ import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.DaoException;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
 

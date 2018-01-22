@@ -1,9 +1,9 @@
-package ua.glushko.authentification;
+package ua.glushko.services.utils;
 
 import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.Scope;
 import ua.glushko.model.entity.UserRole;
-import ua.glushko.model.exception.ParameterException;
+import ua.glushko.exception.ParameterException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

@@ -4,9 +4,9 @@ import org.apache.log4j.Logger;
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.dao.GenericDAO;
 import ua.glushko.model.entity.GenericEntity;
-import ua.glushko.model.exception.DaoException;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DaoException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.transaction.TransactionManager;
 
 import java.sql.SQLException;

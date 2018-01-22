@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.auth;
 
-import ua.glushko.authentification.Authentication;
+import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandFactory;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
@@ -8,10 +8,10 @@ import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.*;
-import ua.glushko.model.exception.DaoException;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DaoException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +20,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-import static ua.glushko.services.Validator.isUserStatusActive;
-import static ua.glushko.services.Validator.isUserStatusNotActive;
-import static ua.glushko.services.Validator.getValidatedUserBeforeLogin;
+import static ua.glushko.services.utils.Validator.isUserStatusActive;
+import static ua.glushko.services.utils.Validator.isUserStatusNotActive;
+import static ua.glushko.services.utils.Validator.getValidatedUserBeforeLogin;
 
 /** User authorization */
 public class LoginCommand implements Command {

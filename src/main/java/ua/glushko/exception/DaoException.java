@@ -1,4 +1,4 @@
-package ua.glushko.model.exception;
+package ua.glushko.exception;
 
 import org.apache.log4j.Logger;
 import ua.glushko.configaration.MessageManager;

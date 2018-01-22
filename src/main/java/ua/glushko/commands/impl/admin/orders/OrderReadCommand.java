@@ -1,14 +1,13 @@
 package ua.glushko.commands.impl.admin.orders;
 
-import ua.glushko.authentification.Authentication;
+import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.*;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.DaoException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.OrdersHistoryService;
 import ua.glushko.services.impl.OrdersService;
 import ua.glushko.services.impl.RepairServicesService;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-import static ua.glushko.authentification.Authentication.*;
+import static ua.glushko.services.utils.Authentication.*;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.*;
 
 /** Display information about the type of service with the ability to edit or delete */

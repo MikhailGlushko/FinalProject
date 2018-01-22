@@ -1,4 +1,4 @@
-package ua.glushko.authentification;
+package ua.glushko.utils.authentification;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,7 +6,8 @@ import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
-import ua.glushko.model.exception.ParameterException;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.services.utils.Authentication;
 import ua.glushko.services.impl.UsersService;
 import ua.glushko.transaction.ConnectionPool;
 
@@ -19,8 +20,8 @@ import java.util.Map;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ua.glushko.authentification.Authentication.PARAM_GRANTS;
-import static ua.glushko.authentification.Authentication.PARAM_ROLE;
+import static ua.glushko.services.utils.Authentication.PARAM_GRANTS;
+import static ua.glushko.services.utils.Authentication.PARAM_ROLE;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;

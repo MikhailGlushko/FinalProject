@@ -6,9 +6,9 @@ import ua.glushko.model.dao.H2DataSource;
 import ua.glushko.model.entity.Action;
 import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.model.entity.OrderStatus;
-import ua.glushko.model.exception.DaoException;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DaoException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.transaction.ConnectionPool;
 
 import java.sql.SQLException;

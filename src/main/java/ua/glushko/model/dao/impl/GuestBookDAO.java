@@ -2,7 +2,7 @@ package ua.glushko.model.dao.impl;
 
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.entity.GuestBook;
-import ua.glushko.model.exception.DaoException;
+import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
 

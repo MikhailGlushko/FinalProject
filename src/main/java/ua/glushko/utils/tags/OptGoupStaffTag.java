@@ -1,4 +1,4 @@
-package ua.glushko.tags;
+package ua.glushko.utils.tags;
 
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;

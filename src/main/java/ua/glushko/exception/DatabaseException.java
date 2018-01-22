@@ -1,4 +1,4 @@
-package ua.glushko.model.exception;
+package ua.glushko.exception;
 
 import java.sql.SQLException;
 

@@ -5,7 +5,7 @@ import org.junit.Test;
 import ua.glushko.model.dao.GenericDAO;
 import ua.glushko.model.dao.MySQLDAOFactory;
 import ua.glushko.model.entity.RepairService;
-import ua.glushko.model.exception.DaoException;
+import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
 import java.util.List;

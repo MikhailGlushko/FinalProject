@@ -1,4 +1,4 @@
-package ua.glushko.tags;
+package ua.glushko.utils.tags;
 
 import ua.glushko.commands.impl.admin.orders.OrdersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;

@@ -6,9 +6,9 @@ import ua.glushko.model.dao.impl.OrderDAO;
 import ua.glushko.model.dao.impl.OrderHistoryDAO;
 import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.*;
-import ua.glushko.model.exception.DaoException;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DaoException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
 

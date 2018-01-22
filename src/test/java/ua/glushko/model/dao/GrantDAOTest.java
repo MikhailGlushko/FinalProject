@@ -6,7 +6,7 @@ import org.junit.Test;
 import ua.glushko.model.dao.impl.GrantDAO;
 import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.Grant;
-import ua.glushko.model.exception.DaoException;
+import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
 import java.util.List;

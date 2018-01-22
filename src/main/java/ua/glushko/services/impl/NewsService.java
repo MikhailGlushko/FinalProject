@@ -3,9 +3,9 @@ package ua.glushko.services.impl;
 import ua.glushko.model.dao.MySQLDAOFactory;
 import ua.glushko.model.dao.impl.NewsDAO;
 import ua.glushko.model.entity.News;
-import ua.glushko.model.exception.DaoException;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DaoException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
 

@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.auth;
 
-import ua.glushko.authentification.Authentication;
+import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandFactory;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;

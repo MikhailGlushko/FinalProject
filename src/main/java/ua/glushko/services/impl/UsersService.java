@@ -8,10 +8,10 @@ import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
-import ua.glushko.model.exception.DaoException;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DaoException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
 

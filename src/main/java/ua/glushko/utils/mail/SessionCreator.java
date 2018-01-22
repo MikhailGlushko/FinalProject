@@ -1,4 +1,4 @@
-package ua.glushko.mail;
+package ua.glushko.utils.mail;
 
 import java.util.Properties;
 import javax.mail.PasswordAuthentication;

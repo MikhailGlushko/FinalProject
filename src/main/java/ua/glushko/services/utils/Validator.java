@@ -1,11 +1,11 @@
-package ua.glushko.services;
+package ua.glushko.services.utils;
 
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
 import ua.glushko.model.entity.UserStatus;
-import ua.glushko.model.exception.ParameterException;
+import ua.glushko.exception.ParameterException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package ua.glushko.tags;
+package ua.glushko.utils.tags;
 
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
@@ -9,9 +9,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
-import static ua.glushko.authentification.Authentication.*;
+import static ua.glushko.services.utils.Authentication.*;
 import static ua.glushko.commands.Command.*;
 
 @SuppressWarnings("serial")

@@ -3,7 +3,7 @@ package ua.glushko.model.dao.impl;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.entity.GuestBook;
-import ua.glushko.model.exception.DaoException;
+import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
 import java.util.List;

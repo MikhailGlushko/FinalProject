@@ -1,7 +1,7 @@
 package ua.glushko.model.dao;
 
 import ua.glushko.model.entity.GenericEntity;
-import ua.glushko.model.exception.DaoException;
+import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
 

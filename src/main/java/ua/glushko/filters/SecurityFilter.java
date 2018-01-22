@@ -1,6 +1,6 @@
 package ua.glushko.filters;
 
-import ua.glushko.authentification.Authentication;
+import ua.glushko.services.utils.Authentication;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

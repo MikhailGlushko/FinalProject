@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.dao.MySQLDAOFactory;
 import ua.glushko.model.entity.Order;
-import ua.glushko.model.exception.DaoException;
+import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
 import java.sql.Date;

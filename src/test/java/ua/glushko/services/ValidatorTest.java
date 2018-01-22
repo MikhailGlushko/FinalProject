@@ -1,6 +1,7 @@
 package ua.glushko.services;
 
 import org.junit.Test;
+import ua.glushko.services.utils.Validator;
 
 import static org.junit.Assert.*;
 

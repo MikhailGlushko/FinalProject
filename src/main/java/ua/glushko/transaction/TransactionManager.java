@@ -1,8 +1,8 @@
 package ua.glushko.transaction;
 
-import ua.glushko.model.exception.DaoException;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DaoException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.TransactionException;
 
 import java.sql.Connection;
 import java.sql.SQLException;

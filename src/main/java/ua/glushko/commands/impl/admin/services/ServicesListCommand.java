@@ -1,12 +1,12 @@
 package ua.glushko.commands.impl.admin.services;
 
-import ua.glushko.authentification.Authentication;
+import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.RepairService;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.RepairServicesService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
 
-import static ua.glushko.authentification.Authentication.R;
+import static ua.glushko.services.utils.Authentication.R;
 
 public class ServicesListCommand implements Command {
 

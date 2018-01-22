@@ -1,23 +1,23 @@
 package ua.glushko.commands.impl.admin.users;
 
-import ua.glushko.authentification.Authentication;
+import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.User;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static ua.glushko.authentification.Authentication.U;
+import static ua.glushko.services.utils.Authentication.U;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS_READ;
 import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.PARAM_USER_ID;
-import static ua.glushko.services.Validator.getValidatedUserBeforeUpdateDetails;
+import static ua.glushko.services.utils.Validator.getValidatedUserBeforeUpdateDetails;
 
 /**
  * Update user data

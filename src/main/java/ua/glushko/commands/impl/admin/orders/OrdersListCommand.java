@@ -1,12 +1,12 @@
 package ua.glushko.commands.impl.admin.orders;
 
-import ua.glushko.authentification.Authentication;
+import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.Order;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 
-import static ua.glushko.authentification.Authentication.R;
+import static ua.glushko.services.utils.Authentication.R;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDERS_LIST;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDERS_LIST_TITLE;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PATH_PAGE_ORDERS;

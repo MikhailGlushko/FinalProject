@@ -5,16 +5,16 @@ import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.User;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
-import static ua.glushko.services.Validator.getValidatedUserBeforeSetup;
+import static ua.glushko.services.utils.Validator.getValidatedUserBeforeSetup;
 
 /** Saving user credentials after change */
 public class SetupSaveCommand implements Command {

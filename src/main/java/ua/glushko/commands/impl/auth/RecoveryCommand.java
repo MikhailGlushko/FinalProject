@@ -5,18 +5,18 @@ import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
-import ua.glushko.mail.MailThread;
+import ua.glushko.utils.mail.MailThread;
 import ua.glushko.model.entity.User;
-import ua.glushko.model.exception.DatabaseException;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.TransactionException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Properties;
 
-import static ua.glushko.services.Validator.getValidatedUserBeforeRecoveryPassword;
+import static ua.glushko.services.utils.Validator.getValidatedUserBeforeRecoveryPassword;
 
 /** Recovery password */
 public class RecoveryCommand implements Command {

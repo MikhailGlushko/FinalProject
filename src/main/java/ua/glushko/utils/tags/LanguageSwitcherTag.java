@@ -1,4 +1,4 @@
-package ua.glushko.tags;
+package ua.glushko.utils.tags;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
