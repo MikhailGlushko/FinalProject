@@ -28,46 +28,58 @@
         <BR>
         <p>&nbsp;</p>
         <c:if test="${not empty service_detail}">
-            <div class="login_div" align="center">
+            <div class="login_div" class="login_div" align="center">
                 <form name="edit" method="post" action="/do">
-                    <br/>
                     <input type="hidden" name="command" value="services_action"/>
                     <input type="hidden" name="service_id" value="${service_detail.id}"/>
                     <input type="hidden" name="page" value="${param.page}"/>
-                    <div class="input-row">
-                        <div class="input-field">
-                            <input id="service_name" type="text" name="service_name" value="${service_detail.name}" required/>
-                            <label for="service_name"><fmt:message key="service.name"/><em>*</em></label>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label for="service_name" style="float: left"><fmt:message key="service.name"/><em>*</em></label>
+                            <input class="input-sm" style="float: right" id="service_name" type="text" name="service_name"
+                                   placeholder="<fmt:message key="service.name"/>"
+                                   value="${service_detail.name}" required/>
                         </div>
                     </div>
-                    <div class="input-row">
-                        <div class="input-field">
-                            <input id="service_name_ru" type="text" name="service_name_ru" value="${service_detail.nameRu}" required/>
-                            <label for="service_name_ru"><fmt:message key="service.name.ru"/><em>*</em></label>
+                    <br>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label for="service_name_ru" style="float: left"><fmt:message key="service.name.ru"/><em>*</em></label>
+                            <input class="input-sm" style="float: right" id="service_name_ru" type="text" name="service_name_ru"
+                                   placeholder="<fmt:message key="service.name.ru"/>"
+                                   value="${service_detail.nameRu}" required/>
                         </div>
                     </div>
-
-                    <div class="input-row">
-                        <div class="input-field">
-                            <input id="service_parent" type="number" name="service_parent" value="${service_detail.parent}" required/>
-                            <label for="service_parent"><fmt:message key="service.parent"/><em>*</em></label>
+                    <br>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label for="service_parent" style="float: left"><fmt:message key="service.parent"/><em>*</em></label>
+                            <input class="input-sm" style="float: right" id="service_parent" type="number" name="service_parent"
+                                   placeholder="<fmt:message key="service.parent"/>"
+                                   value="${service_detail.parent}" required/>
                         </div>
                     </div>
-                ${errorMessage}
-                    <br/>
-                        ${wrongAction}
-                    <br/>
-                        ${nullPage}
-                    <hr/>
-                    <br/>
+                    <br>
+                    <c:if test="${not empty errorMessage}">
+                        ${errorMessage}
+                    </c:if>
+                    <c:if test="${not empty wrongAction}">
+                        <br/>                        ${wrongAction}
+                    </c:if>
+                    <c:if test="${not empty nullPage}">
+                        <br/>                        ${nullPage}
+                    </c:if>
+                    <br>
                     <div class="input-row">
-                            <button name="action" class="mainmenubutton" type="submit" value="save">
+                            <button name="action" class="btn btn-lg btn-primary btn-block" type="submit" value="save">
                                 <fmt:message key='app.welcome.save'/>
                             </button>
-                            <button name="action" class="mainmenubutton" type="button" value="cancel" onClick="window.location.href='/do?command=services&page=${param.page}'">
+                    </div>
+                    <div class="input-row">
+                            <button class="btn btn-sm btn-link" type="button" style="float: left" name="action" class="mainmenubutton" type="button" value="cancel" onClick="window.location.href='/do?command=services&page=${param.page}'">
                                 <fmt:message key='app.welcome.cancel'/>
                             </button>
-                            <button name="action" class="mainmenubutton" type="submit" value="delete">
+                            <button class="btn btn-sm btn-link" name="action" class="mainmenubutton" type="submit" value="delete">
                                 <fmt:message key='app.welcome.delete'/>
                             </button>
                     </div>

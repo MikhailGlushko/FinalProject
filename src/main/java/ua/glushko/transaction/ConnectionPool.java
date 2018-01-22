@@ -1,6 +1,6 @@
 package ua.glushko.transaction;
 
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DatabaseException;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -21,11 +21,11 @@ public class ConnectionPool {
         return CONNECTION_POOL;
     }
 
-    public static Connection getConnection() throws PersistException {
+    public static Connection getConnection() throws DatabaseException {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
-            throw new PersistException("No Database");
+            throw new DatabaseException("No Database");
         }
     }
 

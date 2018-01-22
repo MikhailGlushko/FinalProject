@@ -34,5 +34,7 @@ public class UsersCommandHelper {
     public static final String MESSAGE_USER_INCORRECT_DATA = "user.incorrectdata";
     public static final String MESSAGE_USER_NOT_EXIST = "user.notexist";
 
+    public static final String MESSAGE_USER_DATABASE_NOT_FOUND = "database.not.found";
+
 
 }

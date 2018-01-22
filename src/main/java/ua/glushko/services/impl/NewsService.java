@@ -1,11 +1,10 @@
 package ua.glushko.services.impl;
 
 import ua.glushko.model.dao.MySQLDAOFactory;
-import ua.glushko.model.dao.impl.GuestBookDAO;
 import ua.glushko.model.dao.impl.NewsDAO;
-import ua.glushko.model.entity.GuestBook;
 import ua.glushko.model.entity.News;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
@@ -22,7 +21,7 @@ public class NewsService extends AbstractService {
         return new NewsService();
     }
 
-    public List<News> getNewsList() throws PersistException, TransactionException {
+    public List<News> getNewsList() throws TransactionException, DatabaseException {
         NewsDAO newsDAO = MySQLDAOFactory.getFactory().getNewsDAO();
         List<News> read;
         try{
@@ -35,7 +34,7 @@ public class NewsService extends AbstractService {
         return read;
     }
 
-    public List<News> getNewsList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
+    public List<News> getNewsList(int page, int pagesCount, int rowsPerPage) throws TransactionException, DatabaseException {
         NewsDAO newsDAO = MySQLDAOFactory.getFactory().getNewsDAO();
         int start = (page - 1) * rowsPerPage;
         int limit = pagesCount * rowsPerPage;
@@ -54,15 +53,15 @@ public class NewsService extends AbstractService {
         return  MySQLDAOFactory.getFactory().getNewsDAO().getTableHead();
     }
 
-    public News getNewsId(int id) throws PersistException, TransactionException {
+    public News getNewsId(int id) throws DaoException {
         return getById(MySQLDAOFactory.getFactory().getNewsDAO(),id);
     }
 
-    public void updateNews(News item) throws PersistException, TransactionException {
+    public void updateNews(News item) throws TransactionException, DatabaseException {
         update(MySQLDAOFactory.getFactory().getNewsDAO(),item);
     }
 
-    public void deleteNews(Integer serviceId) throws PersistException, TransactionException {
+    public void deleteNews(Integer serviceId) throws TransactionException, DatabaseException {
         delete(MySQLDAOFactory.getFactory().getNewsDAO(),serviceId);
     }
 

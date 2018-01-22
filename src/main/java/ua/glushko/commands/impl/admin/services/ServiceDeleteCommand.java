@@ -4,8 +4,9 @@ import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.model.entity.RepairService;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.RepairServicesService;
 
@@ -22,14 +23,14 @@ public class ServiceDeleteCommand implements Command {
 
         try {
             deleteUserDataFromDatabase(request);
-        } catch (TransactionException | PersistException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = "/do?command=" + COMMAND_SERVICES + "&page=" + request.getAttribute(PARAM_PAGE);
         return new CommandRouter(request, response, page);
     }
 
-    private void deleteUserDataFromDatabase(HttpServletRequest request) throws PersistException, TransactionException {
+    private void deleteUserDataFromDatabase(HttpServletRequest request) throws TransactionException, DatabaseException {
         Integer Id = null;
         RepairService repairService = null;
         try {

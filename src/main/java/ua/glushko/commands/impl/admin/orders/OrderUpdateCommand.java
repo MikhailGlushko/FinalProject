@@ -4,14 +4,12 @@ import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.model.entity.Order;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -29,7 +27,7 @@ public class OrderUpdateCommand implements Command {
 
         try {
             storeOrderToDatabase(request);
-        } catch (TransactionException | PersistException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = "/do?command=" + COMMAND_ORDERS +"&page=" + request.getAttribute(PARAM_PAGE);
@@ -37,7 +35,7 @@ public class OrderUpdateCommand implements Command {
 
     }
 
-    private void storeOrderToDatabase(HttpServletRequest request) throws PersistException, TransactionException {
+    private void storeOrderToDatabase(HttpServletRequest request) {
         Integer orderId = null;
         try {
             int access = Authentication.checkAccess(request);
@@ -83,7 +81,7 @@ public class OrderUpdateCommand implements Command {
             request.setAttribute(OrdersCommandHelper.PARAM_ORDER, item);
             request.setAttribute(PARAM_COMMAND, COMMAND_ORDERS);
             LOGGER.debug("order " + orderId+" was updated");
-        } catch (ParameterException e) {
+        } catch (Exception e) {
             LOGGER.debug("order " + orderId+" was not update");
             LOGGER.error(e);
         }

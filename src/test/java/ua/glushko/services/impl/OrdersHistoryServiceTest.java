@@ -6,7 +6,8 @@ import ua.glushko.model.dao.H2DataSource;
 import ua.glushko.model.entity.Action;
 import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.model.entity.OrderStatus;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.transaction.ConnectionPool;
 
@@ -29,38 +30,38 @@ public class OrdersHistoryServiceTest {
     }
 
     @Test
-    public void getOrderHistoryList() throws PersistException, TransactionException {
+    public void getOrderHistoryList() throws DaoException, TransactionException, DatabaseException {
         List<OrderHistory> orderHistoryList = service.getOrderHistoryList();
         assertNotNull(orderHistoryList);
     }
 
     @Test
-    public void getOrderHistoryList1() throws PersistException, TransactionException {
+    public void getOrderHistoryList1() throws DaoException, TransactionException, DatabaseException {
         List<OrderHistory> orderHistoryList = service.getOrderHistoryList(1, 1, 1);
         assertNotNull(orderHistoryList);
     }
 
     @Test
-    public void getOrderHistoryList2() throws PersistException, TransactionException {
+    public void getOrderHistoryList2() throws DaoException, TransactionException, DatabaseException {
         List<OrderHistory> orderHistoryList = service.getOrderHistoryList(1, 1, 1, 1);
         assertNotNull(orderHistoryList);
     }
 
     @Test
-    public void getOrderHistoryTitles() throws PersistException, TransactionException {
+    public void getOrderHistoryTitles() throws DaoException, TransactionException, DatabaseException {
         service.getOrderHistoryList(1, 1, 1, 1);
         List<String> orderHistoryTitles = service.getOrderHistoryTitles();
         assertNotNull(orderHistoryTitles);
     }
 
     @Test
-    public void getOrderHistoryById() throws PersistException, TransactionException {
+    public void getOrderHistoryById() throws DaoException, TransactionException {
         OrderHistory orderHistoryById = service.getOrderHistoryById(1);
         assertNotNull(orderHistoryById);
     }
 
     @Test
-    public void updateOrderHistoty() throws PersistException, TransactionException, ParseException {
+    public void updateOrderHistoty() throws DaoException, TransactionException, ParseException, DatabaseException {
         OrderHistory orderHistoryById = service.getOrderHistoryById(1);
         String action = orderHistoryById.getAction();
         orderHistoryById.setAction(Action.GUESTBOOK_COMMENT.name());
@@ -84,7 +85,7 @@ public class OrdersHistoryServiceTest {
     }
 
     @Test
-    public void deleteOrder() throws PersistException, TransactionException, ParseException {
+    public void deleteOrder() throws DaoException, TransactionException, ParseException, DatabaseException {
         OrderHistory orderHistoryById = service.getOrderHistoryById(1);
         orderHistoryById.setId(0);
         service.updateOrderHistory(orderHistoryById);

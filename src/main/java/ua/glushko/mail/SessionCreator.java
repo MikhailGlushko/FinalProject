@@ -1,7 +1,5 @@
 package ua.glushko.mail;
 
-import org.apache.log4j.Logger;
-
 import java.util.Properties;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;

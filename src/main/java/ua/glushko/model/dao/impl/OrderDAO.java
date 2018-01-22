@@ -2,7 +2,7 @@ package ua.glushko.model.dao.impl;
 
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.entity.Order;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
 
@@ -131,7 +131,7 @@ public class OrderDAO extends AbstractDAO<Order> {
         return list;
     }
 
-    public List<Order> read(int start, int limit, int userId) throws PersistException {
+    public List<Order> read(int start, int limit, int userId) throws DaoException {
         List<Order> list = Collections.emptyList();
         String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
                 "FROM repair_agency.orders a\n" +
@@ -150,13 +150,13 @@ public class OrderDAO extends AbstractDAO<Order> {
             setTitles(resultSet.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }
 
     @Override
-    public List<Order> read() throws PersistException {
+    public List<Order> read() throws DaoException {
         List<Order> list = Collections.emptyList();
         String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
                 "FROM repair_agency.orders a\n" +
@@ -169,13 +169,13 @@ public class OrderDAO extends AbstractDAO<Order> {
             setTitles(statement.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }
 
     @Override
-    public List<Order> read(int start, int limit) throws PersistException {
+    public List<Order> read(int start, int limit) throws DaoException {
         List<Order> list = Collections.emptyList();
         String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
                 "FROM repair_agency.orders a\n" +
@@ -191,13 +191,13 @@ public class OrderDAO extends AbstractDAO<Order> {
             setTitles(resultSet.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }
 
     @Override
-    public Order read(int id) throws PersistException {
+    public Order read(int id) throws DaoException {
         List<Order> list = Collections.emptyList();
         String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
                 "FROM repair_agency.orders a\n" +
@@ -211,13 +211,13 @@ public class OrderDAO extends AbstractDAO<Order> {
             ResultSet resultSet = statement.executeQuery();
             list = parseResultSet(resultSet);
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         if (list.size() == 0) {
             return null;
         }
         if (list.size() > 1) {
-            throw new PersistException("Received more than one record.");
+            throw new DaoException("Received more than one record.");
         }
         return list.iterator().next();
     }

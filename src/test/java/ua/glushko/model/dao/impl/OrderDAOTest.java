@@ -2,10 +2,9 @@ package ua.glushko.model.dao.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.glushko.model.dao.GenericDAO;
 import ua.glushko.model.dao.MySQLDAOFactory;
 import ua.glushko.model.entity.Order;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
 import java.sql.Date;
@@ -25,28 +24,28 @@ public class OrderDAOTest {
     }
 
     @Test
-    public void readAll() throws PersistException {
+    public void readAll() throws DaoException {
         List<Order> read = dao.read();
     }
 
     @Test
-    public void readById() throws PersistException {
+    public void readById() throws DaoException {
         Order read = dao.read(1);
     }
 
     @Test
-    public void readByCustomer() throws PersistException {
+    public void readByCustomer() throws DaoException {
         List<Order> orders = ((OrderDAO) dao).read(0, 100, 5);
     }
 
     @Test
-    public void readByEmployee() throws PersistException {
+    public void readByEmployee() throws DaoException {
         List<Order> orders = ((OrderDAO) dao).read(0, 100, 0);
     }
 
 
     @Test
-    public void create() throws PersistException {
+    public void create() throws DaoException {
         Order order = new Order();
         dao.create(order);
         order = new Order();
@@ -56,7 +55,7 @@ public class OrderDAOTest {
     }
 
     @Test
-    public void readLimit() throws PersistException {
+    public void readLimit() throws DaoException {
         List<Order> read = dao.read(0, 2);
         assertTrue(read.size()==2);
     }

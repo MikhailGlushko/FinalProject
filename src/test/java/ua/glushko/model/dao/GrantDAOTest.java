@@ -6,10 +6,9 @@ import org.junit.Test;
 import ua.glushko.model.dao.impl.GrantDAO;
 import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.Grant;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
-import java.security.spec.ECField;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
@@ -27,17 +26,17 @@ public class GrantDAOTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void readAll() throws PersistException {
+    public void readAll() throws DaoException {
         List<Grant> grants = ((GrantDAO) grantDAO).read();
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void deleteOne() throws PersistException {
+    public void deleteOne() throws DaoException {
         grantDAO.delete(1);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void updateOne() throws PersistException {
+    public void updateOne() throws DaoException {
         List<Grant> grants = ((GrantDAO) grantDAO).read("ADMIN");
         assertNotNull(grants);
         Grant grant = grants.iterator().next();
@@ -45,30 +44,30 @@ public class GrantDAOTest {
     }
 
     @Test
-    public void read() throws PersistException {
+    public void read() throws DaoException {
         List<Grant> grants = ((GrantDAO) grantDAO).read("ADMIN");
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void create() throws PersistException {
+    public void create() throws DaoException {
         Grant grant = new Grant();
         grantDAO.create(grant);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void update() throws PersistException {
+    public void update() throws DaoException {
         Grant grant = grantDAO.read(1);
         grantDAO.update(grant);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void delete() throws PersistException {
+    public void delete() throws DaoException {
         Grant grant = grantDAO.read(1);
         grantDAO.delete(grant.getId());
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void deleteAll() throws PersistException {
+    public void deleteAll() throws DaoException {
         grantDAO.deleteAll();
     }
 

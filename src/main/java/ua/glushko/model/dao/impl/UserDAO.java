@@ -2,11 +2,10 @@ package ua.glushko.model.dao.impl;
 
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.dao.AbstractDAO;
-import ua.glushko.model.dao.GenericDAO;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
 
@@ -105,7 +104,7 @@ public class UserDAO extends AbstractDAO<User> {
         return list;
     }
 
-    public User checkUserAuth(String login, String pass) throws PersistException {
+    public User checkUserAuth(String login, String pass) throws DaoException {
         String sql = getSelectQuery() +
                 " where login=? and password=?";
         List<User> users = Collections.emptyList();
@@ -118,14 +117,14 @@ public class UserDAO extends AbstractDAO<User> {
             users = parseResultSet(resultSet);
             String PROPERTY_NAME_USER_INCORRECT_LOGIN_OR_PASSWORD = "user.incorrectLoginOrPassword";
             if (users.size() == 0)
-                throw new PersistException(MessageManager.getMessage(PROPERTY_NAME_USER_INCORRECT_LOGIN_OR_PASSWORD));
+                throw new DaoException(MessageManager.getMessage(PROPERTY_NAME_USER_INCORRECT_LOGIN_OR_PASSWORD));
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return users.iterator().next();
     }
 
-    public User getUserByLogin(String login) throws PersistException, ParameterException {
+    public User getUserByLogin(String login) throws DaoException, ParameterException {
         if(login==null || login.isEmpty())
             throw new ParameterException("login is null");
         String sql = getSelectQuery() +
@@ -138,14 +137,14 @@ public class UserDAO extends AbstractDAO<User> {
             resultSet = statement.executeQuery();
             users = parseResultSet(resultSet);
             if (users.size() == 0)
-                throw new PersistException("user not fount");
+                throw new DaoException("user not fount");
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return users.iterator().next();
     }
 
-    public List<User> readStuff(UserRole  role, boolean flag) throws PersistException {
+    public List<User> readStuff(UserRole  role, boolean flag) throws DaoException {
         String sql;
         if(flag)
             sql = getSelectQuery() +" where role=?";
@@ -161,7 +160,7 @@ public class UserDAO extends AbstractDAO<User> {
             if (users.size() == 0)
                 return null;
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return users;
     }

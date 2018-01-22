@@ -2,7 +2,7 @@ package ua.glushko.model.dao.impl;
 
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.entity.News;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
 
@@ -93,7 +93,7 @@ public class NewsDAO extends AbstractDAO<News> {
                 " from " + getTableName();
     }
 
-    public List<News> read() throws PersistException {
+    public List<News> read() throws DaoException {
         List<News> list = Collections.emptyList();
         String sql = getSelectQuery()+" order by id desc";
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -102,7 +102,7 @@ public class NewsDAO extends AbstractDAO<News> {
             setTitles(statement.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }
@@ -113,7 +113,7 @@ public class NewsDAO extends AbstractDAO<News> {
                 " order by id desc limit ?,? ";
     }
 
-    public List<News> read(int start, int limit) throws PersistException {
+    public List<News> read(int start, int limit) throws DaoException {
         List<News> list = Collections.emptyList();
         String sql = getSelectQuery(start, limit);
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -124,7 +124,7 @@ public class NewsDAO extends AbstractDAO<News> {
             setTitles(resultSet.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }

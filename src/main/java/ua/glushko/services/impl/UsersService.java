@@ -8,8 +8,9 @@ import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
@@ -26,7 +27,7 @@ public class UsersService extends AbstractService {
         return new UsersService();
     }
 
-    public List<User> getUsersList() throws PersistException, TransactionException {
+    public List<User> getUsersList() throws TransactionException, DatabaseException {
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         List<User> read;
         try {
@@ -39,7 +40,7 @@ public class UsersService extends AbstractService {
         return read;
     }
 
-    public List<User> getUsersList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
+    public List<User> getUsersList(int page, int pagesCount, int rowsPerPage) throws TransactionException, DatabaseException {
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         int start = (page - 1) * rowsPerPage;
         int limit = pagesCount * rowsPerPage;
@@ -58,21 +59,21 @@ public class UsersService extends AbstractService {
         return MySQLDAOFactory.getFactory().getUserDao().getTableHead();
     }
 
-    public User getUserById(int id) throws PersistException {
+    public User getUserById(int id) throws DaoException {
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         return userDao.read(id);
     }
 
-    public void updateUser(User user) throws PersistException, TransactionException {
+    public void updateUser(User user) throws TransactionException, DatabaseException {
         //if (user.getLogin() == null || user.getLogin().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty())
-        //    throw new PersistException(MessageManager.getMessage("user.incorrectLoginOrPassword"));
+        //    throw new DaoException(MessageManager.getMessage("user.incorrectLoginOrPassword"));
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         try {
             TransactionManager.beginTransaction();
             if (user.getId() != null && user.getId() != 0) {
                 User oldUser = userDao.read(user.getId());
                 if(Objects.isNull(oldUser))
-                    throw new PersistException("user.not.found");
+                    throw new DaoException("user.not.found");
                 oldUser.setName(user.getName());
                 oldUser.setLogin(user.getLogin());
                 oldUser.setPhone(user.getPhone());
@@ -91,7 +92,7 @@ public class UsersService extends AbstractService {
         }
     }
 
-    public User getUserByLogin(String userLogin) throws PersistException, TransactionException, ParameterException {
+    public User getUserByLogin(String userLogin) throws TransactionException, ParameterException, DatabaseException {
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         User user;
         try {
@@ -104,7 +105,7 @@ public class UsersService extends AbstractService {
         return user;
     }
 
-    public Map<User, List<Grant>> authenticateUser(String login, String password) throws TransactionException, PersistException {
+    public Map<User, List<Grant>> authenticateUser(String login, String password) throws TransactionException, DatabaseException {
         User user;
         Map<User, List<Grant>> userWithGrants = new HashMap<>();
         List<Grant> grants = Collections.emptyList();
@@ -131,12 +132,12 @@ public class UsersService extends AbstractService {
     }
 
     public User register(String login, String password, String name, String email, String phone)
-            throws PersistException, TransactionException, ParameterException {
+            throws TransactionException, ParameterException, DatabaseException {
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         User userByLogin = null;
         try {
             userByLogin = ((UserDAO) userDao).getUserByLogin(login);
-        } catch (PersistException e) {
+        } catch (DaoException e) {
             // user not found. It's OK. Let's go to register it.
         }
         if (Objects.isNull(userByLogin)) {
@@ -158,12 +159,12 @@ public class UsersService extends AbstractService {
             }
             return user;
         } else {
-            throw new PersistException("user already exist");
+            throw new DaoException("user already exist");
         }
     }
 
     public User changePassword(String login, String password)
-            throws PersistException, TransactionException, ParameterException {
+            throws TransactionException, ParameterException, DatabaseException {
 
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         User user;
@@ -181,7 +182,7 @@ public class UsersService extends AbstractService {
         return user;
     }
 
-    public void deleteUser(Integer userId) throws PersistException, TransactionException {
+    public void deleteUser(Integer userId) throws TransactionException, DatabaseException {
         GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
         try {
             TransactionManager.beginTransaction();
@@ -202,7 +203,7 @@ public class UsersService extends AbstractService {
         return ((UserDAO) userDao).count(id);
     }
 
-    public List<User> getUsersAsStuff(UserRole role, boolean flag) throws PersistException, TransactionException {
+    public List<User> getUsersAsStuff(UserRole role, boolean flag) throws TransactionException, DatabaseException {
         List<User> users;
         try {
             GenericDAO<User> userDAO = MySQLDAOFactory.getFactory().getUserDao();

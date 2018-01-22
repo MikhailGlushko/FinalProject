@@ -3,7 +3,7 @@ package ua.glushko.model.dao.impl;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.entity.GuestBook;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
 import java.util.List;
@@ -39,26 +39,26 @@ public class GuestBookDAOTest {
     }
 
     @Test
-    public void read() throws PersistException {
+    public void read() throws DaoException {
         List<GuestBook> read = instance.read();
         assertNotNull(read);
     }
 
     @Test
-    public void readLimit() throws PersistException {
+    public void readLimit() throws DaoException {
         List<GuestBook> read = instance.read(0,1);
         assertTrue(read.size()==1);
     }
 
     @Test
-    public void create() throws PersistException {
+    public void create() throws DaoException {
         GuestBook guestBook = new GuestBook();
         instance.create(guestBook);
         assertTrue(guestBook.getId()!=0);
     }
 
     @Test
-    public void update() throws PersistException {
+    public void update() throws DaoException {
         GuestBook guestBook = instance.read(1);
         String decription = guestBook.getDescription();
         guestBook.setDescription(decription+"!");

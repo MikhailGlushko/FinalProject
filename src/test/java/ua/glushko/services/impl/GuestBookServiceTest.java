@@ -4,7 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.dao.H2DataSource;
 import ua.glushko.model.entity.GuestBook;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.transaction.ConnectionPool;
 
@@ -25,32 +26,32 @@ public class GuestBookServiceTest {
     }
 
     @Test
-    public void getGuestBookList() throws PersistException, TransactionException {
+    public void getGuestBookList() throws DaoException, TransactionException, DatabaseException {
         List<GuestBook> guestBookList = service.getGuestBookList();
         assertNotNull(guestBookList);
     }
 
     @Test
-    public void getGuestBookList1() throws PersistException, TransactionException {
+    public void getGuestBookList1() throws DaoException, TransactionException, DatabaseException {
         List<GuestBook> guestBookList = service.getGuestBookList(1, 1, 1);
         assertNotNull(guestBookList);
     }
 
     @Test
-    public void getGuestBookTitles() throws PersistException, TransactionException {
+    public void getGuestBookTitles() throws DaoException, TransactionException, DatabaseException {
         service.getGuestBookList(1, 1, 1);
         List<String> guestBookTitles = service.getGuestBookTitles();
         assertNotNull(guestBookTitles);
     }
 
     @Test
-    public void getGuestBookById() throws PersistException, TransactionException {
+    public void getGuestBookById() throws DaoException, TransactionException {
         GuestBook book = service.getGuestBookById(1);
         assertNotNull(book);
     }
 
     @Test
-    public void updateGuestBook() throws PersistException, TransactionException {
+    public void updateGuestBook() throws DaoException, TransactionException, DatabaseException {
         GuestBook book = service.getGuestBookById(1);
         assertNotNull(book);
         String decription = book.getDescription();
@@ -62,7 +63,7 @@ public class GuestBookServiceTest {
     }
 
     @Test
-    public void deleteGuestBook() throws PersistException, TransactionException {
+    public void deleteGuestBook() throws DaoException, TransactionException, DatabaseException {
         GuestBook book = service.getGuestBookById(1);
         book.setId(0);
         service.updateGuestBook(book);

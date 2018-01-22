@@ -17,7 +17,7 @@ public class Validator {
     private static final boolean isPhoneValidation = Boolean.valueOf(ConfigurationManager.getProperty("validation.phone"));
 
     /** Check userId*/
-    public static boolean validateUserId(String id){
+    private static boolean validateUserId(String id){
         try{
             Integer.valueOf(id);
         } catch (NumberFormatException e){
@@ -27,7 +27,7 @@ public class Validator {
     }
 
     /** Check userStatus */
-    public static boolean validateUserStatus(String status){
+    private static boolean validateUserStatus(String status){
         try {
             UserStatus.valueOf(status);
         } catch (IllegalArgumentException e){
@@ -37,7 +37,7 @@ public class Validator {
     }
 
     /** *Check UserRole */
-    public static boolean validateUserRole(String role){
+    private static boolean validateUserRole(String role){
         try{
             UserRole.valueOf(role);
         } catch (IllegalArgumentException e){
@@ -71,7 +71,7 @@ public class Validator {
     }
 
     /** Check UserPhone */
-    public static boolean validatePhone(String phone){
+    private static boolean validatePhone(String phone){
         String pattern = "^\\+\\d{2}\\(\\d{3}\\)\\d{3}-\\d{2}-\\d{2}$";
         return Objects.nonNull(phone) && (!isPhoneValidation || phone.matches(pattern));
     }

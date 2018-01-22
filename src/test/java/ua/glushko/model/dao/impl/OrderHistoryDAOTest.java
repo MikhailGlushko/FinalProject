@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.entity.Action;
 import ua.glushko.model.entity.OrderHistory;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
 import java.util.Date;
@@ -24,38 +24,38 @@ public class OrderHistoryDAOTest {
     }
 
     @Test
-    public void read() throws PersistException {
+    public void read() throws DaoException {
         List<OrderHistory> read = dao.read();
         assertNotNull(read);
     }
 
     @Test
-    public void readLimit() throws PersistException {
+    public void readLimit() throws DaoException {
         List<OrderHistory> read = dao.read(0, 1);
         assertTrue(read.size()==1);
     }
 
     @Test
-    public void read2() throws PersistException {
+    public void read2() throws DaoException {
         OrderHistory read = dao.read(1);
         assertNotNull(read);
     }
 
     @Test
-    public void read3() throws PersistException {
+    public void read3() throws DaoException {
         List<OrderHistory> read = dao.read(0, 1, 1);
         assertNotNull(read);
     }
 
-    @Test (expected = PersistException.class)
-    public void createNull() throws PersistException {
+    @Test (expected = DaoException.class)
+    public void createNull() throws DaoException {
         OrderHistory orderHistory= new OrderHistory() ;
         dao.create(orderHistory);
         assertTrue(orderHistory.getId()!=0);
     }
 
     @Test
-    public void create() throws PersistException {
+    public void create() throws DaoException {
         OrderHistory orderHistory= new OrderHistory() ;
         orderHistory.setUserId(1);
         orderHistory.setOrderId(1);

@@ -7,8 +7,6 @@ import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.Order;
 import ua.glushko.model.entity.RepairService;
 import ua.glushko.model.entity.User;
-import ua.glushko.model.exception.PersistException;
-import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.RepairServicesService;
 import ua.glushko.services.impl.UsersService;
 
@@ -29,7 +27,7 @@ public class OrderAddCommand implements Command {
 
             // prepare list for menu
             RepairServicesService repairServices = RepairServicesService.getService();
-            Integer userId = null;
+            int userId = 0;
             try {
                 userId = Integer.valueOf(request.getSession().getAttribute(Authentication.PARAM_ID).toString());
             } catch (NumberFormatException e){
@@ -50,7 +48,7 @@ public class OrderAddCommand implements Command {
             request.setAttribute(OrdersCommandHelper.PARAM_ORDER, new Order());
             request.setAttribute(OrdersCommandHelper.PARAM_SERVICES_LIST, repairServiceList);
             request.setAttribute("serviceList",serviceList);
-        } catch (PersistException | TransactionException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
 

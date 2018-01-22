@@ -4,7 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.dao.H2DataSource;
 import ua.glushko.model.entity.RepairService;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.transaction.ConnectionPool;
 
@@ -25,32 +26,32 @@ public class RepairServicesServiceTest {
     }
 
     @Test
-    public void getRepairServiceList() throws PersistException, TransactionException {
+    public void getRepairServiceList() throws DaoException, TransactionException, DatabaseException {
         List<RepairService> repairServiceList = service.getRepairServiceList();
         assertNotNull(repairServiceList);
     }
 
     @Test
-    public void getRepairServiceList1() throws PersistException, TransactionException {
+    public void getRepairServiceList1() throws DaoException, TransactionException, DatabaseException {
         List<RepairService> repairServiceList = service.getRepairServiceList(1, 1, 1);
         assertNotNull(repairServiceList);
     }
 
     @Test
-    public void getRepairServiceTitles() throws PersistException, TransactionException {
+    public void getRepairServiceTitles() throws DaoException, TransactionException, DatabaseException {
         service.getRepairServiceList(1, 1, 1);
         List<String> serviceTitles = service.getRepairServiceTitles();
         assertNotNull(serviceTitles);
     }
 
     @Test
-    public void getRepairServiceById() throws PersistException, TransactionException {
+    public void getRepairServiceById() throws DaoException, TransactionException {
         RepairService repairServiceById = service.getRepairServiceById(1);
         assertNotNull(repairServiceById);
     }
 
     @Test
-    public void updateRepairService() throws PersistException, TransactionException {
+    public void updateRepairService() throws DaoException, TransactionException, DatabaseException {
         RepairService repairServiceById = service.getRepairServiceById(1);
         String name = repairServiceById.getName();
         repairServiceById.setName(name+"!");
@@ -61,7 +62,7 @@ public class RepairServicesServiceTest {
     }
 
     @Test
-    public void deleteRepairService() throws PersistException, TransactionException {
+    public void deleteRepairService() throws DaoException, TransactionException, DatabaseException {
         service.deleteRepairService(2);
     }
 

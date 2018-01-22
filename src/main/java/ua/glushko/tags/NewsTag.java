@@ -1,6 +1,5 @@
 package ua.glushko.tags;
 
-import ua.glushko.model.entity.GuestBook;
 import ua.glushko.model.entity.News;
 
 import javax.servlet.jsp.JspException;
@@ -24,16 +23,14 @@ public class NewsTag extends TagSupport {
         try {
             StringBuilder message = new StringBuilder();
             if(Objects.nonNull(list) && list.size()>0){
-                Iterator<Object> guestBookIterator = list.iterator();
-                while (guestBookIterator.hasNext()){
-                    Object next = guestBookIterator.next();
-                    News news= null;
-                    if(next instanceof News)
+                for (Object next : list) {
+                    News news = null;
+                    if (next instanceof News)
                         news = (News) next;
-                    message.append("<li><strong>").append(news.getActionDate()).append("</strong>")
+                    message.append("<li><strong>").append(Objects.requireNonNull(news).getActionDate()).append("</strong>")
                             .append("<a href=\"#\">").append(news.getDescription()).append("</a>")
                             .append("<div class=text-justify>")
-                            .append(news.getMemo().substring(0,255)).append(" ... ")
+                            .append(news.getMemo().substring(0, 255)).append(" ... ")
                             .append("</div>");
                     message.append("</li>");
                 }

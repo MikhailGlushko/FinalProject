@@ -1,22 +1,13 @@
 package ua.glushko.tags;
 
-import ua.glushko.authentification.Authentication;
-import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.GuestBook;
-import ua.glushko.model.exception.PersistException;
-import ua.glushko.model.exception.TransactionException;
-import ua.glushko.services.impl.GuestBookService;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-
-import static ua.glushko.commands.Command.PARAM_LOCALE;
 
 @SuppressWarnings("serial")
 public class GuestBookTag extends TagSupport {
@@ -50,7 +41,8 @@ public class GuestBookTag extends TagSupport {
                     GuestBook guestBook = null;
                     if(next instanceof GuestBook)
                         guestBook = (GuestBook)next;
-                    message.append("<li><strong>").append(guestBook.getActionDate()).append("</strong>")
+                    message.append("<li><strong>").append(guestBook.getActionDate()).append(", ").append(guestBook.getUserName())
+                            .append("</strong><br>")
                             .append("<a href=\"#\">").append(guestBook.getDescription()).append("</a>")
                             .append("<div class=text-justify>");
                             if(guestBook.getMemo().length()>size)

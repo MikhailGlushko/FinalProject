@@ -6,13 +6,11 @@ import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.RepairService;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.RepairServicesService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -24,7 +22,7 @@ public class ServicesListCommand implements Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             storeRepairServicesListToSession(request);
-        }catch (TransactionException | SQLException e) {
+        }catch (Exception e) {
            LOGGER.error(e);
         }
         String page = ConfigurationManager.getProperty(ServicesCommandHelper.PATH_PAGE_SERVICES);

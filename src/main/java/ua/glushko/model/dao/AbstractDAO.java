@@ -1,8 +1,7 @@
 package ua.glushko.model.dao;
 
-import org.apache.log4j.Logger;
 import ua.glushko.model.entity.GenericEntity;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
 
@@ -20,11 +19,11 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
 
     /**
      * Create new entity
-     * @param object
-     * @throws PersistException
+     * @param object - Entity
+     * @throws DaoException - Exception
      */
     @Override
-    public void create(T object) throws PersistException {
+    public void create(T object) throws DaoException {
         String sql = getCreateQuery();
         ResultSet generatedKeys = null;
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -32,12 +31,12 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             prepareStatementForCreate(statement, object);
             int effectedRows = statement.executeUpdate();
             if (effectedRows == 0) {
-                throw new PersistException("Can not insert record to database. Operation aborted.");
+                throw new DaoException("Can not insert record to database. Operation aborted.");
             }
             generatedKeys = statement.getGeneratedKeys();
             setGeneratedKey(object, generatedKeys);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
     }
 
@@ -64,17 +63,17 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
      * Update exist entity
      */
     @Override
-    public void update(T object) throws PersistException {
+    public void update(T object) throws DaoException {
         String sql = getUpdateQuery();
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             prepareStatementForUpdate(statement, object);
             int effectedRows = statement.executeUpdate();
             if (effectedRows != 1) {
-                throw new PersistException("Can not update record - record not found. Unsuccessful operation.");
+                throw new DaoException("Can not update record - record not found. Unsuccessful operation.");
             }
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
     }
 
@@ -96,7 +95,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
      * delete exist entity
      */
 
-    public T delete(int id) throws PersistException {
+    public T delete(int id) throws DaoException {
         T object = read(id);
         String sql = getDeleteQuery() + " where id=?";
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -104,10 +103,10 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             prepareStatementForDeleteByKey(statement, id);
             int effectedRows = statement.executeUpdate();
             if (effectedRows != 1) {
-                throw new PersistException("Can not delete record. Operation aborted");
+                throw new DaoException("Can not delete record. Operation aborted");
             }
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return object;
     }
@@ -123,16 +122,16 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
      * Delete exist entity
      */
     @Override
-    public void deleteAll() throws PersistException {
+    public void deleteAll() throws DaoException {
         String sql = getDeleteQuery();
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             int effectedRows = statement.executeUpdate();
             if (effectedRows == 0) {
-                throw new PersistException("Can not delete record. Operation aborted");
+                throw new DaoException("Can not delete record. Operation aborted");
             }
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
     }
 
@@ -146,7 +145,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     /**
      * Read entity from database by id
      */
-    public T read(int id) throws PersistException {
+    public T read(int id) throws DaoException {
         List<T> list = Collections.emptyList();
         String sql = getSelectQuery() +
                 " where id=?";
@@ -156,13 +155,13 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             ResultSet resultSet = statement.executeQuery();
             list = parseResultSet(resultSet);
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         if (list.size() == 0) {
             return null;
         }
         if (list.size() > 1) {
-            throw new PersistException("Received more than one record.");
+            throw new DaoException("Received more than one record.");
         }
         return list.iterator().next();
     }
@@ -182,7 +181,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     /**
      * Get list by name
      */
-    public List<T> read(String name) throws PersistException {
+    public List<T> read(String name) throws DaoException {
         List<T> list = Collections.emptyList();
         String sql = getSelectQuery() +
                 " where name=?";
@@ -193,7 +192,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             setTitles(statement.getMetaData());
             list = parseResultSet(resultSet);
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }
@@ -208,7 +207,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     /**
      * Get list of all entities
      */
-    public List<T> read() throws PersistException {
+    public List<T> read() throws DaoException {
         List<T> list = Collections.emptyList();
         String sql = getSelectQuery();
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -217,19 +216,19 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             setTitles(statement.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }
 
     /**
      * Get list of limited entities
-     * @param start
-     * @param limit
-     * @return
-     * @throws PersistException
+     * @param start - start
+     * @param limit - limit
+     * @return list of Entities
+     * @throws DaoException - exception
      */
-    public List<T> read(int start, int limit) throws PersistException {
+    public List<T> read(int start, int limit) throws DaoException {
         List<T> list = Collections.emptyList();
         String sql = getSelectQuery(start, limit);
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -240,7 +239,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             setTitles(resultSet.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }

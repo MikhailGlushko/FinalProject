@@ -5,15 +5,13 @@ import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.User;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.util.Objects;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import static ua.glushko.services.Validator.getValidatedUserBeforeSetup;
@@ -34,7 +32,7 @@ public class SetupSaveCommand implements Command {
             storeUserDataToSession(request,userOld);
             page = ConfigurationManager.getProperty(PATH_PAGE_INDEX);
             return new CommandRouter(request, response, page, CommandRouter.REDIRECT);
-        } catch (TransactionException | PersistException e){
+        } catch (TransactionException | DatabaseException e){
             LOGGER.error(e);
             page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS_SETUP);
             request.setAttribute(PARAM_ERROR_MESSAGE,

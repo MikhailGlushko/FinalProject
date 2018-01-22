@@ -1,6 +1,5 @@
 package ua.glushko.tags;
 
-import ua.glushko.model.entity.RepairService;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
 

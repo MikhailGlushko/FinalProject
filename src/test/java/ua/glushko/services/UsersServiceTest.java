@@ -7,8 +7,9 @@ import ua.glushko.model.dao.H2DataSource;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
 import ua.glushko.model.entity.UserStatus;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 import ua.glushko.transaction.ConnectionPool;
@@ -44,7 +45,7 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void getUserById() throws PersistException, TransactionException {
+    public void getUserById() throws DaoException, TransactionException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(1);
         assertNotNull(user);
@@ -53,22 +54,22 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void getUserByLogin() throws PersistException, TransactionException, ParameterException {
+    public void getUserByLogin() throws DaoException, TransactionException, ParameterException, DatabaseException {
 
             UsersService usersService = UsersService.getService();
             User user = usersService.getUserByLogin("admin");
             assertNotNull(user);
     }
 
-    @Test (expected = PersistException.class)
-    public void getUserByLoginWrong() throws PersistException, TransactionException, ParameterException {
+    @Test (expected = DaoException.class)
+    public void getUserByLoginWrong() throws DaoException, TransactionException, ParameterException, DatabaseException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserByLogin("adminadmin");
         assertNull(user);
     }
 
     @Test
-    public void updateUser() throws PersistException, TransactionException {
+    public void updateUser() throws DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(5);
         assertNotNull(user);
@@ -76,8 +77,8 @@ public class UsersServiceTest {
         usersService.updateUser(user);
     }
 
-    @Test(expected = PersistException.class)
-    public void updateUserWrongId() throws PersistException, TransactionException {
+    @Test(expected = DaoException.class)
+    public void updateUserWrongId() throws DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(5);
         assertNotNull(user);
@@ -87,7 +88,7 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void updateUserResetPass() throws PersistException, TransactionException, ParameterException {
+    public void updateUserResetPass() throws DaoException, TransactionException, ParameterException, DatabaseException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(5);
         assertNotNull(user);
@@ -95,7 +96,7 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void updateUserNullLogin() throws PersistException, TransactionException {
+    public void updateUserNullLogin() throws DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(6);
         assertNotNull(user);
@@ -104,7 +105,7 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void deleteUser() throws PersistException, TransactionException {
+    public void deleteUser() throws DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(3);
         assertNotNull(user);
@@ -121,7 +122,7 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void getUsersAsStuff() throws PersistException, TransactionException {
+    public void getUsersAsStuff() throws DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         List<User> usersAsStuff = usersService.getUsersAsStuff(UserRole.CUSTOMER, true);
         assertTrue(usersAsStuff.size()!=0);
@@ -142,7 +143,7 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void getTitles() throws PersistException, TransactionException {
+    public void getTitles() throws DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         usersService.getUsersList();
         List<String> usersTitles = usersService.getUsersTitles();

@@ -2,10 +2,9 @@ package ua.glushko.services.impl;
 
 import ua.glushko.model.dao.MySQLDAOFactory;
 import ua.glushko.model.dao.impl.GuestBookDAO;
-import ua.glushko.model.entity.GenericEntity;
 import ua.glushko.model.entity.GuestBook;
-import ua.glushko.model.entity.OrderHistory;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
@@ -22,7 +21,7 @@ public class GuestBookService extends AbstractService {
         return new GuestBookService();
     }
 
-    public List<GuestBook> getGuestBookList() throws PersistException, TransactionException {
+    public List<GuestBook> getGuestBookList() throws TransactionException, DatabaseException {
         GuestBookDAO guestBookDAO = MySQLDAOFactory.getFactory().getGuestBookDAO();
         List<GuestBook> read;
         try{
@@ -35,7 +34,7 @@ public class GuestBookService extends AbstractService {
         return read;
     }
 
-    public List<GuestBook> getGuestBookList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
+    public List<GuestBook> getGuestBookList(int page, int pagesCount, int rowsPerPage) throws TransactionException, DatabaseException {
         GuestBookDAO guestBookDAO = MySQLDAOFactory.getFactory().getGuestBookDAO();
         int start = (page - 1) * rowsPerPage;
         int limit = pagesCount * rowsPerPage;
@@ -54,15 +53,15 @@ public class GuestBookService extends AbstractService {
         return  MySQLDAOFactory.getFactory().getGuestBookDAO().getTableHead();
     }
 
-    public GuestBook getGuestBookById(int id) throws PersistException, TransactionException {
+    public GuestBook getGuestBookById(int id) throws DaoException {
         return getById(MySQLDAOFactory.getFactory().getGuestBookDAO(),id);
     }
 
-    public void updateGuestBook(GuestBook item) throws PersistException, TransactionException {
+    public void updateGuestBook(GuestBook item) throws TransactionException, DatabaseException {
         update(MySQLDAOFactory.getFactory().getGuestBookDAO(),item);
     }
 
-    public void deleteGuestBook(Integer serviceId) throws PersistException, TransactionException {
+    public void deleteGuestBook(Integer serviceId) throws TransactionException, DatabaseException {
         delete(MySQLDAOFactory.getFactory().getGuestBookDAO(),serviceId);
     }
 

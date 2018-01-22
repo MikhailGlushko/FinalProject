@@ -26,7 +26,7 @@ public class Authentication {
 
     enum CRUD {
         M(0), C(128), R(64), U(32), D(16);
-        private int value;
+        private final int value;
 
         CRUD(int value) {
             this.value = value;
@@ -90,8 +90,8 @@ public class Authentication {
     /**
      * Calculation of access for one command
      *
-     * @param grant
-     * @return
+     * @param grant - Grants
+     * @return - grants as byte value
      */
     private static int calculateAccess(Grant grant) {
         int userAccess = 0;

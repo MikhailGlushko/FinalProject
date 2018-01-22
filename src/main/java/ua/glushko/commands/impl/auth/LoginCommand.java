@@ -8,8 +8,9 @@ import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.*;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
@@ -41,16 +42,20 @@ public class LoginCommand implements Command {
             if (isUserStatusActive(userAfterLogin)) {
                 LOGGER.debug("user " + userAfterLogin.getLogin() + " was login");
                 storeUserAuthenticateData(request.getSession(), userAfterLogin, currentUserGrants);
-                request.setAttribute(PARAM_COMMAND,CommandFactory.COMMAND_WELCOME);
-                page ="/do";
+                request.setAttribute(PARAM_COMMAND, CommandFactory.COMMAND_WELCOME);
+                page = "/do";
             } else if (isUserStatusNotActive(userAfterLogin)) {
                 LOGGER.debug("user " + userAfterLogin.getLogin() + " is " + userAfterLogin.getStatus());
                 request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_STATUS + userAfterLogin.getStatus(), locale));
                 page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
             }
-        } catch (PersistException | TransactionException e) {
+        } catch (DaoException | TransactionException e) {
             LOGGER.debug("user " + userBeforeLogin.getLogin() + " rejected");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_INCORRECT_LOGIN_OR_PASSWORD, locale));
+            page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
+        } catch (DatabaseException e){
+            LOGGER.debug("user " + userBeforeLogin.getLogin() + " rejected");
+            request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_DATABASE_NOT_FOUND, locale));
             page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
         } catch (ParameterException e) {
             LOGGER.debug("user " + userBeforeLogin.getLogin() + " rejected");

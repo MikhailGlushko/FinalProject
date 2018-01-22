@@ -2,7 +2,7 @@ package ua.glushko.model.dao.impl;
 
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.entity.GuestBook;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
 
@@ -101,7 +101,7 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
                 " from " + getTableName();
     }
 
-    public List<GuestBook> read() throws PersistException {
+    public List<GuestBook> read() throws DaoException {
         List<GuestBook> list = Collections.emptyList();
         String sql = getSelectQuery()+" order by id desc";
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -110,7 +110,7 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
             setTitles(statement.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }
@@ -121,7 +121,7 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
                 " order by id desc limit ?,? ";
     }
 
-    public List<GuestBook> read(int start, int limit) throws PersistException {
+    public List<GuestBook> read(int start, int limit) throws DaoException {
         List<GuestBook> list = Collections.emptyList();
         String sql = getSelectQuery(start, limit);
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -132,7 +132,7 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
             setTitles(resultSet.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }

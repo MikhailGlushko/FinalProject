@@ -5,8 +5,6 @@ import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.User;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +31,7 @@ public class UserReadCommand implements Command {
                 request.setAttribute(UsersCommandHelper.PARAM_USER_LIST_TITLE, titles);
                 request.setAttribute(UsersCommandHelper.PARAM_NAME_USER, user);
             }
-        } catch (PersistException | ParameterException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = ConfigurationManager.getProperty(PATH_PAGE_USERS_DETAIL);

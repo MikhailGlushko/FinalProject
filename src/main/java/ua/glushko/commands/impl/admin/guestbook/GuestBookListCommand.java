@@ -6,7 +6,6 @@ import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.GuestBook;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.GuestBookService;
 
@@ -27,9 +26,7 @@ public class GuestBookListCommand implements Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             storeGuestBookListToSession(request);
-        }catch (TransactionException | SQLException e) {
-           LOGGER.error(e);
-        } catch (ParameterException e) {
+        }catch (Exception e) {
             LOGGER.error(e);
         }
         String page = ConfigurationManager.getProperty(PATH_PAGE_GUEST_BOOK);
@@ -40,17 +37,15 @@ public class GuestBookListCommand implements Command {
             HttpSession session = request.getSession();
             int access = Authentication.checkAccess(request);
             GuestBookService guestBookService = GuestBookService.getService();
-            Integer pagesCount = null;
-            Integer rowsCount = null;
-            Integer pageNumber = null;
+            int pagesCount = 0;
+            int rowsCount = 0;
+            int pageNumber = 1;
             Integer userId = null;
             try {
                 pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
                 rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
                 String parameter = request.getParameter(PARAM_PAGE);
-                if (parameter == null || parameter.isEmpty() || parameter.equals("null"))
-                    pageNumber = 1;
-                else
+                if (!(parameter == null || parameter.isEmpty() || parameter.equals("null")))
                     pageNumber = Integer.valueOf(request.getParameter(PARAM_PAGE));
                 userId = Integer.valueOf(session.getAttribute(Authentication.PARAM_ID).toString());
             } catch (NumberFormatException e){

@@ -5,8 +5,8 @@ import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.User;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
@@ -39,7 +39,7 @@ public class UserUpdateCommand implements Command {
             }
             page = "/do?command=" + COMMAND_USERS + "&page=" + request.getAttribute(PARAM_PAGE);
             return new CommandRouter(request, response, page);
-        } catch (TransactionException | PersistException e) {
+        } catch (TransactionException | DatabaseException e) {
             LOGGER.error(e);
             page = "/do?command=" + COMMAND_USERS_READ + "&user_id=" + request.getParameter(PARAM_USER_ID);
             return new CommandRouter(request, response, page);

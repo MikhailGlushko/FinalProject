@@ -2,7 +2,7 @@ package ua.glushko.model.dao.impl;
 
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.entity.Grant;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
 
@@ -112,7 +112,7 @@ public class GrantDAO extends AbstractDAO<Grant> {
     }
 
     @Override
-    public List<Grant> read(String role) throws PersistException {
+    public List<Grant> read(String role) throws DaoException {
         List<Grant> list = Collections.emptyList();
         String sql = getSelectQuery() +
                 " where role=?";
@@ -123,7 +123,7 @@ public class GrantDAO extends AbstractDAO<Grant> {
             resultSet = statement.executeQuery();
             list = parseResultSet(resultSet);
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }

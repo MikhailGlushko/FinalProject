@@ -21,6 +21,8 @@
     <link href="../../css/style.css" rel="stylesheet" type="text/css">
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="../../css/login.css" rel="stylesheet" type="text/css">
+    <script src="../../dist/js/jquery.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="main">
@@ -30,58 +32,62 @@
         <hr/>
         <br/>
         <fmt:message key="guestbook.title"/>:<br/><br/>
-        <div class="form">
+        <div class="login_div" align="center">
             <form name="new" method="post" action="/do">
-                <fieldset>
-                    <input type="hidden" name="command" value="gestbook_new">
-                    <legend>Новое сообщение</legend>
-                    <div class="input-row">
-                        <div class="input-field">
-                            <input id="user_name" value="" name="user_name" required/>
-                            <label for="user_name">Автор сообщения<em>*</em></label>
-                        </div>
-                        <div class="input-field">
-                            <input id="subject" value="" name="subject" required/>
-                            <label for="subject">Тема сообщения<em>*</em></label>
-                        </div>
-                        <div class="input-field">
-                            <textarea id="memo" name="memo" required></textarea>
-                            <label for="memo">Сообщение<em>*</em></label>
-                        </div>
+                <input type="hidden" name="command" value="gestbook_new">
+                <legend>Новое сообщение</legend>
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <label for="user_name" style="float: left">Автор сообщения<em>*</em></label>
+                        <input class="form-control" id="user_name" style="float: right" value="" name="user_name"
+                               placeholder="Автор сообщения" required/>
                     </div>
-                    <div class="input-row">
-                        <button name="action" class="mainmenubutton" type="submit" value="add">
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <label for="subject" style="float: left">Тема сообщения<em>*</em></label>
+                        <input class="form-control" id="subject" style="float: right" value="" name="subject"
+                               placeholder="Тема сообщения" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group  col-lg-12">
+                        <label for="memo" style="float: left">Сообщение<em>*</em></label>
+                        <BR>
+                        <textarea class="form-control" id="memo" style="float: left; width: 100%; max-width: 100%"
+                                  name="memo" rows="5" required></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <button class="btn btn-lg btn-primary btn-block" name="action" type="submit" value="add">
                             <fmt:message key='app.welcome.save'/>
                         </button>
                     </div>
-                </fieldset>
+                </div>
             </form>
         </div>
         <c:if test="${not empty guestbook_list}">
-            <div class="list" align="center" style="width: 100%">
-                <c:forEach items="${guestbook_list}" var="item">
-                    <fieldset>
-                        <legend>${item.id}</legend>
-                        <div class="input-row">
-                            <div class="input-field">
-                                <input id="i1${item.id}" value="${item.userName}" disabled/>
-                                <label for="i1${item.id}">Автор сообщения</label>
+            <div class="list" style="width: 100%">
+                <div class="panel-group col-lg-offset-1 col-lg-10" id="collapse-group">
+                    <c:forEach items="${guestbook_list}" var="item">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <a data-toggle="collapse"
+                                       data-parent="#collapse-group"
+                                       href="#el${item.id}">${item.actionDate} ${item.userName} ${item.description}
+                                    </a>
+                                </h3>
                             </div>
-                            <div class="input-field">
-                                <input id="i2${item.id}" value="${item.description}" disabled/>
-                                <label for="i2${item.id}">Тема сообщения</label>
-                            </div>
-                            <div class="input-field">
-                                <input id="i3${item.id}" value="${item.actionDate}" disabled/>
-                                <label for="i3${item.id}">Дата сообщения</label>
-                            </div>
-                            <div class="input-field">
-                                <textarea id="i4${item.id}" disabled>${item.memo}</textarea>
-                                <label for="i4${item.id}">Сообщение</label>
+                            <div id="el${item.id}" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    ${item.memo}
+                                </div>
                             </div>
                         </div>
-                    </fieldset>
-                </c:forEach>
+                    </c:forEach>
+                </div>
             </div>
             <br/>
         </c:if>

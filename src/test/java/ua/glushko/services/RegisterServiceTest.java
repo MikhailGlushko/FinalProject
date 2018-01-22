@@ -4,8 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.dao.H2DataSource;
 import ua.glushko.model.entity.User;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 import ua.glushko.transaction.ConnectionPool;
@@ -23,13 +24,13 @@ public class RegisterServiceTest {
         registerService = UsersService.getService();
     }
 
-    @Test (expected = PersistException.class)
-    public void registerExistLogin() throws PersistException {
+    @Test (expected = DaoException.class)
+    public void registerExistLogin() throws DaoException, DatabaseException {
         try {
             User user = registerService.register("admin", "admin", "admin", "admin","admin");
             assertNotNull("Должно было сработать исключение",user);
-        } catch (PersistException e) {
-            throw new PersistException(e);
+        } catch (DaoException e) {
+            throw new DaoException(e);
         } catch (TransactionException e) {
             e.printStackTrace();
         } catch (ParameterException e) {
@@ -38,22 +39,22 @@ public class RegisterServiceTest {
     }
 
     @Test
-    public void registerNewUser() throws PersistException, TransactionException, ParameterException {
+    public void registerNewUser() throws DaoException, TransactionException, ParameterException, DatabaseException {
         try {
             User user = registerService.register("test10", "test10", "test10", "test10","test10");
             assertNotNull("",user);
-        } catch (PersistException e) {
-          throw new PersistException(e);
+        } catch (DaoException e) {
+          throw new DaoException(e);
         }
     }
 
     @Test (expected = ParameterException.class)
-    public void registerUserWithNullParameters() throws TransactionException, PersistException, ParameterException {
+    public void registerUserWithNullParameters() throws TransactionException, DaoException, ParameterException, DatabaseException {
         try {
             User user = registerService.register(null, "test10", "test10", "test10","test10");
             assertNotNull("",user);
-        } catch (PersistException e) {
-            throw new PersistException(e);
+        } catch (DaoException e) {
+            throw new DaoException(e);
         }
     }
 }

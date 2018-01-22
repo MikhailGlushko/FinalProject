@@ -5,7 +5,6 @@ import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.users.UserCreateCommand;
 import ua.glushko.commands.impl.admin.users.UserDeleteCommand;
 import ua.glushko.commands.impl.admin.users.UserUpdateCommand;
-import ua.glushko.model.exception.ParameterException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

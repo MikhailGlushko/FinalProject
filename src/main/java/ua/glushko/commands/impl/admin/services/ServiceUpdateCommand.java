@@ -4,14 +4,14 @@ import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.model.entity.RepairService;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.RepairServicesService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import static ua.glushko.authentification.Authentication.U;
 import static ua.glushko.commands.CommandFactory.COMMAND_SERVICES;
@@ -23,7 +23,7 @@ public class ServiceUpdateCommand implements Command {
 
         try {
             storeServiceDataToDatabase(request);
-        } catch (TransactionException | PersistException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = "/do?command=" + COMMAND_SERVICES +"&page=" + request.getAttribute(PARAM_PAGE);
@@ -31,7 +31,7 @@ public class ServiceUpdateCommand implements Command {
 
     }
 
-    private void storeServiceDataToDatabase(HttpServletRequest request) throws PersistException, TransactionException {
+    private void storeServiceDataToDatabase(HttpServletRequest request) throws TransactionException, DatabaseException {
         Integer serviceId = null;
         try {
             int access = Authentication.checkAccess(request);

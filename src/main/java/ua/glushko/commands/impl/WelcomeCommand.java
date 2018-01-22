@@ -1,15 +1,11 @@
 package ua.glushko.commands.impl;
 
-import org.omg.IOP.ServiceContextHelper;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
-import ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.GuestBook;
 import ua.glushko.model.entity.News;
 import ua.glushko.model.entity.RepairService;
-import ua.glushko.model.exception.PersistException;
-import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.GuestBookService;
 import ua.glushko.services.impl.NewsService;
 import ua.glushko.services.impl.RepairServicesService;
@@ -40,7 +36,7 @@ public class WelcomeCommand implements Command {
             List<RepairService> repairServiceList = repairServicesService.getRepairServiceList();
             request.setAttribute(PARAM_SERVICE_LIST,repairServiceList);
 
-        } catch (PersistException | TransactionException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
 

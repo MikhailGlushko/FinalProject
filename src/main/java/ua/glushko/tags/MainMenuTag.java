@@ -41,7 +41,7 @@ public class MainMenuTag extends TagSupport {
 
             if(Objects.nonNull(grants))
             for (Object grant:grants) {
-                if (grant instanceof Grant && Objects.nonNull(grant) && ((Grant)grant).getAction().contains("M")){
+                if (grant instanceof Grant && ((Grant) grant).getAction().contains("M")){
                     builder.append("<a class=\"btn btn-default btn-sm\" href=\"/do?command=")
                             .append(((Grant)grant).getCommand())
                             .append("\">")

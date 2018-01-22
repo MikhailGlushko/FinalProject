@@ -4,9 +4,6 @@ import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.model.entity.User;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
-import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +30,7 @@ public class UserDeleteCommand implements Command {
                 LOGGER.debug("user " + user.getLogin() + " was deleted");
                 request.setAttribute(PARAM_COMMAND, COMMAND_USERS);
             }
-        } catch (TransactionException | PersistException | ParameterException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = "/do?command=" + COMMAND_USERS + "&page=" + request.getAttribute(PARAM_PAGE);

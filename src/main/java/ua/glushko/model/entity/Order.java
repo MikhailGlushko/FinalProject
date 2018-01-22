@@ -129,7 +129,7 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setPrice(double price) {
-        if(!Double.valueOf(this.price).equals(Double.valueOf(price))) {
+        if(!Double.valueOf(this.price).equals(price)) {
             this.price = price;
             this.changed = true;
         }
@@ -172,8 +172,8 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setStatus(String status){
-        if(this.status!=null && !this.status.equals(status) ||
-                status!=null && !status.equals(this.status)) {
+        if(this.status!=null && !this.status.toString().equals(status) ||
+                status!=null && !status.toString().equals(this.status)) {
             this.status = OrderStatus.valueOf(OrderStatus.class, status);
             this.changed = true;
         }

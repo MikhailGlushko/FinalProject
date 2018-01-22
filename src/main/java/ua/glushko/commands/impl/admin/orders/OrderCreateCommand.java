@@ -1,12 +1,12 @@
 package ua.glushko.commands.impl.admin.orders;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import ua.glushko.authentification.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.Order;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.OrdersService;
 
@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import static ua.glushko.authentification.Authentication.C;
 import static ua.glushko.authentification.Authentication.c;
@@ -30,7 +31,7 @@ public class OrderCreateCommand implements Command {
 
         try {
             storeOrderDataToDatabase(request);
-        } catch (TransactionException | SQLException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = "/do?command=" + COMMAND_ORDERS + "&page=" + request.getAttribute(PARAM_LAST_PAGE);
@@ -64,7 +65,8 @@ public class OrderCreateCommand implements Command {
             order = new Order();
             order.setDescriptionShort(orderDescriptionShort);
             order.setDescriptionDetail(orderDescriptionDetail);
-            order.setRepairService(orderRepairService);
+            if(Objects.nonNull(orderRepairService))
+                order.setRepairService(orderRepairService);
             order.setCity(orderCity);
             order.setStreet(orderStreet);
 
@@ -76,7 +78,8 @@ public class OrderCreateCommand implements Command {
             }
             order.setExpectedDate(date);
             order.setAppliance(orderAppliance);
-            order.setUserId(orderUserId);
+            if(Objects.nonNull(orderUserId))
+                order.setUserId(orderUserId);
             order.setMemo(orderMemo);
             if ((access & C) == C || (access & c)==c) {
                 LOGGER.debug("creating new order "+order);

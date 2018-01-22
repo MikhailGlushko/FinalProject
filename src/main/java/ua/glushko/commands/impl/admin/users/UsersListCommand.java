@@ -5,14 +5,10 @@ import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.User;
-import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
-import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.List;
 
 import static ua.glushko.authentification.Authentication.*;
@@ -50,7 +46,7 @@ public class UsersListCommand implements Command {
                 request.setAttribute(PARAM_LAST_PAGE, count);
                 LOGGER.debug("users list were received and try to show");
             }
-        } catch (TransactionException | SQLException | ParameterException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS);

@@ -6,7 +6,8 @@ import ua.glushko.model.dao.impl.OrderDAO;
 import ua.glushko.model.dao.impl.OrderHistoryDAO;
 import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.*;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
@@ -27,7 +28,7 @@ public class OrdersHistoryService extends AbstractService {
         return new OrdersHistoryService();
     }
 
-    public List<OrderHistory> getOrderHistoryList() throws PersistException, TransactionException {
+    public List<OrderHistory> getOrderHistoryList() throws TransactionException, DatabaseException {
         OrderHistoryDAO orderHistoryDAO = MySQLDAOFactory.getFactory().getOrderHistoryDAO();
         List<OrderHistory> read;
         try{
@@ -41,7 +42,7 @@ public class OrdersHistoryService extends AbstractService {
 
     }
 
-    public List<OrderHistory> getOrderHistoryList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
+    public List<OrderHistory> getOrderHistoryList(int page, int pagesCount, int rowsPerPage) throws TransactionException, DatabaseException {
         OrderHistoryDAO orderHistoryDAO = MySQLDAOFactory.getFactory().getOrderHistoryDAO();
         int start = (page - 1) * rowsPerPage;
         int limit = pagesCount * rowsPerPage;
@@ -57,7 +58,7 @@ public class OrdersHistoryService extends AbstractService {
 
     }
 
-    public List<OrderHistory> getOrderHistoryList(int page, int pagesCount, int rowsPerPage, Integer id) throws PersistException, TransactionException {
+    public List<OrderHistory> getOrderHistoryList(int page, int pagesCount, int rowsPerPage, Integer id) throws TransactionException, DatabaseException {
 
         OrderHistoryDAO orderHistoryDAO = MySQLDAOFactory.getFactory().getOrderHistoryDAO();
 
@@ -78,11 +79,11 @@ public class OrdersHistoryService extends AbstractService {
         return MySQLDAOFactory.getFactory().getOrderHistoryDAO().getTableHead();
     }
 
-    public OrderHistory getOrderHistoryById(int id) throws PersistException, TransactionException {
+    public OrderHistory getOrderHistoryById(int id) throws DaoException {
         return getById(MySQLDAOFactory.getFactory().getOrderHistoryDAO(), id);
     }
 
-    public void updateOrderHistory(OrderHistory orderHistory) throws PersistException, TransactionException, ParseException {
+    public void updateOrderHistory(OrderHistory orderHistory) throws TransactionException, ParseException, DatabaseException {
         try {
             TransactionManager.beginTransaction();
             OrderDAO orderDAO = OrderDAO.getInstance();
@@ -150,7 +151,7 @@ public class OrdersHistoryService extends AbstractService {
         }
     }
 
-    public void deleteOrder(Integer serviceId) throws PersistException, TransactionException {
+    public void deleteOrder(Integer serviceId) throws TransactionException, DatabaseException {
         delete(MySQLDAOFactory.getFactory().getOrderHistoryDAO(), serviceId);
     }
 

@@ -6,8 +6,9 @@ import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.orders.OrdersCommandHelper;
 import ua.glushko.model.entity.Action;
 import ua.glushko.model.entity.OrderHistory;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.OrdersHistoryService;
 
@@ -27,14 +28,14 @@ public class OrderHistoryChangeDateCommand implements Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             storeHistoryDataToDatabase(request);
-        } catch (TransactionException | PersistException  | ParseException |ParameterException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = "/do?command=" + COMMAND_ORDERS_READ + "&order_id=" + request.getParameter(PARAM_ORDER_ID);
         return new CommandRouter(request, response, page);
     }
 
-    private void storeHistoryDataToDatabase(HttpServletRequest request) throws PersistException, TransactionException, ParseException, ParameterException {
+    private void storeHistoryDataToDatabase(HttpServletRequest request) throws TransactionException, ParseException, ParameterException, DatabaseException {
         String parameter = request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID);
         if(Objects.isNull(parameter))
             throw new ParameterException("order.id.is.null");

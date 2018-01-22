@@ -5,8 +5,6 @@ import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.CommandFactory;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.transaction.ConnectionPool;
-import ua.glushko.transaction.H2DataSource;
-import ua.glushko.transaction.MySQLDataSource;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

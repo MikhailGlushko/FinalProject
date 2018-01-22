@@ -5,7 +5,7 @@ import org.junit.*;
 import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.transaction.ConnectionPool;
 import ua.glushko.transaction.TransactionManager;
@@ -43,7 +43,7 @@ public class UserDAOTest {
             //получаем список пользователей, должен быть не пустой
             List<User> list = userDAO.read();
             assertTrue("Таблица пользователей пустая", list.size() != 0);
-        } catch (PersistException e) {
+        } catch (DaoException e) {
             logger.error(e);
         }
     }
@@ -55,7 +55,7 @@ public class UserDAOTest {
             //получаем список пользователей, должен быть не пустой
             List<User> list = userDAO.read(0,25);
             assertTrue("Таблица пользователей пустая", list.size() == 25);
-        } catch (PersistException e) {
+        } catch (DaoException e) {
             logger.error(e);
         }
     }
@@ -66,7 +66,7 @@ public class UserDAOTest {
             User user = userDAO.read(1);
             assertNotNull("Пользователь с ключом 1 не найден", user);
             assertTrue(user.getId()==1);
-        } catch (PersistException e) {
+        } catch (DaoException e) {
             logger.error(e);
         }
     }
@@ -77,7 +77,7 @@ public class UserDAOTest {
             // получаем пользователя с ключом 10, нет такого
             User user = userDAO.read(100);
             assertNull("Пользователя с ключом 10 не должно быть", user);
-        } catch (PersistException e) {
+        } catch (DaoException e) {
             logger.error(e);
         }
     }
@@ -88,7 +88,7 @@ public class UserDAOTest {
             // получаем пользователя с существующим именем
             List<User> list = ((UserDAO) userDAO).read("Manager");
             assertTrue("Пользователь с именем Manager не найден", list.size() != 0);
-        } catch (PersistException e) {
+        } catch (DaoException e) {
             logger.error(e);
         }
     }
@@ -99,7 +99,7 @@ public class UserDAOTest {
             // получаем пользователя с несуществующим именем
             List<User> list = ((UserDAO) userDAO).read("MANAGER1");
             assertTrue("Пользователя с именем MANAGER1 не должно быть", list.size() == 0);
-        } catch (PersistException e) {
+        } catch (DaoException e) {
             logger.error(e);
         }
     }
@@ -157,7 +157,7 @@ public class UserDAOTest {
         } catch (TransactionException e) {
             TransactionManager.rollBack();
             logger.error(e);
-        } catch (PersistException e) {
+        } catch (DaoException e) {
             logger.error(e);
         }
         User read = userDAO.read(5);
@@ -185,7 +185,7 @@ public class UserDAOTest {
         }
     }
 
-    @Test(expected = PersistException.class)
+    @Test(expected = DaoException.class)
     public void updateNoExistUser() throws SQLException {
         try {
             userDAO = MySQLDAOFactory.getFactory().getUserDao();
@@ -195,7 +195,7 @@ public class UserDAOTest {
             u1.setId(50);
             u1.setLogin(u1.getLogin()+"1");
             userDAO.update(u1);
-        } catch (PersistException e) {
+        } catch (DaoException e) {
             logger.error(e);
             throw e;
         }
@@ -221,12 +221,12 @@ public class UserDAOTest {
         }
     }
 
-    @Test(expected = PersistException.class)
-    public void deleteOneNoExist() throws PersistException {
+    @Test(expected = DaoException.class)
+    public void deleteOneNoExist() throws DaoException {
         try {
             // пробуем удалить не существующую запись, ожидаем исключение
             userDAO.delete(100);
-        } catch (PersistException e) {
+        } catch (DaoException e) {
             logger.error(e);
             throw e;
         }
@@ -300,7 +300,7 @@ public class UserDAOTest {
                         GenericDAO<User> userDAO = MySQLDAOFactory.getFactory().getUserDao();
                         List<User> read3 = userDAO.read();
                         Thread.sleep(100);
-                    } catch (PersistException e) {
+                    } catch (DaoException e) {
                         logger.error(e);
                     } catch (InterruptedException e) {
                         logger.error(e);
@@ -327,14 +327,14 @@ public class UserDAOTest {
     }
 
     @Test
-    public void getAdmins() throws PersistException {
+    public void getAdmins() throws DaoException {
         userDAO = MySQLDAOFactory.getFactory().getUserDao();
         List<User> users = ((UserDAO) userDAO).readStuff(UserRole.ADMIN, true);
         assertTrue(users.size()==1);
     }
 
     @Test
-    public void getStuff() throws PersistException {
+    public void getStuff() throws DaoException {
         userDAO = MySQLDAOFactory.getFactory().getUserDao();
         List<User> users = ((UserDAO) userDAO).readStuff(UserRole.CUSTOMER, false);
         assertTrue(users.size()!=1);

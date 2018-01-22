@@ -5,7 +5,7 @@ import org.junit.Test;
 import ua.glushko.model.dao.GenericDAO;
 import ua.glushko.model.dao.MySQLDAOFactory;
 import ua.glushko.model.entity.RepairService;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
 import java.util.List;
@@ -25,19 +25,19 @@ public class RepairServiceDAOTest {
     }
 
     @Test
-    public void readAll() throws PersistException {
+    public void readAll() throws DaoException {
         List<RepairService> list = reapirServiceDAO.read();
     }
 
     @Test
-    public void create() throws PersistException {
+    public void create() throws DaoException {
         RepairService repairService = new RepairService();
         reapirServiceDAO.create(repairService);
         assertTrue(repairService.getId()!=0);
     }
 
     @Test
-    public void update() throws PersistException {
+    public void update() throws DaoException {
         RepairService read = reapirServiceDAO.read(1);
         String name = read.getName();
         read.setName(name+"!");

@@ -4,8 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.model.entity.User;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 import ua.glushko.servlets.Controller;
@@ -50,8 +51,8 @@ public class RegisterCommandTest {
         controller.processRequest(request, response);
     }
 
-    @Test (expected = PersistException.class)
-    public void registerExist() throws ServletException, PersistException, TransactionException, ParameterException {
+    @Test (expected = DaoException.class)
+    public void registerExist() throws ServletException, DaoException, TransactionException, ParameterException, DatabaseException {
             when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("admin");
             when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("P@ssw0rd");
             when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2)).thenReturn("P@ssw0rd");
@@ -67,7 +68,7 @@ public class RegisterCommandTest {
     }
 
     @Test
-    public void register() throws ServletException, PersistException, TransactionException, ParameterException {
+    public void register() throws ServletException, DaoException, TransactionException, ParameterException, DatabaseException {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("testuser");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("P@ssw0rd");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2)).thenReturn("P@ssw0rd");

@@ -1,6 +1,6 @@
 package ua.glushko.transaction;
 
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,11 +32,11 @@ public class ConnectionWrapper implements AutoCloseable {
         return connection.prepareStatement(sql);
     }
 
-    public PreparedStatement prepareStatement(String sql, int returnGeneratedKeys) throws PersistException {
+    public PreparedStatement prepareStatement(String sql, int returnGeneratedKeys) throws DaoException {
         try {
             return connection.prepareStatement(sql, returnGeneratedKeys);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
     }
 }

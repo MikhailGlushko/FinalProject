@@ -6,7 +6,6 @@ import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.RepairService;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.RepairServicesService;
 
@@ -25,7 +24,7 @@ public class ServiceCreateCommand implements Command {
 
         try {
             storeUserDataToDatabase(request);
-        } catch (TransactionException | SQLException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = "/do?command=" + COMMAND_SERVICES + "&page=" + request.getAttribute(PARAM_LAST_PAGE);
@@ -56,7 +55,6 @@ public class ServiceCreateCommand implements Command {
                 Integer rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
                 count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
                 request.setAttribute(PARAM_LAST_PAGE,count);
-
             }
         } catch (ParameterException e) {
             LOGGER.debug("new service "+repairService+" did not create");

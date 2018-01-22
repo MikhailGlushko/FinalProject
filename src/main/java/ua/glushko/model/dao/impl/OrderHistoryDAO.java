@@ -2,7 +2,7 @@ package ua.glushko.model.dao.impl;
 
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.entity.OrderHistory;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
 
@@ -100,7 +100,7 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
         return list;
     }
 
-    public List<OrderHistory> read(int start, int limit, int orderId) throws PersistException {
+    public List<OrderHistory> read(int start, int limit, int orderId) throws DaoException {
         List<OrderHistory> list = Collections.emptyList();
         String sql = "SELECT a.*, b.name as `user_name`\n" +
                 "FROM repair_agency.orders_history a\n" +
@@ -117,13 +117,13 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
             setTitles(resultSet.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }
 
     @Override
-    public List<OrderHistory> read() throws PersistException {
+    public List<OrderHistory> read() throws DaoException {
         List<OrderHistory> list = Collections.emptyList();
         String sql = "SELECT a.*, b.name as `user_name`\n" +
                 "FROM repair_agency.orders_history a\n" +
@@ -135,13 +135,13 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
             setTitles(statement.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }
 
     @Override
-    public List<OrderHistory> read(int start, int limit) throws PersistException {
+    public List<OrderHistory> read(int start, int limit) throws DaoException {
         List<OrderHistory> list = Collections.emptyList();
         String sql = "SELECT a.*, b.name as `user_name`\n" +
                 "FROM repair_agency.orders_history a\n" +
@@ -156,13 +156,13 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
             setTitles(resultSet.getMetaData());
             list = parseResultSet(resultSet);
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         return list;
     }
 
     @Override
-    public OrderHistory read(int id) throws PersistException {
+    public OrderHistory read(int id) throws DaoException {
         List<OrderHistory> list = Collections.emptyList();
         String sql = "SELECT a.*, b.name as `user_name`\n" +
                 "FROM repair_agency.orders_history a\n" +
@@ -175,13 +175,13 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
             ResultSet resultSet = statement.executeQuery();
             list = parseResultSet(resultSet);
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new DaoException(e);
         }
         if (list.size() == 0) {
             return null;
         }
         if (list.size() > 1) {
-            throw new PersistException("Received more than one record.");
+            throw new DaoException("Received more than one record.");
         }
         return list.iterator().next();
     }

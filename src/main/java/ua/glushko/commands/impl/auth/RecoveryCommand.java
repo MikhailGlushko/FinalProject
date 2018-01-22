@@ -7,8 +7,8 @@ import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.mail.MailThread;
 import ua.glushko.model.entity.User;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
@@ -40,7 +40,7 @@ public class RecoveryCommand implements Command {
             mailThread.start();
             LOGGER.debug("secret key for user "+user.getLogin()+" was sent to his email");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_PASSWORD_WAS_SEND, locale));
-        } catch (PersistException | TransactionException e) {
+        } catch (TransactionException | DatabaseException e) {
             LOGGER.debug("Password for user "+user.getLogin()+" was not change. User not exist.");
             page = ConfigurationManager.getProperty(PATH_PAGE_RECOVER);
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_NOT_EXIST, locale));

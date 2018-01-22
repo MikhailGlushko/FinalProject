@@ -5,7 +5,8 @@ import org.junit.Test;
 import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 import ua.glushko.servlets.Controller;
@@ -49,7 +50,7 @@ public class UsersListCommandTest {
    }
 
     @Test
-    public void getUsersListForUserAdmin() throws ServletException, PersistException, TransactionException {
+    public void getUsersListForUserAdmin() throws ServletException, DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("admin", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -63,7 +64,7 @@ public class UsersListCommandTest {
     }
 
     @Test
-    public void getUsersListForUserManager() throws ServletException, PersistException, TransactionException {
+    public void getUsersListForUserManager() throws ServletException, DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("manager", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -77,7 +78,7 @@ public class UsersListCommandTest {
     }
 
     @Test
-    public void getUsersListForUserMaster() throws ServletException, PersistException, TransactionException {
+    public void getUsersListForUserMaster() throws ServletException, DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("master", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -91,7 +92,7 @@ public class UsersListCommandTest {
     }
 
     @Test
-    public void getUsersListForUserCustomer() throws ServletException, PersistException, TransactionException {
+    public void getUsersListForUserCustomer() throws ServletException, DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("customer", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -104,8 +105,8 @@ public class UsersListCommandTest {
         controller.processRequest(request,response);
     }
 
-    @Test (expected = PersistException.class)
-    public void getUsersListForGuest() throws ServletException, PersistException, TransactionException {
+    @Test (expected = DaoException.class)
+    public void getUsersListForGuest() throws ServletException, DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser(null, null);
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -117,8 +118,8 @@ public class UsersListCommandTest {
         controller.processRequest(request,response);
     }
 
-    @Test (expected = PersistException.class)
-    public void getUsersListForGuest2() throws ServletException, PersistException, TransactionException {
+    @Test (expected = DaoException.class)
+    public void getUsersListForGuest2() throws ServletException, DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("test", "test");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());

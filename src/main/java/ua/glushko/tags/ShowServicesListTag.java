@@ -39,7 +39,7 @@ public class ShowServicesListTag extends ShowListTag {
             builder.append("<tr onClick=\"window.location.href='")
                     .append("/do?command=").append(command).append("_detail")
                     .append("&page=").append(page)
-                    .append("&service_id=").append(object.getId())
+                    .append("&service_id=").append(Objects.requireNonNull(object).getId())
                     .append("'; return false\">")
                     .append("<td><a href=\"/do?command=").append(command).append("_detail")
                     .append("&page=").append(page)

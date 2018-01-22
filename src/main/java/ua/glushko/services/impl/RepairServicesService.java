@@ -1,11 +1,10 @@
 package ua.glushko.services.impl;
 
-import ua.glushko.configaration.MessageManager;
-import ua.glushko.model.dao.GenericDAO;
 import ua.glushko.model.dao.MySQLDAOFactory;
 import ua.glushko.model.dao.impl.RepairServiceDAO;
 import ua.glushko.model.entity.RepairService;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.AbstractService;
 import ua.glushko.transaction.TransactionManager;
@@ -22,7 +21,7 @@ public class RepairServicesService extends AbstractService {
         return new RepairServicesService();
     }
 
-    public List<RepairService> getRepairServiceList() throws PersistException, TransactionException {
+    public List<RepairService> getRepairServiceList() throws TransactionException, DatabaseException {
         RepairServiceDAO repairServiceDao = MySQLDAOFactory.getFactory().getRepairServiceDao();
         List<RepairService> read;
         try{
@@ -35,15 +34,17 @@ public class RepairServicesService extends AbstractService {
         return read;
     }
 
-    public List<RepairService> getRepairServiceList(int page, int pagesCount, int rowsPerPage) throws PersistException, TransactionException {
+    public List<RepairService> getRepairServiceList(int page, int pagesCount, int rowsPerPage) throws TransactionException, DatabaseException {
         RepairServiceDAO repairServiceDao = MySQLDAOFactory.getFactory().getRepairServiceDao();
         int start = (page - 1) * rowsPerPage;
         int limit = pagesCount * rowsPerPage;
-        List<RepairService> read;
+        List<RepairService> read = null;
         try {
             TransactionManager.beginTransaction();
             read = repairServiceDao.read(start, limit);
             TransactionManager.endTransaction();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
         } finally {
             TransactionManager.rollBack();
         }
@@ -54,15 +55,15 @@ public class RepairServicesService extends AbstractService {
         return  MySQLDAOFactory.getFactory().getRepairServiceDao().getTableHead();
     }
 
-    public RepairService getRepairServiceById(int id) throws PersistException, TransactionException {
+    public RepairService getRepairServiceById(int id) throws DaoException {
         return getById(MySQLDAOFactory.getFactory().getRepairServiceDao(),id);
     }
 
-    public void updateRepairService(RepairService service) throws PersistException, TransactionException {
+    public void updateRepairService(RepairService service) throws TransactionException, DatabaseException {
         update(MySQLDAOFactory.getFactory().getRepairServiceDao(),service);
     }
 
-    public void deleteRepairService(Integer serviceId) throws PersistException, TransactionException {
+    public void deleteRepairService(Integer serviceId) throws TransactionException, DatabaseException {
         delete(MySQLDAOFactory.getFactory().getRepairServiceDao(),serviceId);
     }
 

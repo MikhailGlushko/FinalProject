@@ -38,7 +38,7 @@ public class ShowUsersListTag extends ShowListTag {
             builder.append("<tr onClick=\"window.location.href='")
                     .append("/do?command=").append(command).append("_detail")
                     .append("&page=").append(page)
-                    .append("&user_id=").append(object.getId())
+                    .append("&user_id=").append(Objects.requireNonNull(object).getId())
                     .append("'; return false\">")
                     .append("<td><a href=\"/do?command=").append(command).append("_detail")
                     .append("&page=").append(page)

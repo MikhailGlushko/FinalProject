@@ -6,7 +6,6 @@ import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.Order;
 import ua.glushko.model.entity.OrderHistory;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import java.io.IOException;
 import java.util.Iterator;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.Objects;
 
 import static ua.glushko.commands.Command.*;
-import static ua.glushko.commands.Command.PARAM_PAGE;
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDER_HISTORY_PAGE;
 
 @SuppressWarnings("serial")
@@ -34,9 +32,7 @@ public class ShowOrdersHistoryListTag extends ShowListTag {
                 property = ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT);
                 rowsCount = Integer.valueOf(property);
             } catch (NullPointerException e) {
-                if (Objects.isNull(pagesCount))
                     pagesCount = 5;
-                if (Objects.isNull(rowsCount))
                     rowsCount = 5;
             }
 
@@ -73,7 +69,7 @@ public class ShowOrdersHistoryListTag extends ShowListTag {
                 object = (OrderHistory) next;
             }
             builder.append("<tr >")
-                    .append("<td>").append(object.getId()).append("</td>");
+                    .append("<td>").append(Objects.requireNonNull(object).getId()).append("</td>");
             builder.append("<td>").append(object.getAction()).append("</td>");
             builder.append("<td>").append(object.getDescription()).append("</td>");
             builder.append("<td>").append(object.getActionDate()).append("</td>");
@@ -107,9 +103,7 @@ public class ShowOrdersHistoryListTag extends ShowListTag {
             if(i >0 && i-page<pageCount){
                 if(page!=i){
                     String command = pageContext.getRequest().getParameter(PARAM_COMMAND);
-                    builder.append("<td>").append("<a href=\"/do?command=").append(command)
-                            .append("&order_id="+id)
-                            .append("&page="+currentPage)
+                    builder.append("<td>").append("<a href=\"/do?command=").append(command).append("&order_id=").append(id).append("&page=").append(currentPage)
                             .append("&history_page=").append(i).append("\">").append(i).append("</a>").append("</td>");
                 } else {
                     builder.append("<td>").append(" [ ").append(i).append(" ] ").append("</td>");

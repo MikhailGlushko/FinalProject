@@ -44,9 +44,7 @@ abstract class ShowListTag extends TagSupport {
                 property = ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT);
                 rowsCount = Integer.valueOf(property);
             } catch (NullPointerException e) {
-                if (Objects.isNull(pagesCount))
                     pagesCount = 5;
-                if (Objects.isNull(rowsCount))
                     rowsCount = 5;
             }
 
@@ -61,8 +59,7 @@ abstract class ShowListTag extends TagSupport {
             Integer access = Integer.valueOf(pageContext.getRequest().getAttribute(PARAM_ACCESS).toString());
             if((access & C) == C || (access & c) == c ) {
                 builder.append("<div class='addbutton' align=\"right\">")
-                        .append("<button class='addbutton' type='button' name='button' value='add' onClick=\"window.location.href='/do?command=")
-                        .append(list.iterator().next().getClass().getSimpleName().toLowerCase() + "s_add")
+                        .append("<button class='addbutton' type='button' name='button' value='add' onClick=\"window.location.href='/do?command=").append(list.iterator().next().getClass().getSimpleName().toLowerCase()).append("s_add")
                         .append("'\">")
                         .append(MessageManager.getMessage("menu.add", locale))
                         .append("</button>")

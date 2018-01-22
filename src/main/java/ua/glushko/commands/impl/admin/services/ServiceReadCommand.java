@@ -5,14 +5,13 @@ import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.RepairService;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.RepairServicesService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static ua.glushko.authentification.Authentication.U;
@@ -24,18 +23,16 @@ public class ServiceReadCommand implements Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             storeRepairServiceDetailToSession(request);
-        } catch (TransactionException | PersistException e) {
-            LOGGER.error(e);
-        } catch (ParameterException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = ConfigurationManager.getProperty(ServicesCommandHelper.PATH_PAGE_SERVICES_DETAIL);
         return new CommandRouter(request, response, page);
     }
 
-    private void storeRepairServiceDetailToSession(HttpServletRequest request) throws PersistException, TransactionException, ParameterException {
+    private void storeRepairServiceDetailToSession(HttpServletRequest request) throws DaoException, TransactionException, ParameterException {
         int access = Authentication.checkAccess(request);
-        Integer id=null;
+        int id=0;
         try {
             id = Integer.valueOf(request.getParameter(ServicesCommandHelper.PARAM_SERVICE_ID));
         }catch (NumberFormatException e){

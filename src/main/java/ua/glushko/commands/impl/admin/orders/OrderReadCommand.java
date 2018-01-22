@@ -5,8 +5,9 @@ import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.*;
+import ua.glushko.model.exception.DatabaseException;
 import ua.glushko.model.exception.ParameterException;
-import ua.glushko.model.exception.PersistException;
+import ua.glushko.model.exception.DaoException;
 import ua.glushko.model.exception.TransactionException;
 import ua.glushko.services.impl.OrdersHistoryService;
 import ua.glushko.services.impl.OrdersService;
@@ -15,7 +16,6 @@ import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static ua.glushko.authentification.Authentication.*;
@@ -28,28 +28,24 @@ public class OrderReadCommand implements Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             storeOrderDetailToSession(request);
-        } catch (TransactionException | PersistException e) {
-            LOGGER.error(e);
-        } catch (ParameterException e) {
+        } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = ConfigurationManager.getProperty(OrdersCommandHelper.PATH_PAGE_ORDERS_DETAIL);
         return new CommandRouter(request, response, page);
     }
 
-    private void storeOrderDetailToSession(HttpServletRequest request) throws PersistException, TransactionException, ParameterException {
-        Integer pagesCount = null;
-        Integer rowsCount = null;
-        Integer pageNumber = null;
-        Integer id = null;
+    private void storeOrderDetailToSession(HttpServletRequest request) throws TransactionException, ParameterException, DatabaseException {
+        int pagesCount = 0;
+        int rowsCount = 0;
+        int pageNumber = 1;
+        int id = 0;
 
         try {
             pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
             rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
             String parameter = request.getParameter(PARAM_PAGE);
-            if (parameter == null || parameter.isEmpty())
-                pageNumber = 1;
-            else
+            if (!(parameter == null || parameter.isEmpty()))
                 pageNumber = Integer.valueOf(request.getParameter(PARAM_PAGE));
             id = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
         } catch (NumberFormatException e){
