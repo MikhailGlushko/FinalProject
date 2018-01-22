@@ -1,0 +1,86 @@
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] ERROR DaoException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) )
+22.01.2018 17:54:03 [main] ERROR DaoException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] ERROR DaoException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) )
+22.01.2018 17:54:03 [main] ERROR DaoException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] ERROR DaoException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) )
+22.01.2018 17:54:03 [main] ERROR DaoException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] ERROR DaoException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) )
+22.01.2018 17:54:03 [main] ERROR DaoException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] ERROR DaoException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) )
+22.01.2018 17:54:03 [main] ERROR DaoException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] ERROR DaoException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) )
+22.01.2018 17:54:03 [main] ERROR DaoException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] ERROR DaoException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) )
+22.01.2018 17:54:03 [main] ERROR DaoException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] ERROR DaoException - Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) )
+22.01.2018 17:54:03 [main] ERROR DaoException - MySQL Error Code: 0 Incorrect Login or Password. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] ERROR DaoException - user.login.not.present ( ua.glushko.commands.impl.auth.LoginCommand.execute(LoginCommand.java:36) )
+22.01.2018 17:54:03 [main] ERROR DaoException - user.login.not.present ( ua.glushko.commands.impl.auth.LoginCommand.execute(LoginCommand.java:36) )
+22.01.2018 17:54:03 [main] ERROR DaoException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) )
+22.01.2018 17:54:03 [main] ERROR DaoException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] ERROR DaoException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) )
+22.01.2018 17:54:03 [main] ERROR DaoException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:03 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:03 [main] ERROR DaoException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:100) )
+22.01.2018 17:54:03 [main] ERROR DaoException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:100) ).
+22.01.2018 17:54:03 [main] ERROR DaoException - user.password.not.match ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:28) )
+22.01.2018 17:54:03 [main] ERROR DaoException - user.login.incorrect ( ua.glushko.commands.impl.auth.RegisterCommand.execute(RegisterCommand.java:28) )
+22.01.2018 17:54:03 [main] ERROR DaoException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:100) )
+22.01.2018 17:54:03 [main] ERROR DaoException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:100) ).
+22.01.2018 17:54:03 [main] ERROR DaoException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:139) )
+22.01.2018 17:54:03 [main] ERROR DaoException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:139) ).
+22.01.2018 17:54:03 [main] ERROR DaoException - user.secret.key.not.match ( ua.glushko.commands.impl.auth.ResetPasswordCommand.execute(ResetPasswordCommand.java:26) )
+22.01.2018 17:54:03 [main] ERROR DaoException - user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:173) )
+22.01.2018 17:54:03 [main] ERROR DaoException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.changePassword(UsersService.java:173) ).
+22.01.2018 17:54:03 [main] ERROR Command - ua.glushko.exception.DaoException: ua.glushko.exception.DaoException: user not fount
+22.01.2018 17:54:03 [main] ERROR DaoException - Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) )
+22.01.2018 17:54:03 [main] ERROR DaoException - Код ошибки MySQL: 0 Can not update record - record not found. Unsuccessful operation. ( ua.glushko.model.dao.UserDAOTest.updateNoExistUser(UserDAOTest.java:197) ).
+22.01.2018 17:54:03 [main] ERROR UserDAO - ua.glushko.exception.DaoException: ua.glushko.exception.DaoException: Can not update record - record not found. Unsuccessful operation.
+22.01.2018 17:54:04 [main] ERROR DaoException - Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) )
+22.01.2018 17:54:04 [main] ERROR DaoException - Код ошибки MySQL: 0 Can not delete record. Operation aborted ( ua.glushko.model.dao.UserDAOTest.deleteOneNoExist(UserDAOTest.java:228) ).
+22.01.2018 17:54:04 [main] ERROR UserDAO - ua.glushko.exception.DaoException: ua.glushko.exception.DaoException: Can not delete record. Operation aborted
+22.01.2018 17:54:04 [main] ERROR DaoException - Код ошибки MySQL: 22030 Value not permitted for column "ACTION ENUM('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL": "''"; SQL statement:
+insert into orders_history (order_id,user_id,action,description,action_date,old_value,new_value) values ( ?,?,?,?,?,?,? ) [22030-196] ( org.h2.message.DbException.get(DbException.java:179) ).
+22.01.2018 17:54:04 [main] ERROR DaoException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) )
+22.01.2018 17:54:04 [main] ERROR DaoException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:04 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:04 [main] ERROR DaoException - Код ошибки MySQL: 0 ua.glushko.exception.DaoException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:04 [main] ERROR DaoException - Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) )
+22.01.2018 17:54:04 [main] ERROR DaoException - Код ошибки MySQL: 0 Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:04 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:04 [main] ERROR DaoException - Код ошибки MySQL: 0 ua.glushko.exception.DaoException: Не корректный пароли и/или логин. ( ua.glushko.services.impl.UsersService.authenticateUser(UsersService.java:117) ).
+22.01.2018 17:54:04 [main] ERROR DaoException - login is null ( ua.glushko.services.impl.UsersService.register(UsersService.java:139) )
+22.01.2018 17:54:04 [main] ERROR DaoException - user already exist ( ua.glushko.services.RegisterServiceTest.registerExistLogin(RegisterServiceTest.java:30) )
+22.01.2018 17:54:04 [main] ERROR DaoException - Код ошибки MySQL: 0 user already exist ( ua.glushko.services.RegisterServiceTest.registerExistLogin(RegisterServiceTest.java:30) ).
+22.01.2018 17:54:04 [main] ERROR DaoException - user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:139) )
+22.01.2018 17:54:04 [main] ERROR DaoException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.register(UsersService.java:139) ).
+22.01.2018 17:54:04 [main] ERROR DaoException - user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:100) )
+22.01.2018 17:54:04 [main] ERROR DaoException - Код ошибки MySQL: 0 user not fount ( ua.glushko.services.impl.UsersService.getUserByLogin(UsersService.java:100) ).
+22.01.2018 17:54:04 [main] ERROR DaoException - user.not.found ( ua.glushko.services.UsersServiceTest.updateUserWrongId(UsersServiceTest.java:87) )
+22.01.2018 17:54:04 [main] INFO  AbstractService - ROLLBACK
+22.01.2018 17:54:04 [main] INFO  AbstractService - ROLLBACK
