@@ -30,6 +30,7 @@ public class MainMenuTag extends TagSupport {
                     .append("<a class=\"btn btn-default btn-sm\" href=\"")
                     .append("/do?command="+ CommandFactory.COMMAND_WELCOME)
                     .append("\">")
+                    .append(" <i class=\"glyphicon glyphicon-home\"> </i> ")
                     .append(MessageManager.getMessage("main.home",locale))
                     .append("</a>");
 
@@ -56,17 +57,20 @@ public class MainMenuTag extends TagSupport {
                 builder.append("<a class=\"btn btn-default btn-sm\" href=\"/do?command=")
                         .append(COMMAND_LOGOUT)
                         .append("\" style=\"margin-right: 20; float: right\">")
+                        .append(" <i class=\"glyphicon glyphicon-log-out\"> </i> ")
                         .append(MessageManager.getMessage("main.logout",locale))
                         .append("</a>");
             } else {
                 builder.append("<a class=\"btn btn-default btn-sm\" href=\"")
                         .append(ConfigurationManager.getProperty(PATH_PAGE_LOGIN))
                         .append("\" style=\"margin-right: 20; float: right\">")
+                        .append(" <i class=\"glyphicon glyphicon-log-in\"> </i> ")
                         .append(MessageManager.getMessage("main.login",locale))
                         .append("</a>")
                         .append("<a class=\"btn btn-default btn-sm\" href=\"")
                         .append(ConfigurationManager.getProperty(PATH_PAGE_REGISTER))
                         .append("\" style=\"margin-right: 20; float: right\">")
+                        .append(" <i class=\"glyphicon glyphicon-user\"> </i> ")
                         .append(MessageManager.getMessage("main.register",locale))
                         .append("</a>");
             }

@@ -15,10 +15,8 @@ import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 
+import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.*;
 import static ua.glushko.services.utils.Authentication.R;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDERS_LIST;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDERS_LIST_TITLE;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PATH_PAGE_ORDERS;
 
 public class OrdersListCommand implements Command {
 
@@ -51,23 +49,20 @@ public class OrdersListCommand implements Command {
         } catch (NumberFormatException e) {
             LOGGER.debug(e);
         }
+        List<Order> items = null;
         if ((access & R) == R) {
-            List<Order> items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount);
-            List<String> titles = ordersService.getOrderTitles();
-            int count = ordersService.count();
-            count = (count % rowsCount != 0) ? count / rowsCount + 1 : count / rowsCount;
-            request.setAttribute(PARAM_ORDERS_LIST_TITLE, titles);
-            request.setAttribute(PARAM_ORDERS_LIST, items);
-            request.setAttribute(PARAM_LAST_PAGE, count);
+            items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount);
         } else if ((access & Authentication.r) == Authentication.r) {
-            List<Order> items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount, userId);
-            List<String> titles = ordersService.getOrderTitles();
-            int count = ordersService.count(userId);
-            count = (count % rowsCount != 0) ? count / rowsCount + 1 : count / rowsCount;
-            request.setAttribute(PARAM_ORDERS_LIST_TITLE, titles);
-            request.setAttribute(PARAM_ORDERS_LIST, items);
-            request.setAttribute(PARAM_LAST_PAGE, count);
+            items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount, userId);
         }
+        List<String> titles = ordersService.getOrderTitles();
+        Integer countNew = ordersService.countNew();
+        int count = ordersService.count(userId);
+        count = (count % rowsCount != 0) ? count / rowsCount + 1 : count / rowsCount;
+        request.setAttribute(PARAM_ORDERS_LIST_TITLE, titles);
+        request.setAttribute(PARAM_ORDERS_LIST, items);
+        request.setAttribute(PARAM_LAST_PAGE, count);
+        request.setAttribute(PARAM_ORDERS_COUNT_NEW,countNew);
         request.setAttribute(PARAM_PAGES_COUNT, pagesCount);
         request.setAttribute(PARAM_ROWS_COUNT, rowsCount);
         request.setAttribute(PARAM_PAGE, pageNumber);

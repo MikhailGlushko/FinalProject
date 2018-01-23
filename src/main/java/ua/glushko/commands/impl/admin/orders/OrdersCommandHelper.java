@@ -22,6 +22,7 @@ public class OrdersCommandHelper {
     public static final String PARAM_ORDER = "orders_detail";
     public static final String PARAM_ORDERS_LIST = "orders_list";
     public static final String PARAM_ORDERS_LIST_TITLE = "orders_list_head";
+    public static final String PARAM_ORDERS_COUNT_NEW  = "orders_count_new";
     public static final String PARAM_SERVICES_LIST = "services_list";
     public static final String PARAM_EMPLOYEES_LIST = "employee_list";
     public static final String PARAM_ORDER_HISTORY_PAGE = "history_page";

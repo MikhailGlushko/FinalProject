@@ -14,6 +14,7 @@ import ua.glushko.exception.ParameterException;
 import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,7 +42,7 @@ public class LoginCommand implements Command {
             List<Grant> currentUserGrants = userAuthenticateData.get(userAfterLogin);
             if (isUserStatusActive(userAfterLogin)) {
                 LOGGER.debug("user " + userAfterLogin.getLogin() + " was login");
-                storeUserAuthenticateData(request.getSession(), userAfterLogin, currentUserGrants);
+                storeUserAuthenticateData(request, userAfterLogin, currentUserGrants);
                 request.setAttribute(PARAM_COMMAND, CommandFactory.COMMAND_WELCOME);
                 page = "/do";
             } else if (isUserStatusNotActive(userAfterLogin)) {
@@ -66,11 +67,19 @@ public class LoginCommand implements Command {
         return new CommandRouter(request, response, page);
     }
 
-    private void storeUserAuthenticateData(HttpSession session, User currentUser, List<Grant> userGrants) {
-        session.setAttribute(Authentication.PARAM_LOGIN, currentUser.getLogin());
-        session.setAttribute(Authentication.PARAM_NAME_NAME, currentUser.getName());
-        session.setAttribute(Authentication.PARAM_ROLE, currentUser.getRole());
-        session.setAttribute(Authentication.PARAM_ID, currentUser.getId());
-        session.setAttribute(Authentication.PARAM_GRANTS, userGrants);
+    private void storeUserAuthenticateData(HttpServletRequest request, User currentUser, List<Grant> userGrants) {
+        request.getSession().setAttribute(Authentication.PARAM_LOGIN, currentUser.getLogin());
+        request.getSession().setAttribute(Authentication.PARAM_NAME_NAME, currentUser.getName());
+        request.getSession().setAttribute(Authentication.PARAM_ROLE, currentUser.getRole());
+        request.getSession().setAttribute(Authentication.PARAM_ID, currentUser.getId());
+        request.getSession().setAttribute(Authentication.PARAM_GRANTS, userGrants);
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie: cookies) {
+            String name = cookie.getName();
+            if (name.equals(PARAM_LOCALE)) {
+                request.getSession().setAttribute(PARAM_LOCALE, cookie.getValue());
+                break;
+            }
+        }
     }
 }
