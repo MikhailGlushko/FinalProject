@@ -5,6 +5,7 @@ import ua.glushko.model.entity.RepairService;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @SuppressWarnings("serial")
 public class OptGoupTag extends TagSupport {
@@ -22,6 +23,7 @@ public class OptGoupTag extends TagSupport {
     @Override
     public int doStartTag() {
         StringBuilder builder = new StringBuilder();
+        if(Objects.nonNull(list))
         for (Object o:list) {
             if(o instanceof RepairService){
                 RepairService r  = (RepairService) o;

@@ -5,6 +5,7 @@ import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.CommandFactory;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.transaction.ConnectionPool;
+import ua.glushko.transaction.H2DataSource;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -25,6 +26,8 @@ public class Controller extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+        //TODO
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         if (ConnectionPool.getConnectionPool().getDataSource() == null){
             try {
                 Context context = (Context)(new InitialContext().lookup(JNDI_NAME));

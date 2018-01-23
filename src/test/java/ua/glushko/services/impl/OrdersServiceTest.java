@@ -3,7 +3,6 @@ package ua.glushko.services.impl;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.transaction.H2DataSource;
-import ua.glushko.model.dao.impl.OrderDAO;
 import ua.glushko.model.entity.Order;
 import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.exception.DaoException;
@@ -85,7 +84,7 @@ public class OrdersServiceTest {
     public void AssignTo() throws DatabaseException, TransactionException {
         Integer before = service.countNew();
         assertNotNull(before);
-        Order order = service.assignToEmployee(2);
+        Order order = service.takeNewOrder(2);
         assertNotNull(order);
         Integer after = service.countNew();
         assertNotEquals(before,after);

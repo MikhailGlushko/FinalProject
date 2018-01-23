@@ -93,7 +93,7 @@ public class OrdersService extends AbstractService {
         return read;
     }
 
-    public Order assignToEmployee(int employeeId) throws DatabaseException, TransactionException {
+    public Order takeNewOrder(int employeeId) throws DatabaseException, TransactionException {
         OrderDAO orderDAO = MySQLDAOFactory.getFactory().getOrderDao();
         Order order;
         try{

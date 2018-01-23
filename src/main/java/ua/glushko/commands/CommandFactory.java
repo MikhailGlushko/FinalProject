@@ -48,6 +48,7 @@ public class CommandFactory {
     public static final String COMMAND_ORDER_UPDATE = "orders_update";
     public static final String COMMAND_ORDER_DELETE = "orders_delete";
     public static final String COMMAND_ORDER_CREATE = "orders_create";
+    public static final String COMMAND_ORDER_TAKE = "orders_take";
     // for requests history
     private static final String COMMAND_HISTORY_ACTION_CRUD = "history_action";
     public static final String COMMAND_HISTORY_CHANGE_EMPLOYEE = "history_change_employee";
@@ -103,6 +104,7 @@ public class CommandFactory {
         commandMap.put(COMMAND_ORDERS_READ,   new OrderReadCommand());
         commandMap.put(COMMAND_ORDER_UPDATE, new OrderUpdateCommand());
         commandMap.put(COMMAND_ORDER_DELETE, new OrderDeleteCommand());
+        commandMap.put(COMMAND_ORDER_TAKE, new OrderTakeCommand());
 
         commandMap.put(COMMAND_HISTORY_ACTION_CRUD, new OrderHistoryActionCRUDCommand());
         commandMap.put(COMMAND_HISTORY_CHANGE_EMPLOYEE, new OrderHistoryChangeEmployeeCommand());
