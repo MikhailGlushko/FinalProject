@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_LOCALE;
 import static ua.glushko.commands.CommandFactory.COMMAND_LOGOUT;
-import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
+import ua.glushko.transaction.H2DataSource;
 
 public class LogoutCommandTest {
     HttpSession session = mock(HttpSession.class);
@@ -26,7 +26,7 @@ public class LogoutCommandTest {
 
     @Before
     public void setUp(){
-        ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         when(request.getSession()).thenReturn(session);
         when(request.getSession().getAttribute(PARAM_LOCALE)).thenReturn("ru");
         when(request.getParameter(PARAM_COMMAND)).thenReturn(COMMAND_LOGOUT);

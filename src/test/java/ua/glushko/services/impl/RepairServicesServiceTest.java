@@ -2,7 +2,7 @@ package ua.glushko.services.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.glushko.model.dao.H2DataSource;
+import ua.glushko.transaction.H2DataSource;
 import ua.glushko.model.entity.RepairService;
 import ua.glushko.exception.DaoException;
 import ua.glushko.exception.DatabaseException;
@@ -21,8 +21,7 @@ public class RepairServicesServiceTest {
     @Test
     public void getService() {
         service = RepairServicesService.getService();
-        if (ConnectionPool.getConnectionPool().getDataSource() == null)
-            ConnectionPool.getConnectionPool().setDataSource(H2DataSource.H2_CONNECTION_POOL);
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
     }
 
     @Test

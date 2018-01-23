@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
+import ua.glushko.transaction.H2DataSource;
 
 public class OrderHistoryDAOTest {
 
@@ -19,7 +19,7 @@ public class OrderHistoryDAOTest {
 
     @Before
     public void init(){
-        ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         dao = OrderHistoryDAO.getInstance();
     }
 

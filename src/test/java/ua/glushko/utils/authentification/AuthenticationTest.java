@@ -24,7 +24,7 @@ import static ua.glushko.services.utils.Authentication.PARAM_GRANTS;
 import static ua.glushko.services.utils.Authentication.PARAM_ROLE;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
-import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
+import ua.glushko.transaction.H2DataSource;
 
 public class AuthenticationTest {
 
@@ -32,7 +32,7 @@ public class AuthenticationTest {
     HttpServletRequest request;
     @Before
     public void setUp() throws Exception {
-        ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         UsersService usersService = UsersService.getService();
         Map<User, List<Grant>> useDataAndGrantsSet = usersService.authenticateUser("admin", "P@ssw0rd");
         User user = useDataAndGrantsSet.keySet().iterator().next();

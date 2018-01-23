@@ -9,14 +9,14 @@ import ua.glushko.transaction.ConnectionPool;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
+import ua.glushko.transaction.H2DataSource;
 
 public class GuestBookDAOTest {
 
     GuestBookDAO instance;
     @Before
     public void init(){
-        ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         instance = GuestBookDAO.getInstance();
     }
 

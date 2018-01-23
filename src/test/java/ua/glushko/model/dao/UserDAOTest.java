@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static ua.glushko.model.dao.H2DataSource.*;
+import ua.glushko.transaction.H2DataSource;
 
 public class UserDAOTest {
 
@@ -32,7 +32,7 @@ public class UserDAOTest {
 
     @Before
     public void init() {
-            ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
+            ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
             userDAO = MySQLDAOFactory.getFactory().getUserDao();
     }
 
@@ -282,7 +282,7 @@ public class UserDAOTest {
     @Test
     public void deleteOneAndreadItInOtherThread() {
         try {
-            ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
+            ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
             TransactionManager.beginTransaction();
             List<User> read1 = userDAO.read();
             // открываем транзакцию

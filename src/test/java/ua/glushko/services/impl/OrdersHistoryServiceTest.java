@@ -2,13 +2,15 @@ package ua.glushko.services.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.glushko.model.dao.H2DataSource;
+import ua.glushko.transaction.H2DataSource;
+import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.Action;
 import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.exception.DaoException;
 import ua.glushko.exception.DatabaseException;
 import ua.glushko.exception.TransactionException;
+import ua.glushko.model.entity.User;
 import ua.glushko.transaction.ConnectionPool;
 
 import java.sql.SQLException;
@@ -24,8 +26,7 @@ public class OrdersHistoryServiceTest {
     @Before
     @Test
     public void getService() {
-        if (ConnectionPool.getConnectionPool().getDataSource() == null)
-            ConnectionPool.getConnectionPool().setDataSource(H2DataSource.H2_CONNECTION_POOL);
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         service = OrdersHistoryService.getService();
     }
 
@@ -86,6 +87,9 @@ public class OrdersHistoryServiceTest {
 
     @Test
     public void deleteOrder() throws DaoException, TransactionException, ParseException, DatabaseException {
+        UserDAO userDAO = UserDAO.getInstance();
+        User user = userDAO.read(2);
+        System.out.println(user);
         OrderHistory orderHistoryById = service.getOrderHistoryById(1);
         orderHistoryById.setId(0);
         service.updateOrderHistory(orderHistoryById);

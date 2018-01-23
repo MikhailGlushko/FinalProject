@@ -1,5 +1,6 @@
 package ua.glushko.model.dao.impl;
 
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.dao.MySQLDAOFactory;
@@ -8,10 +9,11 @@ import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
+import ua.glushko.transaction.H2DataSource;
 
 public class OrderDAOTest {
 
@@ -19,7 +21,7 @@ public class OrderDAOTest {
 
     @Before
     public void init() {
-        ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         dao = MySQLDAOFactory.getFactory().getOrderDao();
     }
 
@@ -58,5 +60,11 @@ public class OrderDAOTest {
     public void readLimit() throws DaoException {
         List<Order> read = dao.read(0, 2);
         assertTrue(read.size()==2);
+    }
+
+    @Test
+    public void takeNew() throws SQLException {
+        Order order = dao.takeNew();
+        System.out.println(order);
     }
 }

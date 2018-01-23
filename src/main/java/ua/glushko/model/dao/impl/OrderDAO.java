@@ -1,5 +1,6 @@
 package ua.glushko.model.dao.impl;
 
+import ua.glushko.exception.DatabaseException;
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.entity.Order;
 import ua.glushko.exception.DaoException;
@@ -131,6 +132,28 @@ public class OrderDAO extends AbstractDAO<Order> {
         return list;
     }
 
+    public Order takeNew() throws DaoException {
+        String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
+                "FROM repair_agency.orders a\n" +
+                "left join users b on a.user_id=b.id \n" +
+                "left join users c on a.employee_id=c.id\n" +
+                "where employee_id is null\n"+
+                "order by order_date desc, status\n" +
+                "limit 1;";
+        List<Order> list = Collections.emptyList();
+        try (ConnectionWrapper con = TransactionManager.getConnection();
+             PreparedStatement statement = con.prepareStatement(sql)){
+            ResultSet resultSet = statement.executeQuery();
+            list = parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        if (list.size() > 1) {
+            throw new DaoException("Received more than one record.");
+        }
+        return list.iterator().next();
+    }
+
     public List<Order> read(int start, int limit, int userId) throws DaoException {
         List<Order> list = Collections.emptyList();
         String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
@@ -225,5 +248,20 @@ public class OrderDAO extends AbstractDAO<Order> {
     protected String getCountQuery(int userId) {
         return "select count(*) AS total from " + getTableName()+
                 " where user_id="+userId+" or employee_id="+userId;
+    }
+
+    public Integer countNew() throws DaoException{
+        String sql = "SELECT count(*) as total \n" +
+                "FROM repair_agency.orders a\n" +
+                "where employee_id is null\n";
+        try (ConnectionWrapper con = TransactionManager.getConnection();
+             PreparedStatement statement = con.prepareStatement(sql)) {
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next())
+                return resultSet.getInt("total");
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+        return 0;
     }
 }

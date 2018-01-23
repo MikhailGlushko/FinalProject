@@ -1,10 +1,7 @@
 package ua.glushko.services.impl;
 
 import ua.glushko.model.dao.MySQLDAOFactory;
-import ua.glushko.model.dao.impl.GuestBookDAO;
-import ua.glushko.model.dao.impl.OrderDAO;
-import ua.glushko.model.dao.impl.OrderHistoryDAO;
-import ua.glushko.model.dao.impl.UserDAO;
+import ua.glushko.model.dao.impl.*;
 import ua.glushko.model.entity.*;
 import ua.glushko.exception.DaoException;
 import ua.glushko.exception.DatabaseException;
@@ -85,17 +82,30 @@ public class OrdersHistoryService extends AbstractService {
 
     public void updateOrderHistory(OrderHistory orderHistory) throws TransactionException, ParseException, DatabaseException {
         try {
-            TransactionManager.beginTransaction();
             OrderDAO orderDAO = OrderDAO.getInstance();
             OrderHistoryDAO orderHistoryDAO = OrderHistoryDAO.getInstance();
+            OrderQueDAO orderQueDAO = OrderQueDAO.getInstance();
+            UserDAO userDAO = UserDAO.getInstance();
+
+            TransactionManager.beginTransaction();
+
             Order order = orderDAO.read(orderHistory.getOrderId());
             GuestBookDAO guestBookDAO = GuestBookDAO.getInstance();
             orderHistory.setActionDate(new Date(System.currentTimeMillis()));
-            UserDAO userDAO = UserDAO.getInstance();
+            OrderQue orderQue = new OrderQue();
+            orderQue.setOrderId(orderHistory.getOrderId());
+            orderQue.setCreate(new Date(System.currentTimeMillis()));
+            orderQue.setMessage(orderHistory.getDescription());
             switch (Action.valueOf(orderHistory.getAction())) {
                 case ADD_COMMENT:
                     orderHistory.setOldValue(order.getMemo());
                     order.setMemo(orderHistory.getDescription());
+                    orderQue.setRole(UserRole.MANAGER);
+                    if(order.getEmployeeId()!=0) {
+                        User user = userDAO.read(order.getEmployeeId());
+                        orderQue.setEmployeeId(user.getId());
+                        orderQue.setRole(user.getRole());
+                    }
                     break;
                 case GUESTBOOK_COMMENT:
                     GuestBook guestBook = new GuestBook();
@@ -116,16 +126,33 @@ public class OrdersHistoryService extends AbstractService {
                     DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
                     Date date = format.parse(orderHistory.getNewValue());
                     order.setExpectedDate(date);
+                    orderQue.setRole(UserRole.MANAGER);
+                    if(order.getEmployeeId()!=0) {
+                        user = userDAO.read(order.getEmployeeId());
+                        orderQue.setEmployeeId(user.getId());
+                        orderQue.setRole(user.getRole());
+                    }
                     break;
                 case CHANGE_EMPLOYEE:
                     orderHistory.setOldValue(String.valueOf(order.getEmployeeId()));
                     order.setEmployeeId(Integer.valueOf(orderHistory.getNewValue()));
                     if (order.getStatus() == OrderStatus.NEW)
                         order.setStatus(OrderStatus.INWORK);
+                    orderQue.setRole(UserRole.MANAGER);
+                    if(order.getEmployeeId()!=0) {
+                        user = userDAO.read(order.getEmployeeId());
+                        orderQue.setEmployeeId(user.getId());
+                        orderQue.setRole(user.getRole());
+                    }
                     break;
                 case CHANGE_PRICE:
                     orderHistory.setOldValue(String.valueOf(order.getPrice()));
                     order.setPrice(Double.valueOf(orderHistory.getNewValue()));
+                    if(order.getEmployeeId()!=0) {
+                        user = userDAO.read(order.getEmployeeId());
+                        orderQue.setEmployeeId(user.getId());
+                        orderQue.setRole(user.getRole());
+                    }
                     break;
                 case CHANGE_STATUS:
                     orderHistory.setOldValue(order.getStatus().name());
@@ -134,6 +161,11 @@ public class OrdersHistoryService extends AbstractService {
                         order.setEmployeeId(order.getUserId());
                     if (order.getStatus() == OrderStatus.NEW)
                         order.setEmployeeId(orderHistory.getUserId());
+                    if(order.getEmployeeId()!=0) {
+                        user = userDAO.read(order.getEmployeeId());
+                        orderQue.setEmployeeId(user.getId());
+                        orderQue.setRole(user.getRole());
+                    }
                     break;
             }
             if (order.isChanged()) {
@@ -143,6 +175,7 @@ public class OrdersHistoryService extends AbstractService {
                 else
                     orderHistoryDAO.create(orderHistory);
             }
+            orderQueDAO.create(orderQue);
             TransactionManager.endTransaction();
         } catch (NumberFormatException e){
             LOGGER.error(e);

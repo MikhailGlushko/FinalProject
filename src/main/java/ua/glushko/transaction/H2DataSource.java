@@ -12,5 +12,7 @@ public class H2DataSource {
             + "SET SCHEMA REPAIR_AGENCY\\; "
             + "RUNSCRIPT FROM 'classpath:/scripts/repair_agency_dump_h2.sql'";
 
-    public static final JdbcConnectionPool H2_CONNECTION_POOL = JdbcConnectionPool.create(URL, "", "");
+    public static JdbcConnectionPool getInstance(){
+        return JdbcConnectionPool.create(URL, "", "");
+    }
 }
