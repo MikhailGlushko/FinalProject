@@ -32,7 +32,7 @@
         <c:if test="${not empty orders_list}">
             <br/>
             <fmt:message key="orders.title"/>:<br/><br/>
-            <c:if test="${not empty orders_count_new}">
+            <c:if test="${role=='MANAGER' and not empty orders_count_new}">
                 <fmt:message key="order.new.items"/> <span class="badge">${orders_count_new}</span>
                 <button class="btn btn-default">
                     <i class="glyphicon glyphicon glyphicon glyphicon-pushpin"></i> <fmt:message key="orders.take"/>
