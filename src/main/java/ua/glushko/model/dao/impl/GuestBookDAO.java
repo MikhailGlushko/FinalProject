@@ -40,13 +40,12 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
 
     @Override
     protected String getFieldList() {
-        StringBuilder builder = new StringBuilder();
-        return builder
-                .append(NAME_FIELD_ORDER_ID).append(",")
-                .append(NAME_FIELD_USER_NAME).append(",")
-                .append(NAME_FIELD_DESCRIPTION).append(",")
-                .append(NAME_FIELD_ACTION_DATE).append(",")
-                .append(NAME_FIELD_MEMO).toString();
+        String builder = NAME_FIELD_ORDER_ID + "," +
+                NAME_FIELD_USER_NAME + "," +
+                NAME_FIELD_DESCRIPTION + "," +
+                NAME_FIELD_ACTION_DATE + "," +
+                NAME_FIELD_MEMO;
+        return builder;
     }
 
     @Override
@@ -98,43 +97,13 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
     @Override
     protected String getSelectQuery() {
         return "select id, " + getFieldList() +
-                " from " + getTableName();
+                " from " + getTableName() +
+                " order by id desc";
     }
 
-    public List<GuestBook> read() throws DaoException {
-        List<GuestBook> list = Collections.emptyList();
-        String sql = getSelectQuery()+" order by id desc";
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            ResultSet resultSet = statement.executeQuery();
-            setTitles(statement.getMetaData());
-            list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return list;
-    }
-
-    private String getSelectQuery(int from, int limit) {
+    protected String getSelectQuery(int from, int limit) {
         return "select id, " + getFieldList() +
                 " from " + getTableName() +
                 " order by id desc limit ?,? ";
     }
-
-    public List<GuestBook> read(int start, int limit) throws DaoException {
-        List<GuestBook> list = Collections.emptyList();
-        String sql = getSelectQuery(start, limit);
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            statement.setInt(1, start);
-            statement.setInt(2, limit);
-            ResultSet resultSet = statement.executeQuery();
-            setTitles(resultSet.getMetaData());
-            list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return list;
-    }
-
 }

@@ -56,13 +56,12 @@ public class GrantDAO extends AbstractDAO<Grant> {
 
     @Override
     protected String getFieldList() {
-        StringBuilder builder = new StringBuilder();
-        return builder
-                .append(NAME_FIELD_COMMAND).append(",")
-                .append(NAME_FIELD_MENU).append(",")
-                .append(NAME_FIELD_ROLE).append(",")
-                .append(NAME_FIELD_ACTION).append(",")
-                .append(NAME_FIELD_SCOPE).toString();
+        String builder = NAME_FIELD_COMMAND + "," +
+                NAME_FIELD_MENU + "," +
+                NAME_FIELD_ROLE + "," +
+                NAME_FIELD_ACTION + "," +
+                NAME_FIELD_SCOPE;
+        return builder;
     }
 
     @Override
@@ -113,10 +112,10 @@ public class GrantDAO extends AbstractDAO<Grant> {
 
     @Override
     public List<Grant> read(String role) throws DaoException {
-        List<Grant> list = Collections.emptyList();
+        List<Grant> list;
         String sql = getSelectQuery() +
                 " where role=?";
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             prepareStatementForSelectByName(statement, role);

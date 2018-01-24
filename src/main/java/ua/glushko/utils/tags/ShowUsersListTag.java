@@ -12,14 +12,14 @@ import static ua.glushko.commands.Command.*;
 public class ShowUsersListTag extends ShowListTag {
     public void makeBody(List<Object> list, StringBuilder builder, Integer rowsCount) {
         // build bode if table
-        String command = null;
+        String command;
         Object attribute = pageContext.getRequest().getAttribute(PARAM_COMMAND);
         if (Objects.nonNull(attribute))
             command = (String) attribute;
         else
             command = pageContext.getRequest().getParameter(PARAM_COMMAND);
 
-        Integer page = null;
+        Integer page;
         attribute = pageContext.getRequest().getAttribute(PARAM_PAGE);
         if(Objects.nonNull(attribute))
             page = (Integer)attribute;
@@ -47,13 +47,19 @@ public class ShowUsersListTag extends ShowListTag {
                     .append("</a></td>");
             builder.append("<td>").append(object.getRole()).append("</td>");
             builder.append("<td>").append(object.getName()).append("</td>");
-            builder.append("<td>").append(object.getLogin()).append("</td>");
-            builder.append("<td>").append(object.getPassword()).append("</td>");
+            //builder.append("<td>").append(object.getLogin()).append("</td>");
+            //builder.append("<td>").append(object.getPassword()).append("</td>");
             builder.append("<td>").append(object.getEmail()).append("</td>");
             builder.append("<td>").append(object.getPhone()).append("</td>");
-            builder.append("<td>").append(object.getStatus()).append("</td>");
-            builder.append("<td>").append(object.getLastLogin()).append("</td>");
+            //builder.append("<td>").append(object.getStatus()).append("</td>");
+            //builder.append("<td>").append(object.getLastLogin()).append("</td>");
             builder.append("</tr>");
         }
+    }
+
+    void makeHeader(StringBuilder builder) {
+            builder.append("<thead><tr>");
+            builder.append("<th>ID</th><th>ROLE</th><th>NAME</th><th>EMAIL</th><th>PHONE</th>");
+            builder.append("</tr></thead>");
     }
 }

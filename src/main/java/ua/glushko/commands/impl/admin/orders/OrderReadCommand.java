@@ -64,7 +64,7 @@ public class OrderReadCommand implements Command {
         String clientName = client.getName();
 
         // get all users list
-        List<User> stuffs = usersService.getUsersAsStuff(UserRole.CUSTOMER, false);
+        List<User> stuffs = usersService.getUsersByRole(UserRole.CUSTOMER, false);
         if ((access & R) == R || (access & r) == r) {
             // change all requests
             request.setAttribute(PARAM_ORDER_USER_ID,clientId);

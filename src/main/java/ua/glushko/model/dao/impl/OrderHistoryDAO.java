@@ -43,15 +43,14 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
 
     @Override
     protected String getFieldList() {
-        StringBuilder builder = new StringBuilder();
-        return builder
-                .append(NAME_FIELD_ORDER_ID).append(",")
-                .append(NAME_FIELD_USER_ID).append(",")
-                .append(NAME_FIELD_ACTION).append(",")
-                .append(NAME_FIELD_DESCRIPTION).append(",")
-                .append(NAME_FIELD_ACTION_DATE).append(",")
-                .append(NAME_FIELD_OLD_VALUE).append(",")
-                .append(NAME_FIELD_NEW_VALUE).toString();
+        String builder = NAME_FIELD_ORDER_ID + "," +
+                NAME_FIELD_USER_ID + "," +
+                NAME_FIELD_ACTION + "," +
+                NAME_FIELD_DESCRIPTION + "," +
+                NAME_FIELD_ACTION_DATE + "," +
+                NAME_FIELD_OLD_VALUE + "," +
+                NAME_FIELD_NEW_VALUE;
+        return builder;
     }
 
     @Override
@@ -101,7 +100,7 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
     }
 
     public List<OrderHistory> read(int start, int limit, int orderId) throws DaoException {
-        List<OrderHistory> list = Collections.emptyList();
+        List<OrderHistory> list;
         String sql = "SELECT a.*, b.name as `user_name`\n" +
                 "FROM repair_agency.orders_history a\n" +
                 "left join users b on a.user_id=b.id \n" +
@@ -123,67 +122,29 @@ public class OrderHistoryDAO extends AbstractDAO<OrderHistory> {
     }
 
     @Override
-    public List<OrderHistory> read() throws DaoException {
-        List<OrderHistory> list = Collections.emptyList();
-        String sql = "SELECT a.*, b.name as `user_name`\n" +
+    protected String getSelectQuery(){
+        return "SELECT a.*, b.name as `user_name`\n" +
                 "FROM repair_agency.orders_history a\n" +
                 "left join users b on a.user_id=b.id \n" +
                 "order by action_date desc;";
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            ResultSet resultSet = statement.executeQuery();
-            setTitles(statement.getMetaData());
-            list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return list;
     }
 
     @Override
-    public List<OrderHistory> read(int start, int limit) throws DaoException {
-        List<OrderHistory> list = Collections.emptyList();
-        String sql = "SELECT a.*, b.name as `user_name`\n" +
-                "FROM repair_agency.orders_history a\n" +
-                "left join users b on a.user_id=b.id \n" +
-                "order by action_date desc\n" +
-                "limit ?,?;";
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            statement.setInt(1, start);
-            statement.setInt(2, limit);
-            ResultSet resultSet = statement.executeQuery();
-            setTitles(resultSet.getMetaData());
-            list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return list;
+    protected String getSelectQuery(int start, int limit) {
+        return  "SELECT a.*, b.name as `user_name`\n" +
+            "FROM repair_agency.orders_history a\n" +
+            "left join users b on a.user_id=b.id \n" +
+            "order by action_date desc\n" +
+            "limit ?,?;";
     }
 
     @Override
-    public OrderHistory read(int id) throws DaoException {
-        List<OrderHistory> list = Collections.emptyList();
-        String sql = "SELECT a.*, b.name as `user_name`\n" +
+    protected String getSelectQueryById(){
+        return "SELECT a.*, b.name as `user_name`\n" +
                 "FROM repair_agency.orders_history a\n" +
                 "left join users b on a.user_id=b.id \n" +
                 "where a.id=?\n"+
                 "order by action_date desc";
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            prepareStatementForSelectById(statement, id);
-            ResultSet resultSet = statement.executeQuery();
-            list = parseResultSet(resultSet);
-        } catch (Exception e) {
-            throw new DaoException(e);
-        }
-        if (list.size() == 0) {
-            return null;
-        }
-        if (list.size() > 1) {
-            throw new DaoException("Received more than one record.");
-        }
-        return list.iterator().next();
     }
 
     protected String getCountQuery(int orderId) {

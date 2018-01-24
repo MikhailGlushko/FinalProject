@@ -3,7 +3,7 @@ package ua.glushko.model.dao.impl;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.dao.GenericDAO;
-import ua.glushko.model.dao.MySQLDAOFactory;
+import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.entity.RepairService;
 import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
@@ -21,7 +21,7 @@ public class RepairServiceDAOTest {
     @Before
     public void init() {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
-         reapirServiceDAO = MySQLDAOFactory.getFactory().getRepairServiceDao();
+         reapirServiceDAO = DAOFactory.getFactory().getRepairServiceDao();
     }
 
     @Test

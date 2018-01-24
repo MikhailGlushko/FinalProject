@@ -3,9 +3,7 @@ package ua.glushko.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Order History
- */
+/** Order History */
 public class OrderHistory implements GenericEntity, Serializable{
     private int id;
     private int orderId;

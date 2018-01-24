@@ -123,12 +123,12 @@ public class UsersServiceTest {
     @Test
     public void getUsersAsStuff() throws DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
-        List<User> usersAsStuff = usersService.getUsersAsStuff(UserRole.CUSTOMER, true);
+        List<User> usersAsStuff = usersService.getUsersByRole(UserRole.CUSTOMER, true);
         assertTrue(usersAsStuff.size()!=0);
         for (User user: usersAsStuff) {
             usersService.deleteUser(user.getId());
         }
-        usersAsStuff = usersService.getUsersAsStuff(UserRole.CUSTOMER, true);
+        usersAsStuff = usersService.getUsersByRole(UserRole.CUSTOMER, true);
         assertNull(usersAsStuff);
     }
 

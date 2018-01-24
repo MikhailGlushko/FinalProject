@@ -20,9 +20,12 @@ public class OrdersCommandHelper {
     public static final String PARAM_ORDER_EMPLOYEE_NAME = "order_employee_name";
 
     public static final String PARAM_ORDER = "orders_detail";
+    public static final String PARAM_ORDERS_SLIST = "orders_slist";
     public static final String PARAM_ORDERS_LIST = "orders_list";
     public static final String PARAM_ORDERS_LIST_TITLE = "orders_list_head";
     public static final String PARAM_ORDERS_COUNT_NEW  = "orders_count_new";
+    public static final String PARAM_ORDERS_STAT_TOTAL = "stat_total";
+    public static final String PARAM_ORDERS_STAT_NEW   = "stat_new";
     public static final String PARAM_SERVICES_LIST = "services_list";
     public static final String PARAM_EMPLOYEES_LIST = "employee_list";
     public static final String PARAM_ORDER_HISTORY_PAGE = "history_page";

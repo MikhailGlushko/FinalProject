@@ -1,8 +1,6 @@
 package ua.glushko.model.entity;
 
-/**
- * Order status
- */
+/** Order status */
 public enum OrderStatus {
-    NEW, CLOSE, COMPLETE, SUSPEND, INWORK, REJECT
+    NEW, INWORK, SUSPEND, COMPLETE, REJECT, CLOSE
 }

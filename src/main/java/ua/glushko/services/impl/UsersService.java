@@ -2,7 +2,7 @@ package ua.glushko.services.impl;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import ua.glushko.model.dao.GenericDAO;
-import ua.glushko.model.dao.MySQLDAOFactory;
+import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.dao.impl.GrantDAO;
 import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.Grant;
@@ -12,13 +12,13 @@ import ua.glushko.exception.DaoException;
 import ua.glushko.exception.DatabaseException;
 import ua.glushko.exception.ParameterException;
 import ua.glushko.exception.TransactionException;
-import ua.glushko.services.AbstractService;
+import ua.glushko.services.Service;
 import ua.glushko.transaction.TransactionManager;
 
 import java.sql.SQLException;
 import java.util.*;
 
-public class UsersService extends AbstractService {
+public class UsersService extends Service {
 
     private UsersService() {
     }
@@ -27,47 +27,32 @@ public class UsersService extends AbstractService {
         return new UsersService();
     }
 
+    /** List of Users */
     public List<User> getUsersList() throws TransactionException, DatabaseException {
-        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
-        List<User> read;
-        try {
-            TransactionManager.beginTransaction();
-            read = userDao.read();
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
+        return DAOFactory.getFactory().getUserDao().read();
     }
 
-    public List<User> getUsersList(int page, int pagesCount, int rowsPerPage) throws TransactionException, DatabaseException {
-        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
-        int start = (page - 1) * rowsPerPage;
-        int limit = pagesCount * rowsPerPage;
-        List<User> read;
-        try {
-            TransactionManager.beginTransaction();
-            read = userDao.read(start, limit);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
+    /** List of Users with limit */
+    public List<User> getUsersList(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
+        return DAOFactory.getFactory().getUserDao().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 
+    /** List of field names */
     public List<String> getUsersTitles() {
-        return MySQLDAOFactory.getFactory().getUserDao().getTableHead();
+        return DAOFactory.getFactory().getUserDao().getTableHead();
     }
 
+    /** Get User by id */
     public User getUserById(int id) throws DaoException {
-        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        GenericDAO<User> userDao = DAOFactory.getFactory().getUserDao();
         return userDao.read(id);
     }
 
+    /** Update exist user or create new */
     public void updateUser(User user) throws TransactionException, DatabaseException {
         //if (user.getLogin() == null || user.getLogin().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty())
         //    throw new DaoException(MessageManager.getMessage("user.incorrectLoginOrPassword"));
-        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        GenericDAO<User> userDao = DAOFactory.getFactory().getUserDao();
         try {
             TransactionManager.beginTransaction();
             if (user.getId() != null && user.getId() != 0) {
@@ -78,7 +63,7 @@ public class UsersService extends AbstractService {
                 oldUser.setLogin(user.getLogin());
                 oldUser.setPhone(user.getPhone());
                 oldUser.setEmail(user.getEmail());
-                if(user.getPassword()!=null && user.getPassword()!="")
+                if(user.getPassword()!=null && !Objects.equals(user.getPassword(), ""))
                     oldUser.setPassword(DigestUtils.md5Hex(user.getLogin()+user.getPassword()));
                 oldUser.setStatus(user.getStatus());
                 oldUser.setRole(user.getRole());
@@ -92,25 +77,18 @@ public class UsersService extends AbstractService {
         }
     }
 
+    /** Get user by login */
     public User getUserByLogin(String userLogin) throws TransactionException, ParameterException, DatabaseException {
-        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
-        User user;
-        try {
-            TransactionManager.beginTransaction();
-            user = ((UserDAO) userDao).getUserByLogin(userLogin);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return user;
+        return DAOFactory.getFactory().getUserDao().getUserByLogin(userLogin);
     }
 
+    /** Get user Grants */
     public Map<User, List<Grant>> authenticateUser(String login, String password) throws TransactionException, DatabaseException {
         User user;
         Map<User, List<Grant>> userWithGrants = new HashMap<>();
         List<Grant> grants = Collections.emptyList();
-        GenericDAO<User> userDAO = MySQLDAOFactory.getFactory().getUserDao();
-        GenericDAO<Grant> grantDAO = MySQLDAOFactory.getFactory().getGrantDao();
+        GenericDAO<User> userDAO = DAOFactory.getFactory().getUserDao();
+        GenericDAO<Grant> grantDAO = DAOFactory.getFactory().getGrantDao();
         try {
             String m5HexPassword = DigestUtils.md5Hex(login+password);
             TransactionManager.beginTransaction();
@@ -131,9 +109,10 @@ public class UsersService extends AbstractService {
         return userWithGrants;
     }
 
+    /** Register new User */
     public User register(String login, String password, String name, String email, String phone)
             throws TransactionException, ParameterException, DatabaseException {
-        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        GenericDAO<User> userDao = DAOFactory.getFactory().getUserDao();
         User userByLogin = null;
         try {
             userByLogin = ((UserDAO) userDao).getUserByLogin(login);
@@ -163,10 +142,11 @@ public class UsersService extends AbstractService {
         }
     }
 
+    /** Change password */
     public User changePassword(String login, String password)
             throws TransactionException, ParameterException, DatabaseException {
 
-        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        GenericDAO<User> userDao = DAOFactory.getFactory().getUserDao();
         User user;
         try {
             String m5HexPassword = DigestUtils.md5Hex(login+password);
@@ -182,48 +162,24 @@ public class UsersService extends AbstractService {
         return user;
     }
 
+    /** delete exist User */
     public void deleteUser(Integer userId) throws TransactionException, DatabaseException {
-        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
-        try {
-            TransactionManager.beginTransaction();
-            userDao.delete(userId);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
+        delete(DAOFactory.getFactory().getUserDao(),userId);
     }
 
+    /** Total of Users */
     public int count() throws SQLException {
-        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        GenericDAO<User> userDao = DAOFactory.getFactory().getUserDao();
         return userDao.count();
     }
 
     public int count(int id) throws SQLException {
-        GenericDAO<User> userDao = MySQLDAOFactory.getFactory().getUserDao();
+        GenericDAO<User> userDao = DAOFactory.getFactory().getUserDao();
         return ((UserDAO) userDao).count(id);
     }
 
-    public List<User> getUsersAsStuff(UserRole role, boolean flag) throws TransactionException, DatabaseException {
-        List<User> users;
-        try {
-            GenericDAO<User> userDAO = MySQLDAOFactory.getFactory().getUserDao();
-            TransactionManager.beginTransaction();
-            users = ((UserDAO) userDAO).readStuff(role, flag);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        List<User> result = null;
-        if (users != null) {
-            result = new LinkedList<>();
-            for (User item : users) {
-                User tmp = new User();
-                tmp.setId(item.getId());
-                tmp.setName(item.getName());
-                tmp.setRole(item.getRole());
-                result.add(tmp);
-            }
-        }
-        return result;
+    /** List of Stuff Users */
+    public List<User> getUsersByRole(UserRole role, boolean noInvertRole) throws TransactionException, DatabaseException {
+        return (DAOFactory.getFactory().getUserDao()).readByRole(role,noInvertRole);
     }
 }

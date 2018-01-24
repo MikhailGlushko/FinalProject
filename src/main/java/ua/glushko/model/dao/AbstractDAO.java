@@ -18,14 +18,14 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * Create new entity
+     * Create new GenericEntity
      * @param object - Entity
      * @throws DaoException - Exception
      */
     @Override
     public void create(T object) throws DaoException {
         String sql = getCreateQuery();
-        ResultSet generatedKeys = null;
+        ResultSet generatedKeys;
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             prepareStatementForCreate(statement, object);
@@ -60,7 +60,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * Update exist entity
+     * Update exist GenericEntity
      */
     @Override
     public void update(T object) throws DaoException {
@@ -92,7 +92,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * delete exist entity
+     * delete exist GenericEntity
      */
 
     public T delete(int id) throws DaoException {
@@ -119,7 +119,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * Delete exist entity
+     * Delete all exist GenericEntities
      */
     @Override
     public void deleteAll() throws DaoException {
@@ -143,12 +143,11 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * Read entity from database by id
+     * Read GenericEntity from database by id
      */
     public T read(int id) throws DaoException {
-        List<T> list = Collections.emptyList();
-        String sql = getSelectQuery() +
-                " where id=?";
+        List<T> list;
+        String sql = getSelectQueryById();
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             prepareStatementForSelectById(statement, id);
@@ -179,10 +178,10 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * Get list by name
+     * Get list of GenericEntities by name
      */
     public List<T> read(String name) throws DaoException {
-        List<T> list = Collections.emptyList();
+        List<T> list;
         String sql = getSelectQuery() +
                 " where name=?";
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -205,10 +204,10 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * Get list of all entities
+     * Get list of all GenericEntities
      */
     public List<T> read() throws DaoException {
-        List<T> list = Collections.emptyList();
+        List<T> list;
         String sql = getSelectQuery();
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
@@ -222,14 +221,14 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     }
 
     /**
-     * Get list of limited entities
+     * Get list of limited GenericEntities
      * @param start - start
      * @param limit - limit
      * @return list of Entities
      * @throws DaoException - exception
      */
     public List<T> read(int start, int limit) throws DaoException {
-        List<T> list = Collections.emptyList();
+        List<T> list;
         String sql = getSelectQuery(start, limit);
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
@@ -252,7 +251,13 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
                 " from " + getTableName();
     }
 
-    private String getSelectQuery(int from, int limit) {
+    protected String getSelectQueryById() {
+        return "select id, " + getFieldList() +
+                " from " + getTableName() +
+                " where id =?";
+    }
+
+    protected String getSelectQuery(int from, int limit) {
         return "select id, " + getFieldList() +
                 " from " + getTableName() +
                 " limit ?,? ";

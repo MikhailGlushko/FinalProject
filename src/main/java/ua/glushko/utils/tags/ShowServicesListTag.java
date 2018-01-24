@@ -13,14 +13,14 @@ import static ua.glushko.commands.Command.PARAM_PAGE;
 public class ShowServicesListTag extends ShowListTag {
     public void makeBody(List<Object> list, StringBuilder builder, Integer rowsCount) {
         // build bode if table
-        String command = null;
+        String command;
         Object attribute = pageContext.getRequest().getAttribute(PARAM_COMMAND);
         if (Objects.nonNull(attribute))
             command = (String) attribute;
         else
             command = pageContext.getRequest().getParameter(PARAM_COMMAND);
 
-        Integer page = null;
+        Integer page;
         attribute = pageContext.getRequest().getAttribute(PARAM_PAGE);
         if(Objects.nonNull(attribute))
             page = (Integer)attribute;

@@ -37,7 +37,7 @@
             </div>
             <div class="login_div" align="center">
                 <h2 class="form-signin-heading"><fmt:message key="app.welcome.pleaseregister"/></h2>
-                <form class="form-signin" name="register" method="post" action="/do">
+                <form class="form-signin" name="register" method="post" action="<c:url value="/do"/>">
                     <input type="hidden" name="command" value="register"/>
                     <div class="input-row">
                         <div class="form-group">

@@ -49,7 +49,7 @@ public class Validator {
     /** Check UserLogin */
     public static boolean validateLogin(String login) {
         String pattern = "^[a-zA-Z]+([a-zA-Z0-9-._]){7,}";
-        return Objects.nonNull(login) && (!isEmailValidation || login.matches(pattern));
+        return Objects.nonNull(login) && (!isLoginValidation || login.matches(pattern));
     }
 
     /** Check UserPassword */
@@ -149,18 +149,12 @@ public class Validator {
             throw new ParameterException("user.id.not.present");
         if(Objects.isNull(userLogin) || userLogin.isEmpty())
             throw new ParameterException("user.login.not.present");
-        //if(Objects.isNull(userPassword) || userPassword.isEmpty())
-        //    throw new ParameterException("user.password.not.present");
-        //if(Objects.isNull(userPassword2) || userPassword2.isEmpty() || !userPassword2.equals(userPassword))
-        //    throw new ParameterException("user.password.not.match");
         if(Objects.isNull(userName) || userName.isEmpty())
             throw new ParameterException("user.name.not.present");
         if(Objects.isNull(userEmail) || userEmail.isEmpty())
             throw new ParameterException("user.email.not.present");
         if(Objects.isNull(userPhone) || userPhone.isEmpty())
             throw new ParameterException("user.phone.not.present");
-        //if(!Validator.validatePassword(userPassword))
-        //    throw new ParameterException("user.password.incorrect");
         if(!Validator.validateEmail(userEmail))
             throw new ParameterException("user.email.incorrect");
         if(!Validator.validatePhone(userPhone))

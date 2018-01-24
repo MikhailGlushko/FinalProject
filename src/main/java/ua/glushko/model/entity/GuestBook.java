@@ -3,14 +3,12 @@ package ua.glushko.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * GuestBook
- */
+/** GuestBook */
 public class GuestBook implements GenericEntity, Serializable{
     private int id;
     private int orderId;
     private String userName;
-    private String decription;
+    private String description;
     private Date actionDate;
     private String memo;
 
@@ -32,11 +30,11 @@ public class GuestBook implements GenericEntity, Serializable{
     }
 
         public String getDescription() {
-        return decription;
+        return description;
     }
 
-    public void setDescription(String decription) {
-        this.decription = decription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getActionDate() {
@@ -69,7 +67,7 @@ public class GuestBook implements GenericEntity, Serializable{
                 "id=" + id +
                 ", orderId=" + orderId +
                 ", userName='" + userName + '\'' +
-                ", description='" + decription + '\'' +
+                ", description='" + description + '\'' +
                 ", actionDate=" + actionDate +
                 ", memo='" + memo + '\'' +
                 '}';

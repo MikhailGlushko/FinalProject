@@ -50,8 +50,10 @@ public class OrdersListCommand implements Command {
             LOGGER.debug(e);
         }
         List<Order> items = null;
+        List<Order> itemsS = null;
         if ((access & R) == R) {
             items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount);
+            itemsS = ordersService.getOrderListByStatus(pageNumber, pagesCount, rowsCount);
         } else if ((access & Authentication.r) == Authentication.r) {
             items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount, userId);
         }
@@ -61,6 +63,7 @@ public class OrdersListCommand implements Command {
         count = (count % rowsCount != 0) ? count / rowsCount + 1 : count / rowsCount;
         request.setAttribute(PARAM_ORDERS_LIST_TITLE, titles);
         request.setAttribute(PARAM_ORDERS_LIST, items);
+        request.setAttribute(PARAM_ORDERS_SLIST, itemsS);
         request.setAttribute(PARAM_LAST_PAGE, count);
         request.setAttribute(PARAM_ORDERS_COUNT_NEW,countNew);
         request.setAttribute(PARAM_PAGES_COUNT, pagesCount);

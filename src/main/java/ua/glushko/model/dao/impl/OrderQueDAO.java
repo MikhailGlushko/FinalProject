@@ -2,7 +2,6 @@ package ua.glushko.model.dao.impl;
 
 import ua.glushko.exception.DaoException;
 import ua.glushko.model.dao.AbstractDAO;
-import ua.glushko.model.entity.GuestBook;
 import ua.glushko.model.entity.OrderQue;
 import ua.glushko.model.entity.UserRole;
 import ua.glushko.transaction.ConnectionWrapper;
@@ -44,14 +43,13 @@ public class OrderQueDAO extends AbstractDAO<OrderQue> {
 
     @Override
     protected String getFieldList() {
-        StringBuilder builder = new StringBuilder();
-        return builder
-                .append(NAME_FIELD_ORDER_ID).append(",")
-                .append(NAME_FIELD_ROLE).append(",")
-                .append(NAME_FIELD_EMPLOYEE_ID).append(",")
-                .append(NAME_FIELD_CREATE).append(",")
-                .append(NAME_FIELD_CLOSE).append(",")
-                .append(NAME_FIELD_MESSAGE).toString();
+        String builder = NAME_FIELD_ORDER_ID + "," +
+                NAME_FIELD_ROLE + "," +
+                NAME_FIELD_EMPLOYEE_ID + "," +
+                NAME_FIELD_CREATE + "," +
+                NAME_FIELD_CLOSE + "," +
+                NAME_FIELD_MESSAGE;
+        return builder;
     }
 
     @Override
@@ -113,42 +111,14 @@ public class OrderQueDAO extends AbstractDAO<OrderQue> {
     @Override
     protected String getSelectQuery() {
         return "select id, " + getFieldList() +
-                " from " + getTableName();
+                " from " + getTableName()+
+                " order by id desc";
     }
 
-    public List<OrderQue> read() throws DaoException {
-        List<OrderQue> list = Collections.emptyList();
-        String sql = getSelectQuery()+" order by id desc";
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            ResultSet resultSet = statement.executeQuery();
-            setTitles(statement.getMetaData());
-            list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return list;
-    }
-
-    private String getSelectQuery(int from, int limit) {
+    protected String getSelectQuery(int from, int limit) {
         return "select id, " + getFieldList() +
                 " from " + getTableName() +
                 " order by id desc limit ?,? ";
     }
 
-    public List<OrderQue> read(int start, int limit) throws DaoException {
-        List<OrderQue> list = Collections.emptyList();
-        String sql = getSelectQuery(start, limit);
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            statement.setInt(1, start);
-            statement.setInt(2, limit);
-            ResultSet resultSet = statement.executeQuery();
-            setTitles(resultSet.getMetaData());
-            list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return list;
-    }
 }

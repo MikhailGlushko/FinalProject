@@ -29,7 +29,7 @@
         <c:if test="${empty user_login}">
             <div class="login_div" align="center">
                 <h2 class="form-signin-heading"><fmt:message key="app.welcome.pleaseLogin"/></h2>
-                <form class="form-signin" name="loginForm" method="post" action="/do">
+                <form class="form-signin" name="loginForm" method="post" action="<c:url value="/do"/>">
                     <input type="hidden" name="command" value="login"/>
                     <div class="input-row">
                         <div class="input-field">

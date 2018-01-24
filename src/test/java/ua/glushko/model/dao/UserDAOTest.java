@@ -33,7 +33,7 @@ public class UserDAOTest {
     @Before
     public void init() {
             ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
-            userDAO = MySQLDAOFactory.getFactory().getUserDao();
+            userDAO = DAOFactory.getFactory().getUserDao();
     }
 
     @Test
@@ -107,7 +107,7 @@ public class UserDAOTest {
     @Test
     public void createNewUserWithoutCommit() throws TransactionException, SQLException {
         try {
-            userDAO = MySQLDAOFactory.getFactory().getUserDao();
+            userDAO = DAOFactory.getFactory().getUserDao();
             assertNotNull(userDAO);
             //создаем нового пользователя
             TransactionManager.beginTransaction();
@@ -137,7 +137,7 @@ public class UserDAOTest {
     @Test
     public void createNewUserWithCommit() throws TransactionException, SQLException {
         try {
-            userDAO = MySQLDAOFactory.getFactory().getUserDao();
+            userDAO = DAOFactory.getFactory().getUserDao();
             assertNotNull(userDAO);
             //создаем нового пользователя
             TransactionManager.beginTransaction();
@@ -168,7 +168,7 @@ public class UserDAOTest {
     @Test
     public void updateExistUser() {
         try {
-            userDAO = MySQLDAOFactory.getFactory().getUserDao();
+            userDAO = DAOFactory.getFactory().getUserDao();
             TransactionManager.beginTransaction();
             User u1 = userDAO.read(1);
             u1.setName(u1.getName() + u1.getId());
@@ -188,7 +188,7 @@ public class UserDAOTest {
     @Test(expected = DaoException.class)
     public void updateNoExistUser() throws SQLException {
         try {
-            userDAO = MySQLDAOFactory.getFactory().getUserDao();
+            userDAO = DAOFactory.getFactory().getUserDao();
             Integer count = userDAO.count();
             User u1 = userDAO.read(1);
             u1.setName(u1.getName() + u1.getId());
@@ -235,7 +235,7 @@ public class UserDAOTest {
     @Test
     public void deleteAll() {
         try {
-            userDAO = MySQLDAOFactory.getFactory().getUserDao();
+            userDAO = DAOFactory.getFactory().getUserDao();
             TransactionManager.beginTransaction();
             List<User> list = userDAO.read();
             assertNotNull(list);
@@ -256,7 +256,7 @@ public class UserDAOTest {
     public void deleteOneRollBack() {
         try {
             TransactionManager.beginTransaction();
-            userDAO = MySQLDAOFactory.getFactory().getUserDao();
+            userDAO = DAOFactory.getFactory().getUserDao();
             List<User> read1 = userDAO.read();
             // удаляем пользователя с ключом 1
             User u = userDAO.delete(1);
@@ -297,7 +297,7 @@ public class UserDAOTest {
                     // и пробуем прочитать те же данные
                     try {
                         Thread.sleep(100);
-                        GenericDAO<User> userDAO = MySQLDAOFactory.getFactory().getUserDao();
+                        GenericDAO<User> userDAO = DAOFactory.getFactory().getUserDao();
                         List<User> read3 = userDAO.read();
                         Thread.sleep(100);
                     } catch (DaoException e) {
@@ -321,22 +321,22 @@ public class UserDAOTest {
 
     @Test
     public void count() throws SQLException {
-        userDAO = MySQLDAOFactory.getFactory().getUserDao();
+        userDAO = DAOFactory.getFactory().getUserDao();
         Integer count = userDAO.count();
         assertNotNull(count);
     }
 
     @Test
     public void getAdmins() throws DaoException {
-        userDAO = MySQLDAOFactory.getFactory().getUserDao();
-        List<User> users = ((UserDAO) userDAO).readStuff(UserRole.ADMIN, true);
+        userDAO = DAOFactory.getFactory().getUserDao();
+        List<User> users = ((UserDAO) userDAO).readByRole(UserRole.ADMIN, true);
         assertTrue(users.size()==1);
     }
 
     @Test
     public void getStuff() throws DaoException {
-        userDAO = MySQLDAOFactory.getFactory().getUserDao();
-        List<User> users = ((UserDAO) userDAO).readStuff(UserRole.CUSTOMER, false);
+        userDAO = DAOFactory.getFactory().getUserDao();
+        List<User> users = ((UserDAO) userDAO).readByRole(UserRole.CUSTOMER, false);
         assertTrue(users.size()!=1);
     }
 }

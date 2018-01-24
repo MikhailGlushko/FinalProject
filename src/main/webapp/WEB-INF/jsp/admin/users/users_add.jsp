@@ -29,7 +29,7 @@
         </div>
         <div class="login_div" align="center">
             <p class="title"><fmt:message key="app.welcome.pleaseregister"/></p>
-            <form class="form-signin" name="register" method="post" action="/do">
+            <form class="form-signin" name="register" method="post" action="<c:url value="/do"/>">
                 <input type="hidden" name="command" value="users_action"/>
                 <input type="hidden" name="page" value="${param.last_page}">
                 <div class="row">

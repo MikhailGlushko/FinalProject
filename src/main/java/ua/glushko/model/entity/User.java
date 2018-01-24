@@ -3,9 +3,7 @@ package ua.glushko.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Users
- */
+/** Users */
 public class User implements GenericEntity, Cloneable, Serializable {
 
     private int id;

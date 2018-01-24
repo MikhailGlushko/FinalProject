@@ -23,9 +23,9 @@ public class ShowOrdersHistoryListTag extends ShowListTag {
             StringBuilder builder = new StringBuilder();
 
             String property;
-            Integer pagesCount = null;
-            Integer rowsCount = null;
-            Integer page      = null;
+            Integer pagesCount;
+            Integer rowsCount;
+            Integer page;
             try {
                 property = ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT);
                 pagesCount = Integer.valueOf(property);

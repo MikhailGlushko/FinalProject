@@ -28,7 +28,7 @@
         <jsp:include page="../../../jsp/mainmenu.jspx"/>
         <c:if test="${not empty orders_detail}">
             <div class="login_div" align="center" style="width: 550px; display: table-cell">
-                <form name="edit" method="post" action="/do">
+                <form name="edit" method="post" action="<c:url value="/do"/>">
                     <input type="hidden" name="command" value="orders_action"/>
                     <input type="hidden" name="order_id" value="${orders_detail.id}"/>
                     <input type="hidden" name="page" value="${param.page}"/>
@@ -182,7 +182,7 @@
 
 
             <div class="login_div" align="center" style="width: 500px; display: table-cell">
-                <form name="change" method="post" action="/do">
+                <form name="change" method="post" action="<c:url value="/do"/>">
                     <input type="hidden" name="command" value="history_action"/>
                     <input type="hidden" name="order_id" value="${orders_detail.id}"/>
                     <input type="hidden" name="user_id" value="${userId}"/>

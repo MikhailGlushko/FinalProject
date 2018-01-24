@@ -22,7 +22,7 @@ public class GrantDAOTest {
     @Before
     public void init() {
             ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
-            grantDAO = MySQLDAOFactory.getFactory().getGrantDao();
+            grantDAO = DAOFactory.getFactory().getGrantDao();
     }
 
     @Test(expected = UnsupportedOperationException.class)

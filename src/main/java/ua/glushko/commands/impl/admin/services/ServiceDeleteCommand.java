@@ -30,7 +30,7 @@ public class ServiceDeleteCommand implements Command {
     }
 
     private void deleteUserDataFromDatabase(HttpServletRequest request) throws TransactionException, DatabaseException {
-        Integer Id = null;
+        Integer Id;
         RepairService repairService = null;
         try {
             int access = Authentication.checkAccess(request);

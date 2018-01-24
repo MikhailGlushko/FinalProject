@@ -42,6 +42,7 @@
                 <br/>
             </c:if>
             <customtags:ShowOrdersList head="${orders_list_head}" list="${orders_list}"/>
+            <%--<customtags:ShowOrdersTable head="${orders_list_head}" list="${orders_slist}"/>--%>
             <br/>
         </c:if>
         <hr/>

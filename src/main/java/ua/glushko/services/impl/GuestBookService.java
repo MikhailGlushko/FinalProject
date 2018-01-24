@@ -1,18 +1,18 @@
 package ua.glushko.services.impl;
 
-import ua.glushko.model.dao.MySQLDAOFactory;
+import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.dao.impl.GuestBookDAO;
 import ua.glushko.model.entity.GuestBook;
 import ua.glushko.exception.DaoException;
 import ua.glushko.exception.DatabaseException;
 import ua.glushko.exception.TransactionException;
-import ua.glushko.services.AbstractService;
+import ua.glushko.services.Service;
 import ua.glushko.transaction.TransactionManager;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class GuestBookService extends AbstractService {
+public class GuestBookService extends Service {
 
     private GuestBookService() {
     }
@@ -21,55 +21,43 @@ public class GuestBookService extends AbstractService {
         return new GuestBookService();
     }
 
-    public List<GuestBook> getGuestBookList() throws TransactionException, DatabaseException {
-        GuestBookDAO guestBookDAO = MySQLDAOFactory.getFactory().getGuestBookDAO();
-        List<GuestBook> read;
-        try{
-            TransactionManager.beginTransaction();
-            read = guestBookDAO.read();
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
+    /** List of all GuestBooks*/
+    public List<GuestBook> getGuestBookList() throws DatabaseException {
+        return DAOFactory.getFactory().getGuestBookDAO().read();
     }
 
-    public List<GuestBook> getGuestBookList(int page, int pagesCount, int rowsPerPage) throws TransactionException, DatabaseException {
-        GuestBookDAO guestBookDAO = MySQLDAOFactory.getFactory().getGuestBookDAO();
-        int start = (page - 1) * rowsPerPage;
-        int limit = pagesCount * rowsPerPage;
-        List<GuestBook> read;
-        try {
-            TransactionManager.beginTransaction();
-            read = guestBookDAO.read(start, limit);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
+    /** List of GuestBook with limit*/
+    public List<GuestBook> getGuestBookList(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
+        return DAOFactory.getFactory().getGuestBookDAO().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 
+    /** List of field names*/
     public List<String> getGuestBookTitles() {
-        return  MySQLDAOFactory.getFactory().getGuestBookDAO().getTableHead();
+        return  DAOFactory.getFactory().getGuestBookDAO().getTableHead();
     }
 
+    /** Get GuestBook by id */
     public GuestBook getGuestBookById(int id) throws DaoException {
-        return getById(MySQLDAOFactory.getFactory().getGuestBookDAO(),id);
+        return getById(DAOFactory.getFactory().getGuestBookDAO(),id);
     }
 
+    /** Update exist GuestBook or create new*/
     public void updateGuestBook(GuestBook item) throws TransactionException, DatabaseException {
-        update(MySQLDAOFactory.getFactory().getGuestBookDAO(),item);
+        update(DAOFactory.getFactory().getGuestBookDAO(),item);
     }
 
+    /** Delete exist GuestBook */
     public void deleteGuestBook(Integer serviceId) throws TransactionException, DatabaseException {
-        delete(MySQLDAOFactory.getFactory().getGuestBookDAO(),serviceId);
+        delete(DAOFactory.getFactory().getGuestBookDAO(),serviceId);
     }
 
+    /** get total of GuestBooks */
     public int count() throws SQLException, TransactionException {
-        return this.count(MySQLDAOFactory.getFactory().getGuestBookDAO());
+        return this.count(DAOFactory.getFactory().getGuestBookDAO());
     }
 
+    /** Get total of GuestBook*/
     public int count(int id) throws SQLException, TransactionException {
-        return this.count(MySQLDAOFactory.getFactory().getGuestBookDAO(),id);
+        return this.count(DAOFactory.getFactory().getGuestBookDAO(),id);
     }
 }

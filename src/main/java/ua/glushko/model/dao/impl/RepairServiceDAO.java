@@ -37,11 +37,10 @@ public class RepairServiceDAO extends AbstractDAO<RepairService> {
 
     @Override
     protected String getFieldList() {
-        StringBuilder builder = new StringBuilder();
-        return builder
-                .append(NAME_FIELD_NAME).append(",")
-                .append(NAME_FIELD_NAME_RU).append(",")
-                .append(NAME_FIELD_PARENT).toString();
+        String builder = NAME_FIELD_NAME + "," +
+                NAME_FIELD_NAME_RU + "," +
+                NAME_FIELD_PARENT;
+        return builder;
     }
 
     @Override

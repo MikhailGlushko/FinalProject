@@ -1,8 +1,6 @@
 package ua.glushko.model.entity;
 
-/**
- * Scope of grants
- */
+/** Scope of grants */
 public enum Scope {
     ALL, OWNER, NONE
 }

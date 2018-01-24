@@ -28,7 +28,7 @@
         <c:if test="${empty user_login}">
             <div class="login_div" align="center">
                 <h2 class="form-signin-heading"><fmt:message key="app.welcome.pleaseLogin"/></h2>
-                <form name="recoveryForm" method="post" action="/MailServlet" class="form-signin">
+                <form name="recoveryForm" method="post" action="<c:url value="/MailServlet"/>" class="form-signin">
                     <input type="hidden" name="command" value="recovery"/>
                     <div class="input-row">
                         <div class="input-field">

@@ -22,7 +22,7 @@ import static ua.glushko.commands.CommandFactory.*;
 public class OrderHistoryActionCRUDCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-        String page = null;
+        String page;
         String action = request.getParameter("order_change_action");
         switch (action) {
             case "CHANGE_EMPLOYEE":

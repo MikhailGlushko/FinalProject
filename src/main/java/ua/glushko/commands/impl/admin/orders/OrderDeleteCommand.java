@@ -30,7 +30,7 @@ public class OrderDeleteCommand implements Command {
     }
 
     private void deleteOrderDataFromDatabase(HttpServletRequest request) throws TransactionException, DatabaseException {
-        Integer Id = null;
+        Integer Id;
         Order order = null;
         try {
             int access = Authentication.checkAccess(request);

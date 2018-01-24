@@ -1,12 +1,12 @@
 package ua.glushko.services.impl;
 
-import ua.glushko.model.dao.MySQLDAOFactory;
+import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.dao.impl.*;
 import ua.glushko.model.entity.*;
 import ua.glushko.exception.DaoException;
 import ua.glushko.exception.DatabaseException;
 import ua.glushko.exception.TransactionException;
-import ua.glushko.services.AbstractService;
+import ua.glushko.services.Service;
 import ua.glushko.transaction.TransactionManager;
 
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class OrdersHistoryService extends AbstractService {
+public class OrdersHistoryService extends Service {
 
     private OrdersHistoryService() {
     }
@@ -25,61 +25,32 @@ public class OrdersHistoryService extends AbstractService {
         return new OrdersHistoryService();
     }
 
-    public List<OrderHistory> getOrderHistoryList() throws TransactionException, DatabaseException {
-        OrderHistoryDAO orderHistoryDAO = MySQLDAOFactory.getFactory().getOrderHistoryDAO();
-        List<OrderHistory> read;
-        try{
-            TransactionManager.beginTransaction();
-            read = orderHistoryDAO.read();
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
-
+    /** List of Order History */
+    public List<OrderHistory> getOrderHistoryList() throws DatabaseException {
+        return DAOFactory.getFactory().getOrderHistoryDAO().read();
     }
 
-    public List<OrderHistory> getOrderHistoryList(int page, int pagesCount, int rowsPerPage) throws TransactionException, DatabaseException {
-        OrderHistoryDAO orderHistoryDAO = MySQLDAOFactory.getFactory().getOrderHistoryDAO();
-        int start = (page - 1) * rowsPerPage;
-        int limit = pagesCount * rowsPerPage;
-        List<OrderHistory> read;
-        try {
-            TransactionManager.beginTransaction();
-            read = orderHistoryDAO.read(start, limit);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
-
+    /** List of Order History with limit */
+    public List<OrderHistory> getOrderHistoryList(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
+        return DAOFactory.getFactory().getOrderHistoryDAO().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 
-    public List<OrderHistory> getOrderHistoryList(int page, int pagesCount, int rowsPerPage, Integer id) throws TransactionException, DatabaseException {
-
-        OrderHistoryDAO orderHistoryDAO = MySQLDAOFactory.getFactory().getOrderHistoryDAO();
-
-        int start = (page - 1) * rowsPerPage;
-        int limit = pagesCount * rowsPerPage;
-        List<OrderHistory> read;
-        try {
-            TransactionManager.beginTransaction();
-            read = orderHistoryDAO.read(start, limit,id);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
+    /** List of Order History for orderId with limit */
+    public List<OrderHistory> getOrderHistoryList(int page, int pagesCount, int rowsPerPage, Integer orderId) throws DatabaseException {
+        return DAOFactory.getFactory().getOrderHistoryDAO().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage,orderId);
     }
 
+    /** List of field names */
     public List<String> getOrderHistoryTitles() {
-        return MySQLDAOFactory.getFactory().getOrderHistoryDAO().getTableHead();
+        return DAOFactory.getFactory().getOrderHistoryDAO().getTableHead();
     }
 
+    /** Get Order History by id */
     public OrderHistory getOrderHistoryById(int id) throws DaoException {
-        return getById(MySQLDAOFactory.getFactory().getOrderHistoryDAO(), id);
+        return getById(DAOFactory.getFactory().getOrderHistoryDAO(), id);
     }
 
+    /** Update exist Order History or create new */
     public void updateOrderHistory(OrderHistory orderHistory) throws TransactionException, ParseException, DatabaseException {
         try {
             OrderDAO orderDAO = OrderDAO.getInstance();
@@ -184,15 +155,18 @@ public class OrdersHistoryService extends AbstractService {
         }
     }
 
+    /** Delete exist Order History */
     public void deleteOrder(Integer serviceId) throws TransactionException, DatabaseException {
-        delete(MySQLDAOFactory.getFactory().getOrderHistoryDAO(), serviceId);
+        delete(DAOFactory.getFactory().getOrderHistoryDAO(), serviceId);
     }
 
+    /** Total of Order History*/
     public int count() throws SQLException, TransactionException {
-        return this.count(MySQLDAOFactory.getFactory().getOrderHistoryDAO());
+        return this.count(DAOFactory.getFactory().getOrderHistoryDAO());
     }
 
-    public int count(int id) throws SQLException, TransactionException {
-        return this.count(MySQLDAOFactory.getFactory().getOrderHistoryDAO(), id);
+    /** Total of Order History by orderId*/
+    public int count(int orderId) throws SQLException, TransactionException {
+        return this.count(DAOFactory.getFactory().getOrderHistoryDAO(), orderId);
     }
 }

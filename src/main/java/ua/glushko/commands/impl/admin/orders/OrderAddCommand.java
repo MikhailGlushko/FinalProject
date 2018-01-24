@@ -51,7 +51,6 @@ public class OrderAddCommand implements Command {
         } catch (Exception e) {
             LOGGER.error(e);
         }
-
         // forward to the form to create new request
         String page = ConfigurationManager.getProperty(OrdersCommandHelper.PATH_PAGE_ORDERS_ADD);
         return new CommandRouter(request, response, page);

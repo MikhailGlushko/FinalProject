@@ -35,9 +35,9 @@ abstract class ShowListTag extends TagSupport {
             StringBuilder builder = new StringBuilder();
 
             String property;
-            Integer pagesCount = null;
-            Integer rowsCount = null;
-            Integer page      = null;
+            Integer pagesCount;
+            Integer rowsCount;
+            Integer page;
             try {
                 property = ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT);
                 pagesCount = Integer.valueOf(property);
@@ -49,7 +49,7 @@ abstract class ShowListTag extends TagSupport {
             }
 
             if (pageContext.getRequest().getParameter(PARAM_PAGE) != null
-                    && pageContext.getRequest().getParameter(PARAM_PAGE)!=""
+                    && !Objects.equals(pageContext.getRequest().getParameter(PARAM_PAGE), "")
                     && !pageContext.getRequest().getParameter(PARAM_PAGE).equals("null"))
                 page = Integer.valueOf(pageContext.getRequest().getParameter(PARAM_PAGE));
             else

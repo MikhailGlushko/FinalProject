@@ -5,17 +5,22 @@ import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.entity.GuestBook;
 import ua.glushko.model.entity.News;
+import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.model.entity.RepairService;
 import ua.glushko.services.impl.GuestBookService;
 import ua.glushko.services.impl.NewsService;
+import ua.glushko.services.impl.OrdersService;
 import ua.glushko.services.impl.RepairServicesService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PARAM_GUEST_BOOKS_LIST;
 import static ua.glushko.commands.impl.admin.news.NewsCommandHelper.PARAM_GUEST_NEWS_LIST;
+import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDERS_STAT_NEW;
+import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDERS_STAT_TOTAL;
 import static ua.glushko.commands.impl.admin.services.ServicesCommandHelper.PARAM_SERVICE_LIST;
 
 public class WelcomeCommand implements Command {
@@ -36,6 +41,11 @@ public class WelcomeCommand implements Command {
             List<RepairService> repairServiceList = repairServicesService.getRepairServiceList();
             request.setAttribute(PARAM_SERVICE_LIST,repairServiceList);
 
+            OrdersService ordersService = OrdersService.getService();
+            Map<OrderStatus, Integer> totalsCount = ordersService.getTotalsByStatus();
+            Map<OrderStatus, Integer> newCount = ordersService.getNewByStatus();
+            request.setAttribute(PARAM_ORDERS_STAT_TOTAL, totalsCount);
+            request.setAttribute(PARAM_ORDERS_STAT_NEW, newCount);
         } catch (Exception e) {
             LOGGER.error(e);
         }

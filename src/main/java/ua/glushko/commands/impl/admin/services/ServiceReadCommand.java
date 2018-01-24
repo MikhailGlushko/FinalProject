@@ -30,7 +30,7 @@ public class ServiceReadCommand implements Command {
         return new CommandRouter(request, response, page);
     }
 
-    private void storeRepairServiceDetailToSession(HttpServletRequest request) throws DaoException, TransactionException, ParameterException {
+    private void storeRepairServiceDetailToSession(HttpServletRequest request) throws DaoException, ParameterException {
         int access = Authentication.checkAccess(request);
         int id=0;
         try {

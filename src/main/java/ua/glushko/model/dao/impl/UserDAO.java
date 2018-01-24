@@ -45,16 +45,15 @@ public class UserDAO extends AbstractDAO<User> {
 
     @Override
     protected String getFieldList() {
-        StringBuilder builder = new StringBuilder();
-        return builder
-                .append(NAME_FIELD_ROLE).append(",")
-                .append(NAME_FIELD_NAME).append(",")
-                .append(NAME_FIELD_LOGIN).append(",")
-                .append(NAME_FIELD_PASSWORD).append(",")
-                .append(NAME_FIELD_EMAIL).append(",")
-                .append(NAME_FIELD_PHONE).append(",")
-                .append(NAME_FIELD_STATUS).append(",")
-                .append(NAME_FIELD_LAST_LOGIN).toString();
+        String builder = NAME_FIELD_ROLE + "," +
+                NAME_FIELD_NAME + "," +
+                NAME_FIELD_LOGIN + "," +
+                NAME_FIELD_PASSWORD + "," +
+                NAME_FIELD_EMAIL + "," +
+                NAME_FIELD_PHONE + "," +
+                NAME_FIELD_STATUS + "," +
+                NAME_FIELD_LAST_LOGIN;
+        return builder;
     }
 
     @Override
@@ -107,8 +106,8 @@ public class UserDAO extends AbstractDAO<User> {
     public User checkUserAuth(String login, String pass) throws DaoException {
         String sql = getSelectQuery() +
                 " where login=? and password=?";
-        List<User> users = Collections.emptyList();
-        ResultSet resultSet = null;
+        List<User> users;
+        ResultSet resultSet;
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             statement.setString(1, login);
@@ -129,8 +128,8 @@ public class UserDAO extends AbstractDAO<User> {
             throw new ParameterException("login is null");
         String sql = getSelectQuery() +
                 " where login=?";
-        List<User> users = Collections.emptyList();
-        ResultSet resultSet = null;
+        List<User> users;
+        ResultSet resultSet;
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             statement.setString(1, login);
@@ -144,7 +143,7 @@ public class UserDAO extends AbstractDAO<User> {
         return users.iterator().next();
     }
 
-    public List<User> readStuff(UserRole  role, boolean flag) throws DaoException {
+    public List<User> readByRole(UserRole  role, boolean flag) throws DaoException {
         String sql;
         if(flag)
             sql = getSelectQuery() +" where role=?";

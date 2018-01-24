@@ -28,7 +28,7 @@
         <BR>
         <p>&nbsp;</p>
         <div class="login_div" align="center">
-            <form name="edit" method="post" action="/do">
+            <form name="edit" method="post" action="<c:url value="/do"/>">
                 <input type="hidden" name="command" value="orders_action"/>
                 <div class="input-row">
                     <div class="input-field">

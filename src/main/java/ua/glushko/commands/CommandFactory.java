@@ -28,7 +28,7 @@ public class CommandFactory {
     public static final String COMMAND_USERS = "users";
     public static final String COMMAND_USERS_READ = "users_detail";
     private static final String COMMAND_USERS_ACTION_CRUD = "users_action";
-    public static final String COMMAND_USERS_ADD = "users_add";
+    private static final String COMMAND_USERS_ADD = "users_add";
     public static final String COMMAND_USERS_UPDATE = "users_update";
     public static final String COMMAND_USERS_DELETE = "users_delete";
     public static final String COMMAND_USERS_CREATE = "users_create";
@@ -48,7 +48,7 @@ public class CommandFactory {
     public static final String COMMAND_ORDER_UPDATE = "orders_update";
     public static final String COMMAND_ORDER_DELETE = "orders_delete";
     public static final String COMMAND_ORDER_CREATE = "orders_create";
-    public static final String COMMAND_ORDER_TAKE = "orders_take";
+    private static final String COMMAND_ORDER_TAKE = "orders_take";
     // for requests history
     private static final String COMMAND_HISTORY_ACTION_CRUD = "history_action";
     public static final String COMMAND_HISTORY_CHANGE_EMPLOYEE = "history_change_employee";
@@ -60,7 +60,7 @@ public class CommandFactory {
 
     // for guest book
     public static final String COMMAND_GUEST_BOOK = "guestbook";
-    public static final String COMMAND_GUEST_BOOK_NEW = "gestbook_new";
+    private static final String COMMAND_GUEST_BOOK_NEW = "gestbook_new";
 
     private static final String COMMAND_SETUP = "setup";
     private static final String COMMAND_SETUP_SAVE = "setup_save";

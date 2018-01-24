@@ -21,9 +21,9 @@ import static ua.glushko.services.utils.Validator.getValidatedUserBeforeSetup;
 public class SetupSaveCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-        String page = null;
+        String page;
         String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
-        User userNew = new User();
+        User userNew;
         try {
             userNew = getValidatedUserBeforeSetup(request);
             UsersService usersService = UsersService.getService();

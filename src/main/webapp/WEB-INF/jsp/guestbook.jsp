@@ -34,7 +34,7 @@
         <fmt:message key="guestbook.title"/>:<br/><br/>
         <c:if test="${role=='CUSTOMER'}">
             <div class="login_div" align="center">
-                <form name="new" method="post" action="/do">
+                <form name="new" method="post" action="<c:url value="/do"/>">
                     <input type="hidden" name="command" value="gestbook_new">
                     <legend>Новое сообщение</legend>
                     <div class="row">
