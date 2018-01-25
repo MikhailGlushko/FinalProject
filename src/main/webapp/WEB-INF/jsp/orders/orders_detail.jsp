@@ -27,152 +27,168 @@
         <jsp:include page="../../../jsp/header.jspx"/>
         <jsp:include page="../../../jsp/mainmenu.jspx"/>
         <c:if test="${not empty orders_detail}">
+            <br/>
             <div class="login_div" align="center" style="width: 550px; display: table-cell">
                 <form name="edit" method="post" action="<c:url value="/do"/>">
                     <input type="hidden" name="command" value="orders_action"/>
                     <input type="hidden" name="order_id" value="${orders_detail.id}"/>
                     <input type="hidden" name="page" value="${param.page}"/>
                     <c:if test="${role =='ADMIN'}">
-                        <div class="input-row">
-                            <div class="input-field">
-                                <select id="order_repair_service" name="order_repair_service"
+                        <div class="row" style="width: 100%">
+                            <div class="form-group">
+                                <label for="order_repair_service" style="float: left"><fmt:message
+                                        key="order.repair.service"/><em>*</em></label>
+                                <select class="input-sm" style="float: right" id="order_repair_service"
+                                        name="order_repair_service"
                                         value="${orders_detail.repairService}" required>
                                     <customtags:OptGoup list="${services_list}" value="${orders_detail.repairService}"/>
                                 </select>
-                                <label for="order_repair_service"><fmt:message key="order.repair.service"/><em>*</em></label>
                             </div>
                         </div>
                     </c:if>
-                    <div class="input-row">
-                        <div class="input-field">
-                            <select id="order_status" name="order_status">
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label for="order_status" style="float: left"><fmt:message key="order.status"/></label>
+                            <select class="input-sm" style="float: right" id="order_status" name="order_status">
                                 <option value="${orders_detail.status}">${orders_detail.status}</option>
                                 <c:if test="${role =='ADMIN'}">
                                     <option value="NEW">NEW</option>
-                                    <option value="CLOSE">CLOSE</option>
+                                    <option value="VERIFICATION">VERIFICATION</option>
+                                    <option value="ESTIMATE">ESTIMATE</option>
+                                    <option value="CONFIRMATION">CONFIRMATION</option>
+                                    <option value="PROGRESS">PROGRESS</option>
                                     <option value="COMPLETE">COMPLETE</option>
-                                    <option value="SUSPEND">SUSPEND</option>
-                                    <option value="INWORK">INWORK</option>
+                                    <option value="PAYMENT">PAYMENT</option>
+                                    <option value="CLOSE">CLOSE</option>
                                     <option value="REJECT">REJECT</option>
+                                    <option value="SUSPEND">SUSPEND</option>
                                 </c:if>
                             </select>
-                            <label for="order_status"><fmt:message key="order.status"/></label>
                         </div>
                     </div>
-                    <div class="input-row">
-                        <div class="input-field">
-                                <%--<input id="order_user_id" type="text" name="order_user_id" value="" required/>--%>
-                            <select id="order_employee_id" name="order_employee_id">
-                                    <%--<option value="${order_employee_id}" selected>${order_employee_name}</option>--%>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label style="float: left" for="order_employee_id"><fmt:message
+                                    key="order.employee.id"/></label>
+                            <select class="input-sm" style="float: right" id="order_employee_id"
+                                    name="order_employee_id">
                                 <option value="" disabled selected>${orders_detail.employeeName}</option>
                                 <option value="${orders_detail.userId}">${order_user_name}</option>
                                 <customtags:OptGoupStuff list="${employee_list}" value="${orders_detail.employeeId}"/>
                             </select>
-                            <label for="order_employee_id"><fmt:message key="order.employee.id"/></label>
                         </div>
                     </div>
-                    <fieldset>
-                        <legend><fmt:message key="order.description"/></legend>
-                        <div class="input-row">
-                            <div class="input-field">
-                                <input id="order_description_short" type="text" name="order_description_short"
-                                       value="${orders_detail.descriptionShort}" required/>
-                                <label for="order_description_short"><fmt:message
-                                        key="order.description.short"/><em>*</em></label>
-                            </div>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label style="float: left" for="order_description_short"><fmt:message
+                                    key="order.description.short"/><em>*</em></label>
+                            <input class="input-sm" style="float: right" id="order_description_short" type="text"
+                                   name="order_description_short"
+                                   placeholder="<fmt:message key="order.description.short"/>"
+                                   value="${orders_detail.descriptionShort}" required/>
                         </div>
-                        <div class="input-row">
-                            <div class="input-field">
-                            <textarea id="order_description_detail" name="order_description_detail" required
-                                      style="height: 100px">${orders_detail.descriptionDetail}</textarea>
-                                <label for="order_description_detail"><fmt:message
-                                        key="order.description.detail"/><em>*</em></label>
-                            </div>
+                    </div>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label style="float: left" for="order_description_detail"><fmt:message
+                                    key="order.description.detail"/><em>*</em></label>
+                            <textarea class="input-sm" id="order_description_detail" name="order_description_detail"
+                                      required
+                                      style="float: right; height: 100px">${orders_detail.descriptionDetail}</textarea>
                         </div>
-                        <div class="input-row">
-                            <div class="input-field">
-                                    <%--<input id="order_appliance" type="text" name="order_appliance" value="${orders_detail.appliance}" required/>--%>
-                                <textarea id="order_appliance" name="order_appliance" required
-                                          style="height: 50px">${orders_detail.appliance}</textarea>
-                                <label for="order_appliance"><fmt:message key="order.appliance"/><em>*</em></label>
-                            </div>
+                    </div>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label style="float: left" for="order_appliance"><fmt:message
+                                    key="order.appliance"/><em>*</em></label>
+                            <textarea class="input-sm" id="order_appliance" name="order_appliance" required
+                                      style="float: right; height: 50px">${orders_detail.appliance}</textarea>
                         </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend><fmt:message key="order.actionDate"/></legend>
-                        <div class="input-row">
-                            <div class="input-field">
-                                <input id="order_order_date" type="date" name="order_order_date"
-                                       value="${orders_detail.orderDate}" disabled/>
-                                <label for="order_order_date"><fmt:message key="order.order.actionDate"/></label>
-                            </div>
+                    </div>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label style="float: left" for="order_order_date"><fmt:message
+                                    key="order.order.actionDate"/></label>
+                            <input class="input-sm" style="float: right" id="order_order_date" type="date"
+                                   name="order_order_date"
+                                   placeholder="<fmt:message key="order.order.actionDate"/>"
+                                   value="${orders_detail.orderDate}" disabled/>
                         </div>
-                        <div class="input-row">
-                            <div class="input-field">
-                                <input id="order_expected_date" type="date" name="order_expected_date"
-                                       value="${orders_detail.expectedDate}"/>
-                                <label for="order_expected_date"><fmt:message key="order.expected.actionDate"/></label>
-                            </div>
+                    </div>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label style="float: left" for="order_expected_date"><fmt:message
+                                    key="order.expected.actionDate"/></label>
+                            <input class="input-sm" style="float: right" id="order_expected_date" type="date"
+                                   name="order_expected_date"
+                                   placeholder="<fmt:message key="order.expected.actionDate"/>"
+                                   value="${orders_detail.expectedDate}"/>
                         </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend><fmt:message key="order.address"/></legend>
-                        <div class="input-row">
-                            <div class="input-field">
-                                <input id="order_city" type="text" name="order_city" value="${orders_detail.city}"
-                                       required/>
-                                <label for="order_city"><fmt:message key="order.city"/><em>*</em></label>
-                            </div>
+                    </div>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label style="float: left" for="order_city"><fmt:message
+                                    key="order.city"/><em>*</em></label>
+                            <input class="input-sm" style="float: right" id="order_city" type="text" name="order_city"
+                                   placeholder="<fmt:message key="order.city"/>"
+                                   value="${orders_detail.city}"
+                                   required/>
                         </div>
-                        <div class="input-row">
-                            <div class="input-field">
-                                    <%--<input id="order_street" type="text" name="order_street" value="${orders_detail.street}" required/>--%>
-                                <textarea id="order_street" name="order_street" required
-                                          style="height: 50px">${orders_detail.street}</textarea>
-                                <label for="order_street"><fmt:message key="order.street"/><em>*</em></label>
-                            </div>
+                    </div>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label style="float: left" for="order_street"><fmt:message
+                                    key="order.street"/><em>*</em></label>
+                            <textarea class="input-sm" id="order_street" name="order_street" required
+                                      style="float: right; height: 50px">${orders_detail.street}</textarea>
                         </div>
-                        <div class="input-row">
-                            <div class="input-field">
-                                    <%--<input id="order_user_id" type="text" name="order_user_id" value="${orders_detail.userId}" required/>--%>
-                                <select id="order_user_id" name="order_user_id">
-                                    <option value="${orders_detail.userId}">${order_user_name}</option>
-                                </select>
-                                <label for="order_user_id"><fmt:message key="order.user.id"/></label>
-                            </div>
+                    </div>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label style="float: left" for="order_user_id"><fmt:message key="order.user.id"/></label>
+                            <select class="input-sm" style="float: right" id="order_user_id" name="order_user_id">
+                                <option value="${orders_detail.userId}">${order_user_name}</option>
+                            </select>
                         </div>
-                    </fieldset>
-                    <div class="input-row">
-                        <div class="input-field">
-                            <input id="order_price" type="number" name="order_price"
+                    </div>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label style="float: left" for="order_price"><fmt:message key="order.price"/></label>
+                            <input class="input-sm" style="float: right" id="order_price" type="number"
+                                   name="order_price"
+                                   placeholder="<fmt:message key="order.price"/>"
                                    value="${orders_detail.price}"/>
-                            <label for="order_price"><fmt:message key="order.price"/></label>
                         </div>
                     </div>
-                    <div class="input-row">
-                        <div class="input-field">
-                            <textarea id="order_memo" type="text" name="order_memo"
-                                      style="height: 100px">${orders_detail.memo}</textarea>
-                            <label for="order_memo"><fmt:message key="order.memo"/></label>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label style="float: left" for="order_memo"><fmt:message key="order.memo"/></label>
+                            <textarea class="input-sm" id="order_memo" type="text" name="order_memo"
+                                      style="float: right;height: 100px;">${orders_detail.memo}</textarea>
                         </div>
                     </div>
+                    <br>
+                    <c:if test="${not empty errorMessage}">
                         ${errorMessage}
-                    <br/>
-                        ${wrongAction}
-                    <br/>
-                        ${nullPage}
-                    <hr/>
-                    <br/>
-                    <c:if test="${role =='ADMIN'}">
+                    </c:if>
+                    <c:if test="${not empty wrongAction}">
+                        <br/>                        ${wrongAction}
+                    </c:if>
+                    <c:if test="${not empty nullPage}">
+                        <br/>                        ${nullPage}
+                    </c:if>
+                    <br>
+                    <c:if test="${role =='ADMIN' or role=='MANAGER' and orders_detail.status=='VERIFICATION'}">
                         <div class="input-row">
-                            <button name="action" class="mainmenubutton" type="submit" value="save">
+                            <button name="action" class="btn btn-sm btn-primary btn-block" type="submit" value="save">
                                 <fmt:message key='app.welcome.save'/>
                             </button>
-                            <button name="action" class="mainmenubutton" type="button" value="cancel"
-                                    onClick="window.location.href='/do?command=orders&page=${page}'">
+                            <button name="action" class="btn btn-sm btn-link" type="button" value="cancel"
+                                    onClick="window.location.href='/do?command=orders&page=${page}'"
+                                    style="float: left">
                                 <fmt:message key='app.welcome.cancel'/>
                             </button>
-                            <button name="action" class="mainmenubutton" type="submit" value="delete">
+                            <button name="action" class="btn btn-sm btn-link" type="submit" value="delete">
                                 <fmt:message key='app.welcome.delete'/>
                             </button>
                         </div>
@@ -180,102 +196,108 @@
                 </form>
             </div>
 
+            <c:set var="statusId" value="${orders_detail.status.ordinal()}"/>
+            <c:choose>
+                <c:when test="${statusId==0}">
+                    <c:set var="action_ok" value="VERIFICATION"/>
+                </c:when>
+                <c:when test="${statusId==1}">
+                    <c:set var="action_ok" value="ESTIMATE"/>
+                </c:when>
+                <c:when test="${statusId==2}">
+                    <c:set var="action_ok" value="CONFIRMATION"/>
+                </c:when>
+                <c:when test="${statusId==3}">
+                    <c:set var="action_ok" value="PROGRESS"/>
+                </c:when>
+                <c:when test="${statusId==4}">
+                    <c:set var="action_ok" value="COMPLETE"/>
+                </c:when>
+                <c:when test="${statusId==5}">
+                    <c:set var="action_ok" value="PAYMENT"/>
+                </c:when>
+                <c:when test="${statusId==6}">
+                    <c:set var="action_ok" value="CLOSE"/>
+                </c:when>
+                <c:when test="${statusId==9}">
+                    <c:set var="action_ok" value="PROGRESS"/>
+                </c:when>
+            </c:choose>
 
             <div class="login_div" align="center" style="width: 500px; display: table-cell">
                 <form name="change" method="post" action="<c:url value="/do"/>">
-                    <input type="hidden" name="command" value="history_action"/>
+                    <input type="hidden" name="command" value="orders_change_status"/>
                     <input type="hidden" name="order_id" value="${orders_detail.id}"/>
-                    <input type="hidden" name="user_id" value="${userId}"/>
-                    <fieldset>
-                        <legend><fmt:message key="order.change.action"/></legend>
-                        <div class="input-row">
-                            <div class="input-field">
-                                <select id="order_change_action" name="order_change_action" required>
-                                    <option selected></option>
-                                    <c:if test="${role !='CUSTOMER'}">
-                                        <option value="CHANGE_EMPLOYEE"><fmt:message
-                                                key="order.change.employee"/></option>
-                                        <option value="CHANGE_STATUS"><fmt:message key="order.change.status"/></option>
-                                        <option value="CHANGE_DATE"><fmt:message key="order.change.actionDate"/></option>
-                                        <option value="CHANGE_PRICE"><fmt:message key="order.change.price"/></option>
-                                        <option value="CHANGE_COMMENT"><fmt:message
-                                                key="order.change.comment"/></option>
-                                    </c:if>
-                                    <c:if test="${role =='CUSTOMER'}">
-                                        <option value="CHANGE_COMMENT" selected><fmt:message key="order.change.comment"/></option>
-                                        <option value="GUESTBOOK_COMMENT"><fmt:message key="order.change.guestbook"/></option>
-                                    </c:if>
-                                </select>
-                                <label for="order_change_action"><fmt:message key="order.change.action"/><em>*</em></label>
+                    <input type="hidden" name="user_id" value="${id}"/>
+                    <input type="hidden" name="order_status_change" value="${action_ok}">
+                    <c:if test="${(orders_detail.employeeId==id and orders_detail.status!='CONFIRMATION') or
+                                    (orders_detail.userId==id and orders_detail.status=='CONFIRMATION')}">
+                        <c:choose>
+                            <c:when test="${statusId==0}">
+                                <div class="row" style="width: 100%">
+                                    <div class="form-group">
+                                        <label style="float: left" for="order_employee_id_change"><fmt:message
+                                                key="order.employee.id"/></label>
+                                        <select class="input-sm" style="float: right" id="order_employee_id_change"
+                                                name="order_employee_id_change">
+                                                <%--<option value="${order_employee_id}" selected>${order_employee_name}</option>--%>
+                                            <option value="${orders_detail.userId}" disabled>${order_user_name}</option>
+                                            <customtags:OptGoupStuff list="${employee_list}"
+                                                                     value="${orders_detail.employeeId}"/>
+                                            <option value="" selected></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br/>
+                            </c:when>
+                            <c:when test="${statusId==1}">
+                                <div class="row" style="width: 100%">
+                                    <div class="form-group">
+                                        <label style="float: left" for="order_employee_id_change"><fmt:message
+                                                key="order.employee.id"/></label>
+                                        <select class="input-sm" style="float: right" id="order_employee_id_change"
+                                                name="order_employee_id_change">
+                                                <%--<option value="${order_employee_id}" selected>${order_employee_name}</option>--%>
+                                            <option value="${orders_detail.userId}" disabled>${order_user_name}</option>
+                                            <customtags:OptGoupStuff list="${employee_list}"
+                                                                     value="${orders_detail.employeeId}"/>
+                                            <option value="" selected></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br/>
+                            </c:when>
+                        </c:choose>
+                        <c:if test="${statusId!=7 and statusId!=8}">
+                            <div class="input-row">
+                                <button name="action" class="btn btn-sm btn-success" type="submit" value="approve">
+                                    OK and Sent to ${action_ok}
+                                </button>
+                            </div>
+                        </c:if>
+                    </c:if>
+                    <br/>
+                    <c:if test="${
+                        (orders_detail.userId==id and (orders_detail.status=='CONFIRMATION' or
+                                                       orders_detail.status=='NEW')) or
+                        (orders_detail.employeeId==id and (orders_detail.status=='VERIFICATION' or
+                                                           orders_detail.status=='ESTIMATE' or
+                                                           orders_detail.status=='PROGRESS'))}">
+                        <div class="row" style="width: 100%">
+                            <div class="form-group">
+                                <label for="reject_memo" style="float: left"><fmt:message
+                                        key="order.rejection.reason"/></label>
+                                <textarea class="input-sm" id="reject_memo" type="text" name="order_memo_change"
+                                          style="float: right;height: 100px;">${reject_memo}</textarea>
                             </div>
                         </div>
                         <div class="input-row">
-                            <div class="input-field">
-                            <textarea id="order_memo_change" type="text" name="order_memo_change"
-                                      style="height: 50px" required></textarea>
-                                <label for="order_memo_change"><fmt:message key="order.memo.change"/><em>*</em></label>
-                            </div>
-                        </div>
-                        <div class="input-row">
-                            <button name="action" class="mainmenubutton" type="submit" value="change_employee">
-                                <fmt:message key='app.welcome.apply'/>
+                            <button name="action" class="btn btn-sm btn-danger" type="submit" value="reject">
+                                REJECT
                             </button>
-                        </div>
-                    </fieldset>
-                    <c:if test="${role !='CUSTOMER'}">
-                        <div class="input-row">
-                            <div class="input-field">
-                                    <%--<input id="order_user_id" type="text" name="order_user_id" value="" required/>--%>
-                                <select id="order_employee_id_change" name="order_employee_id_change">
-                                        <%--<option value="${order_employee_id}" selected>${order_employee_name}</option>--%>
-                                    <option value="${orders_detail.userId}" disabled>${order_user_name}</option>
-                                    <customtags:OptGoupStuff list="${employee_list}"
-                                                             value="${orders_detail.employeeId}"/>
-                                    <option value="" selected></option>
-                                </select>
-                                <label for="order_employee_id_change"><fmt:message key="order.employee.id"/></label>
-                            </div>
-                        </div>
-                        <div class="input-row">
-                            <div class="input-field">
-                                <select id="order_status_change" name="order_status_change">
-                                    <option value="${orders_detail.status}" disabled="">${orders_detail.status}</option>
-                                    <c:if test="${role !='MASTER'}">
-                                        <option value="NEW">NEW</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                        <option value="COMPLETE">COMPLETE</option>
-                                        <option value="SUSPEND">SUSPEND</option>
-                                        <option value="INWORK">INWORK</option>
-                                        <option value="REJECT">REJECT</option>
-                                    </c:if>
-                                    <c:if test="${role =='MASTER'}">
-                                        <option value="COMPLETE">COMPLETE</option>
-                                        <option value="SUSPEND">SUSPEND</option>
-                                        <option value="INWORK">INWORK</option>
-                                        <option value="REJECT">REJECT</option>
-                                    </c:if>
-                                </select>
-                                <label for="order_status_change"><fmt:message key="order.status"/></label>
-                            </div>
-                        </div>
-                        <div class="input-row">
-                            <div class="input-field">
-                                <input id="order_expected_date_change" type="actionDate" name="order_expected_date_change"
-                                       value="${orders_detail.expectedDate}"/>
-                                <label for="order_expected_date_change"><fmt:message key="order.expected.actionDate"/></label>
-                            </div>
-                        </div>
-                        <div class="input-row">
-                            <div class="input-field">
-                                <input id="order_price_change" type="number" name="order_price_change"
-                                       value="${orders_detail.price}"/>
-                                <label for="order_price_change"><fmt:message key="order.price"/></label>
-                            </div>
                         </div>
                     </c:if>
                 </form>
-                <hr/>
-                <customtags:ShowOrdersHistoryList head="${history_list_head}" list="${history_list}"/>
             </div>
         </c:if>
         <jsp:include page="../../../jsp/footer.jspx"/>

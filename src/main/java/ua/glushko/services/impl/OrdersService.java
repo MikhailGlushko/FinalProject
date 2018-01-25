@@ -25,47 +25,65 @@ public class OrdersService extends Service {
         return new OrdersService();
     }
 
-    /** List of Orders */
+    /**
+     * List of Orders
+     */
     public List<Order> getOrderList() throws DatabaseException {
         return DAOFactory.getFactory().getOrderDao().read();
     }
 
-    /** List of Orders by limit */
+    /**
+     * List of Orders by limit
+     */
     public List<Order> getOrderList(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
         return DAOFactory.getFactory().getOrderDao().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 
-    /** List of Orders for status */
+    /**
+     * List of Orders for status
+     */
     public List<Order> getOrderListByStatus(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
         return DAOFactory.getFactory().getOrderDao().readByStatus((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 
-    /** List of field names */
+    /**
+     * List of field names
+     */
     public List<String> getOrderTitles() {
-        return  DAOFactory.getFactory().getOrderDao().getTableHead();
+        return DAOFactory.getFactory().getOrderDao().getTableHead();
     }
 
-    /** Get order by id */
+    /**
+     * Get order by id
+     */
     public Order getOrderById(int id) throws DaoException {
-        return getById(DAOFactory.getFactory().getOrderDao(),id);
+        return getById(DAOFactory.getFactory().getOrderDao(), id);
     }
 
-    /** Delete exist order */
+    /**
+     * Delete exist order
+     */
     public void deleteOrder(Integer serviceId) throws TransactionException, DatabaseException {
-        delete(DAOFactory.getFactory().getOrderDao(),serviceId);
+        delete(DAOFactory.getFactory().getOrderDao(), serviceId);
     }
 
-    /** Total of Orders */
+    /**
+     * Total of Orders
+     */
     public int count() throws SQLException, TransactionException {
         return this.count(DAOFactory.getFactory().getOrderDao());
     }
 
-    /** Total of Orders */
+    /**
+     * Total of Orders
+     */
     public int count(int id) throws SQLException, TransactionException {
-        return this.count(DAOFactory.getFactory().getOrderDao(),id);
+        return this.count(DAOFactory.getFactory().getOrderDao(), id);
     }
 
-    /** List of Orders for userId with Limit */
+    /**
+     * List of Orders for userId with Limit
+     */
     public List<Order> getOrderList(int page, int pagesCount, int rowsPerPage, Integer userId) throws TransactionException, DatabaseException {
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
 
@@ -74,7 +92,7 @@ public class OrdersService extends Service {
         List<Order> read;
         try {
             TransactionManager.beginTransaction();
-            read = orderDAO.read(start, limit,userId);
+            read = orderDAO.read(start, limit, userId);
             TransactionManager.endTransaction();
         } finally {
             TransactionManager.rollBack();
@@ -82,7 +100,9 @@ public class OrdersService extends Service {
         return read;
     }
 
-    /** List of Orders for status with limit */
+    /**
+     * List of Orders for status with limit
+     */
     public List<Order> getOrderListByStatus(int page, int pagesCount, int rowsPerPage, Integer id) throws TransactionException, DatabaseException {
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
 
@@ -91,7 +111,7 @@ public class OrdersService extends Service {
         List<Order> read;
         try {
             TransactionManager.beginTransaction();
-            read = orderDAO.readByStatus(start, limit,id);
+            read = orderDAO.readByStatus(start, limit, id);
             TransactionManager.endTransaction();
         } finally {
             TransactionManager.rollBack();
@@ -99,18 +119,36 @@ public class OrdersService extends Service {
         return read;
     }
 
-    /** get new order and set current userId to employeeId */
-    public Order takeNewOrder(int employeeId) throws DatabaseException, TransactionException {
+    /**
+     * get new order and set current userId to employeeId
+     */
+    public Order takeNewOrder(int employeeId, OrderStatus status) throws DatabaseException, TransactionException {
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
-        Order order;
-        try{
+        OrderQueDAO orderQueDAO = DAOFactory.getFactory().getOrderQueDao();
+        UserDAO userDAO = DAOFactory.getFactory().getUserDao();
+        Order order = null;
+        try {
             TransactionManager.beginTransaction();
-            order = orderDAO.takeNew();
+            order = orderDAO.take(status);
+            switch (status) {
+                case NEW:
+                    order.setStatus(OrderStatus.VERIFICATION);
+                    break;
+                default:
+                    break;
+            }
             order.setEmployeeId(employeeId);
-            if(order.getStatus()== OrderStatus.NEW)
-                order.setStatus(OrderStatus.INWORK);
             orderDAO.update(order);
-            order = orderDAO.read(order.getId());
+            //order = orderDAO.read(order.getId());
+            User user = userDAO.read(employeeId);
+            // create new OrderQue for user
+            OrderQue orderQue = new OrderQue();
+            orderQue.setMessage("Рассмотреть заказ № " + order.getId());
+            orderQue.setOrderId(order.getId());
+            orderQue.setCreate(new Date(System.currentTimeMillis()));
+            orderQue.setRole(user.getRole());
+            orderQue.setEmployeeId(employeeId);
+            orderQueDAO.create(orderQue);
             TransactionManager.endTransaction();
         } finally {
             TransactionManager.rollBack();
@@ -118,24 +156,28 @@ public class OrdersService extends Service {
         return order;
     }
 
-    /** Total of Orders with status==NEW */
-    public Integer countNew() throws DaoException {
+    /**
+     * Total of Orders with status==NEW
+     */
+    public Integer countNewWithoutEmployee(OrderStatus status) throws DaoException {
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
-        return orderDAO.countNew();
+        return orderDAO.countWithoutEmployeeByStatus(status);
     }
 
-    /** Update exist Order or create new */
+    /**
+     * Update exist Order or create new
+     */
     public void updateOrder(Order item) throws TransactionException, DatabaseException {
         OrderQueDAO orderQueDAO = DAOFactory.getFactory().getOrderQueDao();
         UserDAO userDAO = DAOFactory.getFactory().getUserDao();
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
-        try{
+        try {
             TransactionManager.beginTransaction();
-            if(item.getId()!=null && item.getId()!=0) {
+            if (item.getId() != null && item.getId() != 0) {
                 orderDAO.update(item);
                 OrderQue orderQue = new OrderQue();
                 orderQue.setRole(UserRole.MANAGER);
-                if(item.getEmployeeId()!=0){
+                if (item.getEmployeeId() != 0) {
                     User user = userDAO.read(item.getEmployeeId());
                     orderQue.setEmployeeId(user.getId());
                     orderQue.setRole(user.getRole());
@@ -143,8 +185,7 @@ public class OrdersService extends Service {
                     orderQue.setMessage("UPDATE_ORDER");
                     orderQueDAO.create(orderQue);
                 }
-            }
-            else {
+            } else {
                 orderDAO.create(item);
                 OrderQue orderQue = new OrderQue();
                 orderQue.setOrderId(item.getId());
@@ -159,13 +200,17 @@ public class OrdersService extends Service {
         }
     }
 
-    /** Get stats for count all Orders per status*/
-    public Map<OrderStatus,Integer> getTotalsByStatus() throws SQLException {
+    /**
+     * Get stats for count all Orders per status
+     */
+    public Map<OrderStatus, Integer> getTotalsByStatus() throws SQLException {
         return DAOFactory.getFactory().getOrderDao().getTotalsByStatus();
     }
 
-    /** Get stats for count Orders per status created today*/
-    public Map<OrderStatus,Integer> getNewByStatus() throws SQLException {
+    /**
+     * Get stats for count Orders per status created today
+     */
+    public Map<OrderStatus, Integer> getNewByStatus() throws SQLException {
         return DAOFactory.getFactory().getOrderDao().getNewByStatus();
     }
 }

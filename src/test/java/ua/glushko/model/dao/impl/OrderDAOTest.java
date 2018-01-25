@@ -65,7 +65,7 @@ public class OrderDAOTest {
 
     @Test
     public void takeNew() throws SQLException {
-        Order order = dao.takeNew();
+        Order order = dao.take(OrderStatus.NEW);
         System.out.println(order);
     }
 

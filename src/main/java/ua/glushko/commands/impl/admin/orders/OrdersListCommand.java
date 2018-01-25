@@ -1,5 +1,7 @@
 package ua.glushko.commands.impl.admin.orders;
 
+import ua.glushko.model.entity.OrderStatus;
+import ua.glushko.model.entity.UserRole;
 import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
@@ -16,6 +18,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.*;
+import static ua.glushko.services.utils.Authentication.PARAM_ROLE;
 import static ua.glushko.services.utils.Authentication.R;
 
 public class OrdersListCommand implements Command {
@@ -58,7 +61,12 @@ public class OrdersListCommand implements Command {
             items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount, userId);
         }
         List<String> titles = ordersService.getOrderTitles();
-        Integer countNew = ordersService.countNew();
+        UserRole role = (UserRole) session.getAttribute(PARAM_ROLE);
+        Integer countNew=0;
+        if(UserRole.MANAGER==role)
+            countNew = ordersService.countNewWithoutEmployee(OrderStatus.NEW);
+        if(UserRole.MASTER==role)
+            countNew = ordersService.countNewWithoutEmployee(OrderStatus.ESTIMATE);
         int count = ordersService.count(userId);
         count = (count % rowsCount != 0) ? count / rowsCount + 1 : count / rowsCount;
         request.setAttribute(PARAM_ORDERS_LIST_TITLE, titles);

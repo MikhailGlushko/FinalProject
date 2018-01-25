@@ -108,7 +108,7 @@ public class OrdersHistoryService extends Service {
                     orderHistory.setOldValue(String.valueOf(order.getEmployeeId()));
                     order.setEmployeeId(Integer.valueOf(orderHistory.getNewValue()));
                     if (order.getStatus() == OrderStatus.NEW)
-                        order.setStatus(OrderStatus.INWORK);
+                        order.setStatus(OrderStatus.PROGRESS);
                     orderQue.setRole(UserRole.MANAGER);
                     if(order.getEmployeeId()!=0) {
                         user = userDAO.read(order.getEmployeeId());

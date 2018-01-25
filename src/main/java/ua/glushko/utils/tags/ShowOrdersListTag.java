@@ -24,8 +24,9 @@ public class ShowOrdersListTag extends ShowListTag {
         attribute = pageContext.getRequest().getAttribute(PARAM_PAGE);
         if(Objects.nonNull(attribute))
             page = (Integer)attribute;
-        else
+        else if(Objects.nonNull(pageContext.getRequest().getParameter(PARAM_PAGE)))
             page = Integer.valueOf(pageContext.getRequest().getParameter(PARAM_PAGE));
+        else page=1;
 
         Iterator<Object> iterator = list.iterator();
         for (int i = 0; i < rowsCount; i++) {

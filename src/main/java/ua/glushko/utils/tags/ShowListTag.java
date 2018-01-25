@@ -56,7 +56,9 @@ abstract class ShowListTag extends TagSupport {
                 page = 1;
 
             // build head of table
-            Integer access = Integer.valueOf(pageContext.getRequest().getAttribute(PARAM_ACCESS).toString());
+            Integer access = 0;
+            if(Objects.nonNull(pageContext.getRequest().getAttribute(PARAM_ACCESS)))
+                access = Integer.valueOf(pageContext.getRequest().getAttribute(PARAM_ACCESS).toString());
             if((access & C) == C || (access & c) == c ) {
                 builder.append("<div class='addbutton' align=\"right\">")
                         .append("<button class='addbutton' type='button' name='button' value='add' onClick=\"window.location.href='/do?command=").append(list.iterator().next().getClass().getSimpleName().toLowerCase()).append("s_add")
@@ -75,7 +77,7 @@ abstract class ShowListTag extends TagSupport {
             makeNavigator(builder, pagesCount, rowsCount, page);
             pageContext.getOut().write(builder.toString());
         } catch (IOException | NumberFormatException e) {
-            throw new JspException(e.getMessage());
+            //throw new JspException(e.getMessage());
         }
         return SKIP_BODY;
     }

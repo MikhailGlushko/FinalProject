@@ -2,15 +2,15 @@ package ua.glushko.commands.impl;
 
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
+import ua.glushko.commands.impl.admin.orders.OrdersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
-import ua.glushko.model.entity.GuestBook;
-import ua.glushko.model.entity.News;
-import ua.glushko.model.entity.OrderStatus;
-import ua.glushko.model.entity.RepairService;
+import ua.glushko.exception.ParameterException;
+import ua.glushko.model.entity.*;
 import ua.glushko.services.impl.GuestBookService;
 import ua.glushko.services.impl.NewsService;
 import ua.glushko.services.impl.OrdersService;
 import ua.glushko.services.impl.RepairServicesService;
+import ua.glushko.services.utils.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,10 +42,17 @@ public class WelcomeCommand implements Command {
             request.setAttribute(PARAM_SERVICE_LIST,repairServiceList);
 
             OrdersService ordersService = OrdersService.getService();
+            if(!Authentication.isUserLogIn(request.getSession()))
+                throw new ParameterException("user.not.log.in");
+
+            // Статистика заказов
             Map<OrderStatus, Integer> totalsCount = ordersService.getTotalsByStatus();
             Map<OrderStatus, Integer> newCount = ordersService.getNewByStatus();
             request.setAttribute(PARAM_ORDERS_STAT_TOTAL, totalsCount);
             request.setAttribute(PARAM_ORDERS_STAT_NEW, newCount);
+
+            // Список своих сообщений
+
         } catch (Exception e) {
             LOGGER.error(e);
         }

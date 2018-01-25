@@ -25,8 +25,6 @@
     <div class="content">
         <jsp:include page="../../../jsp/header.jspx"/>
         <jsp:include page="../../../jsp/mainmenu.jspx"/>
-        <BR>
-        <p>&nbsp;</p>
         <div class="login_div" align="center">
             <form name="edit" method="post" action="<c:url value="/do"/>">
                 <input type="hidden" name="command" value="orders_action"/>

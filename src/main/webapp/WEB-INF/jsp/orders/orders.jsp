@@ -31,8 +31,10 @@
         <!-- логика по выводу списка пользователей-->
         <c:if test="${not empty orders_list}">
             <br/>
+            <br/>
             <fmt:message key="orders.title"/>:<br/><br/>
-            <c:if test="${role=='MANAGER' and orders_count_new!=0}">
+            <%--<c:if test="${role=='MANAGER' and orders_count_new!=0}">--%>
+            <c:if test="${orders_count_new!=0}">
                 <fmt:message key="order.new.items"/> <span class="badge">${orders_count_new}</span>
                 <button class="btn btn-default" onClick="window.location.href='/do?command=orders_take'">
                     <i class="glyphicon glyphicon glyphicon glyphicon-pushpin"></i> <fmt:message key="orders.take"/>

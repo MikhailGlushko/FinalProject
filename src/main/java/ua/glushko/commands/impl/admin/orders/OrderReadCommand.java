@@ -82,6 +82,7 @@ public class OrderReadCommand implements Command {
             List<String> orderHistoryTitles = ordersHistoryService.getOrderHistoryTitles();
             request.setAttribute(PARAM_ORDER_HISTORY_LIST,orderHistoryList);
             request.setAttribute(PARAM_ORDER_HISTORY_LIST_TITLE,orderHistoryTitles);
+            request.setAttribute("order_statuses",OrderStatus.values());
         }
     }
 }

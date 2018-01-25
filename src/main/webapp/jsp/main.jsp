@@ -66,9 +66,7 @@
                                 <div class="panel-body col-lg-6">
 
                                     <div class="panel-heading" id="collapse-group">
-
                                         <customtags:Services list="${services_list}"/>
-
                                     </div>
                                 </div>
                                 <div class="panel-body col-lg-6">
@@ -82,14 +80,16 @@
                 <div class="row">
                     <%--Отзывы--%>
                     <div class="col-lg-6">
-                        <div class="panel panel-default" style="border: 1px solid #6cf; margin: 10px;">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">Последние отзывы</h4>
+                        <c:if test="${empty role or role=='CUSTOMER'}">
+                            <div class="panel panel-default" style="border: 1px solid #6cf; margin: 10px;">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">Последние отзывы</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <customtags:GuestBook list="${guestbook_list}" size="150"/>
+                                </div>
                             </div>
-                            <div class="panel-body">
-                                <customtags:GuestBook list="${guestbook_list}" size="150"/>
-                            </div>
-                        </div>
+                        </c:if>
                     </div>
                     <%--Новости--%>
                     <div class="col-lg-6">
@@ -161,6 +161,24 @@
 
                     <%--</c:forEach>--%>
                     <br/>
+                </c:if>
+                <c:if test="${not empty role and role!='CUSTOMER'}">
+                    <div class="panel panel-default" style="border: 1px solid #6cf; margin: 10px;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Статистика заказов</h4>
+                        </div>
+                        <div class="panel-body">
+                            <customtags:Stats totalOrders="${stat_total}" newOrders="${stat_new}"/>
+                        </div>
+                    </div>
+                    <div class="panel panel-default" style="border: 1px solid #6cf; margin: 10px;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Последние отзывы</h4>
+                        </div>
+                        <div class="panel-body">
+                            <customtags:GuestBook list="${guestbook_list}" size="150"/>
+                        </div>
+                    </div>
                 </c:if>
             </div>
         </div>

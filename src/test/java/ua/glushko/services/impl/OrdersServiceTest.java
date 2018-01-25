@@ -82,11 +82,11 @@ public class OrdersServiceTest {
 
     @Test
     public void AssignTo() throws DatabaseException, TransactionException {
-        Integer before = service.countNew();
+        Integer before = service.countNewWithoutEmployee(OrderStatus.NEW);
         assertNotNull(before);
-        Order order = service.takeNewOrder(2);
+        Order order = service.takeNewOrder(2,OrderStatus.NEW);
         assertNotNull(order);
-        Integer after = service.countNew();
+        Integer after = service.countNewWithoutEmployee(OrderStatus.NEW);
         assertNotEquals(before,after);
     }
 }

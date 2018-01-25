@@ -15,10 +15,14 @@ public class OrdersCommandHelper {
     public static final String PARAM_ORDER_USER_ID = "order_user_id";
     public static final String PARAM_ORDER_USER_NAME = "order_user_name";
     public static final String PARAM_ORDER_MEMO = "order_memo";
+    public static final String PARAM_ORDER_MEMO_CHANGE = "order_memo_change";
     public static final String PARAM_ORDER_STATUS = "order_status";
+    public static final String PARAM_ORDER_STATUS_CHANGE = "order_status_change";
     public static final String PARAM_ORDER_EMPLOYEE_ID = "order_employee_id";
+    public static final String PARAM_ORDER_EMPLOYEE_ID_CHANGE = "order_employee_id_change";
     public static final String PARAM_ORDER_EMPLOYEE_NAME = "order_employee_name";
 
+    public static final String PARAM_ORDER_FORM_ACTION = "action";
     public static final String PARAM_ORDER = "orders_detail";
     public static final String PARAM_ORDERS_SLIST = "orders_slist";
     public static final String PARAM_ORDERS_LIST = "orders_list";

@@ -177,8 +177,8 @@ CREATE TABLE `orders` (
   `appliance` varchar(45) NOT NULL,
   `price` decimal(10,2) DEFAULT '0.00',
   `user_id` int(11) NOT NULL,
-  `memo` varchar(255) DEFAULT NULL,
-  `status` enum('NEW','CLOSE','COMPLETE','SUSPEND','INWORK','REJECT') DEFAULT 'NEW',
+  `memo` mediumtext,
+  `status` ENUM('NEW', 'VERIFICATION', 'ESTIMATE', 'CONFIRMATION', 'PROGRESS', 'COMPLETE', 'SUSPEND', 'CLOSE', 'REJECT', 'PAYMENT', 'INWORK') DEFAULT 'NEW',
   `employee_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

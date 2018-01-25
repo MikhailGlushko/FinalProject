@@ -1,5 +1,6 @@
 package ua.glushko.commands.impl.admin.orders;
 
+import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
@@ -13,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import static ua.glushko.services.utils.Authentication.U;
 import static ua.glushko.services.utils.Authentication.u;
@@ -47,10 +49,14 @@ public class OrderUpdateCommand implements Command {
             String  orderExpectedDate = request.getParameter(OrdersCommandHelper.PARAM_ORDER_EXPECTED_DATE);
             String  orderAppliance = request.getParameter(OrdersCommandHelper.PARAM_ORDER_APPL);
             Integer orderUserId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_USER_ID));
-            String  orderMemo = request.getParameter(OrdersCommandHelper.PARAM_ORDER_APPL);
-            Integer orderEmployeeId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_EMPLOYEE_ID));
+            String  orderMemo = request.getParameter(OrdersCommandHelper.PARAM_ORDER_MEMO);
+            Integer orderEmployeeId = null;
+            if(Objects.nonNull(request.getParameter(OrdersCommandHelper.PARAM_ORDER_EMPLOYEE_ID)))
+                orderEmployeeId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_EMPLOYEE_ID));
             String  orderStatus = request.getParameter(OrdersCommandHelper.PARAM_ORDER_STATUS);
-            Double orderPrice = Double.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_PRICE));
+            Double orderPrice = null;
+            if(Objects.nonNull(request.getParameter(OrdersCommandHelper.PARAM_ORDER_PRICE)))
+                orderPrice = Double.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_PRICE));
 
             OrdersService ordersService= OrdersService.getService();
             // get user data from database
@@ -64,8 +70,10 @@ public class OrderUpdateCommand implements Command {
             item.setUserId(orderUserId);
             item.setMemo(orderMemo);
             item.setStatus(orderStatus);
-            item.setEmployeeId(orderEmployeeId);
-            item.setPrice(orderPrice);
+            if(Objects.nonNull(orderEmployeeId))
+                item.setEmployeeId(orderEmployeeId);
+            if(Objects.nonNull(orderPrice))
+                item.setPrice(orderPrice);
             DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
             Date date = null;
             try {
