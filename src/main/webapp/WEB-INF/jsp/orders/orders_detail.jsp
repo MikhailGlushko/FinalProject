@@ -179,8 +179,9 @@
                     <c:if test="${not empty nullPage}">
                         <br/>                        ${nullPage}
                     </c:if>
-                    <br>
-                    <c:if test="${role =='ADMIN' or role=='MANAGER' and orders_detail.status=='VERIFICATION'}">
+                    <c:if test="${role =='ADMIN' or
+                    role=='MANAGER' and orders_detail.status=='VERIFICATION' or
+                    role=='MASTER' and orders_detail.status=='ESTIMATE'}">
                         <div class="input-row">
                             <button name="action" class="btn btn-sm btn-primary btn-block" type="submit" value="save">
                                 <fmt:message key='app.welcome.save'/>
@@ -235,15 +236,15 @@
                     <input type="hidden" name="order_status_change" value="${action_ok}">
                     <c:if test="${(orders_detail.employeeId==id and orders_detail.status!='CONFIRMATION') or
                                     (orders_detail.userId==id and orders_detail.status=='CONFIRMATION')}">
+                        <%--User for next step --%>
                         <c:choose>
                             <c:when test="${statusId==0}">
                                 <div class="row" style="width: 100%">
                                     <div class="form-group">
-                                        <label style="float: left" for="order_employee_id_change"><fmt:message
+                                        <label style="float: left" for="order_employee_id_change1"><fmt:message
                                                 key="order.employee.id"/></label>
-                                        <select class="input-sm" style="float: right" id="order_employee_id_change"
+                                        <select class="input-sm" style="float: right" id="order_employee_id_change1"
                                                 name="order_employee_id_change">
-                                                <%--<option value="${order_employee_id}" selected>${order_employee_name}</option>--%>
                                             <option value="${orders_detail.userId}" disabled>${order_user_name}</option>
                                             <customtags:OptGoupStuff list="${employee_list}"
                                                                      value="${orders_detail.employeeId}"/>
@@ -252,23 +253,14 @@
                                     </div>
                                 </div>
                                 <br/>
-                                <div class="row" style="width: 100%">
-                                    <div class="form-group">
-                                        <label for="order_memo_change" style="float: left"><fmt:message
-                                                key="order.memo"/></label>
-                                        <textarea class="input-sm" id="order_memo_change" type="text"
-                                                  name="order_memo_change"
-                                                  style="float: right;height: 100px;">${order_memo_change}</textarea>
-                                    </div>
-                                </div>
                                 <br/>
                             </c:when>
                             <c:when test="${statusId==1}">
                                 <div class="row" style="width: 100%">
                                     <div class="form-group">
-                                        <label style="float: left" for="order_employee_id_change"><fmt:message
+                                        <label style="float: left" for="order_employee_id_change2"><fmt:message
                                                 key="order.employee.id"/></label>
-                                        <select class="input-sm" style="float: right" id="order_employee_id_change"
+                                        <select class="input-sm" style="float: right" id="order_employee_id_change2"
                                                 name="order_employee_id_change">
                                                 <%--<option value="${order_employee_id}" selected>${order_employee_name}</option>--%>
                                             <option value="${orders_detail.userId}" disabled>${order_user_name}</option>
@@ -278,55 +270,55 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row" style="width: 100%">
-                                    <div class="form-group">
-                                        <label for="order_memo_change" style="float: left"><fmt:message
-                                                key="order.memo"/></label>
-                                    </div>
-                                </div>
-                                <div class="row" style="width: 100%">
-                                    <div class="form-group">
-                                        <textarea class="input-sm" id="order_memo_change" type="text"
-                                                  name="order_memo_change"
-                                                  style="float: right;height: 100px; width: 100%; max-width: 100%">${order_memo_change}</textarea>
-                                    </div>
-                                </div>
-                                <br/>
-                                <br/>
                             </c:when>
                         </c:choose>
-                        <c:if test="${statusId!=7 and statusId!=8}">
-                            <div class="input-row">
-                                <button name="action" class="btn btn-sm btn-success" type="submit" value="approve">
+                    </c:if>
+                        <%-- Memo --%>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label for="order_memo_change" style="float: left"><fmt:message
+                                    key="order.memo"/></label>
+                        </div>
+                    </div>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                                        <textarea class="input-sm" id="order_memo_change" type="text"
+                                                  name="order_memo_change"
+                                                  style="float: right;height: 100px; width: 100%; max-width: 100%"
+                                                  required>${order_memo_change}</textarea>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <button name="action" style="float: left" class="btn btn-sm btn-primary" type="submit"
+                                    value="comment">
+                                Add comment
+                            </button>
+                            <c:if test="${statusId!=7 and statusId!=8 and ((orders_detail.employeeId==id and orders_detail.status!='CONFIRMATION') or
+                                          (orders_detail.userId==id and orders_detail.status=='CONFIRMATION'))}">
+                                <button name="action" style="float: right" class="btn btn-sm btn-success"
+                                        type="submit" value="approve">
                                     OK and Sent to ${action_ok}
                                 </button>
-                            </div>
-                        </c:if>
-                    </c:if>
+                            </c:if>
+                        </div>
+                    </div>
                     <br/>
+                    <br/>
+
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <c:if test="${(orders_detail.userId==id and (orders_detail.status=='CONFIRMATION' or orders_detail.status=='NEW')) or
+                                         (orders_detail.employeeId==id and (orders_detail.status=='VERIFICATION' or orders_detail.status=='ESTIMATE' or  orders_detail.status=='PROGRESS')) }">
+                                <button name="action" class="btn btn-sm btn-danger" type="submit" value="reject">
+                                    REJECT
+                                </button>
+                            </c:if>
+                        </div>
+                    </div>
                     <hr/>
                     <br/>
-                    <c:if test="${
-                        (orders_detail.userId==id and (orders_detail.status=='CONFIRMATION' or
-                                                       orders_detail.status=='NEW')) or
-                        (orders_detail.employeeId==id and (orders_detail.status=='VERIFICATION' or
-                                                           orders_detail.status=='ESTIMATE' or
-                                                           orders_detail.status=='PROGRESS'))}">
-                        <div class="row" style="width: 100%">
-                            <div class="form-group">
-                                <label for="reject_memo" style="float: left"><fmt:message
-                                        key="order.rejection.reason"/></label>
-                                <textarea class="input-sm" id="reject_memo" type="text" name="order_memo_change"
-                                          style="float: right;height: 100px;">${reject_memo}</textarea>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="input-row">
-                            <button name="action" class="btn btn-sm btn-danger" type="submit" value="reject">
-                                REJECT
-                            </button>
-                        </div>
-                    </c:if>
                 </form>
             </div>
         </c:if>

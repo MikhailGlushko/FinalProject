@@ -36,6 +36,10 @@ public class OrdersCommandHelper {
     public static final String PARAM_ORDER_HISTORY_LIST = "history_list";
     public static final String PARAM_ORDER_HISTORY_LIST_TITLE = "history_list_head";
 
+    public static final String PARAM_BTN_COMMENT = "btnComment";
+    public static final String PARAM_BTN_OK = "btnOk";
+    public static final String PARAM_BTN_REJECT = "btnReject";
+
     public static final String PATH_PAGE_ORDERS = "path.page.orders";
     public static final String PATH_PAGE_ORDERS_DETAIL = "path.page.ordersdetail";
     public static final String PATH_PAGE_ORDERS_ADD = "path.page.ordersadd";

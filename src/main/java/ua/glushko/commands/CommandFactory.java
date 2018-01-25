@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import ua.glushko.commands.impl.*;
 import ua.glushko.commands.impl.admin.guestbook.GuestBookListCommand;
 import ua.glushko.commands.impl.admin.guestbook.GuestBookNewCommand;
-import ua.glushko.commands.impl.admin.history.*;
 import ua.glushko.commands.impl.orders.*;
 import ua.glushko.commands.impl.admin.services.*;
 import ua.glushko.commands.impl.admin.setup.SetupCommand;
@@ -107,14 +106,6 @@ public class CommandFactory {
         commandMap.put(COMMAND_ORDER_DELETE, new OrderDeleteCommand());
         commandMap.put(COMMAND_ORDER_TAKE, new OrderTakeCommand());
         commandMap.put(COMMAND_ORDER_CHANGE_STATUS, new OrderChangeStatusCommand());
-
-        commandMap.put(COMMAND_HISTORY_ACTION_CRUD, new OrderHistoryActionCRUDCommand());
-        commandMap.put(COMMAND_HISTORY_CHANGE_EMPLOYEE, new OrderHistoryChangeEmployeeCommand());
-        commandMap.put(COMMAND_HISTORY_CHANGE_STATUS, new OrderHistoryChangeStatusCommand());
-        commandMap.put(COMMAND_HISTORY_CHANGE_DATE, new OrderHistoryChangeDateCommand());
-        commandMap.put(COMMAND_HISTORY_CHANGE_PRICE, new OrderHistoryChangePriceCommand());
-        commandMap.put(COMMAND_HISTORY_CHANGE_COMMENT, new OrderHistoryChangeCommentCommand());
-        commandMap.put(COMMAND_HISTORY_CHANGE_GUEST_BOOK, new OrderHistoryChangeGuestBookCommand());
 
         commandMap.put(COMMAND_GUEST_BOOK, new GuestBookListCommand());
         commandMap.put(COMMAND_GUEST_BOOK_NEW, new GuestBookNewCommand());

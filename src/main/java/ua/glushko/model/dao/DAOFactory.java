@@ -32,10 +32,6 @@ public class DAOFactory {
         return OrderDAO.getInstance();
     }
 
-    public OrderHistoryDAO getOrderHistoryDAO() {
-        return OrderHistoryDAO.getInstance();
-    }
-
     public GuestBookDAO getGuestBookDAO(){
         return GuestBookDAO.getInstance();
     }

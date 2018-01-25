@@ -138,7 +138,7 @@ public class OrderDAO extends AbstractDAO<Order> {
                 "FROM repair_agency.orders a\n" +
                 "left join users b on a.user_id=b.id \n" +
                 "left join users c on a.employee_id=c.id\n" +
-                "where a.status=? and employee_id is null\n"+
+                "where a.status=? and (employee_id is null or employee_id=0)\n"+
                 "order by order_date asc, status\n" +
                 "limit 1;";
         List<Order> list;

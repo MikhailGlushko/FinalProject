@@ -62,6 +62,7 @@ public class OrderUpdateCommand implements Command {
             OrdersService ordersService= OrdersService.getService();
             // get user data from database
             Order item = ordersService.getOrderById(orderId);
+            //validateAccessToUdate(Authentication.getCurrentUserId(request.getSession()));
             item.setDescriptionShort(orderDescriptionShort);
             item.setDescriptionDetail(orderDescriptionDetail);
             item.setRepairService(orderRepairService);

@@ -165,14 +165,6 @@
                 <c:if test="${not empty role and role!='CUSTOMER'}">
                     <div class="panel panel-default" style="border: 1px solid #6cf; margin: 10px;">
                         <div class="panel-heading">
-                            <h4 class="panel-title">Статистика заказов</h4>
-                        </div>
-                        <div class="panel-body">
-                            <customtags:Stats totalOrders="${stat_total}" newOrders="${stat_new}"/>
-                        </div>
-                    </div>
-                    <div class="panel panel-default" style="border: 1px solid #6cf; margin: 10px;">
-                        <div class="panel-heading">
                             <h4 class="panel-title">Последние отзывы</h4>
                         </div>
                         <div class="panel-body">

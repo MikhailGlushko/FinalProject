@@ -8,7 +8,6 @@ import ua.glushko.model.entity.*;
 import ua.glushko.exception.DatabaseException;
 import ua.glushko.exception.ParameterException;
 import ua.glushko.exception.TransactionException;
-import ua.glushko.services.impl.OrdersHistoryService;
 import ua.glushko.services.impl.OrdersService;
 import ua.glushko.services.impl.RepairServicesService;
 import ua.glushko.services.impl.UsersService;
@@ -76,12 +75,6 @@ public class OrderReadCommand implements Command {
             RepairServicesService repairServices = RepairServicesService.getService();
             List<RepairService> repairServiceList = repairServices.getRepairServiceList();
             request.setAttribute(OrdersCommandHelper.PARAM_SERVICES_LIST, repairServiceList);
-            // history list
-            OrdersHistoryService ordersHistoryService = OrdersHistoryService.getService();
-            List<OrderHistory> orderHistoryList = ordersHistoryService.getOrderHistoryList(pageNumber, pagesCount, rowsCount,id);
-            List<String> orderHistoryTitles = ordersHistoryService.getOrderHistoryTitles();
-            request.setAttribute(PARAM_ORDER_HISTORY_LIST,orderHistoryList);
-            request.setAttribute(PARAM_ORDER_HISTORY_LIST_TITLE,orderHistoryTitles);
             request.setAttribute("order_statuses",OrderStatus.values());
         }
     }

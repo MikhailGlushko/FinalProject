@@ -62,9 +62,10 @@ public class OrderChangeStatusCommand implements Command {
                             .append(userName).append(" ")
                             .append(action).append(" ")
                             .append(order.getStatus())
-                            .toString());
+                            .append(actionMemo).toString());
                     break;
                 case "reject":
+                    order.setEmployeeId(order.getUserId());
                     order.setStatus(OrderStatus.REJECT);
                     oldMemo = order.getMemo();
                     if(Objects.isNull(oldMemo))
@@ -74,7 +75,16 @@ public class OrderChangeStatusCommand implements Command {
                             .append(userName).append(" ")
                             .append(action).append(" ")
                             .append(actionMemo).toString());
-                    order.setEmployeeId(order.getUserId());
+                    break;
+                case "comment":
+                    oldMemo = order.getMemo();
+                    if(Objects.isNull(oldMemo))
+                        oldMemo="";
+                    order.setMemo(new StringBuilder(oldMemo).append("\n")
+                            .append(new Date(System.currentTimeMillis())).append(" ")
+                            .append(userName).append(" ")
+                            .append(action).append(" ")
+                            .append(actionMemo).toString());
                     break;
             }
             if ((access & U) == U || (access & u) == u) {

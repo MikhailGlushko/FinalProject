@@ -101,25 +101,6 @@ public class OrdersService extends Service {
     }
 
     /**
-     * List of Orders for status with limit
-     */
-    public List<Order> getOrderListByStatus(int page, int pagesCount, int rowsPerPage, Integer id) throws TransactionException, DatabaseException {
-        OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
-
-        int start = (page - 1) * rowsPerPage;
-        int limit = pagesCount * rowsPerPage;
-        List<Order> read;
-        try {
-            TransactionManager.beginTransaction();
-            read = orderDAO.readByStatus(start, limit, id);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
-    }
-
-    /**
      * get new order and set current userId to employeeId
      */
     public Order takeNewOrder(int employeeId, OrderStatus status) throws DatabaseException, TransactionException {
@@ -174,6 +155,10 @@ public class OrdersService extends Service {
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
         try {
             TransactionManager.beginTransaction();
+            if(item.getStatus()==OrderStatus.COMPLETE && item.getManagerId()!=0)
+                item.setEmployeeId(item.getManagerId());
+            if(item.getStatus()==OrderStatus.CLOSE)
+                item.setEmployeeId(item.getUserId());
             if (item.getId() != null && item.getId() != 0) {
                 orderDAO.update(item);
                 OrderQue orderQue = new OrderQue();
