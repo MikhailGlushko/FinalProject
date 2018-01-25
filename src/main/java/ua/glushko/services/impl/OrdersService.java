@@ -133,6 +133,7 @@ public class OrdersService extends Service {
             switch (status) {
                 case NEW:
                     order.setStatus(OrderStatus.VERIFICATION);
+                    order.setManagerId(employeeId);
                     break;
                 default:
                     break;

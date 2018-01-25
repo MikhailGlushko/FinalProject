@@ -22,6 +22,7 @@ public class Order implements GenericEntity, Serializable {
     private OrderStatus status = OrderStatus.NEW;
     private int employeeId;
     private String employeeName;
+    private int managerId;
 
     public void setId(int id) {
         this.id = id;
@@ -217,6 +218,17 @@ public class Order implements GenericEntity, Serializable {
         }
     }
 
+    public int getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(int managerId) {
+        if(this.managerId!=managerId) {
+            this.managerId = managerId;
+            this.changed = true;
+        }
+    }
+
     public boolean isChanged() {
         return changed;
     }
@@ -240,6 +252,7 @@ public class Order implements GenericEntity, Serializable {
                 ", status=" + status +
                 ", employeeId=" + employeeId +
                 ", employeeName='" + employeeName + '\'' +
+                ", managerId=" + managerId +
                 '}';
     }
 }

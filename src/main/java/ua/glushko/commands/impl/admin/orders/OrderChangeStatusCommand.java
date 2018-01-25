@@ -52,6 +52,8 @@ public class OrderChangeStatusCommand implements Command {
             switch (action){
                 case "approve":
                     order.setStatus(OrderStatus.valueOf(newStatus));
+                    if(order.getStatus()==OrderStatus.COMPLETE && order.getManagerId()!=0)
+                        order.setEmployeeId(order.getManagerId());
                     if(Objects.nonNull(newEmployeeId))
                         order.setEmployeeId(Integer.valueOf(newEmployeeId));
                     String oldMemo = order.getMemo();

@@ -32,6 +32,7 @@ public class OrderDAO extends AbstractDAO<Order> {
     private final String NAME_FIELD_EMPLOYEE_ID = "employee_id";
     private final String NAME_FIELD_USER_NAME = "user_name";
     private final String NAME_FIELD_EMPLOYEE_NAME = "employee_name";
+    private final String NAME_FIELD_MANAGER_ID = "manager_id";
 
     private static final OrderDAO dao = new OrderDAO();
 
@@ -62,7 +63,8 @@ public class OrderDAO extends AbstractDAO<Order> {
                 NAME_FIELD_USER_ID + "," +
                 NAME_FIELD_MEMO + "," +
                 NAME_FIELD_STATUS + "," +
-                NAME_FIELD_EMPLOYEE_ID;
+                NAME_FIELD_EMPLOYEE_ID+ "," +
+                NAME_FIELD_MANAGER_ID;
         return builder;
     }
 
@@ -93,6 +95,7 @@ public class OrderDAO extends AbstractDAO<Order> {
         statement.setString(11, entity.getMemo());
         statement.setString(12, entity.getStatus().name());
         statement.setInt(13, entity.getEmployeeId());
+        statement.setInt(14, entity.getManagerId());
     }
 
     @Override
@@ -124,6 +127,7 @@ public class OrderDAO extends AbstractDAO<Order> {
             item.setEmployeeId(resultSet.getInt(NAME_FIELD_EMPLOYEE_ID));
             item.setUserName(resultSet.getString(NAME_FIELD_USER_NAME));
             item.setEmployeeName(resultSet.getString(NAME_FIELD_EMPLOYEE_NAME));
+            item.setManagerId(resultSet.getInt(NAME_FIELD_MANAGER_ID));
             list.add(item);
         }
         return list;
