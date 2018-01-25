@@ -163,7 +163,7 @@ public class OrderDAO extends AbstractDAO<Order> {
                 "left join users b on a.user_id=b.id \n" +
                 "left join users c on a.employee_id=c.id\n" +
                 "where (a.user_id=? or a.employee_id=?)\n"+
-                "order by order_date desc, status\n" +
+                "order by status,id desc\n" +
                 "limit ?,?;";
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
@@ -186,7 +186,7 @@ public class OrderDAO extends AbstractDAO<Order> {
                 "FROM repair_agency.orders a\n" +
                 "left join users b on a.user_id=b.id \n" +
                 "left join users c on a.employee_id=c.id\n" +
-                "order by order_date desc, status;";
+                "order by status,id desc;";
     }
 
     @Override
@@ -195,7 +195,7 @@ public class OrderDAO extends AbstractDAO<Order> {
                 "FROM repair_agency.orders a\n" +
                 "left join users b on a.user_id=b.id \n" +
                 "left join users c on a.employee_id=c.id\n" +
-                "order by order_date desc, status\n" +
+                "order by status,id desc\n" +
                 "limit ?,?;";
     }
 
@@ -206,7 +206,7 @@ public class OrderDAO extends AbstractDAO<Order> {
                 "left join users b on a.user_id=b.id \n" +
                 "left join users c on a.employee_id=c.id\n" +
                 "where a.id=?\n"+
-                "order by order_date desc, status";
+                "order by status,id desc";
     }
 
     protected String getCountQuery(int userId) {

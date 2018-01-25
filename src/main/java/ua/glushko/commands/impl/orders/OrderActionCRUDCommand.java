@@ -1,4 +1,4 @@
-package ua.glushko.commands.impl.admin.orders;
+package ua.glushko.commands.impl.orders;
 
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;

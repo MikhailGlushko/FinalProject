@@ -1,4 +1,4 @@
-package ua.glushko.commands.impl.admin.orders;
+package ua.glushko.commands.impl.orders;
 
 import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.model.entity.UserRole;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.*;
+import static ua.glushko.commands.impl.orders.OrdersCommandHelper.*;
 import static ua.glushko.services.utils.Authentication.PARAM_ROLE;
 import static ua.glushko.services.utils.Authentication.R;
 

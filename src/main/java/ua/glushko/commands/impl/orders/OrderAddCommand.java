@@ -1,4 +1,4 @@
-package ua.glushko.commands.impl.admin.orders;
+package ua.glushko.commands.impl.orders;
 
 import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedList;
 import java.util.List;
 
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDER_USER_ID;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDER_USER_NAME;
+import static ua.glushko.commands.impl.orders.OrdersCommandHelper.PARAM_ORDER_USER_ID;
+import static ua.glushko.commands.impl.orders.OrdersCommandHelper.PARAM_ORDER_USER_NAME;
 
 /** redirect to the form of adding a new order by pressing the "+" button on the form with the list of users*/
 public class OrderAddCommand implements Command {

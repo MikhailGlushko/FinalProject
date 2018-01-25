@@ -33,19 +33,17 @@
                     <input type="hidden" name="command" value="orders_action"/>
                     <input type="hidden" name="order_id" value="${orders_detail.id}"/>
                     <input type="hidden" name="page" value="${param.page}"/>
-                    <c:if test="${role =='ADMIN'}">
-                        <div class="row" style="width: 100%">
-                            <div class="form-group">
-                                <label for="order_repair_service" style="float: left"><fmt:message
-                                        key="order.repair.service"/><em>*</em></label>
-                                <select class="input-sm" style="float: right" id="order_repair_service"
-                                        name="order_repair_service"
-                                        value="${orders_detail.repairService}" required>
-                                    <customtags:OptGoup list="${services_list}" value="${orders_detail.repairService}"/>
-                                </select>
-                            </div>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label for="order_repair_service" style="float: left"><fmt:message
+                                    key="order.repair.service"/><em>*</em></label>
+                            <select class="input-sm" style="float: right" id="order_repair_service"
+                                    name="order_repair_service"
+                                    value="${orders_detail.repairService}" required>
+                                <customtags:OptGoup list="${services_list}" value="${orders_detail.repairService}"/>
+                            </select>
                         </div>
-                    </c:if>
+                    </div>
                     <div class="row" style="width: 100%">
                         <div class="form-group">
                             <label for="order_status" style="float: left"><fmt:message key="order.status"/></label>
@@ -163,8 +161,12 @@
                     <div class="row" style="width: 100%">
                         <div class="form-group">
                             <label style="float: left" for="order_memo"><fmt:message key="order.memo"/></label>
+                        </div>
+                    </div>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
                             <textarea class="input-sm" id="order_memo" type="text" name="order_memo"
-                                      style="float: right;height: 100px;">${orders_detail.memo}</textarea>
+                                      style="float: right;height: 100px; width: 100%; max-width: 100%;">${orders_detail.memo}</textarea>
                         </div>
                     </div>
                     <br>
@@ -227,6 +229,7 @@
             <div class="login_div" align="center" style="width: 500px; display: table-cell">
                 <form name="change" method="post" action="<c:url value="/do"/>">
                     <input type="hidden" name="command" value="orders_change_status"/>
+                    <input type="hidden" name="page" value="${param.page}">
                     <input type="hidden" name="order_id" value="${orders_detail.id}"/>
                     <input type="hidden" name="user_id" value="${id}"/>
                     <input type="hidden" name="order_status_change" value="${action_ok}">
@@ -249,6 +252,16 @@
                                     </div>
                                 </div>
                                 <br/>
+                                <div class="row" style="width: 100%">
+                                    <div class="form-group">
+                                        <label for="order_memo_change" style="float: left"><fmt:message
+                                                key="order.memo"/></label>
+                                        <textarea class="input-sm" id="order_memo_change" type="text"
+                                                  name="order_memo_change"
+                                                  style="float: right;height: 100px;">${order_memo_change}</textarea>
+                                    </div>
+                                </div>
+                                <br/>
                             </c:when>
                             <c:when test="${statusId==1}">
                                 <div class="row" style="width: 100%">
@@ -265,6 +278,20 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="row" style="width: 100%">
+                                    <div class="form-group">
+                                        <label for="order_memo_change" style="float: left"><fmt:message
+                                                key="order.memo"/></label>
+                                    </div>
+                                </div>
+                                <div class="row" style="width: 100%">
+                                    <div class="form-group">
+                                        <textarea class="input-sm" id="order_memo_change" type="text"
+                                                  name="order_memo_change"
+                                                  style="float: right;height: 100px; width: 100%; max-width: 100%">${order_memo_change}</textarea>
+                                    </div>
+                                </div>
+                                <br/>
                                 <br/>
                             </c:when>
                         </c:choose>
@@ -276,6 +303,8 @@
                             </div>
                         </c:if>
                     </c:if>
+                    <br/>
+                    <hr/>
                     <br/>
                     <c:if test="${
                         (orders_detail.userId==id and (orders_detail.status=='CONFIRMATION' or
@@ -291,6 +320,7 @@
                                           style="float: right;height: 100px;">${reject_memo}</textarea>
                             </div>
                         </div>
+                        <br/>
                         <div class="input-row">
                             <button name="action" class="btn btn-sm btn-danger" type="submit" value="reject">
                                 REJECT

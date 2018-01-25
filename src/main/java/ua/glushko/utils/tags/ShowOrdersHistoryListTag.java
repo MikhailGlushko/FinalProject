@@ -1,6 +1,6 @@
 package ua.glushko.utils.tags;
 
-import ua.glushko.commands.impl.admin.orders.OrdersCommandHelper;
+import ua.glushko.commands.impl.orders.OrdersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.Order;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static ua.glushko.commands.Command.*;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDER_HISTORY_PAGE;
+import static ua.glushko.commands.impl.orders.OrdersCommandHelper.PARAM_ORDER_HISTORY_PAGE;
 
 @SuppressWarnings("serial")
 public class ShowOrdersHistoryListTag extends ShowListTag {

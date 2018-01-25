@@ -3,7 +3,7 @@ package ua.glushko.commands.impl.admin.history;
 import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
-import ua.glushko.commands.impl.admin.orders.OrdersCommandHelper;
+import ua.glushko.commands.impl.orders.OrdersCommandHelper;
 import ua.glushko.model.entity.Action;
 import ua.glushko.model.entity.OrderHistory;
 import ua.glushko.exception.DatabaseException;
@@ -20,7 +20,7 @@ import java.util.Objects;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS_READ;
 import static ua.glushko.commands.impl.admin.history.OrderHistoryCommandHelper.PARAM_NAME_ORDER_HISTORY_MEMO;
 import static ua.glushko.commands.impl.admin.history.OrderHistoryCommandHelper.PARAM_NAME_ORDER_HISTORY_PRICE;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDER_ID;
+import static ua.glushko.commands.impl.orders.OrdersCommandHelper.PARAM_ORDER_ID;
 
 public class OrderHistoryChangePriceCommand implements Command {
     @Override

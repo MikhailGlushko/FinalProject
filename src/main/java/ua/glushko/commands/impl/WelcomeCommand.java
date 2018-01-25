@@ -2,7 +2,6 @@ package ua.glushko.commands.impl;
 
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
-import ua.glushko.commands.impl.admin.orders.OrdersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.exception.ParameterException;
 import ua.glushko.model.entity.*;
@@ -19,8 +18,8 @@ import java.util.Map;
 
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PARAM_GUEST_BOOKS_LIST;
 import static ua.glushko.commands.impl.admin.news.NewsCommandHelper.PARAM_GUEST_NEWS_LIST;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDERS_STAT_NEW;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.PARAM_ORDERS_STAT_TOTAL;
+import static ua.glushko.commands.impl.orders.OrdersCommandHelper.PARAM_ORDERS_STAT_NEW;
+import static ua.glushko.commands.impl.orders.OrdersCommandHelper.PARAM_ORDERS_STAT_TOTAL;
 import static ua.glushko.commands.impl.admin.services.ServicesCommandHelper.PARAM_SERVICE_LIST;
 
 public class WelcomeCommand implements Command {

@@ -5,7 +5,7 @@ import ua.glushko.commands.impl.*;
 import ua.glushko.commands.impl.admin.guestbook.GuestBookListCommand;
 import ua.glushko.commands.impl.admin.guestbook.GuestBookNewCommand;
 import ua.glushko.commands.impl.admin.history.*;
-import ua.glushko.commands.impl.admin.orders.*;
+import ua.glushko.commands.impl.orders.*;
 import ua.glushko.commands.impl.admin.services.*;
 import ua.glushko.commands.impl.admin.setup.SetupCommand;
 import ua.glushko.commands.impl.admin.setup.SetupSaveCommand;

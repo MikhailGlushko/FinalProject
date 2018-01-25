@@ -1,4 +1,4 @@
-package ua.glushko.commands.impl.admin.orders;
+package ua.glushko.commands.impl.orders;
 
 import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static ua.glushko.services.utils.Authentication.*;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.*;
+import static ua.glushko.commands.impl.orders.OrdersCommandHelper.*;
 
 /** Display information about the type of service with the ability to edit or delete */
 public class OrderReadCommand implements Command {

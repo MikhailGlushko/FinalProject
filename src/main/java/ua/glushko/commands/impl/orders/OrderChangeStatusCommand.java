@@ -1,4 +1,4 @@
-package ua.glushko.commands.impl.admin.orders;
+package ua.glushko.commands.impl.orders;
 
 import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
@@ -9,14 +9,12 @@ import ua.glushko.services.utils.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
-import static ua.glushko.commands.impl.admin.orders.OrdersCommandHelper.*;
+import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS_READ;
+import static ua.glushko.commands.impl.orders.OrdersCommandHelper.*;
 import static ua.glushko.services.utils.Authentication.PARAM_NAME_NAME;
 import static ua.glushko.services.utils.Authentication.U;
 import static ua.glushko.services.utils.Authentication.u;
@@ -31,7 +29,7 @@ public class OrderChangeStatusCommand implements Command {
         } catch (Exception e) {
             LOGGER.error(e);
         }
-        String page = "/do?command=" + COMMAND_ORDERS +"&page=" + request.getAttribute(PARAM_PAGE);
+        String page = "/do?command=" + COMMAND_ORDERS +"&page=" + request.getParameter(PARAM_PAGE);
         return new CommandRouter(request, response, page);
 
     }

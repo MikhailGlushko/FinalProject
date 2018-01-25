@@ -1,6 +1,5 @@
-package ua.glushko.commands.impl.admin.orders;
+package ua.glushko.commands.impl.orders;
 
-import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.services.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
@@ -16,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
+import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS_READ;
+import static ua.glushko.commands.impl.orders.OrdersCommandHelper.PARAM_ORDER_ID;
 import static ua.glushko.services.utils.Authentication.U;
 import static ua.glushko.services.utils.Authentication.u;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
