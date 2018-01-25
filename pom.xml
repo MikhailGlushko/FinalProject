@@ -92,6 +92,13 @@
             <version>${commons-codec}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-maven-plugin -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <version>5.0.6</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -167,6 +174,17 @@
                             <username>tomcat</username>
                             <password>tomcat</password>
                             <path>/</path>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>5.0.6</version>
+                        <configuration>
+                            <user>root</user>
+                            <password>compaq</password>
+                            <url>jdbc:mysql://localhost:3306/repair_agency</url>
+                            <driver>com.mysql.cj.jdbc.Driver</driver>
                         </configuration>
                     </plugin>
                 </plugins>

@@ -27,7 +27,7 @@ public class Controller extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         //TODO
-        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
+        //ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         if (ConnectionPool.getConnectionPool().getDataSource() == null){
             try {
                 Context context = (Context)(new InitialContext().lookup(JNDI_NAME));
