@@ -3,6 +3,7 @@ package ua.glushko.model.dao.impl;
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.entity.Order;
 import ua.glushko.exception.DaoException;
+import ua.glushko.model.entity.OrderStats;
 import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
@@ -33,6 +34,7 @@ public class OrderDAO extends AbstractDAO<Order> {
     private final String NAME_FIELD_USER_NAME = "user_name";
     private final String NAME_FIELD_EMPLOYEE_NAME = "employee_name";
     private final String NAME_FIELD_MANAGER_ID = "manager_id";
+    private final String NAME_FIELD_CHANGE_DATE = "change_date";
 
     private static final OrderDAO dao = new OrderDAO();
 
@@ -64,7 +66,8 @@ public class OrderDAO extends AbstractDAO<Order> {
                 NAME_FIELD_MEMO + "," +
                 NAME_FIELD_STATUS + "," +
                 NAME_FIELD_EMPLOYEE_ID+ "," +
-                NAME_FIELD_MANAGER_ID;
+                NAME_FIELD_MANAGER_ID+ "," +
+                NAME_FIELD_CHANGE_DATE;
         return builder;
     }
 
@@ -96,6 +99,10 @@ public class OrderDAO extends AbstractDAO<Order> {
         statement.setString(12, entity.getStatus().name());
         statement.setInt(13, entity.getEmployeeId());
         statement.setInt(14, entity.getManagerId());
+        if(entity.getChangeDateDate()!=null)
+            statement.setTimestamp(15, new Timestamp(entity.getChangeDateDate().getTime()));
+        else
+            statement.setDate(15,null);
     }
 
     @Override
@@ -128,6 +135,8 @@ public class OrderDAO extends AbstractDAO<Order> {
             item.setUserName(resultSet.getString(NAME_FIELD_USER_NAME));
             item.setEmployeeName(resultSet.getString(NAME_FIELD_EMPLOYEE_NAME));
             item.setManagerId(resultSet.getInt(NAME_FIELD_MANAGER_ID));
+            if(resultSet.getDate(NAME_FIELD_CHANGE_DATE)!=null)
+                item.setChangeDateDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_CHANGE_DATE).getTime()));
             list.add(item);
         }
         return list;
@@ -214,101 +223,66 @@ public class OrderDAO extends AbstractDAO<Order> {
                 " where user_id="+userId+" or employee_id="+userId;
     }
 
-    public Integer countWithoutEmployeeByStatus(OrderStatus status) throws DaoException{
-        String sql = "SELECT count(*) as total \n" +
-                "FROM repair_agency.orders a\n" +
-                "where (employee_id is null or employee_id=0) and status=?\n";
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            statement.setString(1,status.name());
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next())
-                return resultSet.getInt("total");
-        } catch (Exception e) {
-            throw new DaoException(e);
-        }
-        return 0;
-    }
+//    public Integer countWithoutEmployeeByStatus(OrderStatus status) throws DaoException{
+//        String sql = "SELECT count(*) as total \n" +
+//                "FROM repair_agency.orders a\n" +
+//                "where (employee_id is null or employee_id=0) and status=?\n";
+//        try (ConnectionWrapper con = TransactionManager.getConnection();
+//             PreparedStatement statement = con.prepareStatement(sql)) {
+//            statement.setString(1,status.name());
+//            ResultSet resultSet = statement.executeQuery();
+//            if(resultSet.next())
+//                return resultSet.getInt("total");
+//        } catch (Exception e) {
+//            throw new DaoException(e);
+//        }
+//        return 0;
+//    }
 
-    public List<Order> readByStatus(int start, int limit) throws DaoException {
-        List<Order> list;
-        String sql =    "select * from (SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name` FROM repair_agency.orders a left join users b on a.user_id=b.id left join users c on a.employee_id=c.id where a.status='NEW' limit ?,?)\n" +
-                "union\n" +
-                "select * from (SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name` FROM repair_agency.orders a left join users b on a.user_id=b.id left join users c on a.employee_id=c.id where a.status='CLOSE' limit ?,?)\n" +
-                "union\n" +
-                "select * from (SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name` FROM repair_agency.orders a left join users b on a.user_id=b.id left join users c on a.employee_id=c.id where a.status='COMPLETE' limit ?,?)\n" +
-                "union\n" +
-                "select * from (SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name` FROM repair_agency.orders a left join users b on a.user_id=b.id left join users c on a.employee_id=c.id where a.status='SUSPEND' limit ?,?)\n" +
-                "union\n" +
-                "select * from (SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name` FROM repair_agency.orders a left join users b on a.user_id=b.id left join users c on a.employee_id=c.id where a.status='INWORK' limit ?,?)\n" +
-                "union\n" +
-                "select * from (SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name` FROM repair_agency.orders a left join users b on a.user_id=b.id left join users c on a.employee_id=c.id where a.status='REJECT' limit ?,?)\n" +
-                "order by status, id desc;";
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            statement.setInt(1, start);statement.setInt(2, limit);
-            statement.setInt(3, start);statement.setInt(4, limit);
-            statement.setInt(5, start);statement.setInt(6, limit);
-            statement.setInt(7, start);statement.setInt(8, limit);
-            statement.setInt(9, start);statement.setInt(10, limit);
-            statement.setInt(11, start);statement.setInt(12, limit);
-            ResultSet resultSet = statement.executeQuery();
-            setTitles(resultSet.getMetaData());
-            list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return list;
-    }
+    public Map<OrderStatus, Map<OrderStats,Integer>> getTotal(Integer userId) throws DaoException {
+        Map<OrderStatus,Map<OrderStats,Integer>> result = new LinkedHashMap<>();
+        String sql="select a.status, coalesce(a.total,0) as `total`, coalesce(b.new,0) as `new`, coalesce(c.todays,0) as `today`, \n" +
+                "coalesce(d.owner,0) as `owner`,coalesce(e.execution,0) as `execution`, coalesce(f.noemployee,0) as `noemployee`, \n" +
+                "coalesce(g.current,0) as `current`, coalesce(h.countall,0) as `countall` \n"+
+                "from (select count(*) as `total`, status from repair_agency.orders group by status) a\n" +
+                "left join (select count(*) as `new`, status from repair_agency.orders where order_date>=current_date() group by status) b\n" +
+                "on a.status=b.status\n" +
+                "left join (select count(*) as `todays`, status from repair_agency.orders where change_date>=current_date() group by status) c\n" +
+                "on a.status=c.status\n" +
+                "left join (select count(*) as `owner`, status from repair_agency.orders where user_id=?  group by status) d\n" +
+                "on a.status = d.status\n" +
+                "left join (select count(*) as `execution`, status from repair_agency.orders where user_id=? and (status='NEW' or status='CONFIRMATION' or status='PAYMENT' or status='CLOSE' or status='REJECT') or employee_id=? and (status='VERIFICATION' or status='ESTIMATE' or status='PROGRESS' or status='COMPLETE')  group by status) e\n" +
+                "on a.status = e.status\n" +
+                "left join (select count(*) as `noemployee`, status from repair_agency.orders where (employee_id is null or employee_id=0) group by status) f\n" +
+                "on a.status=f.status\n" +
+                "left join (select count(*) as `current`, status from  repair_agency.orders where (employee_id=? or user_id=?) group by status) g\n"+
+                "on a.status=g.status\n" +
+                "left join (select count(*) as `countall` from repair_agency.orders) h\n"+
+                "on true\n"+
+                "group by a.status;";
 
-    public List<Order> readByStatus(int start, int limit, int userId) throws DaoException {
-        List<Order> list;
-        String sql =    "select * from (SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name` FROM repair_agency.orders a left join users b on a.user_id=b.id left join users c on a.employee_id=c.id where a.status='NEW' and (a.user_id=? or a.employee_id=?) limit ?,?)\n" +
-                "union\n" +
-                "select * from (SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name` FROM repair_agency.orders a left join users b on a.user_id=b.id left join users c on a.employee_id=c.id where a.status='CLOSE' and (a.user_id=? or a.employee_id=?) limit ?,?)\n" +
-                "union\n" +
-                "select * from (SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name` FROM repair_agency.orders a left join users b on a.user_id=b.id left join users c on a.employee_id=c.id where a.status='COMPLETE' and (a.user_id=? or a.employee_id=?) limit ?,?)\n" +
-                "union\n" +
-                "select * from (SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name` FROM repair_agency.orders a left join users b on a.user_id=b.id left join users c on a.employee_id=c.id where a.status='SUSPEND' and (a.user_id=? or a.employee_id=?) limit ?,?)\n" +
-                "union\n" +
-                "select * from (SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name` FROM repair_agency.orders a left join users b on a.user_id=b.id left join users c on a.employee_id=c.id where a.status='INWORK' and (a.user_id=? or a.employee_id=?) limit ?,?)\n" +
-                "union\n" +
-                "select * from (SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name` FROM repair_agency.orders a left join users b on a.user_id=b.id left join users c on a.employee_id=c.id where a.status='REJECT' and (a.user_id=? or a.employee_id=?) limit ?,?)\n" +
-                "order by status, id desc;";
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            statement.setInt(1, userId);statement.setInt(2, userId);
-            statement.setInt(3, start);statement.setInt(4, limit);
-            statement.setInt(5, userId);statement.setInt(6, userId);
-            statement.setInt(7, start);statement.setInt(8, limit);
-            statement.setInt(9, userId);statement.setInt(10, userId);
-            statement.setInt(11, start);statement.setInt(12, limit);
-            statement.setInt(13, userId);statement.setInt(14, userId);
-            statement.setInt(15, start);statement.setInt(16, limit);
-            statement.setInt(17, userId);statement.setInt(18, userId);
-            statement.setInt(19, start);statement.setInt(20, limit);
-            statement.setInt(21, userId);statement.setInt(22, userId);
-            statement.setInt(23, start);statement.setInt(24, limit);
-            ResultSet resultSet = statement.executeQuery();
-            setTitles(resultSet.getMetaData());
-            list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return list;
-    }
-
-    private Map<OrderStatus,Integer> getTotals(String sql) throws SQLException {
-        Map<OrderStatus,Integer> result = new LinkedHashMap<>();
         try(ConnectionWrapper con = TransactionManager.getConnection();
             PreparedStatement statement = con.prepareStatement(sql)){
+            statement.setInt(1,userId);
+            statement.setInt(2,userId);
+            statement.setInt(3,userId);
+            statement.setInt(4,userId);
+            statement.setInt(5,userId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
-                int count = resultSet.getInt(1);
-                String value = resultSet.getString(2);
-                if(Objects.nonNull(value)) {
-                    OrderStatus status = OrderStatus.valueOf(value);
-                    result.put(status,count);
+                String status = resultSet.getString(1);
+                if(Objects.nonNull(status)) {
+                    OrderStatus key = OrderStatus.valueOf(status);
+                    Map<OrderStats,Integer> value = new HashMap<>();
+                    value.put(OrderStats.STATUS,resultSet.getInt(2));
+                    value.put(OrderStats.NEW,resultSet.getInt(3));
+                    value.put(OrderStats.TODAY,resultSet.getInt(4));
+                    value.put(OrderStats.OWNER,resultSet.getInt(5));
+                    value.put(OrderStats.EXECUTION,resultSet.getInt(6));
+                    value.put(OrderStats.NO_EMPLOYEE,resultSet.getInt(7));
+                    value.put(OrderStats.CURRENT_USER,resultSet.getInt(8));
+                    value.put(OrderStats.ALL,resultSet.getInt(9));
+                    result.put(key,value);
                 }
             }
         } catch (SQLException e) {
@@ -316,13 +290,4 @@ public class OrderDAO extends AbstractDAO<Order> {
         }
         return result;
     }
-
-    public Map<OrderStatus,Integer> getTotalsByStatus() throws SQLException {
-        String sql = "select count(*) as total, status from repair_agency.orders group by status";
-        return getTotals(sql);
-    }
-
-    public Map<OrderStatus,Integer> getNewByStatus() throws SQLException {
-        String sql = "select count(*) as new, status from repair_agency.orders where order_date=now() group by status";
-        return getTotals(sql);    }
 }

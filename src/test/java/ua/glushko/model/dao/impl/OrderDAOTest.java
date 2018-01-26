@@ -5,11 +5,14 @@ import org.junit.Test;
 import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.entity.Order;
 import ua.glushko.exception.DaoException;
+import ua.glushko.model.entity.OrderStats;
 import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.transaction.ConnectionPool;
 
+import java.sql.Array;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -70,20 +73,12 @@ public class OrderDAOTest {
     }
 
     @Test
-    public void readByCustomer2() throws DaoException {
-        List<Order> orders = ((OrderDAO) dao).readByStatus(0, 100, 5);
-    }
-
-    @Test
-    public void readByEmployee2() throws DaoException {
-        List<Order> orders = ((OrderDAO) dao).readByStatus(0, 100, 0);
-    }
-
-    @Test
-    public void StatsTotal() throws SQLException {
-        Map<OrderStatus, Integer> totalsByStatus = dao.getTotalsByStatus();
-        System.out.println(totalsByStatus);
-        totalsByStatus = dao.getNewByStatus();
-        System.out.println(totalsByStatus);
+    public void getTotal() throws DaoException {
+        Map<OrderStatus, Map<OrderStats,Integer>> total = dao.getTotal(4);
+        total.entrySet().stream().forEach(item ->{System.out.println(item.getKey()+" "+item.getValue());});
+        total = dao.getTotal(3);
+        total.entrySet().stream().forEach(item ->{System.out.println(item.getKey()+" "+item.getValue());});
+        total = dao.getTotal(2);
+        total.entrySet().stream().forEach(item ->{System.out.println(item.getKey()+" "+item.getValue());});
     }
 }

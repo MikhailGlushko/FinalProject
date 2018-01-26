@@ -40,13 +40,6 @@ public class OrdersService extends Service {
     }
 
     /**
-     * List of Orders for status
-     */
-    public List<Order> getOrderListByStatus(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
-        return DAOFactory.getFactory().getOrderDao().readByStatus((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
-    }
-
-    /**
      * List of field names
      */
     public List<String> getOrderTitles() {
@@ -103,14 +96,13 @@ public class OrdersService extends Service {
     /**
      * get new order and set current userId to employeeId
      */
-    public Order takeNewOrder(int employeeId, OrderStatus status) throws DatabaseException, TransactionException {
+    public void takeNewOrder(int employeeId, OrderStatus status) throws DatabaseException, TransactionException {
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
         OrderQueDAO orderQueDAO = DAOFactory.getFactory().getOrderQueDao();
         UserDAO userDAO = DAOFactory.getFactory().getUserDao();
-        Order order = null;
         try {
             TransactionManager.beginTransaction();
-            order = orderDAO.take(status);
+            Order order = orderDAO.take(status);
             switch (status) {
                 case NEW:
                     order.setStatus(OrderStatus.VERIFICATION);
@@ -120,8 +112,8 @@ public class OrdersService extends Service {
                     break;
             }
             order.setEmployeeId(employeeId);
+            order.setChangeDateDate(new Date(System.currentTimeMillis()));
             orderDAO.update(order);
-            //order = orderDAO.read(order.getId());
             User user = userDAO.read(employeeId);
             // create new OrderQue for user
             OrderQue orderQue = new OrderQue();
@@ -135,36 +127,28 @@ public class OrdersService extends Service {
         } finally {
             TransactionManager.rollBack();
         }
-        return order;
-    }
-
-    /**
-     * Total of Orders with status==NEW
-     */
-    public Integer countNewWithoutEmployee(OrderStatus status) throws DaoException {
-        OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
-        return orderDAO.countWithoutEmployeeByStatus(status);
     }
 
     /**
      * Update exist Order or create new
      */
-    public void updateOrder(Order item) throws TransactionException, DatabaseException {
+    public void updateOrder(Order oderd) throws TransactionException, DatabaseException {
         OrderQueDAO orderQueDAO = DAOFactory.getFactory().getOrderQueDao();
         UserDAO userDAO = DAOFactory.getFactory().getUserDao();
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
         try {
             TransactionManager.beginTransaction();
-            if(item.getStatus()==OrderStatus.COMPLETE && item.getManagerId()!=0)
-                item.setEmployeeId(item.getManagerId());
-            if(item.getStatus()==OrderStatus.CLOSE)
-                item.setEmployeeId(item.getUserId());
-            if (item.getId() != null && item.getId() != 0) {
-                orderDAO.update(item);
+            oderd.setChangeDateDate(new Date(System.currentTimeMillis()));
+            if(oderd.getStatus()==OrderStatus.COMPLETE && oderd.getManagerId()!=0)
+                oderd.setEmployeeId(oderd.getManagerId());
+            if(oderd.getStatus()==OrderStatus.CLOSE)
+                oderd.setEmployeeId(oderd.getUserId());
+            if (oderd.getId() != null && oderd.getId() != 0) {
+                orderDAO.update(oderd);
                 OrderQue orderQue = new OrderQue();
                 orderQue.setRole(UserRole.MANAGER);
-                if (item.getEmployeeId() != 0) {
-                    User user = userDAO.read(item.getEmployeeId());
+                if (oderd.getEmployeeId() != 0) {
+                    User user = userDAO.read(oderd.getEmployeeId());
                     orderQue.setEmployeeId(user.getId());
                     orderQue.setRole(user.getRole());
                     orderQue.setCreate(new Date(System.currentTimeMillis()));
@@ -172,9 +156,9 @@ public class OrdersService extends Service {
                     orderQueDAO.create(orderQue);
                 }
             } else {
-                orderDAO.create(item);
+                orderDAO.create(oderd);
                 OrderQue orderQue = new OrderQue();
-                orderQue.setOrderId(item.getId());
+                orderQue.setOrderId(oderd.getId());
                 orderQue.setRole(UserRole.MANAGER);
                 orderQue.setCreate(new Date(System.currentTimeMillis()));
                 orderQue.setMessage("NEW_ORDER");
@@ -186,17 +170,7 @@ public class OrdersService extends Service {
         }
     }
 
-    /**
-     * Get stats for count all Orders per status
-     */
-    public Map<OrderStatus, Integer> getTotalsByStatus() throws SQLException {
-        return DAOFactory.getFactory().getOrderDao().getTotalsByStatus();
-    }
-
-    /**
-     * Get stats for count Orders per status created today
-     */
-    public Map<OrderStatus, Integer> getNewByStatus() throws SQLException {
-        return DAOFactory.getFactory().getOrderDao().getNewByStatus();
+    public Map<OrderStatus, Map<OrderStats, Integer>> getStats(Integer userId) throws DaoException {
+        return DAOFactory.getFactory().getOrderDao().getTotal(userId);
     }
 }

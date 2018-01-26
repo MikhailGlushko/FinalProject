@@ -49,14 +49,6 @@ public class CommandFactory {
     public static final String COMMAND_ORDER_CREATE = "orders_create";
     private static final String COMMAND_ORDER_TAKE = "orders_take";
     private static final String COMMAND_ORDER_CHANGE_STATUS = "orders_change_status";
-    // for requests history
-    private static final String COMMAND_HISTORY_ACTION_CRUD = "history_action";
-    public static final String COMMAND_HISTORY_CHANGE_EMPLOYEE = "history_change_employee";
-    public static final String COMMAND_HISTORY_CHANGE_STATUS = "history_change_status";
-    public static final String COMMAND_HISTORY_CHANGE_DATE = "history_change_date";
-    public static final String COMMAND_HISTORY_CHANGE_PRICE = "history_change_price";
-    public static final String COMMAND_HISTORY_CHANGE_COMMENT = "history_change_comment";
-    public static final String COMMAND_HISTORY_CHANGE_GUEST_BOOK = "history_change_guest_book";
 
     // for guest book
     public static final String COMMAND_GUEST_BOOK = "guestbook";

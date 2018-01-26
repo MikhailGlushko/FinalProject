@@ -45,12 +45,8 @@ public class WelcomeCommand implements Command {
                 throw new ParameterException("user.not.log.in");
 
             // Статистика заказов
-            Map<OrderStatus, Integer> totalsCount = ordersService.getTotalsByStatus();
-            Map<OrderStatus, Integer> newCount = ordersService.getNewByStatus();
-            request.setAttribute(PARAM_ORDERS_STAT_TOTAL, totalsCount);
-            request.setAttribute(PARAM_ORDERS_STAT_NEW, newCount);
-
-            // Список своих сообщений
+            Map<OrderStatus, Map<OrderStats, Integer>> stats = ordersService.getStats(Authentication.getCurrentUserId(request.getSession()));
+            request.setAttribute(PARAM_ORDERS_STAT_TOTAL, stats);
 
         } catch (Exception e) {
             LOGGER.error(e);

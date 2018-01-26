@@ -34,18 +34,9 @@ public class OrderReadCommand implements Command {
     }
 
     private void storeOrderDetailToSession(HttpServletRequest request) throws TransactionException, ParameterException, DatabaseException {
-        int pagesCount = 0;
-        int rowsCount = 0;
-        int pageNumber = 1;
-        int id = 0;
-
+        int orderId = 0;
         try {
-            pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
-            rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
-            String parameter = request.getParameter(PARAM_PAGE);
-            if (!(parameter == null || parameter.isEmpty()))
-                pageNumber = Integer.valueOf(request.getParameter(PARAM_PAGE));
-            id = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
+            orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
         } catch (NumberFormatException e){
             LOGGER.error(e);
         }
@@ -53,7 +44,7 @@ public class OrderReadCommand implements Command {
 
         // orders list
         OrdersService ordersService = OrdersService.getService();
-        Order order = ordersService.getOrderById(id);
+        Order order = ordersService.getOrderById(orderId);
         List<String> titles = ordersService.getOrderTitles();
 
         // user data

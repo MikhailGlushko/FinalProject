@@ -62,7 +62,7 @@ public class Authentication {
 
     public static Integer getCurrentUserId(HttpSession session){
         try {
-            return Integer.valueOf((String) session.getAttribute(Authentication.PARAM_ID));
+            return Integer.valueOf(session.getAttribute(Authentication.PARAM_ID).toString());
         } catch (NumberFormatException e){}
         return null;
     }

@@ -1,5 +1,6 @@
 package ua.glushko.commands.impl.orders;
 
+import ua.glushko.model.entity.OrderStats;
 import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.model.entity.UserRole;
 import ua.glushko.services.utils.Authentication;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import static ua.glushko.commands.impl.orders.OrdersCommandHelper.*;
 import static ua.glushko.services.utils.Authentication.PARAM_ROLE;
@@ -56,22 +59,22 @@ public class OrdersListCommand implements Command {
         List<Order> itemsS = null;
         if ((access & R) == R) {
             items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount);
-            itemsS = ordersService.getOrderListByStatus(pageNumber, pagesCount, rowsCount);
         } else if ((access & Authentication.r) == Authentication.r) {
             items = ordersService.getOrderList(pageNumber, pagesCount, rowsCount, userId);
         }
         List<String> titles = ordersService.getOrderTitles();
         UserRole role = (UserRole) session.getAttribute(PARAM_ROLE);
         Integer countNew=0;
-        if(UserRole.MANAGER==role)
-            countNew = ordersService.countNewWithoutEmployee(OrderStatus.NEW);
-        if(UserRole.MASTER==role)
-            countNew = ordersService.countNewWithoutEmployee(OrderStatus.ESTIMATE);
+        Map<OrderStatus, Map<OrderStats, Integer>> stats = ordersService.getStats(Authentication.getCurrentUserId(request.getSession()));
+        if(Objects.nonNull(stats)) {
+            Map<OrderStats, Integer> orderStatsNew = stats.get(OrderStatus.NEW);
+            countNew = orderStatsNew.get(OrderStats.STATUS);
+        }
         int count = ordersService.count(userId);
         count = (count % rowsCount != 0) ? count / rowsCount + 1 : count / rowsCount;
         request.setAttribute(PARAM_ORDERS_LIST_TITLE, titles);
         request.setAttribute(PARAM_ORDERS_LIST, items);
-        request.setAttribute(PARAM_ORDERS_SLIST, itemsS);
+        //request.setAttribute(PARAM_ORDERS_SLIST, itemsS);
         request.setAttribute(PARAM_LAST_PAGE, count);
         request.setAttribute(PARAM_ORDERS_COUNT_NEW,countNew);
         request.setAttribute(PARAM_PAGES_COUNT, pagesCount);

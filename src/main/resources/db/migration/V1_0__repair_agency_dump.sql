@@ -235,7 +235,6 @@ INSERT INTO `orders` VALUES (11,'Сломался холодилник9','Сло
 INSERT INTO `orders` VALUES (12,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
 INSERT INTO `orders` VALUES (13,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
 INSERT INTO `orders` VALUES (14,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
-INSERT INTO `orders` VALUES (15,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
 
 DROP TABLE IF EXISTS `orders_history`;
 CREATE TABLE `orders_history` (

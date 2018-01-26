@@ -23,6 +23,7 @@ public class Order implements GenericEntity, Serializable {
     private int employeeId;
     private String employeeName;
     private int managerId;
+    private Date changeDate;
 
     public void setId(int id) {
         this.id = id;
@@ -229,6 +230,18 @@ public class Order implements GenericEntity, Serializable {
         }
     }
 
+    public Date getChangeDateDate() {
+        return changeDate;
+    }
+
+    public void setChangeDateDate(Date changeDate) {
+        if(this.changeDate!=null && this.changeDate.equals(changeDate) ||
+                changeDate!=null && !changeDate.equals(this.changeDate)) {
+            this.changeDate = changeDate;
+            this.changed = true;
+        }
+    }
+
     public boolean isChanged() {
         return changed;
     }
@@ -252,7 +265,8 @@ public class Order implements GenericEntity, Serializable {
                 ", status=" + status +
                 ", employeeId=" + employeeId +
                 ", employeeName='" + employeeName + '\'' +
-                ", managerId=" + managerId +
+                ", managerId=" + managerId + '\'' +
+                ", changeDate=" + changeDate +
                 '}';
     }
 }

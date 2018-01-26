@@ -1,6 +1,9 @@
 package ua.glushko.utils.tags;
 
+import ua.glushko.commands.impl.auth.LoginCommand;
 import ua.glushko.model.entity.Order;
+import ua.glushko.model.entity.OrderStatus;
+import ua.glushko.services.utils.Authentication;
 
 import java.util.Iterator;
 import java.util.List;
@@ -28,31 +31,46 @@ public class ShowOrdersListTag extends ShowListTag {
             page = Integer.valueOf(pageContext.getRequest().getParameter(PARAM_PAGE));
         else page=1;
 
+        Integer userId = null;
+        attribute = pageContext.getSession().getAttribute(Authentication.PARAM_ID);
+        if(Objects.nonNull(attribute))
+            userId = (Integer)attribute;
+
         Iterator<Object> iterator = list.iterator();
         for (int i = 0; i < rowsCount; i++) {
-            Order object = null;
+            Order order = null;
             if (!iterator.hasNext())
                 continue;
             Object next = iterator.next();
             if (next instanceof Order) {
-                object = (Order) next;
+                order = (Order) next;
+            }
+            String style="";
+            if(Objects.nonNull(userId) && order.getUserId()==userId &&
+                    (order.getStatus()== OrderStatus.CONFIRMATION || order.getStatus()==OrderStatus.PAYMENT || order.getStatus()==OrderStatus.REJECT)
+                    || Objects.nonNull(userId) && order.getEmployeeId()==userId && (order.getStatus()==OrderStatus.VERIFICATION || order.getStatus()==OrderStatus.ESTIMATE || order.getStatus()==OrderStatus.PROGRESS || order.getStatus()==OrderStatus.COMPLETE)){
+                style = "class=\"btn-warning\"";
+            } else if(order.getStatus()==OrderStatus.NEW) {
+                style = "class=\"btn-info\"";
+            } else if(Objects.nonNull(userId) && (order.getUserId()==userId || order.getEmployeeId()==userId)){
+                style = "class=\"btn-success\"";
             }
             builder.append("<tr onClick=\"window.location.href='")
                     .append("/do?command=").append(command).append("_detail")
                     .append("&page=").append(page)
-                    .append("&order_id=").append(Objects.requireNonNull(object).getId())
-                    .append("'; return false\">")
+                    .append("&order_id=").append(Objects.requireNonNull(order).getId())
+                    .append("'; return false\" ").append(style).append(">")
                     .append("<td><a href=\"/do?command=").append(command).append("_detail")
                     .append("&page=").append(page)
-                    .append("&order_id=").append(object.getId()).append("\">")
-                    .append(object.getId())
+                    .append("&order_id=").append(order.getId()).append("\">")
+                    .append(order.getId())
                     .append("</a></td>");
-            builder.append("<td>").append(object.getDescriptionShort()).append("</td>");
-            builder.append("<td>").append(object.getStatus()).append("</td>");
-            builder.append("<td>").append(object.getOrderDate()).append("</td>");
-            builder.append("<td>").append(object.getExpectedDate()).append("</td>");
-            builder.append("<td>").append(object.getUserName()).append("</td>");
-            builder.append("<td>").append(object.getEmployeeName()).append("</td>");
+            builder.append("<td>").append(order.getDescriptionShort()).append("</td>");
+            builder.append("<td>").append(order.getStatus()).append("</td>");
+            builder.append("<td>").append(order.getOrderDate()).append("</td>");
+            builder.append("<td>").append(order.getExpectedDate()).append("</td>");
+            builder.append("<td>").append(order.getUserName()).append("</td>");
+            builder.append("<td>").append(order.getEmployeeName()).append("</td>");
             builder.append("</tr>");
         }
     }

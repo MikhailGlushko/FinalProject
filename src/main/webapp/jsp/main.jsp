@@ -75,6 +75,16 @@
                             </div>
                         </div>
                     </c:if>
+                    <c:if test="${not empty role and role!='CUSTOMER'}">
+                        <div class="panel panel-default" style="border: 1px solid #6cf; margin: 10px;">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">Статистика заказов</h4>
+                            </div>
+                            <div class="panel-body">
+                                <customtags:Stats totalOrders="${stat_total}"/>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
                 <%----%>
                 <div class="row">
@@ -100,16 +110,6 @@
                                 </div>
                                 <div class="panel-body">
                                     <customtags:News list="${news_list}"/>
-                                </div>
-                            </div>
-                        </c:if>
-                        <c:if test="${not empty role and role!='CUSTOMER'}">
-                            <div class="panel panel-default" style="border: 1px solid #6cf; margin: 10px;">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">Статистика заказов</h4>
-                                </div>
-                                <div class="panel-body">
-                                    <customtags:Stats totalOrders="${stat_total}" newOrders="${stat_new}"/>
                                 </div>
                             </div>
                         </c:if>
