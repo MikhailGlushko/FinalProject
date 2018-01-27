@@ -99,6 +99,12 @@
             <version>5.0.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -111,6 +117,21 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                    <containerConfigXML>src/main/config/dev/META-INF/context.xml</containerConfigXML>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/config/dev</directory>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
         </plugins>
@@ -140,6 +161,25 @@
                     <!--<scope>test</scope>-->
                 </dependency>
             </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <configuration>
+                            <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                            <containerConfigXML>src/main/config/dev/META-INF/context.xml</containerConfigXML>
+                            <webResources>
+                                <resource>
+                                    <directory>src/main/config/dev</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>prod</id>
@@ -166,13 +206,32 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <configuration>
+                            <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                            <containerConfigXML>src/main/config/prod/META-INF/context.xml</containerConfigXML>
+                            <webResources>
+                                <resource>
+                                    <directory>src/main/config/prod</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+                    <plugin>
                         <groupId>org.apache.tomcat.maven</groupId>
                         <artifactId>tomcat7-maven-plugin</artifactId>
                         <version>2.2</version>
                         <configuration>
-                            <url>http://127.0.0.1:8080/manager/text</url>
-                            <username>tomcat</username>
-                            <password>tomcat</password>
+                            <!--<url>http://127.0.0.1:8080/manager/text</url>-->
+                            <!--<username>tomcat</username>-->
+                            <!--<password>tomcat</password>-->
+                            <!--<path>/</path>-->
+                            <url>http://192.168.99.100:8080/manager/text</url>
+                            <username>admin</username>
+                            <password>admin</password>
                             <path>/</path>
                         </configuration>
                     </plugin>
@@ -183,8 +242,39 @@
                         <configuration>
                             <user>root</user>
                             <password>compaq</password>
-                            <url>jdbc:mysql://localhost:3306/repair_agency</url>
+                            <url>jdbc:mysql://192.168.99.100:3306/repair_agency</url>
                             <driver>com.mysql.cj.jdbc.Driver</driver>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jolokia</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.13.9</version>
+                        <configuration>
+                            <dockerHost>tcp://192.168.99.100:2376</dockerHost>
+                            <certPath>/Users/lenovo/.docker/machine/machines/default</certPath>
+                            <useColor>true</useColor>
+                            <images>
+                                <image>
+                                    <name>glushko-mysql-utf8</name>
+                                    <alias>mysql</alias>
+                                    <run>
+                                        <wait>
+                                            <time>10000</time>
+                                        </wait>
+                                    </run>
+                                </image>
+                                <image>
+                                    <name>glushko-tomcat8-java8</name>
+                                    <alias>tomcat</alias>
+                                    <run>
+                                        <wait>
+                                            <time>10000</time>
+                                        </wait>
+                                    </run>
+                                </image>
+                            </images>
                         </configuration>
                     </plugin>
                 </plugins>

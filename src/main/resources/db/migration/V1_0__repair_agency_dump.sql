@@ -111,7 +111,7 @@ CREATE TABLE `repair_services` (
   `name_ru` varchar(45) NOT NULL,
   `parent` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=94 CHARSET=utf8;
 
 INSERT INTO `repair_services` VALUES
   (1,'Repair of large household appliances','Ремонт крупной бытовой техники','0'),

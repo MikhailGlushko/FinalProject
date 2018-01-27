@@ -5,5 +5,5 @@
               type="javax.sql.DataSource"
               username="root" password="compaq"
               driverClassName="com.mysql.cj.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/repair_agency"/>
+              url="jdbc:mysql://127.0.0.1:3306/repair_agency"/>
 </Context>
