@@ -5,5 +5,7 @@ package ua.glushko.model.entity;
  * Access to the system is granted only to users with the status ACTIVE
  */
 public enum UserStatus {
-    ACTIVE, CLOSE, BLOCKED
+    ACTIVE,     // active and can login into system
+    CLOSE,      // closed   - no access
+    BLOCKED     // blocked  - no access
 }

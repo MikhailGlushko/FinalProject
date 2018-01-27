@@ -3,9 +3,7 @@ package ua.glushko.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Orders
- */
+/** Orders */
 public class Order implements GenericEntity, Serializable {
     private boolean changed = false;
     private int id;
@@ -24,6 +22,8 @@ public class Order implements GenericEntity, Serializable {
     private OrderStatus status = OrderStatus.NEW;
     private int employeeId;
     private String employeeName;
+    private int managerId;
+    private Date changeDate;
 
     public void setId(int id) {
         this.id = id;
@@ -219,6 +219,29 @@ public class Order implements GenericEntity, Serializable {
         }
     }
 
+    public int getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(int managerId) {
+        if(this.managerId!=managerId) {
+            this.managerId = managerId;
+            this.changed = true;
+        }
+    }
+
+    public Date getChangeDateDate() {
+        return changeDate;
+    }
+
+    public void setChangeDateDate(Date changeDate) {
+        if(this.changeDate!=null && this.changeDate.equals(changeDate) ||
+                changeDate!=null && !changeDate.equals(this.changeDate)) {
+            this.changeDate = changeDate;
+            this.changed = true;
+        }
+    }
+
     public boolean isChanged() {
         return changed;
     }
@@ -242,6 +265,8 @@ public class Order implements GenericEntity, Serializable {
                 ", status=" + status +
                 ", employeeId=" + employeeId +
                 ", employeeName='" + employeeName + '\'' +
+                ", managerId=" + managerId + '\'' +
+                ", changeDate=" + changeDate +
                 '}';
     }
 }

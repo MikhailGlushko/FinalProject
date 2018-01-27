@@ -3,9 +3,7 @@ package ua.glushko.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * GuestBook
- */
+/** GuestBook */
 public class News implements GenericEntity, Serializable{
     private int id;
     private String description;

@@ -60,6 +60,13 @@ public class Authentication {
         return attribute.toString();
     }
 
+    public static Integer getCurrentUserId(HttpSession session){
+        try {
+            return Integer.valueOf(session.getAttribute(Authentication.PARAM_ID).toString());
+        } catch (NumberFormatException e){}
+        return null;
+    }
+
     /**
      * Performs the calculation of the access level based on previously saved data in the session upon successful authorization of the user
      *

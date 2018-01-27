@@ -3,6 +3,8 @@ package ua.glushko.model.dao.impl;
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.entity.Order;
 import ua.glushko.exception.DaoException;
+import ua.glushko.model.entity.OrderStats;
+import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
 
@@ -10,9 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class OrderDAO extends AbstractDAO<Order> {
 
@@ -33,6 +33,8 @@ public class OrderDAO extends AbstractDAO<Order> {
     private final String NAME_FIELD_EMPLOYEE_ID = "employee_id";
     private final String NAME_FIELD_USER_NAME = "user_name";
     private final String NAME_FIELD_EMPLOYEE_NAME = "employee_name";
+    private final String NAME_FIELD_MANAGER_ID = "manager_id";
+    private final String NAME_FIELD_CHANGE_DATE = "change_date";
 
     private static final OrderDAO dao = new OrderDAO();
 
@@ -51,21 +53,22 @@ public class OrderDAO extends AbstractDAO<Order> {
 
     @Override
     protected String getFieldList() {
-        StringBuilder builder = new StringBuilder();
-        return builder
-                .append(NAME_FIELD_DESCRIPTION_SHORT).append(",")
-                .append(NAME_FIELD_DESCRIPTION_DETAIL).append(",")
-                .append(NAME_FIELD_REPAIR_SERVICE).append(",")
-                .append(NAME_FIELD_CITY).append(",")
-                .append(NAME_FIELD_STREET).append(",")
-                .append(NAME_FIELD_ORDER_DATE).append(",")
-                .append(NAME_FIELD_EXPECTED_DATE).append(",")
-                .append(NAME_FIELD_APPLIANCE).append(",")
-                .append(NAME_FIELD_PRICE).append(",")
-                .append(NAME_FIELD_USER_ID).append(",")
-                .append(NAME_FIELD_MEMO).append(",")
-                .append(NAME_FIELD_STATUS).append(",")
-                .append(NAME_FIELD_EMPLOYEE_ID).toString();
+        String builder = NAME_FIELD_DESCRIPTION_SHORT + "," +
+                NAME_FIELD_DESCRIPTION_DETAIL + "," +
+                NAME_FIELD_REPAIR_SERVICE + "," +
+                NAME_FIELD_CITY + "," +
+                NAME_FIELD_STREET + "," +
+                NAME_FIELD_ORDER_DATE + "," +
+                NAME_FIELD_EXPECTED_DATE + "," +
+                NAME_FIELD_APPLIANCE + "," +
+                NAME_FIELD_PRICE + "," +
+                NAME_FIELD_USER_ID + "," +
+                NAME_FIELD_MEMO + "," +
+                NAME_FIELD_STATUS + "," +
+                NAME_FIELD_EMPLOYEE_ID+ "," +
+                NAME_FIELD_MANAGER_ID+ "," +
+                NAME_FIELD_CHANGE_DATE;
+        return builder;
     }
 
     @Override
@@ -95,6 +98,11 @@ public class OrderDAO extends AbstractDAO<Order> {
         statement.setString(11, entity.getMemo());
         statement.setString(12, entity.getStatus().name());
         statement.setInt(13, entity.getEmployeeId());
+        statement.setInt(14, entity.getManagerId());
+        if(entity.getChangeDateDate()!=null)
+            statement.setTimestamp(15, new Timestamp(entity.getChangeDateDate().getTime()));
+        else
+            statement.setDate(15,null);
     }
 
     @Override
@@ -126,19 +134,45 @@ public class OrderDAO extends AbstractDAO<Order> {
             item.setEmployeeId(resultSet.getInt(NAME_FIELD_EMPLOYEE_ID));
             item.setUserName(resultSet.getString(NAME_FIELD_USER_NAME));
             item.setEmployeeName(resultSet.getString(NAME_FIELD_EMPLOYEE_NAME));
+            item.setManagerId(resultSet.getInt(NAME_FIELD_MANAGER_ID));
+            if(resultSet.getDate(NAME_FIELD_CHANGE_DATE)!=null)
+                item.setChangeDateDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_CHANGE_DATE).getTime()));
             list.add(item);
         }
         return list;
     }
 
+    public Order take(OrderStatus status) throws DaoException{
+        String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
+                "FROM repair_agency.orders a\n" +
+                "left join users b on a.user_id=b.id \n" +
+                "left join users c on a.employee_id=c.id\n" +
+                "where a.status=? and (employee_id is null or employee_id=0)\n"+
+                "order by order_date asc, status\n" +
+                "limit 1;";
+        List<Order> list;
+        try (ConnectionWrapper con = TransactionManager.getConnection();
+             PreparedStatement statement = con.prepareStatement(sql)){
+            statement.setString(1,status.name());
+            ResultSet resultSet = statement.executeQuery();
+            list = parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        if (list.size() > 1) {
+            throw new DaoException("Received more than one record.");
+        }
+        return list.iterator().next();
+    }
+
     public List<Order> read(int start, int limit, int userId) throws DaoException {
-        List<Order> list = Collections.emptyList();
+        List<Order> list;
         String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
                 "FROM repair_agency.orders a\n" +
                 "left join users b on a.user_id=b.id \n" +
                 "left join users c on a.employee_id=c.id\n" +
                 "where (a.user_id=? or a.employee_id=?)\n"+
-                "order by order_date desc, status\n" +
+                "order by status,id desc\n" +
                 "limit ?,?;";
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
@@ -156,74 +190,104 @@ public class OrderDAO extends AbstractDAO<Order> {
     }
 
     @Override
-    public List<Order> read() throws DaoException {
-        List<Order> list = Collections.emptyList();
-        String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
+    protected String getSelectQuery(){
+        return "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
                 "FROM repair_agency.orders a\n" +
                 "left join users b on a.user_id=b.id \n" +
                 "left join users c on a.employee_id=c.id\n" +
-                "order by order_date desc, status;";
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            ResultSet resultSet = statement.executeQuery();
-            setTitles(statement.getMetaData());
-            list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return list;
+                "order by status,id desc;";
     }
 
     @Override
-    public List<Order> read(int start, int limit) throws DaoException {
-        List<Order> list = Collections.emptyList();
-        String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
+    protected String getSelectQuery(int start, int end) {
+        return "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
                 "FROM repair_agency.orders a\n" +
                 "left join users b on a.user_id=b.id \n" +
                 "left join users c on a.employee_id=c.id\n" +
-                "order by order_date desc, status\n" +
+                "order by status,id desc\n" +
                 "limit ?,?;";
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            statement.setInt(1, start);
-            statement.setInt(2, limit);
-            ResultSet resultSet = statement.executeQuery();
-            setTitles(resultSet.getMetaData());
-            list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return list;
     }
 
     @Override
-    public Order read(int id) throws DaoException {
-        List<Order> list = Collections.emptyList();
-        String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
+    protected String getSelectQueryById(){
+        return "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
                 "FROM repair_agency.orders a\n" +
                 "left join users b on a.user_id=b.id \n" +
                 "left join users c on a.employee_id=c.id\n" +
                 "where a.id=?\n"+
-                "order by order_date desc, status";
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            prepareStatementForSelectById(statement, id);
-            ResultSet resultSet = statement.executeQuery();
-            list = parseResultSet(resultSet);
-        } catch (Exception e) {
-            throw new DaoException(e);
-        }
-        if (list.size() == 0) {
-            return null;
-        }
-        if (list.size() > 1) {
-            throw new DaoException("Received more than one record.");
-        }
-        return list.iterator().next();
+                "order by status,id desc";
     }
 
     protected String getCountQuery(int userId) {
         return "select count(*) AS total from " + getTableName()+
                 " where user_id="+userId+" or employee_id="+userId;
+    }
+
+//    public Integer countWithoutEmployeeByStatus(OrderStatus status) throws DaoException{
+//        String sql = "SELECT count(*) as total \n" +
+//                "FROM repair_agency.orders a\n" +
+//                "where (employee_id is null or employee_id=0) and status=?\n";
+//        try (ConnectionWrapper con = TransactionManager.getConnection();
+//             PreparedStatement statement = con.prepareStatement(sql)) {
+//            statement.setString(1,status.name());
+//            ResultSet resultSet = statement.executeQuery();
+//            if(resultSet.next())
+//                return resultSet.getInt("total");
+//        } catch (Exception e) {
+//            throw new DaoException(e);
+//        }
+//        return 0;
+//    }
+
+    public Map<OrderStatus, Map<OrderStats,Integer>> getTotal(Integer userId) throws DaoException {
+        Map<OrderStatus,Map<OrderStats,Integer>> result = new LinkedHashMap<>();
+        String sql="select a.status, coalesce(a.total,0) as `total`, coalesce(b.new,0) as `new`, coalesce(c.todays,0) as `today`, \n" +
+                "coalesce(d.owner,0) as `owner`,coalesce(e.execution,0) as `execution`, coalesce(f.noemployee,0) as `noemployee`, \n" +
+                "coalesce(g.current,0) as `current`, coalesce(h.countall,0) as `countall` \n"+
+                "from (select count(*) as `total`, status from repair_agency.orders group by status) a\n" +
+                "left join (select count(*) as `new`, status from repair_agency.orders where order_date>=current_date() group by status) b\n" +
+                "on a.status=b.status\n" +
+                "left join (select count(*) as `todays`, status from repair_agency.orders where change_date>=current_date() group by status) c\n" +
+                "on a.status=c.status\n" +
+                "left join (select count(*) as `owner`, status from repair_agency.orders where user_id=?  group by status) d\n" +
+                "on a.status = d.status\n" +
+                "left join (select count(*) as `execution`, status from repair_agency.orders where user_id=? and (status='NEW' or status='CONFIRMATION' or status='PAYMENT' or status='CLOSE' or status='REJECT') or employee_id=? and (status='VERIFICATION' or status='ESTIMATE' or status='PROGRESS' or status='COMPLETE')  group by status) e\n" +
+                "on a.status = e.status\n" +
+                "left join (select count(*) as `noemployee`, status from repair_agency.orders where (employee_id is null or employee_id=0) group by status) f\n" +
+                "on a.status=f.status\n" +
+                "left join (select count(*) as `current`, status from  repair_agency.orders where (employee_id=? or user_id=?) group by status) g\n"+
+                "on a.status=g.status\n" +
+                "left join (select count(*) as `countall` from repair_agency.orders) h\n"+
+                "on true\n"+
+                "group by a.status;";
+
+        try(ConnectionWrapper con = TransactionManager.getConnection();
+            PreparedStatement statement = con.prepareStatement(sql)){
+            statement.setInt(1,userId);
+            statement.setInt(2,userId);
+            statement.setInt(3,userId);
+            statement.setInt(4,userId);
+            statement.setInt(5,userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                String status = resultSet.getString(1);
+                if(Objects.nonNull(status)) {
+                    OrderStatus key = OrderStatus.valueOf(status);
+                    Map<OrderStats,Integer> value = new HashMap<>();
+                    value.put(OrderStats.STATUS,resultSet.getInt(2));
+                    value.put(OrderStats.NEW,resultSet.getInt(3));
+                    value.put(OrderStats.TODAY,resultSet.getInt(4));
+                    value.put(OrderStats.OWNER,resultSet.getInt(5));
+                    value.put(OrderStats.EXECUTION,resultSet.getInt(6));
+                    value.put(OrderStats.NO_EMPLOYEE,resultSet.getInt(7));
+                    value.put(OrderStats.CURRENT_USER,resultSet.getInt(8));
+                    value.put(OrderStats.ALL,resultSet.getInt(9));
+                    result.put(key,value);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return result;
     }
 }

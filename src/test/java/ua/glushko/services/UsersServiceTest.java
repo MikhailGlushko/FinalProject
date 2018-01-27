@@ -3,7 +3,7 @@ package ua.glushko.services;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
-import ua.glushko.model.dao.H2DataSource;
+import ua.glushko.transaction.H2DataSource;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
 import ua.glushko.model.entity.UserStatus;
@@ -25,8 +25,7 @@ public class UsersServiceTest {
 
     @Before
     public void getService() {
-        if (ConnectionPool.getConnectionPool().getDataSource() == null)
-            ConnectionPool.getConnectionPool().setDataSource(H2DataSource.H2_CONNECTION_POOL);
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
     }
 
     @Test
@@ -124,12 +123,12 @@ public class UsersServiceTest {
     @Test
     public void getUsersAsStuff() throws DaoException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
-        List<User> usersAsStuff = usersService.getUsersAsStuff(UserRole.CUSTOMER, true);
+        List<User> usersAsStuff = usersService.getUsersByRole(UserRole.CUSTOMER, true);
         assertTrue(usersAsStuff.size()!=0);
         for (User user: usersAsStuff) {
             usersService.deleteUser(user.getId());
         }
-        usersAsStuff = usersService.getUsersAsStuff(UserRole.CUSTOMER, true);
+        usersAsStuff = usersService.getUsersByRole(UserRole.CUSTOMER, true);
         assertNull(usersAsStuff);
     }
 

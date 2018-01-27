@@ -29,7 +29,7 @@ import static ua.glushko.services.utils.Authentication.PARAM_ROLE;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_LOCALE;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
-import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
+import ua.glushko.transaction.H2DataSource;
 
 public class UsersListCommandTest {
 
@@ -42,7 +42,7 @@ public class UsersListCommandTest {
 
     @Before
     public void setUp(){
-        ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         when(request.getSession()).thenReturn(session);
         when(request.getSession().getAttribute(PARAM_LOCALE)).thenReturn("ru");
         when(request.getParameter(PARAM_COMMAND)).thenReturn(COMMAND_USERS);

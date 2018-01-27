@@ -25,9 +25,9 @@ import static ua.glushko.services.utils.Validator.getValidatedUserBeforeUpdateDe
 public class UserUpdateCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-        String page = null;
+        String page;
         String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
-        User userNew = new User();
+        User userNew;
         try {
             int access = Authentication.checkAccess(request);
             if ((access & U) == U) {

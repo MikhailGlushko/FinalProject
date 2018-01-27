@@ -3,7 +3,7 @@ package ua.glushko.model.dao.impl;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.dao.GenericDAO;
-import ua.glushko.model.dao.MySQLDAOFactory;
+import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.entity.RepairService;
 import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
+import ua.glushko.transaction.H2DataSource;
 
 public class RepairServiceDAOTest {
 
@@ -20,8 +20,8 @@ public class RepairServiceDAOTest {
 
     @Before
     public void init() {
-        ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
-         reapirServiceDAO = MySQLDAOFactory.getFactory().getRepairServiceDao();
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
+         reapirServiceDAO = DAOFactory.getFactory().getRepairServiceDao();
     }
 
     @Test

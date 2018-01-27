@@ -17,7 +17,7 @@ public class LanguageSwitcherTag extends TagSupport {
         try {
             HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
             Cookie[] cookies = request.getCookies();
-            String cookieName = null;
+            String cookieName;
             String cookieValue = null;
             if(Objects.nonNull(cookies))
             for (Cookie cookie:cookies) {

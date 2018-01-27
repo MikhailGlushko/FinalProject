@@ -29,7 +29,7 @@
         <p>&nbsp;</p>
         <c:if test="${not empty service_detail}">
             <div class="login_div" class="login_div" align="center">
-                <form name="edit" method="post" action="/do">
+                <form name="edit" method="post" action="<c:url value="/do"/>">
                     <input type="hidden" name="command" value="services_action"/>
                     <input type="hidden" name="service_id" value="${service_detail.id}"/>
                     <input type="hidden" name="page" value="${param.page}"/>

@@ -28,7 +28,7 @@ public class MySQLDataSource {
     }
 
     private static BasicDataSource initDataSource() {
-        BasicDataSource dataSource = null;
+        BasicDataSource dataSource;
         String url = String.format(PROPERTY_NAME_DB_URL,
                 DBConfigurationManager.getProperty(PROPERTY_NAME_DB_HOST),
                 DBConfigurationManager.getProperty(PROPERTY_NAME_DB_PORT),

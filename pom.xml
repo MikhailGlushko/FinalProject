@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ua.epam</groupId>
+    <groupId>ua.glushko</groupId>
     <artifactId>FinalProject</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
@@ -11,10 +11,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.12</junit.version>
         <mockito.version>2.12.0</mockito.version>
-        <dbunit.version>2.5.4</dbunit.version>
         <mysql.version>6.0.6</mysql.version>
         <h2.version>1.4.196</h2.version>
-        <liquibase.version>3.5.3</liquibase.version>
         <log4j.version>1.2.17</log4j.version>
         <commons-dbcp>1.4</commons-dbcp>
         <commons-codec>1.11</commons-codec>
@@ -51,13 +49,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-maven-plugin -->
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-maven-plugin</artifactId>
-            <version>${liquibase.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -92,6 +83,19 @@
             <version>${commons-codec}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-maven-plugin -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <version>5.0.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -104,6 +108,21 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                    <containerConfigXML>src/main/config/dev/META-INF/context.xml</containerConfigXML>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/config/dev</directory>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
         </plugins>
@@ -125,14 +144,31 @@
                     <artifactId>commons-dbcp</artifactId>
                     <version>${commons-dbcp}</version>
                 </dependency>
-
                 <dependency>
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
                     <version>${h2.version}</version>
-                    <!--<scope>test</scope>-->
                 </dependency>
             </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <configuration>
+                            <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                            <containerConfigXML>src/main/config/dev/META-INF/context.xml</containerConfigXML>
+                            <webResources>
+                                <resource>
+                                    <directory>src/main/config/dev</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>prod</id>
@@ -159,14 +195,71 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <configuration>
+                            <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                            <containerConfigXML>src/main/config/prod/META-INF/context.xml</containerConfigXML>
+                            <webResources>
+                                <resource>
+                                    <directory>src/main/config/prod</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+                    <plugin>
                         <groupId>org.apache.tomcat.maven</groupId>
                         <artifactId>tomcat7-maven-plugin</artifactId>
                         <version>2.2</version>
                         <configuration>
-                            <url>http://127.0.0.1:8080/manager/text</url>
-                            <username>tomcat</username>
-                            <password>tomcat</password>
+                            <url>http://192.168.99.100:8080/manager/text</url>
+                            <username>admin</username>
+                            <password>admin</password>
                             <path>/</path>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>5.0.6</version>
+                        <configuration>
+                            <user>root</user>
+                            <password>compaq</password>
+                            <url>jdbc:mysql://192.168.99.100:3306/repair_agency</url>
+                            <driver>com.mysql.cj.jdbc.Driver</driver>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jolokia</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.13.9</version>
+                        <configuration>
+                            <dockerHost>tcp://192.168.99.100:2376</dockerHost>
+                            <certPath>/Users/lenovo/.docker/machine/machines/default</certPath>
+                            <useColor>true</useColor>
+                            <images>
+                                <image>
+                                    <name>glushko-mysql-utf8</name>
+                                    <alias>mysql</alias>
+                                    <run>
+                                        <wait>
+                                            <time>10000</time>
+                                        </wait>
+                                    </run>
+                                </image>
+                                <image>
+                                    <name>glushko-tomcat8-java8</name>
+                                    <alias>tomcat</alias>
+                                    <run>
+                                        <wait>
+                                            <time>10000</time>
+                                        </wait>
+                                    </run>
+                                </image>
+                            </images>
                         </configuration>
                     </plugin>
                 </plugins>

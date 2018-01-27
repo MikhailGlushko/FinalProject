@@ -9,6 +9,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import static ua.glushko.services.utils.Authentication.*;
 import static ua.glushko.commands.Command.*;
@@ -34,9 +35,9 @@ abstract class ShowListTag extends TagSupport {
             StringBuilder builder = new StringBuilder();
 
             String property;
-            Integer pagesCount = null;
-            Integer rowsCount = null;
-            Integer page      = null;
+            Integer pagesCount;
+            Integer rowsCount;
+            Integer page;
             try {
                 property = ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT);
                 pagesCount = Integer.valueOf(property);
@@ -48,14 +49,16 @@ abstract class ShowListTag extends TagSupport {
             }
 
             if (pageContext.getRequest().getParameter(PARAM_PAGE) != null
-                    && pageContext.getRequest().getParameter(PARAM_PAGE)!=""
+                    && !Objects.equals(pageContext.getRequest().getParameter(PARAM_PAGE), "")
                     && !pageContext.getRequest().getParameter(PARAM_PAGE).equals("null"))
                 page = Integer.valueOf(pageContext.getRequest().getParameter(PARAM_PAGE));
             else
                 page = 1;
 
             // build head of table
-            Integer access = Integer.valueOf(pageContext.getRequest().getAttribute(PARAM_ACCESS).toString());
+            Integer access = 0;
+            if(Objects.nonNull(pageContext.getRequest().getAttribute(PARAM_ACCESS)))
+                access = Integer.valueOf(pageContext.getRequest().getAttribute(PARAM_ACCESS).toString());
             if((access & C) == C || (access & c) == c ) {
                 builder.append("<div class='addbutton' align=\"right\">")
                         .append("<button class='addbutton' type='button' name='button' value='add' onClick=\"window.location.href='/do?command=").append(list.iterator().next().getClass().getSimpleName().toLowerCase()).append("s_add")
@@ -74,7 +77,7 @@ abstract class ShowListTag extends TagSupport {
             makeNavigator(builder, pagesCount, rowsCount, page);
             pageContext.getOut().write(builder.toString());
         } catch (IOException | NumberFormatException e) {
-            throw new JspException(e.getMessage());
+            //throw new JspException(e.getMessage());
         }
         return SKIP_BODY;
     }
@@ -93,21 +96,32 @@ abstract class ShowListTag extends TagSupport {
     protected abstract void makeBody(List<Object> list, StringBuilder builder, Integer rowsCount);
 
     void makeNavigator(StringBuilder builder, Integer pagesCount, Integer rowsCount, Integer page) {
-        // build navigator
-        builder.append("<table class=\"navigator\"><tr>").append("<td>").append(MessageManager.getMessage("browser.pages")).append("</td>");
+        String command = pageContext.getRequest().getParameter(PARAM_COMMAND);
+        int pageCount = list.size()/rowsCount;
+        if (list.size()%rowsCount!=0)
+            pageCount++;
+        int lastPage = pageCount;
+        Object attribute = pageContext.getRequest().getAttribute(PARAM_LAST_PAGE);
+        if(Objects.nonNull(attribute))
+            lastPage = Integer.valueOf(attribute.toString());
+        builder.append("<div style=\"text-align: center;\"><ul class=\"pagination\">");
+        if(page-1>0) {
+            builder.append("<li>").append("<a href=\"/do?command=").append(command).append("&page=").append(1).append("\"><<</a>").append("</li>");
+            builder.append("<li>").append("<a href=\"/do?command=").append(command).append("&page=").append(page - 1).append("\"> < </a>").append("</li>");
+        }
         for (int i=page-pagesCount; i<page+pagesCount; i++){
-            int pageCount = list.size()/rowsCount;
-            if (list.size()%rowsCount!=0)
-                pageCount++;
             if(i >0 && i-page<pageCount){
-                if(page!=i){
-                    String command = pageContext.getRequest().getParameter(PARAM_COMMAND);
-                    builder.append("<td>").append("<a href=\"/do?command=").append(command).append("&page=").append(i).append("\">").append(i).append("</a>").append("</td>");
-                } else {
-                    builder.append("<td>").append(" [ ").append(i).append(" ] ").append("</td>");
-                }
+                if(i!=page)
+                    builder.append("<li>").append("<a href=\"/do?command=").append(command).append("&page=").append(i).append("\">").append(i).append("</a>").append("</li>");
+                else
+                    builder.append("<li class=\"active\">").append("<a href=\"/do?command=").append(command).append("&page=").append(i).append("\">").append(i).append("</a>").append("</li>");
             }
         }
-        builder.append("</tr></table>");
+        if(page<lastPage) {
+            builder.append("<li>").append("<a href=\"/do?command=").append(command).append("&page=").append(page + 1).append("\"> > </a>").append("</li>");
+            builder.append("<li>").append("<a href=\"/do?command=").append(command).append("&page=").append(lastPage).append("\">>></a>").append("</li>");
+        }
+
+        builder.append("</ul></div>");
     }
 }

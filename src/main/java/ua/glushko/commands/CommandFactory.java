@@ -4,8 +4,7 @@ import org.apache.log4j.Logger;
 import ua.glushko.commands.impl.*;
 import ua.glushko.commands.impl.admin.guestbook.GuestBookListCommand;
 import ua.glushko.commands.impl.admin.guestbook.GuestBookNewCommand;
-import ua.glushko.commands.impl.admin.history.*;
-import ua.glushko.commands.impl.admin.orders.*;
+import ua.glushko.commands.impl.orders.*;
 import ua.glushko.commands.impl.admin.services.*;
 import ua.glushko.commands.impl.admin.setup.SetupCommand;
 import ua.glushko.commands.impl.admin.setup.SetupSaveCommand;
@@ -28,7 +27,7 @@ public class CommandFactory {
     public static final String COMMAND_USERS = "users";
     public static final String COMMAND_USERS_READ = "users_detail";
     private static final String COMMAND_USERS_ACTION_CRUD = "users_action";
-    public static final String COMMAND_USERS_ADD = "users_add";
+    private static final String COMMAND_USERS_ADD = "users_add";
     public static final String COMMAND_USERS_UPDATE = "users_update";
     public static final String COMMAND_USERS_DELETE = "users_delete";
     public static final String COMMAND_USERS_CREATE = "users_create";
@@ -48,18 +47,12 @@ public class CommandFactory {
     public static final String COMMAND_ORDER_UPDATE = "orders_update";
     public static final String COMMAND_ORDER_DELETE = "orders_delete";
     public static final String COMMAND_ORDER_CREATE = "orders_create";
-    // for requests history
-    private static final String COMMAND_HISTORY_ACTION_CRUD = "history_action";
-    public static final String COMMAND_HISTORY_CHANGE_EMPLOYEE = "history_change_employee";
-    public static final String COMMAND_HISTORY_CHANGE_STATUS = "history_change_status";
-    public static final String COMMAND_HISTORY_CHANGE_DATE = "history_change_date";
-    public static final String COMMAND_HISTORY_CHANGE_PRICE = "history_change_price";
-    public static final String COMMAND_HISTORY_CHANGE_COMMENT = "history_change_comment";
-    public static final String COMMAND_HISTORY_CHANGE_GUEST_BOOK = "history_change_guest_book";
+    private static final String COMMAND_ORDER_TAKE = "orders_take";
+    private static final String COMMAND_ORDER_CHANGE_STATUS = "orders_change_status";
 
     // for guest book
     public static final String COMMAND_GUEST_BOOK = "guestbook";
-    public static final String COMMAND_GUEST_BOOK_NEW = "gestbook_new";
+    private static final String COMMAND_GUEST_BOOK_NEW = "gestbook_new";
 
     private static final String COMMAND_SETUP = "setup";
     private static final String COMMAND_SETUP_SAVE = "setup_save";
@@ -103,14 +96,8 @@ public class CommandFactory {
         commandMap.put(COMMAND_ORDERS_READ,   new OrderReadCommand());
         commandMap.put(COMMAND_ORDER_UPDATE, new OrderUpdateCommand());
         commandMap.put(COMMAND_ORDER_DELETE, new OrderDeleteCommand());
-
-        commandMap.put(COMMAND_HISTORY_ACTION_CRUD, new OrderHistoryActionCRUDCommand());
-        commandMap.put(COMMAND_HISTORY_CHANGE_EMPLOYEE, new OrderHistoryChangeEmployeeCommand());
-        commandMap.put(COMMAND_HISTORY_CHANGE_STATUS, new OrderHistoryChangeStatusCommand());
-        commandMap.put(COMMAND_HISTORY_CHANGE_DATE, new OrderHistoryChangeDateCommand());
-        commandMap.put(COMMAND_HISTORY_CHANGE_PRICE, new OrderHistoryChangePriceCommand());
-        commandMap.put(COMMAND_HISTORY_CHANGE_COMMENT, new OrderHistoryChangeCommentCommand());
-        commandMap.put(COMMAND_HISTORY_CHANGE_GUEST_BOOK, new OrderHistoryChangeGuestBookCommand());
+        commandMap.put(COMMAND_ORDER_TAKE, new OrderTakeCommand());
+        commandMap.put(COMMAND_ORDER_CHANGE_STATUS, new OrderChangeStatusCommand());
 
         commandMap.put(COMMAND_GUEST_BOOK, new GuestBookListCommand());
         commandMap.put(COMMAND_GUEST_BOOK_NEW, new GuestBookNewCommand());

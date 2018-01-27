@@ -7,5 +7,9 @@ package ua.glushko.model.entity;
  * GUEST - guests
  */
 public enum UserRole {
-    ADMIN , MANAGER , MASTER, CUSTOMER, GUEST
+    ADMIN ,     // system admin
+    MANAGER ,   // manager
+    MASTER,     // master
+    CUSTOMER,   // customer
+    GUEST       // reserved
 }

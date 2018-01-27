@@ -216,23 +216,33 @@ CREATE TABLE `orders` (
   `appliance` varchar(45) NOT NULL,
   `price` decimal(10,2) DEFAULT '0.00',
   `user_id` int(11) NOT NULL,
-  `memo` varchar(255) DEFAULT NULL,
-  `status` enum('NEW','CLOSE','COMPLETE','SUSPEND','INWORK','REJECT') DEFAULT 'NEW',
+  `memo` mediumtext,
+  `status` ENUM('NEW', 'VERIFICATION', 'ESTIMATE', 'CONFIRMATION', 'PROGRESS', 'COMPLETE', 'SUSPEND', 'CLOSE', 'REJECT', 'PAYMENT', 'INWORK') DEFAULT 'NEW',
   `employee_id` int(11) DEFAULT NULL,
+  `manager_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-INSERT INTO `orders` VALUES (1,'Сломался холодилник1','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-01',NULL,'Холодильник',0.00,4,NULL,'NEW',2 );
-INSERT INTO `orders` VALUES (2,'Сломался холодилник2','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-02',NULL,'Холодильник',0.00,4,NULL,'NEW',NULL );
-INSERT INTO `orders` VALUES (3,'Сломался холодилни3','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-03',NULL,'Холодильник',0.00,4,NULL,'NEW',NULL );
+INSERT INTO `orders` VALUES (1,'Сломался холодилник1','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-01',NULL,'Холодильник',0.00,4,NULL,'NEW',NULL,NULL );
+INSERT INTO `orders` VALUES (2,'Сломался холодилник2','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-02',NULL,'Холодильник',0.00,4,NULL,'NEW',NULL,NULL );
+INSERT INTO `orders` VALUES (3,'Сломался холодилни3','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-03',NULL,'Холодильник',0.00,4,NULL,'NEW',NULL,NULL );
 
-INSERT INTO `orders` VALUES (4,'Сломался холодилник4','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-04',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL );
-INSERT INTO `orders` VALUES (5,'Сломался холодилник5','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-05',NULL,'Холодильник',0.00,5,NULL,'NEW',2 );
-INSERT INTO `orders` VALUES (6,'Сломался холодилни6','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-06',NULL,'Холодильник',0.00,5,NULL,'NEW',3 );
+INSERT INTO `orders` VALUES (4,'Сломался холодилник4','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-04',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
+INSERT INTO `orders` VALUES (5,'Сломался холодилник5','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-05',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
+INSERT INTO `orders` VALUES (6,'Сломался холодилни6','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-06',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
 
-INSERT INTO `orders` VALUES (7,'Сломался холодилник7','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-07',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL );
-INSERT INTO `orders` VALUES (8,'Сломался холодилник8','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-08',NULL,'Холодильник',0.00,5,NULL,'NEW',2 );
-INSERT INTO `orders` VALUES (9,'Сломался холодилни9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',3 );
+INSERT INTO `orders` VALUES (7,'Сломался холодилник7','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-07',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
+INSERT INTO `orders` VALUES (8,'Сломался холодилник8','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-08',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
+INSERT INTO `orders` VALUES (9,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
+INSERT INTO `orders` VALUES (10,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
+INSERT INTO `orders` VALUES (11,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
+INSERT INTO `orders` VALUES (12,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
+INSERT INTO `orders` VALUES (13,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
+INSERT INTO `orders` VALUES (14,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
+INSERT INTO `orders` VALUES (15,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
+
+ALTER TABLE `repair_agency`.`orders` 
+ADD COLUMN `change_date` DATETIME NULL AFTER `manager_id`;
 
 DROP TABLE IF EXISTS `orders_history`;
 CREATE TABLE `orders_history` (
@@ -242,7 +252,7 @@ CREATE TABLE `orders_history` (
   `action` enum('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL,
   `description` varchar(255) NOT NULL,
   `action_date` datetime NOT NULL,
-  `old_value` varchar(45) NOT NULL,
+  `old_value` varchar(45) DEFAULT NULL,
   `new_value` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
@@ -275,3 +285,15 @@ CREATE TABLE `news` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `news` VALUES (1,'News 1',now(),'Многие люди, учитывая нынешнюю обстановку в Украине, стараются экономить.<br>И вместо того, чтобы выбросить сломавшийся бытовой прибор, отправляются в мастерскую,<br>чтобы профессионал его отремонтировал. В большинстве случаев ремонт обходится дешевле,<br>чем покупка новой бытовой техники.<br>Наше агентство предлагает «вдохнуть вторую жизнь» в любой прибор, облегчающий быт людей.');
+
+DROP TABLE IF EXISTS `order_que`;
+CREATE TABLE `order_que` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `role` enum('ADMIN','MANAGER','MASTER','CUSTOMER') NOT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `create_date` datetime NOT NULL,
+  `close_date` datetime DEFAULT NULL,
+  `message` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -177,9 +177,10 @@ CREATE TABLE `orders` (
   `appliance` varchar(45) NOT NULL,
   `price` decimal(10,2) DEFAULT '0.00',
   `user_id` int(11) NOT NULL,
-  `memo` varchar(255) DEFAULT NULL,
-  `status` enum('NEW','CLOSE','COMPLETE','SUSPEND','INWORK','REJECT') DEFAULT 'NEW',
+  `memo` mediumtext,
+  `status` ENUM('NEW', 'VERIFICATION', 'ESTIMATE', 'CONFIRMATION', 'PROGRESS', 'COMPLETE', 'SUSPEND', 'CLOSE', 'REJECT', 'PAYMENT', 'INWORK') DEFAULT 'NEW',
   `employee_id` int(11) DEFAULT NULL,
+  `manager_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -191,7 +192,7 @@ CREATE TABLE `orders_history` (
   `action` enum('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL,
   `description` varchar(255) NOT NULL,
   `action_date` datetime NOT NULL,
-  `old_value` varchar(45) NOT NULL,
+  `old_value` varchar(45) DEFAULT NULL,
   `new_value` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
@@ -218,3 +219,15 @@ CREATE TABLE `news` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `news` VALUES (1,'News 1',now(),'Многие люди, учитывая нынешнюю обстановку в Украине, стараются экономить.<br>И вместо того, чтобы выбросить сломавшийся бытовой прибор, отправляются в мастерскую,<br>чтобы профессионал его отремонтировал. В большинстве случаев ремонт обходится дешевле,<br>чем покупка новой бытовой техники.<br>Наше агентство предлагает «вдохнуть вторую жизнь» в любой прибор, облегчающий быт людей.');
+
+DROP TABLE IF EXISTS `order_que`;
+CREATE TABLE `order_que` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `role` enum('ADMIN','MANAGER','MASTER','CUSTOMER') NOT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `create_date` datetime NOT NULL,
+  `close_date` datetime DEFAULT NULL,
+  `message` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

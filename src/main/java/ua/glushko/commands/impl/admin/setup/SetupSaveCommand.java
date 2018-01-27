@@ -1,4 +1,5 @@
 package ua.glushko.commands.impl.admin.setup;
+import ua.glushko.commands.CommandFactory;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
@@ -20,9 +21,9 @@ import static ua.glushko.services.utils.Validator.getValidatedUserBeforeSetup;
 public class SetupSaveCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-        String page = null;
+        String page;
         String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
-        User userNew = new User();
+        User userNew;
         try {
             userNew = getValidatedUserBeforeSetup(request);
             UsersService usersService = UsersService.getService();
@@ -30,20 +31,19 @@ public class SetupSaveCommand implements Command {
             populateUser(userNew,userOld);
             usersService.updateUser(userOld);
             storeUserDataToSession(request,userOld);
-            page = ConfigurationManager.getProperty(PATH_PAGE_INDEX);
-            return new CommandRouter(request, response, page, CommandRouter.REDIRECT);
+            request.setAttribute(PARAM_COMMAND, CommandFactory.COMMAND_WELCOME);
+            page = "/do";
         } catch (TransactionException | DatabaseException e){
             LOGGER.error(e);
             page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS_SETUP);
             request.setAttribute(PARAM_ERROR_MESSAGE,
                     MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_INCORRECT_DATA, locale));
-            return new CommandRouter(request, response, page);
         } catch (ParameterException e) {
             page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS_SETUP);
             request.setAttribute(PARAM_ERROR_MESSAGE,
                     MessageManager.getMessage(e.getMessage(), locale));
-            return new CommandRouter(request, response, page);
         }
+            return new CommandRouter(request, response, page);
     }
 
 

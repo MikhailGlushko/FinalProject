@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static ua.glushko.services.utils.Authentication.R;
+import static ua.glushko.services.utils.Authentication.r;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PARAM_GUEST_BOOKS_LIST;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PARAM_GUEST_BOOKS_LIST_TITLE;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PATH_PAGE_GUEST_BOOK;
@@ -25,7 +26,7 @@ public class GuestBookListCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
-            storeGuestBookListToSession(request);
+            storeGuestBookListToRequest(request);
         }catch (Exception e) {
             LOGGER.error(e);
         }
@@ -33,7 +34,7 @@ public class GuestBookListCommand implements Command {
         return new CommandRouter(request, response, page);
     }
 
-    private void storeGuestBookListToSession(HttpServletRequest request) throws SQLException, TransactionException, ParameterException {
+    private void storeGuestBookListToRequest(HttpServletRequest request) throws SQLException, TransactionException, ParameterException {
             HttpSession session = request.getSession();
             int access = Authentication.checkAccess(request);
             GuestBookService guestBookService = GuestBookService.getService();
@@ -51,7 +52,7 @@ public class GuestBookListCommand implements Command {
             } catch (NumberFormatException e){
                 LOGGER.debug(e);
             }
-            if ((access & R)== R) {
+            if ((access & R)== R) {     // right to read all records
                 List<GuestBook> items = guestBookService.getGuestBookList(pageNumber, pagesCount, rowsCount);
                 List<String> titles = guestBookService.getGuestBookTitles();
                 int count = guestBookService.count();
@@ -59,7 +60,7 @@ public class GuestBookListCommand implements Command {
                 request.setAttribute(PARAM_GUEST_BOOKS_LIST_TITLE, titles);
                 request.setAttribute(PARAM_GUEST_BOOKS_LIST, items);
                 request.setAttribute(PARAM_LAST_PAGE,count);
-            } else if((access & Authentication.r) == Authentication.r) {
+            } else if((access & r) == r) { //right to read only its records
                 List<GuestBook> items = guestBookService.getGuestBookList(pageNumber, pagesCount, rowsCount);
                 List<String> titles = guestBookService.getGuestBookTitles();
                 int count = guestBookService.count(userId);

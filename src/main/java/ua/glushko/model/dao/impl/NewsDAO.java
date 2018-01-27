@@ -38,11 +38,10 @@ public class NewsDAO extends AbstractDAO<News> {
 
     @Override
     protected String getFieldList() {
-        StringBuilder builder = new StringBuilder();
-        return builder
-                .append(NAME_FIELD_DESCRIPTION).append(",")
-                .append(NAME_FIELD_ACTION_DATE).append(",")
-                .append(NAME_FIELD_MEMO).toString();
+        String builder = NAME_FIELD_DESCRIPTION + "," +
+                NAME_FIELD_ACTION_DATE + "," +
+                NAME_FIELD_MEMO;
+        return builder;
     }
 
     @Override
@@ -90,43 +89,13 @@ public class NewsDAO extends AbstractDAO<News> {
     @Override
     protected String getSelectQuery() {
         return "select id, " + getFieldList() +
-                " from " + getTableName();
+                " from " + getTableName()+
+                " order by id desc";
     }
 
-    public List<News> read() throws DaoException {
-        List<News> list = Collections.emptyList();
-        String sql = getSelectQuery()+" order by id desc";
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            ResultSet resultSet = statement.executeQuery();
-            setTitles(statement.getMetaData());
-            list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return list;
-    }
-
-    private String getSelectQuery(int from, int limit) {
+    protected String getSelectQuery(int from, int limit) {
         return "select id, " + getFieldList() +
                 " from " + getTableName() +
                 " order by id desc limit ?,? ";
     }
-
-    public List<News> read(int start, int limit) throws DaoException {
-        List<News> list = Collections.emptyList();
-        String sql = getSelectQuery(start, limit);
-        try (ConnectionWrapper con = TransactionManager.getConnection();
-             PreparedStatement statement = con.prepareStatement(sql)) {
-            statement.setInt(1, start);
-            statement.setInt(2, limit);
-            ResultSet resultSet = statement.executeQuery();
-            setTitles(resultSet.getMetaData());
-            list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return list;
-    }
-
 }

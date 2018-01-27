@@ -40,7 +40,7 @@
             </div>
             <div class="login_div" align="center">
                 <h2 class="form-signin-heading"><fmt:message key="app.welcome.resetpassword"/></h2>
-                <form class="form-signin" name="register" method="post" action="/do">
+                <form class="form-signin" name="register" method="post" action="<c:url value="/do"/>">
                     <input type="hidden" name="command" value="resetpassword"/>
                     <div class="input-row">
                         <div class="input-field">

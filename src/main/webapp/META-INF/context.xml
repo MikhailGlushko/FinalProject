@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/repair-agency">
-    <Resource name="jdbc/repair_agency"
-              auth="Container"
-              type="javax.sql.DataSource"
-              username="root" password="compaq"
-              driverClassName="com.mysql.cj.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/repair_agency"/>
-</Context>

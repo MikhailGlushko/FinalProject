@@ -1,8 +1,8 @@
 package ua.glushko.services.impl;
 
-import ua.glushko.services.AbstractService;
+import ua.glushko.services.Service;
 
-public class WelcomeService extends AbstractService {
+public class WelcomeService extends Service {
 
     private WelcomeService() {
     }

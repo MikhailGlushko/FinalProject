@@ -29,7 +29,7 @@
         <p>&nbsp;</p>
         <c:if test="${not empty user_detail}">
             <div class="login_div" align="center">
-                <form class="form-signin" name="edit" method="post" action="/do">
+                <form class="form-signin" name="edit" method="post" action="<c:url value="/do"/>">
                     <input type="hidden" name="command" value="setup_save"/>
                     <input type="hidden" name="user_id" value="${user_detail.id}">
                     <input type="hidden" name="user_password_md5Hex" value="${user_detail.password}">

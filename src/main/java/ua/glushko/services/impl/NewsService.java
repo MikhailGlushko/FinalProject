@@ -1,18 +1,18 @@
 package ua.glushko.services.impl;
 
-import ua.glushko.model.dao.MySQLDAOFactory;
+import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.dao.impl.NewsDAO;
 import ua.glushko.model.entity.News;
 import ua.glushko.exception.DaoException;
 import ua.glushko.exception.DatabaseException;
 import ua.glushko.exception.TransactionException;
-import ua.glushko.services.AbstractService;
+import ua.glushko.services.Service;
 import ua.glushko.transaction.TransactionManager;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class NewsService extends AbstractService {
+public class NewsService extends Service {
 
     private NewsService() {
     }
@@ -21,55 +21,43 @@ public class NewsService extends AbstractService {
         return new NewsService();
     }
 
-    public List<News> getNewsList() throws TransactionException, DatabaseException {
-        NewsDAO newsDAO = MySQLDAOFactory.getFactory().getNewsDAO();
-        List<News> read;
-        try{
-            TransactionManager.beginTransaction();
-            read = newsDAO.read();
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
+    /** List of News*/
+    public List<News> getNewsList() throws DatabaseException {
+        return DAOFactory.getFactory().getNewsDAO().read();
     }
 
-    public List<News> getNewsList(int page, int pagesCount, int rowsPerPage) throws TransactionException, DatabaseException {
-        NewsDAO newsDAO = MySQLDAOFactory.getFactory().getNewsDAO();
-        int start = (page - 1) * rowsPerPage;
-        int limit = pagesCount * rowsPerPage;
-        List<News> read;
-        try {
-            TransactionManager.beginTransaction();
-            read = newsDAO.read(start, limit);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
+    /** List of News with limit */
+    public List<News> getNewsList(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
+        return DAOFactory.getFactory().getNewsDAO().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 
+    /** List of field names */
     public List<String> getNewsTitles() {
-        return  MySQLDAOFactory.getFactory().getNewsDAO().getTableHead();
+        return  DAOFactory.getFactory().getNewsDAO().getTableHead();
     }
 
+    /** Get News by Id*/
     public News getNewsId(int id) throws DaoException {
-        return getById(MySQLDAOFactory.getFactory().getNewsDAO(),id);
+        return getById(DAOFactory.getFactory().getNewsDAO(),id);
     }
 
+    /** Update exist News or create new */
     public void updateNews(News item) throws TransactionException, DatabaseException {
-        update(MySQLDAOFactory.getFactory().getNewsDAO(),item);
+        update(DAOFactory.getFactory().getNewsDAO(),item);
     }
 
-    public void deleteNews(Integer serviceId) throws TransactionException, DatabaseException {
-        delete(MySQLDAOFactory.getFactory().getNewsDAO(),serviceId);
+    /** Delete exist News*/
+    public void deleteNews(Integer newsId) throws TransactionException, DatabaseException {
+        delete(DAOFactory.getFactory().getNewsDAO(),newsId);
     }
 
+    /** Total of News */
     public int count() throws SQLException, TransactionException {
-        return this.count(MySQLDAOFactory.getFactory().getNewsDAO());
+        return this.count(DAOFactory.getFactory().getNewsDAO());
     }
 
+    /** Total of News*/
     public int count(int id) throws SQLException, TransactionException {
-        return this.count(MySQLDAOFactory.getFactory().getNewsDAO(),id);
+        return this.count(DAOFactory.getFactory().getNewsDAO(),id);
     }
 }

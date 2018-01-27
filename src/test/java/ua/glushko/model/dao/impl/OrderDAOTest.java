@@ -2,16 +2,22 @@ package ua.glushko.model.dao.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.glushko.model.dao.MySQLDAOFactory;
+import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.entity.Order;
 import ua.glushko.exception.DaoException;
+import ua.glushko.model.entity.OrderStats;
+import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.transaction.ConnectionPool;
 
+import java.sql.Array;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
-import static ua.glushko.model.dao.H2DataSource.H2_CONNECTION_POOL;
+import ua.glushko.transaction.H2DataSource;
 
 public class OrderDAOTest {
 
@@ -19,8 +25,8 @@ public class OrderDAOTest {
 
     @Before
     public void init() {
-        ConnectionPool.getConnectionPool().setDataSource(H2_CONNECTION_POOL);
-        dao = MySQLDAOFactory.getFactory().getOrderDao();
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
+        dao = DAOFactory.getFactory().getOrderDao();
     }
 
     @Test
@@ -58,5 +64,21 @@ public class OrderDAOTest {
     public void readLimit() throws DaoException {
         List<Order> read = dao.read(0, 2);
         assertTrue(read.size()==2);
+    }
+
+    @Test
+    public void takeNew() throws SQLException {
+        Order order = dao.take(OrderStatus.NEW);
+        System.out.println(order);
+    }
+
+    @Test
+    public void getTotal() throws DaoException {
+        Map<OrderStatus, Map<OrderStats,Integer>> total = dao.getTotal(4);
+        total.entrySet().stream().forEach(item ->{System.out.println(item.getKey()+" "+item.getValue());});
+        total = dao.getTotal(3);
+        total.entrySet().stream().forEach(item ->{System.out.println(item.getKey()+" "+item.getValue());});
+        total = dao.getTotal(2);
+        total.entrySet().stream().forEach(item ->{System.out.println(item.getKey()+" "+item.getValue());});
     }
 }

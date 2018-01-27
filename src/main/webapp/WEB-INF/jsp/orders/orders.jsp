@@ -31,8 +31,27 @@
         <!-- логика по выводу списка пользователей-->
         <c:if test="${not empty orders_list}">
             <br/>
-            <fmt:message key="services.title"/>:<br/><br/>
+            <br/>
+            <fmt:message key="orders.title"/>:<br/><br/>
+            <%--<c:if test="${role=='MANAGER' and orders_count_new!=0}">--%>
+            <%--<c:if test="${orders_count_new!=0}">--%>
+            <div class="input-row" style="width: 100%; float: left">
+                <div class="btn btn-sm btn-success btm-sm-2" style="float: left;">
+                    <fmt:message key="order.my.items"/> <span class="badge badge-success">${orders_count_my}</span>
+                </div>
+                <div class="btn btn-sm btn-info btn-sm-2" style="float: left;">
+                    <fmt:message key="order.new.items"/> <span class="badge badge-info"
+                                                               onClick="window.location.href='/do?command=orders_take'">${orders_count_new}</span>
+                </div>
+                <div class="btn btn-sm btn-warning btm-sm-2" style="float: left;">
+                    <fmt:message key="order.my.progress"/> <span class="badge badge-warning">${orders_count_progress}</span>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <%--</c:if>--%>
             <customtags:ShowOrdersList head="${orders_list_head}" list="${orders_list}"/>
+            <%--<customtags:ShowOrdersTable head="${orders_list_head}" list="${orders_slist}"/>--%>
             <br/>
         </c:if>
         <hr/>
