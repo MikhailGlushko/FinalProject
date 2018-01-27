@@ -153,12 +153,10 @@
                     <artifactId>commons-dbcp</artifactId>
                     <version>${commons-dbcp}</version>
                 </dependency>
-
                 <dependency>
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
                     <version>${h2.version}</version>
-                    <!--<scope>test</scope>-->
                 </dependency>
             </dependencies>
             <build>
@@ -225,10 +223,6 @@
                         <artifactId>tomcat7-maven-plugin</artifactId>
                         <version>2.2</version>
                         <configuration>
-                            <!--<url>http://127.0.0.1:8080/manager/text</url>-->
-                            <!--<username>tomcat</username>-->
-                            <!--<password>tomcat</password>-->
-                            <!--<path>/</path>-->
                             <url>http://192.168.99.100:8080/manager/text</url>
                             <username>admin</username>
                             <password>admin</password>
