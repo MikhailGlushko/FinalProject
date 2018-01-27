@@ -11,10 +11,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.12</junit.version>
         <mockito.version>2.12.0</mockito.version>
-        <dbunit.version>2.5.4</dbunit.version>
         <mysql.version>6.0.6</mysql.version>
         <h2.version>1.4.196</h2.version>
-        <liquibase.version>3.5.3</liquibase.version>
         <log4j.version>1.2.17</log4j.version>
         <commons-dbcp>1.4</commons-dbcp>
         <commons-codec>1.11</commons-codec>
@@ -49,13 +47,6 @@
             <artifactId>mockito-core</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-maven-plugin -->
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-maven-plugin</artifactId>
-            <version>${liquibase.version}</version>
         </dependency>
 
         <dependency>
