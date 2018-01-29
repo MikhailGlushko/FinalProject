@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_LOCALE;
 import ua.glushko.transaction.H2DataSource;
+
+import java.io.IOException;
 
 public class SwitchLanguageCommandTest {
     private final HttpSession session = mock(HttpSession.class);
@@ -35,18 +36,20 @@ public class SwitchLanguageCommandTest {
     }
 
     @Test
-    public void switchToRu() throws ServletException {
+    public void switchToRu() throws ServletException, IOException {
         when(request.getParameter(PARAM_LOCALE)).thenReturn("ru");
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test
-    public void switchToEn() throws ServletException {
+    public void switchToEn() throws ServletException, IOException {
         when(request.getParameter(PARAM_LOCALE)).thenReturn("en");
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 }

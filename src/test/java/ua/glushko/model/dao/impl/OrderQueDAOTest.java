@@ -19,6 +19,7 @@ public class OrderQueDAOTest {
     public void init() {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         dao = DAOFactory.getFactory().getOrderQueDao();
+        assertNotNull(dao);
     }
 
     @Test(expected = DaoException.class)

@@ -78,13 +78,12 @@
                                 <h3 class="panel-title">
                                     <a data-toggle="collapse"
                                        data-parent="#collapse-group"
-                                       href="#el${item.id}">${item.actionDate} ${item.userName} ${item.description}
+                                       href="#el${item.id}"><c:out value="${item.actionDate} ${item.userName} ${item.description}"/>
                                     </a>
                                 </h3>
                             </div>
                             <div id="el${item.id}" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                        ${item.memo}
+                                <div class="panel-body"><c:out value="${item.memo}"/>
                                 </div>
                             </div>
                         </div>

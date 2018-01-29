@@ -21,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_LOCALE;
-import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDER_TAKE;
 import static ua.glushko.commands.utils.Authentication.PARAM_GRANTS;
 import static ua.glushko.commands.utils.Authentication.PARAM_ROLE;
@@ -40,8 +40,6 @@ public class OrderTakeCommandTest {
     private final HttpServletRequest request = mock(HttpServletRequest.class);
     private final HttpServletResponse response=mock(HttpServletResponse.class);
     private final RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
-    private List<Grant> grants;
-    private Map<User, List<Grant>> useDataAndGrantsSet;
 
     @Before
     public void setUp(){
@@ -53,10 +51,10 @@ public class OrderTakeCommandTest {
     }
 
     @Test
-    public void take() throws ServletException, DatabaseException, TransactionException {
+    public void take() throws ServletException, DatabaseException, TransactionException, IOException {
         UsersService usersService = UsersService.getService();
-        useDataAndGrantsSet = usersService.authenticateUser("manager", "P@ssw0rd");
-        grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
+        Map<User, List<Grant>> useDataAndGrantsSet = usersService.authenticateUser("manager", "P@ssw0rd");
+        List<Grant> grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
         when(session.getAttribute(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("manager");
         when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.MANAGER);
         when(session.getAttribute(PARAM_GRANTS)).thenReturn(grants);
@@ -65,7 +63,8 @@ public class OrderTakeCommandTest {
         Order oldOrder = ordersService.getOrderById(1);
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
         Order updatedOrder = ordersService.getOrderById(1);
         assertNotEquals(oldOrder,updatedOrder);
     }

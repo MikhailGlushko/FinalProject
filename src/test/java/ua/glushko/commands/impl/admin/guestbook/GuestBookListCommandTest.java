@@ -14,17 +14,16 @@ import ua.glushko.services.impl.UsersService;
 import ua.glushko.servlets.Controller;
 import ua.glushko.transaction.ConnectionPool;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+import javax.servlet.*;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static ua.glushko.commands.utils.Authentication.PARAM_GRANTS;
 import static ua.glushko.commands.utils.Authentication.PARAM_ROLE;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
@@ -36,6 +35,7 @@ public class GuestBookListCommandTest {
     private final HttpSession session = mock(HttpSession.class);
     private final HttpServletRequest request = mock(HttpServletRequest.class);
     private final HttpServletResponse response=mock(HttpServletResponse.class);
+
     private final RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
     private List<Grant> grants;
     private Map<User, List<Grant>> useDataAndGrantsSet;
@@ -50,7 +50,7 @@ public class GuestBookListCommandTest {
     }
 
     @Test
-    public void getUsersListForUserAdmin() throws ServletException, TransactionException, DatabaseException {
+    public void getUsersListForUserAdmin() throws ServletException, TransactionException, DatabaseException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("admin", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -60,12 +60,12 @@ public class GuestBookListCommandTest {
         when(session.getAttribute(Authentication.PARAM_ID)).thenReturn(1);
 
         Controller controller = new Controller();
-        controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test
-    public void getUsersListForUserManager() throws ServletException, TransactionException, DatabaseException {
+    public void getUsersListForUserManager() throws ServletException, TransactionException, DatabaseException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("manager", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -76,11 +76,12 @@ public class GuestBookListCommandTest {
 
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test
-    public void getUsersListForUserMaster() throws ServletException, TransactionException, DatabaseException {
+    public void getUsersListForUserMaster() throws ServletException, TransactionException, DatabaseException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("master", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -91,11 +92,12 @@ public class GuestBookListCommandTest {
 
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test
-    public void getUsersListForUserCustomer() throws ServletException, TransactionException, DatabaseException {
+    public void getUsersListForUserCustomer() throws ServletException, TransactionException, DatabaseException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("customer", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -106,11 +108,12 @@ public class GuestBookListCommandTest {
 
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test (expected = DaoException.class)
-    public void getUsersListForGuest() throws ServletException, TransactionException, DatabaseException {
+    public void getUsersListForGuest() throws ServletException, TransactionException, DatabaseException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser(null, null);
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -119,11 +122,12 @@ public class GuestBookListCommandTest {
 
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test (expected = DaoException.class)
-    public void getUsersListForGuest2() throws ServletException, TransactionException, DatabaseException {
+    public void getUsersListForGuest2() throws ServletException, TransactionException, DatabaseException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("test", "test");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -132,6 +136,7 @@ public class GuestBookListCommandTest {
 
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 }

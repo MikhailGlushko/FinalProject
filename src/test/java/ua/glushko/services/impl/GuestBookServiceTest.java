@@ -22,6 +22,7 @@ public class GuestBookServiceTest {
     public void getService() {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         service = GuestBookService.getService();
+        assertNotNull(service);
     }
 
     @Test
@@ -68,6 +69,8 @@ public class GuestBookServiceTest {
         service.updateGuestBook(book);
         Integer id = book.getId();
         service.deleteGuestBook(id);
+        GuestBook guestBook = service.getGuestBookById(id);
+        assertNull(guestBook);
     }
 
     @Test
@@ -75,5 +78,6 @@ public class GuestBookServiceTest {
         int count = service.count();
         assertTrue(count!=0);
         count = service.count(1);
+        assertTrue(count!=0);
     }
 }

@@ -1,10 +1,8 @@
 package ua.glushko.model.dao;
 
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.dao.impl.GrantDAO;
-import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.Grant;
 import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
@@ -21,6 +19,7 @@ public class GrantDAOTest {
     public void init() {
             ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
             grantDAO = DAOFactory.getFactory().getGrantDao();
+            assertNotNull(grantDAO);
     }
 
     @Test(expected = UnsupportedOperationException.class)

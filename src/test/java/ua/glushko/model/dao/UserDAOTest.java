@@ -15,29 +15,24 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
+
 import ua.glushko.transaction.H2DataSource;
 
 public class UserDAOTest {
 
     private static final Logger logger = Logger.getLogger(UserDAO.class.getSimpleName());
 
-    /**
-     * если хотим видеть ошибки на русском языке - убираем коентарий со статичного блока
-     */
-    /*static{
-          Locale.setDefault(new Locale("RU"));
-    }*/
-
     private static GenericDAO<User> userDAO;
 
     @Before
     public void init() {
-            ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
-            userDAO = DAOFactory.getFactory().getUserDao();
+        ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
+        userDAO = DAOFactory.getFactory().getUserDao();
+        assertNotNull(userDAO);
     }
 
     @Test
-         public void getUsers() {
+    public void getUsers() {
         try {
             assertNotNull(userDAO);
             //получаем список пользователей, должен быть не пустой
@@ -53,7 +48,7 @@ public class UserDAOTest {
         try {
             assertNotNull(userDAO);
             //получаем список пользователей, должен быть не пустой
-            List<User> list = userDAO.read(0,25);
+            List<User> list = userDAO.read(0, 25);
             assertTrue("Таблица пользователей пустая", list.size() == 25);
         } catch (DaoException e) {
             logger.error(e);
@@ -65,7 +60,7 @@ public class UserDAOTest {
         try {
             User user = userDAO.read(1);
             assertNotNull("Пользователь с ключом 1 не найден", user);
-            assertTrue(user.getId()==1);
+            assertTrue(user.getId() == 1);
         } catch (DaoException e) {
             logger.error(e);
         }
@@ -119,13 +114,11 @@ public class UserDAOTest {
             user.setPassword("P@ssw0rd");
             user.setEmail("email@email.com");
             user.setPhone("123456789");
-            //user.setRole(UserRole.ADMIN);
-            //user.setStatus(UserStatus.BLOCK);
             userDAO.create(user);
-            read = userDAO.read(user.getId());
             assertTrue("Пользоветель не добавлен в базу данных", user.getId() != 0);
             TransactionManager.rollBack();
             read = userDAO.read(5);
+            assertNotNull(read);
             //добавляем пользователя в базу данных, должен измениться id
         } catch (SQLException e) {
             logger.error(e);
@@ -150,10 +143,7 @@ public class UserDAOTest {
             user.setPassword("P@ssw0rd");
             user.setEmail("email@email.com");
             user.setPhone("123456789");
-            //user.setRole(UserRole.ADMIN);
-            //user.setStatus(UserStatus.BLOCK);
             userDAO.create(user);
-            read = userDAO.read(user.getId());
             assertTrue("Пользоветель не добавлен в базу данных", user.getId() != 0);
             TransactionManager.endTransaction();
         } catch (TransactionException e) {
@@ -181,9 +171,7 @@ public class UserDAOTest {
             User u2 = userDAO.read(1);
             assertNotSame("Пользователи должны отличаться", u2, u1);
             TransactionManager.rollBack();
-        } catch (SQLException e) {
-            logger.error(e);
-        } catch (TransactionException e) {
+        } catch (SQLException | TransactionException e) {
             logger.error(e);
         }
     }
@@ -197,7 +185,7 @@ public class UserDAOTest {
             User u1 = userDAO.read(1);
             u1.setName(u1.getName() + u1.getId());
             u1.setId(50);
-            u1.setLogin(u1.getLogin()+"1");
+            u1.setLogin(u1.getLogin() + "1");
             userDAO.update(u1);
         } catch (DaoException e) {
             logger.error(e);
@@ -218,9 +206,7 @@ public class UserDAOTest {
             User read2 = userDAO.read(1);
             assertNull("Пользователя с ключом не должно быть", read2);
             TransactionManager.rollBack();
-        } catch (SQLException e) {
-            logger.error(e);
-        } catch (TransactionException e) {
+        } catch (SQLException | TransactionException e) {
             logger.error(e);
         }
     }
@@ -249,9 +235,7 @@ public class UserDAOTest {
             List<User> list2 = userDAO.read();
             assertEquals("Не должно быть пользователей", 0, list2.size());
             TransactionManager.rollBack();
-        } catch (SQLException e) {
-            logger.error(e);
-        } catch (TransactionException e) {
+        } catch (SQLException | TransactionException e) {
             logger.error(e);
         }
     }
@@ -276,9 +260,7 @@ public class UserDAOTest {
             //подсчитывем количество пользователей, ожидаем старое значение
             userDAO.read();
             assertTrue("Операции не были отменены", read1.size() == read4.size());
-        } catch (SQLException e) {
-            logger.error(e);
-        } catch (TransactionException e) {
+        } catch (SQLException | TransactionException e) {
             logger.error(e);
         }
     }
@@ -295,29 +277,22 @@ public class UserDAOTest {
             List<User> read2 = userDAO.read();
             assertEquals(read1.size() - 1, read2.size());
             // создаем вторую копию ДАО в другом потоке
-            new Thread() {
-                @Override
-                public void run() {
-                    // и пробуем прочитать те же данные
-                    try {
-                        Thread.sleep(100);
-                        GenericDAO<User> userDAO = DAOFactory.getFactory().getUserDao();
-                        List<User> read3 = userDAO.read();
-                        assertNotNull(read3);
-                        Thread.sleep(100);
-                    } catch (DaoException e) {
-                        logger.error(e);
-                    } catch (InterruptedException e) {
-                        logger.error(e);
-                    }
+            new Thread(() -> {
+                // и пробуем прочитать те же данные
+                try {
+                    Thread.sleep(100);
+                    GenericDAO<User> userDAO = DAOFactory.getFactory().getUserDao();
+                    List<User> read3 = userDAO.read();
+                    assertNotNull(read3);
+                    Thread.sleep(100);
+                } catch (DaoException | InterruptedException e) {
+                    logger.error(e);
                 }
-            }.start();
+            }).start();
             Thread.sleep(300);
             //assertEquals(read1.size(), read3.size());
             TransactionManager.rollBack();
-        } catch (SQLException e) {
-            logger.error(e);
-        } catch (TransactionException e) {
+        } catch (SQLException | TransactionException e) {
             logger.error(e);
         } catch (InterruptedException e) {
             logger.error(e);
@@ -335,13 +310,13 @@ public class UserDAOTest {
     public void getAdmins() throws DaoException {
         userDAO = DAOFactory.getFactory().getUserDao();
         List<User> users = ((UserDAO) userDAO).readByRole(UserRole.ADMIN, true);
-        assertTrue(users.size()==1);
+        assertTrue(users.size() == 1);
     }
 
     @Test
     public void getStuff() throws DaoException {
         userDAO = DAOFactory.getFactory().getUserDao();
         List<User> users = ((UserDAO) userDAO).readByRole(UserRole.CUSTOMER, false);
-        assertTrue(users.size()!=1);
+        assertTrue(users.size() != 1);
     }
 }

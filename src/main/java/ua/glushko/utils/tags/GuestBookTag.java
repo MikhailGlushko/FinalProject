@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 
 @SuppressWarnings({"ALL", "unused"})
 public class GuestBookTag extends TagSupport {
@@ -44,14 +45,14 @@ public class GuestBookTag extends TagSupport {
                     if(next instanceof GuestBook)
                         guestBook = (GuestBook)next;
                     //noinspection ConstantConditions
-                    message.append("<li><strong>").append(guestBook.getActionDate()).append(", ").append(guestBook.getUserName())
+                    message.append("<li><strong>").append(guestBook.getActionDate()).append(", ").append(escapeHtml(guestBook.getUserName()))
                             .append("</strong><br>")
                             .append("<a href=\"#\">").append(guestBook.getDescription()).append("</a>")
                             .append("<div class=text-justify>");
                             if(guestBook.getMemo().length()>size)
-                                message.append(guestBook.getMemo().substring(0,size)).append(" ... ");
+                                message.append(escapeHtml(guestBook.getMemo()).substring(0,size)).append(" ... ");
                             else
-                                message.append(guestBook.getMemo());
+                                message.append(escapeHtml(guestBook.getMemo()));
                             message.append("</div>");
                     message.append("</li>");
                 }

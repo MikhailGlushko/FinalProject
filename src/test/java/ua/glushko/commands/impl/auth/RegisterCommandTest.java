@@ -7,7 +7,6 @@ import ua.glushko.model.entity.User;
 import ua.glushko.exception.DatabaseException;
 import ua.glushko.exception.ParameterException;
 import ua.glushko.exception.DaoException;
-import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 import ua.glushko.servlets.Controller;
 import ua.glushko.transaction.ConnectionPool;
@@ -22,7 +21,6 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_LOCALE;
@@ -45,19 +43,20 @@ public class RegisterCommandTest {
     }
 
     @Test (expected = DaoException.class)
-    public void registerIncorrectData() throws ServletException, ParameterException, DatabaseException {
+    public void registerIncorrectData() throws ServletException, ParameterException, DatabaseException, IOException {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("adm");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("admin");
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request, response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request, response);
         UsersService usersService = UsersService.getService();
         User test = usersService.getUserByLogin("adm");
         assertNull(test);
     }
 
     @Test
-    public void registerExist() throws ServletException {
+    public void registerExist() throws ServletException, IOException {
             when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("administrator");
             when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("P@ssw0rd");
             when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2)).thenReturn("P@ssw0rd");
@@ -66,12 +65,13 @@ public class RegisterCommandTest {
             when(request.getParameter(UsersCommandHelper.PARAM_USER_PHONE)).thenReturn("+380(66)386-40-46");
             Controller controller = new Controller();
             controller.init();
-            controller.processRequest(request, response);
-            controller.processRequest(request, response);
+            when(request.getMethod()).thenReturn("POST");
+            controller.service(request, response);
+            controller.service(request, response);
     }
 
     @Test
-    public void register() throws ServletException, ParameterException, DatabaseException {
+    public void register() throws ServletException, ParameterException, DatabaseException, IOException {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("testuser");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("P@ssw0rd");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2)).thenReturn("P@ssw0rd");
@@ -80,7 +80,8 @@ public class RegisterCommandTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PHONE)).thenReturn("+380(66)386-40-46");
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request, response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request, response);
 
         UsersService usersService = UsersService.getService();
         User test = usersService.getUserByLogin("testuser");
@@ -88,7 +89,7 @@ public class RegisterCommandTest {
     }
 
     @Test(expected = DaoException.class)
-    public void register2() throws ServletException, ParameterException, DatabaseException {
+    public void register2() throws ServletException, ParameterException, DatabaseException, IOException {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("testuser");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("P@ssw0rd");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2)).thenReturn("P@ssw0rd");
@@ -98,7 +99,8 @@ public class RegisterCommandTest {
         Controller controller = new Controller();
         controller.init();
         ConnectionPool.getConnectionPool().setDataSource(null);
-        controller.processRequest(request, response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request, response);
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         UsersService usersService = UsersService.getService();
         User test = usersService.getUserByLogin("testuser");

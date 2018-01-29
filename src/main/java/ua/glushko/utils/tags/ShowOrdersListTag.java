@@ -11,7 +11,7 @@ import java.util.Objects;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_PAGE;
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
-
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 @SuppressWarnings("serial")
 public class ShowOrdersListTag extends ShowListTag {
     public void makeBody(List<Object> list, StringBuilder builder, Integer rowsCount) {
@@ -69,12 +69,12 @@ public class ShowOrdersListTag extends ShowListTag {
                     .append("&order_id=").append(order.getId()).append("\">")
                     .append(order.getId())
                     .append("</a></td>");
-            builder.append("<td>").append(order.getDescriptionShort()).append("</td>");
+            builder.append("<td>").append(escapeHtml(order.getDescriptionShort())).append("</td>");
             builder.append("<td>").append(order.getStatus()).append("</td>");
             builder.append("<td>").append(order.getOrderDate()).append("</td>");
             builder.append("<td>").append(order.getExpectedDate()).append("</td>");
-            builder.append("<td>").append(order.getUserName()).append("</td>");
-            builder.append("<td>").append(order.getEmployeeName()).append("</td>");
+            builder.append("<td>").append(escapeHtml(order.getUserName())).append("</td>");
+            builder.append("<td>").append(escapeHtml(order.getEmployeeName())).append("</td>");
             builder.append("</tr>");
         }
     }

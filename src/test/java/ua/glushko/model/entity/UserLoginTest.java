@@ -17,7 +17,7 @@ public class UserLoginTest {
 
     private static final Logger logger = Logger.getLogger(UserLoginTest.class.getSimpleName());
 
-    @Parameter(value = 0)
+    @Parameter()
     public String login;
     @Parameter(value = 1)
     public String result;

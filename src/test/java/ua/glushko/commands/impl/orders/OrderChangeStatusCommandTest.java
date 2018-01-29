@@ -5,7 +5,6 @@ import org.junit.Test;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.exception.DaoException;
 import ua.glushko.exception.DatabaseException;
-import ua.glushko.exception.ParameterException;
 import ua.glushko.exception.TransactionException;
 import ua.glushko.model.entity.*;
 import ua.glushko.services.impl.OrdersService;
@@ -19,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +29,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_LOCALE;
-import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS_ACTION_CRUD;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDER_CHANGE_STATUS;
 import static ua.glushko.commands.impl.orders.OrdersCommandHelper.*;
 import static ua.glushko.commands.utils.Authentication.PARAM_GRANTS;
@@ -42,9 +41,6 @@ public class OrderChangeStatusCommandTest {
     private final HttpServletRequest request = mock(HttpServletRequest.class);
     private final HttpServletResponse response=mock(HttpServletResponse.class);
     private final RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
-    private List<Grant> grants;
-    private Map<User, List<Grant>> useDataAndGrantsSet;
-    private Order tmp;
 
     @Before
     public void setUp() throws DatabaseException, TransactionException {
@@ -54,14 +50,14 @@ public class OrderChangeStatusCommandTest {
         when(request.getParameter(PARAM_COMMAND)).thenReturn(COMMAND_ORDER_CHANGE_STATUS);
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         UsersService usersService = UsersService.getService();
-        useDataAndGrantsSet = usersService.authenticateUser("admin", "P@ssw0rd");
-        grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
+        Map<User, List<Grant>> useDataAndGrantsSet = usersService.authenticateUser("admin", "P@ssw0rd");
+        List<Grant> grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
         when(session.getAttribute(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("admin");
         when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.ADMIN);
         when(session.getAttribute(PARAM_GRANTS)).thenReturn(grants);
         when(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID)).thenReturn("1");
         OrdersService ordersService = OrdersService.getService();
-        tmp = ordersService.getOrderById(1);
+        Order tmp = ordersService.getOrderById(1);
         assertNotNull(tmp);
 
         when(request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_SHORT)).thenReturn(tmp.getDescriptionShort());
@@ -81,7 +77,7 @@ public class OrderChangeStatusCommandTest {
     }
 
     @Test
-    public void changeOrderStatus() throws ServletException, DaoException {
+    public void changeOrderStatus() throws ServletException, DaoException, IOException {
         when(request.getParameter(PARAM_ORDER_FORM_ACTION)).thenReturn(PARAM_ORDER_ACTION_APPROVE);
         when(request.getParameter(PARAM_ORDER_MEMO_CHANGE)).thenReturn("Прошу согласовать");
         when(request.getParameter(PARAM_ORDER_STATUS_CHANGE)).thenReturn(OrderStatus.VERIFICATION.name());
@@ -90,13 +86,14 @@ public class OrderChangeStatusCommandTest {
         Order oldOrder = ordersService.getOrderById(1);
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
         Order order = ordersService.getOrderById(1);
         assertNotEquals(oldOrder,order);
     }
 
     @Test
-    public void changeOrderStatus2() throws ServletException, DaoException {
+    public void changeOrderStatus2() throws ServletException, DaoException, IOException {
         when(request.getParameter(PARAM_ORDER_FORM_ACTION)).thenReturn(PARAM_ORDER_ACTION_APPROVE);
         when(request.getParameter(PARAM_ORDER_MEMO_CHANGE)).thenReturn("Прошу согласовать");
         //when(request.getParameter(PARAM_ORDER_STATUS_CHANGE)).thenReturn(OrderStatus.VERIFICATION.name());
@@ -105,26 +102,29 @@ public class OrderChangeStatusCommandTest {
         Order oldOrder = ordersService.getOrderById(1);
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
         Order order = ordersService.getOrderById(1);
         assertEquals(oldOrder,order);
     }
 
     @Test
-    public void reject() throws ServletException {
+    public void reject() throws ServletException, IOException {
         when(request.getParameter(PARAM_ORDER_FORM_ACTION)).thenReturn(PARAM_ORDER_ACTION_REJECT);
         when(request.getParameter(PARAM_ORDER_MEMO_CHANGE)).thenReturn("Нет запчастей");
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test
-    public void фввСщььуте() throws ServletException {
+    public void addComment() throws ServletException, IOException {
         when(request.getParameter(PARAM_ORDER_FORM_ACTION)).thenReturn(PARAM_ORDER_ACTION_COMMENT);
         when(request.getParameter(PARAM_ORDER_MEMO_CHANGE)).thenReturn("Нет запчастей");
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 }

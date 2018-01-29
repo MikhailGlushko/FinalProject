@@ -1,6 +1,5 @@
 package ua.glushko.services;
 
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.transaction.H2DataSource;
@@ -29,39 +28,43 @@ public class UsersServiceTest {
     @Test
     public void testListUserAll() throws Exception {
         UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
         List<User> users = usersService.getUsersList();
         int size = users.size();
-        assertTrue(size!=0);
+        assertTrue(size != 0);
     }
 
     @Test
     public void testListUserLimit() throws Exception {
         UsersService usersService = UsersService.getService();
-        List<User> users = usersService.getUsersList(6,5,5);
+        assertNotNull(usersService);
+        List<User> users = usersService.getUsersList(6, 5, 5);
         int size = users.size();
-        assertTrue(size!=0);
+        assertTrue(size != 0);
     }
 
     @Test
     public void getUserById() throws DaoException {
         UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
         User user = usersService.getUserById(1);
         assertNotNull(user);
-        user=usersService.getUserById(100);
+        user = usersService.getUserById(100);
         assertNull(user);
     }
 
     @Test
     public void getUserByLogin() throws ParameterException, DatabaseException {
-
-            UsersService usersService = UsersService.getService();
-            User user = usersService.getUserByLogin("admin");
-            assertNotNull(user);
+        UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
+        User user = usersService.getUserByLogin("admin");
+        assertNotNull(user);
     }
 
-    @Test (expected = DaoException.class)
+    @Test(expected = DaoException.class)
     public void getUserByLoginWrong() throws ParameterException, DatabaseException {
         UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
         User user = usersService.getUserByLogin("adminadmin");
         assertNull(user);
     }
@@ -69,6 +72,7 @@ public class UsersServiceTest {
     @Test
     public void updateUser() throws TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
         User user = usersService.getUserById(5);
         assertNotNull(user);
         user.setStatus(UserStatus.BLOCKED);
@@ -78,6 +82,7 @@ public class UsersServiceTest {
     @Test(expected = DaoException.class)
     public void updateUserWrongId() throws TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
         User user = usersService.getUserById(5);
         assertNotNull(user);
         user.setId(100);
@@ -88,6 +93,7 @@ public class UsersServiceTest {
     @Test
     public void updateUserResetPass() throws TransactionException, ParameterException, DatabaseException {
         UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
         User user = usersService.getUserById(5);
         assertNotNull(user);
         User update = usersService.changePassword(user.getLogin(), "P@ssw0rd");
@@ -97,35 +103,43 @@ public class UsersServiceTest {
     @Test
     public void updateUserNullLogin() throws TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
         User user = usersService.getUserById(6);
         assertNotNull(user);
         user.setLogin(null);
         usersService.updateUser(user);
+        User after = usersService.getUserById(user.getId());
+        assertNotEquals(after,user);
     }
 
     @Test
     public void deleteUser() throws TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
         User user = usersService.getUserById(3);
         assertNotNull(user);
         usersService.deleteUser(3);
+        User after = usersService.getUserById(3);
+        assertNull(after);
     }
 
     @Test
     public void count() throws SQLException, TransactionException {
         UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
         int count = usersService.count();
         usersService.deleteUser(2);
         int count2 = usersService.count();
-        assertNotEquals(count2,count);
+        assertNotEquals(count2, count);
     }
 
     @Test
     public void getUsersAsStuff() throws TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
         List<User> usersAsStuff = usersService.getUsersByRole(UserRole.CUSTOMER, true);
-        assertTrue(usersAsStuff.size()!=0);
-        for (User user: usersAsStuff) {
+        assertTrue(usersAsStuff.size() != 0);
+        for (User user : usersAsStuff) {
             usersService.deleteUser(user.getId());
         }
         usersAsStuff = usersService.getUsersByRole(UserRole.CUSTOMER, true);
@@ -135,15 +149,17 @@ public class UsersServiceTest {
     @Test
     public void getCount() throws SQLException {
         UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
         int count = usersService.count();
-        assertTrue(count!=0);
+        assertTrue(count != 0);
         count = usersService.count(1);
-        assertTrue(count!=0);
+        assertTrue(count != 0);
     }
 
     @Test
     public void getTitles() throws DatabaseException {
         UsersService usersService = UsersService.getService();
+        assertNotNull(usersService);
         usersService.getUsersList();
         List<String> usersTitles = usersService.getUsersTitles();
         assertNotNull(usersTitles);

@@ -10,7 +10,7 @@ import java.util.Objects;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_PAGE;
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
-
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 @SuppressWarnings("serial")
 public class ShowOrdersTableTag extends ShowListTag {
     public void makeBody(List<Object> list, StringBuilder builder, Integer rowsCount) {
@@ -48,8 +48,8 @@ public class ShowOrdersTableTag extends ShowListTag {
                             .append("'; return false\">");
                     builder.append("<div class=\"panel panel-heading\">").append(object.getAppliance()).append("</div>");
                     builder.append("<div class=\"panel-body\">");
-                    builder.append(object.getDescriptionShort()).append("<br/>");
-                    builder.append(object.getUserName()).append("<br/>");
+                    builder.append(escapeHtml(object.getDescriptionShort())).append("<br/>");
+                    builder.append(escapeHtml(object.getUserName())).append("<br/>");
                     builder.append(object.getOrderDate());
                     builder.append("</div></div>");
                 } else i--;

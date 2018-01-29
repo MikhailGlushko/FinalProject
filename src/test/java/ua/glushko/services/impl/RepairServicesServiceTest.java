@@ -20,8 +20,9 @@ public class RepairServicesServiceTest {
     @Before
     @Test
     public void getService() {
-        service = RepairServicesService.getService();
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
+        service = RepairServicesService.getService();
+        assertNotNull(service);
     }
 
     @Test
@@ -63,6 +64,8 @@ public class RepairServicesServiceTest {
     @Test
     public void deleteRepairService() throws TransactionException, DatabaseException {
         service.deleteRepairService(2);
+        RepairService service = this.service.getRepairServiceById(2);
+        assertNull(service);
     }
 
     @Test

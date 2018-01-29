@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 import static ua.glushko.commands.Command.*;
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 
 @SuppressWarnings("serial")
 public class HelloTag extends TagSupport {
@@ -29,7 +30,7 @@ public class HelloTag extends TagSupport {
             StringBuilder welcomeMessage = new StringBuilder(welcome);
 
             if(Objects.nonNull(currentUserName) && !currentUserName.isEmpty()){
-                welcomeMessage.append(" ").append(currentUserName).append(" ");
+                welcomeMessage.append(" ").append(escapeHtml(currentUserName)).append(" ");
 
                 if(Objects.nonNull(currentUserLastLogin))
                             welcomeMessage.append(lastLogin).append(" ").append(currentUserLastLogin.toString());

@@ -27,8 +27,6 @@ public class Controller extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        //TODO
-        //ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         if (ConnectionPool.getConnectionPool().getDataSource() == null){
             try {
                 Context context = (Context)(new InitialContext().lookup(JNDI_NAME));
@@ -50,7 +48,7 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
-    public void processRequest(HttpServletRequest req, HttpServletResponse resp) {
+    private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
         CommandFactory commandFactory = CommandFactory.getInstance();
         // get command
         Command command = commandFactory.getCommand(req);

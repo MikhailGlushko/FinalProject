@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.io.IOException;
 import java.util.Properties;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_LOCALE;
@@ -53,21 +53,24 @@ public class RecoveryCommandTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("admin");
         MailServlet controller = new MailServlet();
         controller.init();
-        //controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        //controller.service(request,response);
     }
 
     @Test
-    public void resetPasswordNoExistUser() {
+    public void resetPasswordNoExistUser() throws ServletException, IOException {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("administrator");
         MailServlet controller = new MailServlet();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test
-    public void resetPasswordNoExistUser2() {
+    public void resetPasswordNoExistUser2() throws ServletException, IOException {
         MailServlet controller = new MailServlet();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 }

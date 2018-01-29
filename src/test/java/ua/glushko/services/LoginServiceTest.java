@@ -24,6 +24,7 @@ public class LoginServiceTest {
     public void getService() {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         loginService = UsersService.getService();
+        assertNotNull(loginService);
     }
 
     @Test (expected = DaoException.class)

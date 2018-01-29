@@ -23,6 +23,7 @@ public class OrdersServiceTest {
     public void getService() {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         service = OrdersService.getService();
+        assertNotNull(service);
     }
 
     @Test
@@ -66,6 +67,8 @@ public class OrdersServiceTest {
     @Test
     public void deleteOrder() throws TransactionException, DatabaseException {
         service.deleteOrder(2);
+        Order order = service.getOrderById(2);
+        assertNull(order);
     }
 
     @Test
@@ -73,6 +76,7 @@ public class OrdersServiceTest {
         int count = service.count();
         assertTrue(count!=0);
         count = service.count(1);
+        assertTrue(count==0);
     }
 
     @Test

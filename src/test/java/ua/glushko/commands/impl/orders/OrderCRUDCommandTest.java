@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,6 @@ public class OrderCRUDCommandTest {
     private final RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
     private List<Grant> grants;
     private Map<User, List<Grant>> useDataAndGrantsSet;
-    private Order tmp;
 
     @Before
     public void setUp() throws DatabaseException, TransactionException {
@@ -58,7 +58,7 @@ public class OrderCRUDCommandTest {
         when(session.getAttribute(PARAM_GRANTS)).thenReturn(grants);
         when(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID)).thenReturn("1");
         OrdersService ordersService = OrdersService.getService();
-        tmp = ordersService.getOrderById(1);
+        Order tmp = ordersService.getOrderById(1);
         assertNotNull(tmp);
 
         when(request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_SHORT)).thenReturn(tmp.getDescriptionShort());
@@ -77,36 +77,40 @@ public class OrderCRUDCommandTest {
 
 
     @Test
-    public void saveOrderToDatabase() throws ServletException, DatabaseException {
+    public void saveOrderToDatabase() throws ServletException, DatabaseException, IOException {
         when(request.getParameter(PARAM_ORDER_ACTION)).thenReturn(PARAM_ORDER_ACTION_SAVE);
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
 
         when(request.getParameter(PARAM_COMMAND)).thenReturn(COMMAND_ORDER_UPDATE);
         Order orderBefore = OrdersService.getService().getOrderById(1);
         when(request.getParameter(OrdersCommandHelper.PARAM_ORDER_STATUS)).thenReturn(OrderStatus.CONFIRMATION.name());
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
         Order orderAfter = OrdersService.getService().getOrderById(1);
         assertNotEquals(orderBefore,orderAfter);
     }
 
     @Test
-    public void deleteOrderDataFromDatabase() throws ServletException, DaoException {
+    public void deleteOrderDataFromDatabase() throws ServletException, DaoException, IOException {
         when(request.getParameter(PARAM_ORDER_ACTION)).thenReturn(PARAM_ORDER_ACTION_DELETE);
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
 
         when(request.getParameter(PARAM_COMMAND)).thenReturn(COMMAND_ORDER_DELETE);
         when(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID)).thenReturn("1");
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
         Order order = OrdersService.getService().getOrderById(1);
         assertNotNull(order);
     }
 
     @Test
-    public void createOrderIntoDatabase() throws ServletException, DatabaseException, TransactionException {
+    public void createOrderIntoDatabase() throws ServletException, DatabaseException, TransactionException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("customer", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -117,14 +121,15 @@ public class OrderCRUDCommandTest {
         when(request.getParameter(PARAM_ORDER_ACTION)).thenReturn(PARAM_ORDER_ACTION_ADD);
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
 
         when(request.getParameter(PARAM_COMMAND)).thenReturn(COMMAND_ORDER_CREATE);
-        controller.processRequest(request,response);
+        controller.service(request,response);
     }
 
     @Test
-    public void createOrderIntoDatabase2() throws ServletException, DatabaseException, TransactionException {
+    public void createOrderIntoDatabase2() throws ServletException, DatabaseException, TransactionException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("customer", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -135,18 +140,20 @@ public class OrderCRUDCommandTest {
         when(request.getParameter(PARAM_ORDER_ACTION)).thenReturn(PARAM_ORDER_ACTION_ADD);
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
 
         when(request.getParameter(OrdersCommandHelper.PARAM_ORDER_SERVICE)).thenReturn(null);
         when(request.getParameter(PARAM_COMMAND)).thenReturn(COMMAND_ORDER_CREATE);
-        controller.processRequest(request,response);
+        controller.service(request,response);
     }
 
     @Test
-    public void readOrder() throws ServletException {
+    public void readOrder() throws ServletException, IOException {
         when(request.getParameter(PARAM_COMMAND)).thenReturn(COMMAND_ORDERS_READ);
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 }

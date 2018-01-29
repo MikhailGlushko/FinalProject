@@ -23,6 +23,7 @@ public class RepairServiceDAOTest {
     public void init() {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
          reapirServiceDAO = DAOFactory.getFactory().getRepairServiceDao();
+         assertNotNull(reapirServiceDAO);
     }
 
     @Test

@@ -17,7 +17,7 @@ public class UserPasswordTest {
 
     private static final Logger logger = Logger.getLogger(UserPasswordTest.class.getSimpleName());
 
-    @Parameter(value = 0)
+    @Parameter()
     public String password;
     @Parameter(value = 1)
     public String result;

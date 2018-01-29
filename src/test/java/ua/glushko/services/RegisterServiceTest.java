@@ -21,6 +21,7 @@ public class RegisterServiceTest {
     public void getService() {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         registerService = UsersService.getService();
+        assertNotNull(registerService);
     }
 
     @Test (expected = DaoException.class)
@@ -30,9 +31,7 @@ public class RegisterServiceTest {
             assertNotNull("Должно было сработать исключение",user);
         } catch (DaoException e) {
             throw new DaoException(e);
-        } catch (TransactionException e) {
-            e.printStackTrace();
-        } catch (ParameterException e) {
+        } catch (TransactionException | ParameterException e) {
             e.printStackTrace();
         }
     }

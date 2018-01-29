@@ -19,6 +19,8 @@ import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_LOCALE;
 import ua.glushko.transaction.H2DataSource;
 
+import java.io.IOException;
+
 public class WelcomeCommandTest {
     private final HttpSession session = mock(HttpSession.class);
     private final HttpServletRequest request = mock(HttpServletRequest.class);
@@ -35,9 +37,10 @@ public class WelcomeCommandTest {
     }
 
     @Test
-    public void welcome() throws ServletException {
+    public void welcome() throws ServletException, IOException {
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 }

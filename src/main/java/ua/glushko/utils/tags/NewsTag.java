@@ -7,6 +7,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 
 @SuppressWarnings("ALL")
 public class NewsTag extends TagSupport {
@@ -27,9 +28,9 @@ public class NewsTag extends TagSupport {
                     if (next instanceof News)
                         news = (News) next;
                     message.append("<li><strong>").append(Objects.requireNonNull(news).getActionDate()).append("</strong>")
-                            .append("<a href=\"#\">").append(news.getDescription()).append("</a>")
+                            .append("<a href=\"#\">").append(escapeHtml(news.getDescription())).append("</a>")
                             .append("<div class=text-justify>")
-                            .append(news.getMemo().substring(0, 255)).append(" ... ")
+                            .append(escapeHtml(news.getMemo()).substring(0, 255)).append(" ... ")
                             .append("</div>");
                     message.append("</li>");
                 }

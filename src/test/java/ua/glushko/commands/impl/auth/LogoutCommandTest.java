@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_LOCALE;
 import static ua.glushko.commands.CommandFactory.COMMAND_LOGOUT;
 import ua.glushko.transaction.H2DataSource;
+
+import java.io.IOException;
 
 public class LogoutCommandTest {
     private final HttpSession session = mock(HttpSession.class);
@@ -34,10 +35,11 @@ public class LogoutCommandTest {
     }
 
     @Test
-    public void logout() throws ServletException {
+    public void logout() throws ServletException, IOException {
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
         verify(session).invalidate();
     }
 }
