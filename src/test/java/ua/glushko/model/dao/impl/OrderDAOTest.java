@@ -43,13 +43,13 @@ public class OrderDAOTest {
 
     @Test
     public void readByCustomer() throws DaoException {
-        List<Order> orders = ((OrderDAO) dao).read(0, 100, 5);
+        List<Order> orders = dao.read(0, 100, 5);
         assertNotNull(orders);
     }
 
     @Test
     public void readByEmployee() throws DaoException {
-        List<Order> orders = ((OrderDAO) dao).read(0, 100, 0);
+        List<Order> orders = dao.read(0, 100, 0);
         assertNotNull(orders);
     }
 

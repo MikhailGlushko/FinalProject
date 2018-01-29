@@ -26,19 +26,19 @@ public class OrdersServiceTest {
     }
 
     @Test
-    public void getOrderList() throws DaoException, DatabaseException {
+    public void getOrderList() throws DatabaseException {
         List<Order> orderList = service.getOrderList();
         assertNotNull(orderList);
     }
 
     @Test
-    public void getOrderList1() throws DaoException, DatabaseException {
+    public void getOrderList1() throws DatabaseException {
         List<Order> orderList = service.getOrderList(1, 1, 1);
         assertNotNull(orderList);
     }
 
     @Test
-    public void getOrderTitles() throws DaoException, DatabaseException {
+    public void getOrderTitles() throws DatabaseException {
         service.getOrderList(1, 1, 1);
         List<String> orderTitles = service.getOrderTitles();
         assertNotNull(orderTitles);
@@ -53,7 +53,7 @@ public class OrdersServiceTest {
     }
 
     @Test
-    public void updateOrder() throws DaoException, TransactionException, DatabaseException {
+    public void updateOrder() throws TransactionException, DatabaseException {
         Order orderById = service.getOrderById(1);
         OrderStatus status = orderById.getStatus();
         orderById.setStatus(OrderStatus.REJECT);
@@ -64,7 +64,7 @@ public class OrdersServiceTest {
     }
 
     @Test
-    public void deleteOrder() throws DaoException, TransactionException, DatabaseException {
+    public void deleteOrder() throws TransactionException, DatabaseException {
         service.deleteOrder(2);
     }
 
@@ -76,7 +76,7 @@ public class OrdersServiceTest {
     }
 
     @Test
-    public void getOrderList2() throws DaoException, TransactionException, DatabaseException {
+    public void getOrderList2() throws TransactionException, DatabaseException {
         List<Order> orderList = service.getOrderList(1, 1, 1, 1);
         assertNotNull(orderList);
     }

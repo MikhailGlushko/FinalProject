@@ -50,7 +50,7 @@ public class UsersListCommandTest {
    }
 
     @Test
-    public void getUsersListForUserAdmin() throws ServletException, DaoException, TransactionException, DatabaseException {
+    public void getUsersListForUserAdmin() throws ServletException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("admin", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -64,7 +64,7 @@ public class UsersListCommandTest {
     }
 
     @Test
-    public void getUsersListForUserManager() throws ServletException, DaoException, TransactionException, DatabaseException {
+    public void getUsersListForUserManager() throws ServletException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("manager", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -78,7 +78,7 @@ public class UsersListCommandTest {
     }
 
     @Test
-    public void getUsersListForUserMaster() throws ServletException, DaoException, TransactionException, DatabaseException {
+    public void getUsersListForUserMaster() throws ServletException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("master", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -92,7 +92,7 @@ public class UsersListCommandTest {
     }
 
     @Test
-    public void getUsersListForUserCustomer() throws ServletException, DaoException, TransactionException, DatabaseException {
+    public void getUsersListForUserCustomer() throws ServletException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("customer", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -106,7 +106,7 @@ public class UsersListCommandTest {
     }
 
     @Test (expected = DaoException.class)
-    public void getUsersListForGuest() throws ServletException, DaoException, TransactionException, DatabaseException {
+    public void getUsersListForGuest() throws ServletException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser(null, null);
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -119,7 +119,7 @@ public class UsersListCommandTest {
     }
 
     @Test (expected = DaoException.class)
-    public void getUsersListForGuest2() throws ServletException, DaoException, TransactionException, DatabaseException {
+    public void getUsersListForGuest2() throws ServletException, TransactionException, DatabaseException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("test", "test");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());

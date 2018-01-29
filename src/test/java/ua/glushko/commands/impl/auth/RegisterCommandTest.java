@@ -71,7 +71,7 @@ public class RegisterCommandTest {
     }
 
     @Test
-    public void register() throws ServletException, DaoException, ParameterException, DatabaseException {
+    public void register() throws ServletException, ParameterException, DatabaseException {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("testuser");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("P@ssw0rd");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2)).thenReturn("P@ssw0rd");
@@ -88,7 +88,7 @@ public class RegisterCommandTest {
     }
 
     @Test(expected = DaoException.class)
-    public void register2() throws ServletException, DaoException, ParameterException, DatabaseException {
+    public void register2() throws ServletException, ParameterException, DatabaseException {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("testuser");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("P@ssw0rd");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2)).thenReturn("P@ssw0rd");

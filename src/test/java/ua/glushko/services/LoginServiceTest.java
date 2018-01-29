@@ -27,7 +27,7 @@ public class LoginServiceTest {
     }
 
     @Test (expected = DaoException.class)
-    public void loginWrong() throws DaoException, DatabaseException {
+    public void loginWrong() throws DatabaseException {
         try {
             Map<User, List<Grant>> userListMap = loginService.authenticateUser("misha", "admin");
             User user = userListMap.keySet().iterator().next();
@@ -42,7 +42,7 @@ public class LoginServiceTest {
     }
 
     @Test( expected = DaoException.class)
-    public void loginOk() throws DaoException, DatabaseException {
+    public void loginOk() throws DatabaseException {
         try {
             //String md5Hex = DigestUtils.md5Hex("admin");
             //System.out.println(md5Hex);

@@ -25,19 +25,19 @@ public class RepairServicesServiceTest {
     }
 
     @Test
-    public void getRepairServiceList() throws DaoException, DatabaseException {
+    public void getRepairServiceList() throws DatabaseException {
         List<RepairService> repairServiceList = service.getRepairServiceList();
         assertNotNull(repairServiceList);
     }
 
     @Test
-    public void getRepairServiceList1() throws DaoException, DatabaseException {
+    public void getRepairServiceList1() throws DatabaseException {
         List<RepairService> repairServiceList = service.getRepairServiceList(1, 1, 1);
         assertNotNull(repairServiceList);
     }
 
     @Test
-    public void getRepairServiceTitles() throws DaoException, DatabaseException {
+    public void getRepairServiceTitles() throws DatabaseException {
         service.getRepairServiceList(1, 1, 1);
         List<String> serviceTitles = service.getRepairServiceTitles();
         assertNotNull(serviceTitles);
@@ -50,7 +50,7 @@ public class RepairServicesServiceTest {
     }
 
     @Test
-    public void updateRepairService() throws DaoException, TransactionException, DatabaseException {
+    public void updateRepairService() throws TransactionException, DatabaseException {
         RepairService repairServiceById = service.getRepairServiceById(1);
         String name = repairServiceById.getName();
         repairServiceById.setName(name+"!");
@@ -61,7 +61,7 @@ public class RepairServicesServiceTest {
     }
 
     @Test
-    public void deleteRepairService() throws DaoException, TransactionException, DatabaseException {
+    public void deleteRepairService() throws TransactionException, DatabaseException {
         service.deleteRepairService(2);
     }
 
