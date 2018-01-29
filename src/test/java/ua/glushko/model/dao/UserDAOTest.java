@@ -105,13 +105,14 @@ public class UserDAOTest {
     }
 
     @Test
-    public void createNewUserWithoutCommit() throws TransactionException, SQLException {
+    public void createNewUserWithoutCommit() throws SQLException {
         try {
             userDAO = DAOFactory.getFactory().getUserDao();
             assertNotNull(userDAO);
             //создаем нового пользователя
             TransactionManager.beginTransaction();
             User read = userDAO.read(5);
+            assertNotNull(read);
             User user = new User();
             user.setName("Test User");
             user.setLogin("Test.Login");
@@ -135,13 +136,14 @@ public class UserDAOTest {
     }
 
     @Test
-    public void createNewUserWithCommit() throws TransactionException, SQLException {
+    public void createNewUserWithCommit() throws SQLException {
         try {
             userDAO = DAOFactory.getFactory().getUserDao();
             assertNotNull(userDAO);
             //создаем нового пользователя
             TransactionManager.beginTransaction();
             User read = userDAO.read(5);
+            assertNotNull(read);
             User user = new User();
             user.setName("Test User");
             user.setLogin("Test.Login");
@@ -161,6 +163,7 @@ public class UserDAOTest {
             logger.error(e);
         }
         User read = userDAO.read(5);
+        assertNotNull(read);
         //добавляем пользователя в базу данных, должен измениться id
     }
 
@@ -190,6 +193,7 @@ public class UserDAOTest {
         try {
             userDAO = DAOFactory.getFactory().getUserDao();
             Integer count = userDAO.count();
+            assertNotNull(count);
             User u1 = userDAO.read(1);
             u1.setName(u1.getName() + u1.getId());
             u1.setId(50);
@@ -299,6 +303,7 @@ public class UserDAOTest {
                         Thread.sleep(100);
                         GenericDAO<User> userDAO = DAOFactory.getFactory().getUserDao();
                         List<User> read3 = userDAO.read();
+                        assertNotNull(read3);
                         Thread.sleep(100);
                     } catch (DaoException e) {
                         logger.error(e);

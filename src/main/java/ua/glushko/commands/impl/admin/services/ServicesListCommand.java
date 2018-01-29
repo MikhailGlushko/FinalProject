@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.services;
 
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
 
-import static ua.glushko.services.utils.Authentication.R;
+import static ua.glushko.commands.utils.Authentication.R;
 
 public class ServicesListCommand implements Command {
 

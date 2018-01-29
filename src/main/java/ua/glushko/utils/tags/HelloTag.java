@@ -1,6 +1,6 @@
 package ua.glushko.utils.tags;
 
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 import ua.glushko.configaration.MessageManager;
 
 import javax.servlet.http.HttpSession;

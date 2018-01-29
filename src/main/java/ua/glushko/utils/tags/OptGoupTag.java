@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-@SuppressWarnings("serial")
+@SuppressWarnings("ALL")
 public class OptGoupTag extends TagSupport {
     private List<Object> list;
     private int value;
@@ -20,6 +20,7 @@ public class OptGoupTag extends TagSupport {
         this.value=value;
     }
 
+    @SuppressWarnings({"SameReturnValue", "unused"})
     @Override
     public int doStartTag() {
         StringBuilder builder = new StringBuilder();

@@ -27,13 +27,13 @@ public class ServiceActionCRUDCommand implements Command {
         request.setAttribute(PARAM_PAGE, request.getParameter(PARAM_PAGE));
         switch (action) {
             case "save":
-                page = "/do?command=" + COMMAND_SERVICES_UPDATE+"&page="+request.getParameter(PARAM_PAGE);
+                page = PARAM_SERVLET_PATH+"?command=" + COMMAND_SERVICES_UPDATE+"&page="+request.getParameter(PARAM_PAGE);
                 break;
             case "add":
-                page = "/do?command=" + COMMAND_SERVICES_CREATE+"&page="+request.getParameter(PARAM_LAST_PAGE);
+                page = PARAM_SERVLET_PATH + "?command=" + COMMAND_SERVICES_CREATE+"&page="+request.getParameter(PARAM_LAST_PAGE);
                 break;
             case "delete":
-                page =  "/do?command=" + COMMAND_SERVICES_DELETE;
+                page =  PARAM_SERVLET_PATH + "?command=" + COMMAND_SERVICES_DELETE;
                 break;
         }
         return new CommandRouter(request, response, page);

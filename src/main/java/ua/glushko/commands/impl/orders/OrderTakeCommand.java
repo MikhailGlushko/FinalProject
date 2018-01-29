@@ -9,15 +9,19 @@ import ua.glushko.model.entity.Order;
 import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.model.entity.UserRole;
 import ua.glushko.services.impl.OrdersService;
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.Objects;
+
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
-import static ua.glushko.services.utils.Authentication.PARAM_ID;
-import static ua.glushko.services.utils.Authentication.PARAM_ROLE;
-import static ua.glushko.services.utils.Authentication.U;
+import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS_READ;
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
+import static ua.glushko.commands.utils.Authentication.PARAM_ID;
+import static ua.glushko.commands.utils.Authentication.PARAM_ROLE;
+import static ua.glushko.commands.utils.Authentication.U;
 
 /**
  * delete exist order
@@ -25,18 +29,21 @@ import static ua.glushko.services.utils.Authentication.U;
 public class OrderTakeCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-
+        String page;
         try {
-            takeNextOneNewOrderWithoutEmployee(request);
+            Order order = takeNextOneNewOrderWithoutEmployee(request);
+            if(Objects.nonNull(order))
+                page = PARAM_SERVLET_PATH+ "?command=" + COMMAND_ORDERS_READ + "&"+ OrdersCommandHelper.PARAM_ORDER_ID+"="+order.getId();
+            else
+                page = PARAM_SERVLET_PATH + "?command=" + COMMAND_ORDERS;
         } catch (Exception e) {
             LOGGER.error(e);
+            page = PARAM_SERVLET_PATH + "?command=" + COMMAND_ORDERS;
         }
-        String page = "/do?command=" + COMMAND_ORDERS + "&page=" + request.getAttribute(PARAM_PAGE);
-        return new CommandRouter(request, response, page);
+        return new CommandRouter(request, response, page, CommandRouter.REDIRECT);
     }
 
-    private void takeNextOneNewOrderWithoutEmployee(HttpServletRequest request) throws TransactionException, DatabaseException {
-        Integer Id = null;
+    private Order takeNextOneNewOrderWithoutEmployee(HttpServletRequest request) throws TransactionException, DatabaseException {
         Order order = null;
         try {
             UserRole role = (UserRole) request.getSession().getAttribute(PARAM_ROLE);
@@ -46,10 +53,10 @@ public class OrderTakeCommand implements Command {
                 Integer userId = (Integer) request.getSession().getAttribute(PARAM_ID);
                 switch (role) {
                     case MANAGER:
-                        ordersService.takeNewOrder(userId, OrderStatus.NEW);
+                        order = ordersService.takeNewOrder(userId, OrderStatus.NEW);
                         break;
                     case MASTER:
-                        ordersService.takeNewOrder(userId, OrderStatus.ESTIMATE);
+                        order = ordersService.takeNewOrder(userId, OrderStatus.ESTIMATE);
                         break;
                     default:
                         break;
@@ -57,8 +64,8 @@ public class OrderTakeCommand implements Command {
             }
             request.setAttribute(PARAM_COMMAND, COMMAND_ORDERS);
         } catch (ParameterException e) {
-            LOGGER.debug("order " + order + " did not delete");
             LOGGER.error(e);
         }
+        return order;
     }
 }

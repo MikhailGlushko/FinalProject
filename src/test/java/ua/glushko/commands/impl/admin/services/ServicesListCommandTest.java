@@ -24,20 +24,20 @@ import java.util.Map;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ua.glushko.services.utils.Authentication.PARAM_GRANTS;
-import static ua.glushko.services.utils.Authentication.PARAM_ROLE;
+import static ua.glushko.commands.utils.Authentication.PARAM_GRANTS;
+import static ua.glushko.commands.utils.Authentication.PARAM_ROLE;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_LOCALE;
 import static ua.glushko.commands.CommandFactory.COMMAND_SERVICES;
 import ua.glushko.transaction.H2DataSource;
 
 public class ServicesListCommandTest {
-    HttpSession session = mock(HttpSession.class);
-    HttpServletRequest request = mock(HttpServletRequest.class);
-    HttpServletResponse response=mock(HttpServletResponse.class);
-    RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
-    List<Grant> grants;
-    Map<User, List<Grant>> useDataAndGrantsSet;
+    private final HttpSession session = mock(HttpSession.class);
+    private final HttpServletRequest request = mock(HttpServletRequest.class);
+    private final HttpServletResponse response=mock(HttpServletResponse.class);
+    private final RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
+    private List<Grant> grants;
+    private Map<User, List<Grant>> useDataAndGrantsSet;
 
     @Before
     public void setUp(){

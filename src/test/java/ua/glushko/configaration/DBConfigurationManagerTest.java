@@ -10,12 +10,13 @@ public class DBConfigurationManagerTest {
 
     @Test
     public void getProperty() {
-        String db_host = DBConfigurationManager.getProperty("db_host");
-        assertNotNull(db_host);
+        String dbHost = DBConfigurationManager.getProperty("db_host");
+        assertNotNull(dbHost);
     }
 
     @Test (expected = MissingResourceException.class)
     public void getNoExistProperty() {
-        String db_host = DBConfigurationManager.getProperty("db_host1");
+        String dbHost = DBConfigurationManager.getProperty("db_host1");
+        assertNull(dbHost);
     }
 }

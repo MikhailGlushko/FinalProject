@@ -11,6 +11,7 @@ import ua.glushko.transaction.ConnectionPool;
 import java.util.List;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import ua.glushko.transaction.H2DataSource;
 
@@ -27,6 +28,7 @@ public class RepairServiceDAOTest {
     @Test
     public void readAll() throws DaoException {
         List<RepairService> list = reapirServiceDAO.read();
+        assertNotNull(list);
     }
 
     @Test

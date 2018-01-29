@@ -19,10 +19,10 @@ import static ua.glushko.commands.CommandFactory.COMMAND_LOGOUT;
 import ua.glushko.transaction.H2DataSource;
 
 public class LogoutCommandTest {
-    HttpSession session = mock(HttpSession.class);
-    HttpServletRequest request = mock(HttpServletRequest.class,CALLS_REAL_METHODS);
-    HttpServletResponse response=mock(HttpServletResponse.class);
-    RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
+    private final HttpSession session = mock(HttpSession.class);
+    private final HttpServletRequest request = mock(HttpServletRequest.class,CALLS_REAL_METHODS);
+    private final HttpServletResponse response=mock(HttpServletResponse.class);
+    private final RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
 
     @Before
     public void setUp(){

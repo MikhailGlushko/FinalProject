@@ -13,7 +13,7 @@ import ua.glushko.transaction.H2DataSource;
 
 public class GuestBookDAOTest {
 
-    GuestBookDAO instance;
+    private GuestBookDAO instance;
     @Before
     public void init(){
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());

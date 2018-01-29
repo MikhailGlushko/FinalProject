@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-@SuppressWarnings("serial")
+@SuppressWarnings("ALL")
 public class NewsTag extends TagSupport {
 
     private List<Object> list;

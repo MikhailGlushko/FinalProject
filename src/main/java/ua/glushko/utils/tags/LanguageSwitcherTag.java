@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static ua.glushko.commands.Command.*;
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 
 @SuppressWarnings("serial")
 public class LanguageSwitcherTag extends TagSupport {
@@ -30,11 +31,15 @@ public class LanguageSwitcherTag extends TagSupport {
 
             if(Objects.isNull(cookieValue) || VALUE_LOCALE_EN.equals(cookieValue)){
                 builder.append("<img src=\"../images/en.png\" alt=\"Switch to English\" width=\"20\"/>")
-                        .append("<a href=\"/do?command=lang&amp;locale=ru\">")
+                        .append("<a href=\"")
+                        .append(PARAM_SERVLET_PATH)
+                        .append("?command=lang&amp;locale=ru\">")
                         .append("<img src=\"../images/ru.png\" alt=\"Переключится на Русский\" width=\"20\" class=\"langbutton\" />")
                         .append("</a>");
             } if(Objects.nonNull(cookieValue) && VALUE_LOCALE_RU.equals(cookieValue) ){
-                builder.append("<a href=\"/do?command=lang&amp;locale=en\">")
+                builder.append("<a href=\"")
+                        .append(PARAM_SERVLET_PATH)
+                        .append("?command=lang&amp;locale=en\">")
                         .append("<img src=\"../images/en.png\" alt=\"Switch to English\" width=\"20\" class=\"langbutton\" />")
                         .append("</a>")
                         .append("<img src=\"../images/ru.png\" alt=\"Переключится на Русский\" width=\"20\"/>");

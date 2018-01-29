@@ -41,7 +41,5 @@ public interface GenericDAO<T extends GenericEntity> {
 
     List<T> read(int start, int limit) throws DaoException;
 
-    List<String> getTableHead();
-
     Integer count() throws SQLException;
 }

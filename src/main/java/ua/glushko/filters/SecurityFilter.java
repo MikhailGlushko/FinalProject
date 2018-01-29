@@ -1,6 +1,6 @@
 package ua.glushko.filters;
 
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = { "/do"})
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
+
+@WebFilter(urlPatterns = { PARAM_SERVLET_PATH})
 public class SecurityFilter implements Filter {
 
     @Override

@@ -32,21 +32,25 @@ public class OrderDAOTest {
     @Test
     public void readAll() throws DaoException {
         List<Order> read = dao.read();
+        assertNotNull(read);
     }
 
     @Test
     public void readById() throws DaoException {
         Order read = dao.read(1);
+        assertNotNull(read);
     }
 
     @Test
     public void readByCustomer() throws DaoException {
         List<Order> orders = ((OrderDAO) dao).read(0, 100, 5);
+        assertNotNull(orders);
     }
 
     @Test
     public void readByEmployee() throws DaoException {
         List<Order> orders = ((OrderDAO) dao).read(0, 100, 0);
+        assertNotNull(orders);
     }
 
 

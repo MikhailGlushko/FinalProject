@@ -20,6 +20,7 @@ public class OptGoupStaffTag extends TagSupport {
         this.value=value;
     }
 
+    @SuppressWarnings("SameReturnValue")
     @Override
     public int doStartTag() {
         StringBuilder builder = new StringBuilder();
@@ -35,6 +36,7 @@ public class OptGoupStaffTag extends TagSupport {
             }
             builder.append("</optiongroup>");
         }
+        //noinspection EmptyCatchBlock
         try {
             pageContext.getOut().write(builder.toString());
         } catch (IOException e) {

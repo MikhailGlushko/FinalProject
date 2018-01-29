@@ -22,10 +22,10 @@ import static ua.glushko.commands.Command.PARAM_LOCALE;
 import ua.glushko.transaction.H2DataSource;
 
 public class RecoveryCommandTest {
-    HttpSession session = mock(HttpSession.class);
-    HttpServletRequest request = mock(HttpServletRequest.class,CALLS_REAL_METHODS);
-    HttpServletResponse response=mock(HttpServletResponse.class);
-    RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
+    private final HttpSession session = mock(HttpSession.class);
+    private final HttpServletRequest request = mock(HttpServletRequest.class,CALLS_REAL_METHODS);
+    private final HttpServletResponse response=mock(HttpServletResponse.class);
+    private final RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
     private final Properties properties = new Properties();
 
     @Before
@@ -49,7 +49,7 @@ public class RecoveryCommandTest {
     }
 
     @Test
-    public void resetPassword() throws ServletException {
+    public void resetPassword() {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("admin");
         MailServlet controller = new MailServlet();
         controller.init();
@@ -57,8 +57,15 @@ public class RecoveryCommandTest {
     }
 
     @Test
-    public void resetPasswordNoExistUser() throws ServletException {
+    public void resetPasswordNoExistUser() {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("administrator");
+        MailServlet controller = new MailServlet();
+        controller.init();
+        controller.processRequest(request,response);
+    }
+
+    @Test
+    public void resetPasswordNoExistUser2() {
         MailServlet controller = new MailServlet();
         controller.init();
         controller.processRequest(request,response);

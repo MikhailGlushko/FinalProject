@@ -1,5 +1,5 @@
 package ua.glushko.commands.impl.admin.setup;
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;

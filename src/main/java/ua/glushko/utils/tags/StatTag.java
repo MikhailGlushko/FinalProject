@@ -18,6 +18,7 @@ public class StatTag extends TagSupport {
         this.totalOrders = totalOrders;
     }
 
+    @SuppressWarnings("SameReturnValue")
     @Override
     public int doStartTag() throws JspException {
         StringBuilder message = new StringBuilder();
@@ -51,7 +52,6 @@ public class StatTag extends TagSupport {
             pageContext.getOut().write(message.toString());
         } catch (IOException e) {
             throw new JspException(e.getMessage());
-        } finally {
         }
         return SKIP_BODY;
     }

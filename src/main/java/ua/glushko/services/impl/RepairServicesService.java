@@ -1,13 +1,11 @@
 package ua.glushko.services.impl;
 
 import ua.glushko.model.dao.DAOFactory;
-import ua.glushko.model.dao.impl.RepairServiceDAO;
 import ua.glushko.model.entity.RepairService;
 import ua.glushko.exception.DaoException;
 import ua.glushko.exception.DatabaseException;
 import ua.glushko.exception.TransactionException;
 import ua.glushko.services.Service;
-import ua.glushko.transaction.TransactionManager;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -22,12 +20,12 @@ public class RepairServicesService extends Service {
     }
 
     /** List of RepairServices */
-    public List<RepairService> getRepairServiceList() throws TransactionException, DatabaseException {
+    public List<RepairService> getRepairServiceList() throws DatabaseException {
         return DAOFactory.getFactory().getRepairServiceDao().read();
     }
 
     /** List of repairServices with limit */
-    public List<RepairService> getRepairServiceList(int page, int pagesCount, int rowsPerPage) throws TransactionException, DatabaseException {
+    public List<RepairService> getRepairServiceList(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
         return DAOFactory.getFactory().getRepairServiceDao().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 

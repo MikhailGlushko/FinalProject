@@ -21,8 +21,6 @@ import static org.junit.Assert.*;
 
 public class UsersServiceTest {
 
-    Logger logger = Logger.getLogger(UsersServiceTest.class.getSimpleName());
-
     @Before
     public void getService() {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
@@ -41,10 +39,11 @@ public class UsersServiceTest {
         UsersService usersService = UsersService.getService();
         List<User> users = usersService.getUsersList(6,5,5);
         int size = users.size();
+        assertTrue(size!=0);
     }
 
     @Test
-    public void getUserById() throws DaoException, TransactionException {
+    public void getUserById() throws DaoException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserById(1);
         assertNotNull(user);
@@ -53,7 +52,7 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void getUserByLogin() throws DaoException, TransactionException, ParameterException, DatabaseException {
+    public void getUserByLogin() throws DaoException, ParameterException, DatabaseException {
 
             UsersService usersService = UsersService.getService();
             User user = usersService.getUserByLogin("admin");
@@ -61,7 +60,7 @@ public class UsersServiceTest {
     }
 
     @Test (expected = DaoException.class)
-    public void getUserByLoginWrong() throws DaoException, TransactionException, ParameterException, DatabaseException {
+    public void getUserByLoginWrong() throws DaoException, ParameterException, DatabaseException {
         UsersService usersService = UsersService.getService();
         User user = usersService.getUserByLogin("adminadmin");
         assertNull(user);
@@ -92,6 +91,7 @@ public class UsersServiceTest {
         User user = usersService.getUserById(5);
         assertNotNull(user);
         User update = usersService.changePassword(user.getLogin(), "P@ssw0rd");
+        assertNotNull(update);
     }
 
     @Test
@@ -133,7 +133,7 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void getCount() throws SQLException, TransactionException {
+    public void getCount() throws SQLException {
         UsersService usersService = UsersService.getService();
         int count = usersService.count();
         assertTrue(count!=0);
@@ -142,7 +142,7 @@ public class UsersServiceTest {
     }
 
     @Test
-    public void getTitles() throws DaoException, TransactionException, DatabaseException {
+    public void getTitles() throws DaoException, DatabaseException {
         UsersService usersService = UsersService.getService();
         usersService.getUsersList();
         List<String> usersTitles = usersService.getUsersTitles();

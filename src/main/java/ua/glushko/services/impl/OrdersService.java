@@ -96,13 +96,14 @@ public class OrdersService extends Service {
     /**
      * get new order and set current userId to employeeId
      */
-    public void takeNewOrder(int employeeId, OrderStatus status) throws DatabaseException, TransactionException {
+    public Order takeNewOrder(int employeeId, OrderStatus status) throws DatabaseException, TransactionException {
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
         OrderQueDAO orderQueDAO = DAOFactory.getFactory().getOrderQueDao();
         UserDAO userDAO = DAOFactory.getFactory().getUserDao();
+        Order order;
         try {
             TransactionManager.beginTransaction();
-            Order order = orderDAO.take(status);
+            order = orderDAO.take(status);
             switch (status) {
                 case NEW:
                     order.setStatus(OrderStatus.VERIFICATION);
@@ -127,6 +128,7 @@ public class OrdersService extends Service {
         } finally {
             TransactionManager.rollBack();
         }
+        return order;
     }
 
     /**

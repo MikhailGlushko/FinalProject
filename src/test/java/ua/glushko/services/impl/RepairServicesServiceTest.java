@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 public class RepairServicesServiceTest {
 
-    RepairServicesService service;
+    private RepairServicesService service;
     @Before
     @Test
     public void getService() {
@@ -25,26 +25,26 @@ public class RepairServicesServiceTest {
     }
 
     @Test
-    public void getRepairServiceList() throws DaoException, TransactionException, DatabaseException {
+    public void getRepairServiceList() throws DaoException, DatabaseException {
         List<RepairService> repairServiceList = service.getRepairServiceList();
         assertNotNull(repairServiceList);
     }
 
     @Test
-    public void getRepairServiceList1() throws DaoException, TransactionException, DatabaseException {
+    public void getRepairServiceList1() throws DaoException, DatabaseException {
         List<RepairService> repairServiceList = service.getRepairServiceList(1, 1, 1);
         assertNotNull(repairServiceList);
     }
 
     @Test
-    public void getRepairServiceTitles() throws DaoException, TransactionException, DatabaseException {
+    public void getRepairServiceTitles() throws DaoException, DatabaseException {
         service.getRepairServiceList(1, 1, 1);
         List<String> serviceTitles = service.getRepairServiceTitles();
         assertNotNull(serviceTitles);
     }
 
     @Test
-    public void getRepairServiceById() throws DaoException, TransactionException {
+    public void getRepairServiceById() throws DaoException {
         RepairService repairServiceById = service.getRepairServiceById(1);
         assertNotNull(repairServiceById);
     }

@@ -15,34 +15,6 @@ import java.util.List;
 public class Service {
     protected final Logger LOGGER = Logger.getLogger(Service.class.getSimpleName());
 
-    /** Get list of GenericEntity using */
-    protected List<GenericEntity> getList(GenericDAO<GenericEntity> dao) throws TransactionException, DatabaseException {
-        List<GenericEntity> read;
-        try{
-            TransactionManager.beginTransaction();
-            read = dao.read();
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
-    }
-
-    /** Get list of GenericEntity using with limit */
-    protected List<? extends GenericEntity> getList(AbstractDAO<? extends GenericEntity> dao, int page, int pagesCount, int rowsPerPage) throws TransactionException, DatabaseException {
-        int start = (page - 1) * rowsPerPage;
-        int limit = pagesCount * rowsPerPage;
-        List<? extends GenericEntity> read;
-        try {
-            TransactionManager.beginTransaction();
-            read = dao.read(start, limit);
-            TransactionManager.endTransaction();
-        } finally {
-            TransactionManager.rollBack();
-        }
-        return read;
-    }
-
     /** Get GenericEntity by id */
     protected <T extends GenericEntity> T getById(AbstractDAO<T> dao, int id) throws DaoException {
         return dao.read(id);

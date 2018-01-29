@@ -9,11 +9,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"ALL", "unused"})
 public class GuestBookTag extends TagSupport {
 
     private List<Object> list;
     private int size;
+    @SuppressWarnings("unused")
     private int count;
 
     public void setList(List<Object> list) {
@@ -28,6 +29,7 @@ public class GuestBookTag extends TagSupport {
         this.count = count;
     }
 
+    @SuppressWarnings("SameReturnValue")
     @Override
     public int doStartTag() throws JspException {
         if(size==0) size=255;
@@ -41,6 +43,7 @@ public class GuestBookTag extends TagSupport {
                     GuestBook guestBook = null;
                     if(next instanceof GuestBook)
                         guestBook = (GuestBook)next;
+                    //noinspection ConstantConditions
                     message.append("<li><strong>").append(guestBook.getActionDate()).append(", ").append(guestBook.getUserName())
                             .append("</strong><br>")
                             .append("<a href=\"#\">").append(guestBook.getDescription()).append("</a>")

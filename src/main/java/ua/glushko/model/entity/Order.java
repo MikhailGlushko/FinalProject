@@ -2,6 +2,7 @@ package ua.glushko.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /** Orders */
 public class Order implements GenericEntity, Serializable {
@@ -172,8 +173,8 @@ public class Order implements GenericEntity, Serializable {
     }
 
     public void setStatus(String status){
-        if(this.status!=null && !this.status.toString().equals(status) ||
-                status!=null && !status.toString().equals(this.status)) {
+        if(this.status!=null && !this.status.name().equals(status) ||
+                status!=null && Objects.nonNull(this.status) && !status.equals(this.status.name())) {
             this.status = OrderStatus.valueOf(OrderStatus.class, status);
             this.changed = true;
         }
@@ -242,6 +243,7 @@ public class Order implements GenericEntity, Serializable {
         }
     }
 
+    @SuppressWarnings("unused")
     public boolean isChanged() {
         return changed;
     }
@@ -268,5 +270,37 @@ public class Order implements GenericEntity, Serializable {
                 ", managerId=" + managerId + '\'' +
                 ", changeDate=" + changeDate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return changed == order.changed &&
+                id == order.id &&
+                repairService == order.repairService &&
+                Double.compare(order.price, price) == 0 &&
+                userId == order.userId &&
+                employeeId == order.employeeId &&
+                managerId == order.managerId &&
+                Objects.equals(descriptionShort, order.descriptionShort) &&
+                Objects.equals(descriptionDetail, order.descriptionDetail) &&
+                Objects.equals(city, order.city) &&
+                Objects.equals(street, order.street) &&
+                Objects.equals(orderDate, order.orderDate) &&
+                Objects.equals(expectedDate, order.expectedDate) &&
+                Objects.equals(appliance, order.appliance) &&
+                Objects.equals(userName, order.userName) &&
+                Objects.equals(memo, order.memo) &&
+                status == order.status &&
+                Objects.equals(employeeName, order.employeeName) &&
+                Objects.equals(changeDate, order.changeDate);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(changed, id, descriptionShort, descriptionDetail, repairService, city, street, orderDate, expectedDate, appliance, price, userId, userName, memo, status, employeeId, employeeName, managerId, changeDate);
     }
 }

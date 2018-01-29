@@ -4,31 +4,33 @@ import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
 
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static ua.glushko.services.utils.Authentication.*;
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
+import static ua.glushko.commands.utils.Authentication.*;
 import static ua.glushko.commands.Command.*;
 
 @SuppressWarnings("serial")
 abstract class ShowListTag extends TagSupport {
     private List<String> head;
-    List<Object> list;
+    private List<Object> list;
 
+    @SuppressWarnings("unused")
     public void setList(List<Object> list){
         this.list = list;
     }
 
+    @SuppressWarnings("unused")
     public void setHead(List<String> head) {
         this.head = head;
     }
 
     @Override
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         try {
             HttpSession session = pageContext.getSession();
             String locale = (String) session.getAttribute(PARAM_LOCALE);
@@ -61,7 +63,9 @@ abstract class ShowListTag extends TagSupport {
                 access = Integer.valueOf(pageContext.getRequest().getAttribute(PARAM_ACCESS).toString());
             if((access & C) == C || (access & c) == c ) {
                 builder.append("<div class='addbutton' align=\"right\">")
-                        .append("<button class='addbutton' type='button' name='button' value='add' onClick=\"window.location.href='/do?command=").append(list.iterator().next().getClass().getSimpleName().toLowerCase()).append("s_add")
+                        .append("<button class='addbutton' type='button' name='button' value='add' onClick=\"window.location.href='")
+                        .append(PARAM_SERVLET_PATH)
+                        .append("?command=").append(list.iterator().next().getClass().getSimpleName().toLowerCase()).append("s_add")
                         .append("'\">")
                         .append(MessageManager.getMessage("menu.add", locale))
                         .append("</button>")
@@ -95,7 +99,7 @@ abstract class ShowListTag extends TagSupport {
 
     protected abstract void makeBody(List<Object> list, StringBuilder builder, Integer rowsCount);
 
-    void makeNavigator(StringBuilder builder, Integer pagesCount, Integer rowsCount, Integer page) {
+    private void makeNavigator(StringBuilder builder, Integer pagesCount, Integer rowsCount, Integer page) {
         String command = pageContext.getRequest().getParameter(PARAM_COMMAND);
         int pageCount = list.size()/rowsCount;
         if (list.size()%rowsCount!=0)
@@ -106,20 +110,32 @@ abstract class ShowListTag extends TagSupport {
             lastPage = Integer.valueOf(attribute.toString());
         builder.append("<div style=\"text-align: center;\"><ul class=\"pagination\">");
         if(page-1>0) {
-            builder.append("<li>").append("<a href=\"/do?command=").append(command).append("&page=").append(1).append("\"><<</a>").append("</li>");
-            builder.append("<li>").append("<a href=\"/do?command=").append(command).append("&page=").append(page - 1).append("\"> < </a>").append("</li>");
+            builder.append("<li>").append("<a href=\"")
+                    .append(PARAM_SERVLET_PATH)
+                    .append("?command=").append(command).append("&page=").append(1).append("\"><<</a>").append("</li>");
+            builder.append("<li>").append("<a href=\"")
+                    .append(PARAM_SERVLET_PATH)
+                    .append("?command=").append(command).append("&page=").append(page - 1).append("\"> < </a>").append("</li>");
         }
         for (int i=page-pagesCount; i<page+pagesCount; i++){
             if(i >0 && i-page<pageCount){
                 if(i!=page)
-                    builder.append("<li>").append("<a href=\"/do?command=").append(command).append("&page=").append(i).append("\">").append(i).append("</a>").append("</li>");
+                    builder.append("<li>").append("<a href=\"")
+                            .append(PARAM_SERVLET_PATH)
+                            .append("?command=").append(command).append("&page=").append(i).append("\">").append(i).append("</a>").append("</li>");
                 else
-                    builder.append("<li class=\"active\">").append("<a href=\"/do?command=").append(command).append("&page=").append(i).append("\">").append(i).append("</a>").append("</li>");
+                    builder.append("<li class=\"active\">").append("<a href=\"")
+                            .append(PARAM_SERVLET_PATH)
+                            .append("?command=").append(command).append("&page=").append(i).append("\">").append(i).append("</a>").append("</li>");
             }
         }
         if(page<lastPage) {
-            builder.append("<li>").append("<a href=\"/do?command=").append(command).append("&page=").append(page + 1).append("\"> > </a>").append("</li>");
-            builder.append("<li>").append("<a href=\"/do?command=").append(command).append("&page=").append(lastPage).append("\">>></a>").append("</li>");
+            builder.append("<li>").append("<a href=\"")
+                    .append(PARAM_SERVLET_PATH)
+                    .append("?command=").append(command).append("&page=").append(page + 1).append("\"> > </a>").append("</li>");
+            builder.append("<li>").append("<a href=\"")
+                    .append(PARAM_SERVLET_PATH)
+                    .append("?command=").append(command).append("&page=").append(lastPage).append("\">>></a>").append("</li>");
         }
 
         builder.append("</ul></div>");

@@ -9,8 +9,6 @@ import java.util.List;
 
 public class RepairServiceDAO extends AbstractDAO<RepairService> {
 
-    private final String NAME_TABLE = "repair_services";
-    private final String NAME_FIELD_ID = "id";
     private final String NAME_FIELD_NAME = "name";
     private final String NAME_FIELD_NAME_RU = "name_ru";
     private final String NAME_FIELD_PARENT = "parent";
@@ -32,15 +30,14 @@ public class RepairServiceDAO extends AbstractDAO<RepairService> {
 
     @Override
     protected String getTableName() {
-        return NAME_TABLE;
+        return "repair_services";
     }
 
     @Override
     protected String getFieldList() {
-        String builder = NAME_FIELD_NAME + "," +
+        return NAME_FIELD_NAME + "," +
                 NAME_FIELD_NAME_RU + "," +
                 NAME_FIELD_PARENT;
-        return builder;
     }
 
     @Override
@@ -67,6 +64,7 @@ public class RepairServiceDAO extends AbstractDAO<RepairService> {
         List<RepairService> list = new ArrayList<>();
         while (resultSet.next()) {
             RepairService item = new RepairService();
+            String NAME_FIELD_ID = "id";
             item.setId(resultSet.getInt(NAME_FIELD_ID));
             item.setName(resultSet.getString(NAME_FIELD_NAME));
             item.setNameRu(resultSet.getString(NAME_FIELD_NAME_RU));

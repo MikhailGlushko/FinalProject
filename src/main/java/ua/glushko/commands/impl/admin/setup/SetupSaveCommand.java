@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
-import static ua.glushko.services.utils.Validator.getValidatedUserBeforeSetup;
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
+import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeSetup;
 
 /** Saving user credentials after change */
 public class SetupSaveCommand implements Command {
@@ -32,7 +33,7 @@ public class SetupSaveCommand implements Command {
             usersService.updateUser(userOld);
             storeUserDataToSession(request,userOld);
             request.setAttribute(PARAM_COMMAND, CommandFactory.COMMAND_WELCOME);
-            page = "/do";
+            page = PARAM_SERVLET_PATH;
         } catch (TransactionException | DatabaseException e){
             LOGGER.error(e);
             page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS_SETUP);

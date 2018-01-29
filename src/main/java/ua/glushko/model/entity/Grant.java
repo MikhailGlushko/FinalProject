@@ -39,6 +39,7 @@ public class Grant implements GenericEntity, Serializable {
         return role;
     }
 
+    @SuppressWarnings("unused")
     public void setRole(UserRole role) {
         this.role = role;
     }
@@ -55,6 +56,7 @@ public class Grant implements GenericEntity, Serializable {
         return scope;
     }
 
+    @SuppressWarnings("unused")
     public void setScope(Scope scope) {
         this.scope = scope;
     }

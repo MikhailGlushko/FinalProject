@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.auth;
 
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 import ua.glushko.commands.CommandFactory;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
@@ -19,10 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-import static ua.glushko.services.utils.Validator.isUserStatusActive;
-import static ua.glushko.services.utils.Validator.isUserStatusNotActive;
-import static ua.glushko.services.utils.Validator.getValidatedUserBeforeLogin;
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
+import static ua.glushko.commands.utils.Validator.isUserStatusActive;
+import static ua.glushko.commands.utils.Validator.isUserStatusNotActive;
+import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeLogin;
 
 /** User authorization */
 public class LoginCommand implements Command {
@@ -43,7 +45,7 @@ public class LoginCommand implements Command {
                 LOGGER.debug("user " + userAfterLogin.getLogin() + " was login");
                 storeUserAuthenticateData(request, userAfterLogin, currentUserGrants);
                 request.setAttribute(PARAM_COMMAND, CommandFactory.COMMAND_WELCOME);
-                page = "/do";
+                page = PARAM_SERVLET_PATH;
             } else if (isUserStatusNotActive(userAfterLogin)) {
                 LOGGER.debug("user " + userAfterLogin.getLogin() + " is " + userAfterLogin.getStatus());
                 request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_STATUS + userAfterLogin.getStatus(), locale));
@@ -73,6 +75,7 @@ public class LoginCommand implements Command {
         request.getSession().setAttribute(Authentication.PARAM_ID, currentUser.getId());
         request.getSession().setAttribute(Authentication.PARAM_GRANTS, userGrants);
         Cookie[] cookies = request.getCookies();
+        if(Objects.nonNull(cookies))
         for (Cookie cookie: cookies) {
             String name = cookie.getName();
             if (name.equals(PARAM_LOCALE)) {

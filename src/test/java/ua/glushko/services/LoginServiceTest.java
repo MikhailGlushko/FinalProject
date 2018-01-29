@@ -32,6 +32,7 @@ public class LoginServiceTest {
             Map<User, List<Grant>> userListMap = loginService.authenticateUser("misha", "admin");
             User user = userListMap.keySet().iterator().next();
             List<Grant> grants = userListMap.get(user);
+            assertNull(grants);
             assertNull("Метод должен вернуть исключение",userListMap);
         } catch (DaoException e) {
             throw new DaoException(e);
@@ -48,6 +49,7 @@ public class LoginServiceTest {
             Map<User, List<Grant>> userListMap = loginService.authenticateUser("admin", "admin");
             User user = userListMap.keySet().iterator().next();
             List<Grant> grants = userListMap.get(user);
+            assertNull(grants);
             assertNotNull("Метод должен вернуть обїект",userListMap);
         } catch (DaoException e) {
             throw new DaoException(e);

@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 public class GuestBookServiceTest {
 
-    GuestBookService service;
+    private GuestBookService service;
     @Before
     @Test
     public void getService() {
@@ -25,26 +25,26 @@ public class GuestBookServiceTest {
     }
 
     @Test
-    public void getGuestBookList() throws DaoException, TransactionException, DatabaseException {
+    public void getGuestBookList() throws DaoException, DatabaseException {
         List<GuestBook> guestBookList = service.getGuestBookList();
         assertNotNull(guestBookList);
     }
 
     @Test
-    public void getGuestBookList1() throws DaoException, TransactionException, DatabaseException {
+    public void getGuestBookList1() throws DaoException, DatabaseException {
         List<GuestBook> guestBookList = service.getGuestBookList(1, 1, 1);
         assertNotNull(guestBookList);
     }
 
     @Test
-    public void getGuestBookTitles() throws DaoException, TransactionException, DatabaseException {
+    public void getGuestBookTitles() throws DaoException, DatabaseException {
         service.getGuestBookList(1, 1, 1);
         List<String> guestBookTitles = service.getGuestBookTitles();
         assertNotNull(guestBookTitles);
     }
 
     @Test
-    public void getGuestBookById() throws DaoException, TransactionException {
+    public void getGuestBookById() throws DaoException {
         GuestBook book = service.getGuestBookById(1);
         assertNotNull(book);
     }

@@ -19,10 +19,10 @@ import static ua.glushko.commands.Command.PARAM_LOCALE;
 import ua.glushko.transaction.H2DataSource;
 
 public class SwitchLanguageCommandTest {
-    HttpSession session = mock(HttpSession.class);
-    HttpServletRequest request = mock(HttpServletRequest.class);
-    HttpServletResponse response=mock(HttpServletResponse.class);
-    RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
+    private final HttpSession session = mock(HttpSession.class);
+    private final HttpServletRequest request = mock(HttpServletRequest.class);
+    private final HttpServletResponse response=mock(HttpServletResponse.class);
+    private final RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
 
     @Before
     public void setUp(){

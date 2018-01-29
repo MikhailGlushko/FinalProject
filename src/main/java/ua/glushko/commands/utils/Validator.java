@@ -1,4 +1,4 @@
-package ua.glushko.services.utils;
+package ua.glushko.commands.utils;
 
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
@@ -17,8 +17,9 @@ public class Validator {
     private static final boolean isPhoneValidation = Boolean.valueOf(ConfigurationManager.getProperty("validation.phone"));
 
     /** Check userId*/
-    private static boolean validateUserId(String id){
+    static boolean validateUserId(String id){
         try{
+            //noinspection ResultOfMethodCallIgnored
             Integer.valueOf(id);
         } catch (NumberFormatException e){
             return false;
@@ -27,7 +28,7 @@ public class Validator {
     }
 
     /** Check userStatus */
-    private static boolean validateUserStatus(String status){
+    static boolean validateUserStatus(String status){
         try {
             UserStatus.valueOf(status);
         } catch (IllegalArgumentException e){
@@ -37,7 +38,7 @@ public class Validator {
     }
 
     /** *Check UserRole */
-    private static boolean validateUserRole(String role){
+    static boolean validateUserRole(String role){
         try{
             UserRole.valueOf(role);
         } catch (IllegalArgumentException e){
@@ -73,7 +74,7 @@ public class Validator {
     /** Check UserPhone */
     private static boolean validatePhone(String phone){
         String pattern = "^\\+\\d{2}\\(\\d{3}\\)\\d{3}-\\d{2}-\\d{2}$";
-        return Objects.nonNull(phone) && (!isPhoneValidation || phone.matches(pattern));
+        return !isPhoneValidation  || (Objects.nonNull(phone) && phone.matches(pattern));
     }
 
     public static User getValidatedUserBeforeRecoveryPassword(HttpServletRequest request) throws ParameterException{
@@ -141,7 +142,6 @@ public class Validator {
         String userLogin = request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN);
         String userPassword = request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD);
         String userPassword2 = request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2);
-        String userPasswordMd5hex = request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD_MD5HEX);
         String userName  = request.getParameter(UsersCommandHelper.PARAM_USER_NAME);
         String userEmail = request.getParameter(UsersCommandHelper.PARAM_USER_EMAIL);
         String userPhone = request.getParameter(UsersCommandHelper.PARAM_USER_PHONE);
@@ -311,4 +311,5 @@ public class Validator {
     public static boolean isUserStatusActive(User currentUser) {
         return currentUser != null && currentUser.getStatus() == UserStatus.ACTIVE;
     }
+
 }

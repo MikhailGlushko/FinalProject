@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 public class OrdersServiceTest {
 
-    OrdersService service;
+    private OrdersService service;
     @Before
     @Test
     public void getService() {
@@ -26,26 +26,26 @@ public class OrdersServiceTest {
     }
 
     @Test
-    public void getOrderList() throws DaoException, TransactionException, DatabaseException {
+    public void getOrderList() throws DaoException, DatabaseException {
         List<Order> orderList = service.getOrderList();
         assertNotNull(orderList);
     }
 
     @Test
-    public void getOrderList1() throws DaoException, TransactionException, DatabaseException {
+    public void getOrderList1() throws DaoException, DatabaseException {
         List<Order> orderList = service.getOrderList(1, 1, 1);
         assertNotNull(orderList);
     }
 
     @Test
-    public void getOrderTitles() throws DaoException, TransactionException, DatabaseException {
+    public void getOrderTitles() throws DaoException, DatabaseException {
         service.getOrderList(1, 1, 1);
         List<String> orderTitles = service.getOrderTitles();
         assertNotNull(orderTitles);
     }
 
     @Test
-    public void getOrderById() throws DaoException, TransactionException {
+    public void getOrderById() throws DaoException {
         Order orderById = service.getOrderById(1);
         assertNotNull(orderById);
         orderById = service.getOrderById(100);
@@ -78,15 +78,6 @@ public class OrdersServiceTest {
     @Test
     public void getOrderList2() throws DaoException, TransactionException, DatabaseException {
         List<Order> orderList = service.getOrderList(1, 1, 1, 1);
-    }
-
-    @Test
-    public void AssignTo() throws DatabaseException, TransactionException {
-        //Integer before = service.countNewWithoutEmployee(OrderStatus.NEW);
-        //assertNotNull(before);
-        //Order order = service.takeNewOrder(2,OrderStatus.NEW);
-        //assertNotNull(order);
-        //Integer after = service.countNewWithoutEmployee(OrderStatus.NEW);
-        //assertNotEquals(before,after);
+        assertNotNull(orderList);
     }
 }

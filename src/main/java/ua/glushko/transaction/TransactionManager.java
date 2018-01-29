@@ -22,6 +22,8 @@ public class TransactionManager {
             throw new TransactionException();
         try {
             Connection connection = ConnectionPool.getConnection();
+            if(Objects.isNull(connection))
+                throw new DatabaseException("connection.not.fount");
             connection.setAutoCommit(false);
             ConnectionWrapper wrapper = new ConnectionWrapper(connection, true);
             threadLocal.set(wrapper);
@@ -38,6 +40,8 @@ public class TransactionManager {
         try {
             ConnectionWrapper wrapper = threadLocal.get();
             Connection connection = wrapper.getConnection();
+            if(Objects.isNull(connection))
+                throw new DatabaseException("connection.not.fount");
             connection.commit();
             connection.close();
             threadLocal.set(null);
@@ -54,6 +58,8 @@ public class TransactionManager {
         try {
             ConnectionWrapper wrapper = threadLocal.get();
             Connection connection = wrapper.getConnection();
+            if(Objects.isNull(connection))
+                throw new DatabaseException("connection.not.fount");
             connection.rollback();
             connection.close();
             threadLocal.set(null);

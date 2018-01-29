@@ -1,8 +1,15 @@
 package ua.glushko.commands.impl.auth;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
+import ua.glushko.exception.DaoException;
+import ua.glushko.exception.DatabaseException;
+import ua.glushko.exception.TransactionException;
+import ua.glushko.model.entity.User;
+import ua.glushko.model.entity.UserStatus;
+import ua.glushko.services.impl.UsersService;
 import ua.glushko.servlets.Controller;
 import ua.glushko.transaction.ConnectionPool;
 
@@ -22,10 +29,10 @@ import static ua.glushko.commands.CommandFactory.COMMAND_LOGIN;
 import ua.glushko.transaction.H2DataSource;
 
 public class LoginCommandTest {
-    HttpSession session = mock(HttpSession.class);
-    HttpServletRequest request = mock(HttpServletRequest.class,CALLS_REAL_METHODS);
-    HttpServletResponse response=mock(HttpServletResponse.class);
-    RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
+    private final HttpSession session = mock(HttpSession.class);
+    private final HttpServletRequest request = mock(HttpServletRequest.class,CALLS_REAL_METHODS);
+    private final HttpServletResponse response=mock(HttpServletResponse.class);
+    private final RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
 
     @Before
     public void setUp(){
@@ -39,16 +46,31 @@ public class LoginCommandTest {
     @Test
     public void loginActiveUser() throws ServletException {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("admin");
-        when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("admin");
+        when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("P@ssw0rd");
         Controller controller = new Controller();
         controller.init();
         controller.processRequest(request,response);
     }
 
     @Test
-    public void loginBlockedUser() throws ServletException {
-        when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("customer10");
-        when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("customer10");
+    public void loginActiveUser2() throws ServletException {
+        when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("admin");
+        when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("P@ssw0rd");
+        Controller controller = new Controller();
+        controller.init();
+        ConnectionPool.getConnectionPool().setDataSource(null);
+        controller.processRequest(request,response);
+    }
+
+    @Test
+    public void loginBlockedUser() throws ServletException, DatabaseException, TransactionException {
+        UsersService service = UsersService.getService();
+        User user = service.getUserById(1);
+        user.setStatus(UserStatus.BLOCKED);
+        user.setPassword("P@ssw0rd");
+        service.updateUser(user);
+        when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("admin");
+        when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("P@ssw0rd");
         Controller controller = new Controller();
         controller.init();
         controller.processRequest(request,response);
@@ -56,6 +78,15 @@ public class LoginCommandTest {
 
     @Test
     public void loginFailure() throws ServletException {
+        when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("admin");
+        when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("admin");
+        Controller controller = new Controller();
+        controller.init();
+        controller.processRequest(request,response);
+    }
+
+    @Test
+    public void loginFailure2() throws ServletException {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("");
         Controller controller = new Controller();

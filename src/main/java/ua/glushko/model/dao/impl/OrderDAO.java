@@ -16,8 +16,6 @@ import java.util.*;
 
 public class OrderDAO extends AbstractDAO<Order> {
 
-    private final String NAME_TABLE = "orders";
-    private final String NAME_FIELD_ID = "id";
     private final String NAME_FIELD_DESCRIPTION_SHORT = "description_short";
     private final String NAME_FIELD_DESCRIPTION_DETAIL = "description_detail";
     private final String NAME_FIELD_REPAIR_SERVICE = "repair_service";
@@ -31,8 +29,6 @@ public class OrderDAO extends AbstractDAO<Order> {
     private final String NAME_FIELD_MEMO = "memo";
     private final String NAME_FIELD_STATUS = "status";
     private final String NAME_FIELD_EMPLOYEE_ID = "employee_id";
-    private final String NAME_FIELD_USER_NAME = "user_name";
-    private final String NAME_FIELD_EMPLOYEE_NAME = "employee_name";
     private final String NAME_FIELD_MANAGER_ID = "manager_id";
     private final String NAME_FIELD_CHANGE_DATE = "change_date";
 
@@ -48,12 +44,12 @@ public class OrderDAO extends AbstractDAO<Order> {
 
     @Override
     protected String getTableName() {
-        return NAME_TABLE;
+        return "orders";
     }
 
     @Override
     protected String getFieldList() {
-        String builder = NAME_FIELD_DESCRIPTION_SHORT + "," +
+        return NAME_FIELD_DESCRIPTION_SHORT + "," +
                 NAME_FIELD_DESCRIPTION_DETAIL + "," +
                 NAME_FIELD_REPAIR_SERVICE + "," +
                 NAME_FIELD_CITY + "," +
@@ -68,7 +64,6 @@ public class OrderDAO extends AbstractDAO<Order> {
                 NAME_FIELD_EMPLOYEE_ID+ "," +
                 NAME_FIELD_MANAGER_ID+ "," +
                 NAME_FIELD_CHANGE_DATE;
-        return builder;
     }
 
     @Override
@@ -116,6 +111,7 @@ public class OrderDAO extends AbstractDAO<Order> {
         List<Order> list = new ArrayList<>();
         while (resultSet.next()) {
             Order item = new Order();
+            String NAME_FIELD_ID = "id";
             item.setId(resultSet.getInt(NAME_FIELD_ID));
             item.setDescriptionShort(resultSet.getString(NAME_FIELD_DESCRIPTION_SHORT));
             item.setDescriptionDetail(resultSet.getString(NAME_FIELD_DESCRIPTION_DETAIL));
@@ -132,7 +128,9 @@ public class OrderDAO extends AbstractDAO<Order> {
             item.setMemo(resultSet.getString(NAME_FIELD_MEMO));
             item.setStatus(resultSet.getString(NAME_FIELD_STATUS));
             item.setEmployeeId(resultSet.getInt(NAME_FIELD_EMPLOYEE_ID));
+            String NAME_FIELD_USER_NAME = "user_name";
             item.setUserName(resultSet.getString(NAME_FIELD_USER_NAME));
+            String NAME_FIELD_EMPLOYEE_NAME = "employee_name";
             item.setEmployeeName(resultSet.getString(NAME_FIELD_EMPLOYEE_NAME));
             item.setManagerId(resultSet.getInt(NAME_FIELD_MANAGER_ID));
             if(resultSet.getDate(NAME_FIELD_CHANGE_DATE)!=null)
@@ -199,7 +197,7 @@ public class OrderDAO extends AbstractDAO<Order> {
     }
 
     @Override
-    protected String getSelectQuery(int start, int end) {
+    protected String getSelectQueryWithLimit() {
         return "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
                 "FROM repair_agency.orders a\n" +
                 "left join users b on a.user_id=b.id \n" +

@@ -24,13 +24,13 @@ public class UserActionCRUDCommand implements Command {
         request.setAttribute(PARAM_PAGE, request.getParameter(PARAM_PAGE));
         switch (action) {
             case "save":
-                page = "/do?command=" + COMMAND_USERS_UPDATE;
+                page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS_UPDATE;
                 break;
             case "add":
-                page = "/do?command=" + COMMAND_USERS_CREATE;
+                page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS_CREATE;
                 break;
             case "delete":
-                page = "/do?command=" + COMMAND_USERS_DELETE;
+                page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS_DELETE;
         }
         return new CommandRouter(request, response, page);
     }

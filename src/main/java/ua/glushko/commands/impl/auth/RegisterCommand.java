@@ -15,7 +15,7 @@ import ua.glushko.services.impl.UsersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static ua.glushko.services.utils.Validator.getValidatedUserBeforeRegistration;
+import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeRegistration;
 
 /** register new User */
 public class RegisterCommand implements Command {
@@ -38,7 +38,7 @@ public class RegisterCommand implements Command {
             page = ConfigurationManager.getProperty(PATH_PAGE_REGISTER);
         } catch (DatabaseException e){
             LOGGER.error(e);
-            LOGGER.debug("User already exist :" + newUser.getLogin() + " Registration rejected.");
+            LOGGER.debug("Database not found :" + newUser.getLogin() + " Registration rejected.");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_DATABASE_NOT_FOUND, locale));
             page = ConfigurationManager.getProperty(PATH_PAGE_REGISTER);
         } catch (ParameterException e) {

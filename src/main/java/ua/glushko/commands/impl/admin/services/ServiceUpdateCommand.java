@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.services;
 
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.model.entity.RepairService;
@@ -12,7 +12,8 @@ import ua.glushko.services.impl.RepairServicesService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static ua.glushko.services.utils.Authentication.U;
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
+import static ua.glushko.commands.utils.Authentication.U;
 import static ua.glushko.commands.CommandFactory.COMMAND_SERVICES;
 
 /** Update data data after editing */
@@ -25,13 +26,13 @@ public class ServiceUpdateCommand implements Command {
         } catch (Exception e) {
             LOGGER.error(e);
         }
-        String page = "/do?command=" + COMMAND_SERVICES +"&page=" + request.getAttribute(PARAM_PAGE);
+        String page = PARAM_SERVLET_PATH + "?command=" + COMMAND_SERVICES +"&page=" + request.getAttribute(PARAM_PAGE);
         return new CommandRouter(request, response, page);
 
     }
 
     private void storeServiceDataToDatabase(HttpServletRequest request) throws TransactionException, DatabaseException {
-        Integer serviceId = null;
+        Integer serviceId;
         try {
             int access = Authentication.checkAccess(request);
             serviceId = Integer.valueOf(request.getParameter(ServicesCommandHelper.PARAM_SERVICE_ID));
@@ -51,7 +52,7 @@ public class ServiceUpdateCommand implements Command {
             request.setAttribute(PARAM_COMMAND, COMMAND_SERVICES);
             LOGGER.debug("service " + serviceId+" was updated");
         } catch (ParameterException e) {
-            LOGGER.debug("service " + serviceId+" was not update");
+            LOGGER.debug("service was not update");
             LOGGER.error(e);
         }
     }

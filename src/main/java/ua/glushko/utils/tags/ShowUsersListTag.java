@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static ua.glushko.commands.Command.*;
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 
 @SuppressWarnings("serial")
 public class ShowUsersListTag extends ShowListTag {
@@ -36,11 +37,14 @@ public class ShowUsersListTag extends ShowListTag {
                 object = (User) next;
             }
             builder.append("<tr onClick=\"window.location.href='")
-                    .append("/do?command=").append(command).append("_detail")
+                    .append(PARAM_SERVLET_PATH)
+                    .append("?command=").append(command).append("_detail")
                     .append("&page=").append(page)
                     .append("&user_id=").append(Objects.requireNonNull(object).getId())
                     .append("'; return false\">")
-                    .append("<td><a href=\"/do?command=").append(command).append("_detail")
+                    .append("<td><a href=\"")
+                    .append(PARAM_SERVLET_PATH)
+                    .append("?command=").append(command).append("_detail")
                     .append("&page=").append(page)
                     .append("&user_id=").append(object.getId()).append("\">")
                     .append(object.getId())
