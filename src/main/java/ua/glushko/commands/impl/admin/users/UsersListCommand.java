@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.users;
 
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-import static ua.glushko.services.utils.Authentication.*;
+import static ua.glushko.commands.utils.Authentication.*;
 
 /**
  * Show users list

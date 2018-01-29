@@ -5,7 +5,6 @@ import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.CommandFactory;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.transaction.ConnectionPool;
-import ua.glushko.transaction.H2DataSource;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -17,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-@WebServlet("/do")
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
+
+@WebServlet(PARAM_SERVLET_PATH)
 public class Controller extends HttpServlet {
 
     private final String DATA_SOURCE = ConfigurationManager.getProperty("jdbc/repair_agency");
@@ -26,8 +27,6 @@ public class Controller extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        //TODO
-        //ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         if (ConnectionPool.getConnectionPool().getDataSource() == null){
             try {
                 Context context = (Context)(new InitialContext().lookup(JNDI_NAME));
@@ -49,7 +48,7 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
-    public void processRequest(HttpServletRequest req, HttpServletResponse resp) {
+    private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
         CommandFactory commandFactory = CommandFactory.getInstance();
         // get command
         Command command = commandFactory.getCommand(req);

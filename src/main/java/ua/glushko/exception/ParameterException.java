@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 public class ParameterException extends Exception {
 
-    private static final Logger logger = Logger.getLogger(DaoException.class.getSimpleName());
+    private static final Logger logger = Logger.getLogger(ParameterException.class.getSimpleName());
 
     public ParameterException(String message) {
         super(message);

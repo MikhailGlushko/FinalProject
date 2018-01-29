@@ -16,41 +16,42 @@ import static org.junit.Assert.*;
 
 public class RepairServicesServiceTest {
 
-    RepairServicesService service;
+    private RepairServicesService service;
     @Before
     @Test
     public void getService() {
-        service = RepairServicesService.getService();
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
+        service = RepairServicesService.getService();
+        assertNotNull(service);
     }
 
     @Test
-    public void getRepairServiceList() throws DaoException, TransactionException, DatabaseException {
+    public void getRepairServiceList() throws DatabaseException {
         List<RepairService> repairServiceList = service.getRepairServiceList();
         assertNotNull(repairServiceList);
     }
 
     @Test
-    public void getRepairServiceList1() throws DaoException, TransactionException, DatabaseException {
+    public void getRepairServiceList1() throws DatabaseException {
         List<RepairService> repairServiceList = service.getRepairServiceList(1, 1, 1);
         assertNotNull(repairServiceList);
     }
 
     @Test
-    public void getRepairServiceTitles() throws DaoException, TransactionException, DatabaseException {
+    public void getRepairServiceTitles() throws DatabaseException {
         service.getRepairServiceList(1, 1, 1);
         List<String> serviceTitles = service.getRepairServiceTitles();
         assertNotNull(serviceTitles);
     }
 
     @Test
-    public void getRepairServiceById() throws DaoException, TransactionException {
+    public void getRepairServiceById() throws DaoException {
         RepairService repairServiceById = service.getRepairServiceById(1);
         assertNotNull(repairServiceById);
     }
 
     @Test
-    public void updateRepairService() throws DaoException, TransactionException, DatabaseException {
+    public void updateRepairService() throws TransactionException, DatabaseException {
         RepairService repairServiceById = service.getRepairServiceById(1);
         String name = repairServiceById.getName();
         repairServiceById.setName(name+"!");
@@ -61,8 +62,10 @@ public class RepairServicesServiceTest {
     }
 
     @Test
-    public void deleteRepairService() throws DaoException, TransactionException, DatabaseException {
+    public void deleteRepairService() throws TransactionException, DatabaseException {
         service.deleteRepairService(2);
+        RepairService service = this.service.getRepairServiceById(2);
+        assertNull(service);
     }
 
     @Test

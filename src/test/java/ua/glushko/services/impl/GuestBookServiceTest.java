@@ -16,41 +16,42 @@ import static org.junit.Assert.*;
 
 public class GuestBookServiceTest {
 
-    GuestBookService service;
+    private GuestBookService service;
     @Before
     @Test
     public void getService() {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         service = GuestBookService.getService();
+        assertNotNull(service);
     }
 
     @Test
-    public void getGuestBookList() throws DaoException, TransactionException, DatabaseException {
+    public void getGuestBookList() throws DatabaseException {
         List<GuestBook> guestBookList = service.getGuestBookList();
         assertNotNull(guestBookList);
     }
 
     @Test
-    public void getGuestBookList1() throws DaoException, TransactionException, DatabaseException {
+    public void getGuestBookList1() throws DatabaseException {
         List<GuestBook> guestBookList = service.getGuestBookList(1, 1, 1);
         assertNotNull(guestBookList);
     }
 
     @Test
-    public void getGuestBookTitles() throws DaoException, TransactionException, DatabaseException {
+    public void getGuestBookTitles() throws DatabaseException {
         service.getGuestBookList(1, 1, 1);
         List<String> guestBookTitles = service.getGuestBookTitles();
         assertNotNull(guestBookTitles);
     }
 
     @Test
-    public void getGuestBookById() throws DaoException, TransactionException {
+    public void getGuestBookById() throws DaoException {
         GuestBook book = service.getGuestBookById(1);
         assertNotNull(book);
     }
 
     @Test
-    public void updateGuestBook() throws DaoException, TransactionException, DatabaseException {
+    public void updateGuestBook() throws TransactionException, DatabaseException {
         GuestBook book = service.getGuestBookById(1);
         assertNotNull(book);
         String decription = book.getDescription();
@@ -62,12 +63,14 @@ public class GuestBookServiceTest {
     }
 
     @Test
-    public void deleteGuestBook() throws DaoException, TransactionException, DatabaseException {
+    public void deleteGuestBook() throws TransactionException, DatabaseException {
         GuestBook book = service.getGuestBookById(1);
         book.setId(0);
         service.updateGuestBook(book);
         Integer id = book.getId();
         service.deleteGuestBook(id);
+        GuestBook guestBook = service.getGuestBookById(id);
+        assertNull(guestBook);
     }
 
     @Test
@@ -75,5 +78,6 @@ public class GuestBookServiceTest {
         int count = service.count();
         assertTrue(count!=0);
         count = service.count(1);
+        assertTrue(count!=0);
     }
 }

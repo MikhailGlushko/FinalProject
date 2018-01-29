@@ -36,7 +36,7 @@
                             <label class="sr-only" for="user_login"><fmt:message key="app.welcome.login"/></label>
                             <input class="form-control" id="user_login" type="text" name="user_login"
                                    placeholder="<fmt:message key="app.welcome.login"/>"
-                                   value="${sessionScope.user_login}" required/>
+                                   value="<c:out value="${sessionScope.user_login}"/>" required/>
                         </div>
                     </div>
                     <div class="input-row">

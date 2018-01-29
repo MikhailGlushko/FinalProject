@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"ALL", "unused"})
 public class GuestBookTag extends TagSupport {
 
     private List<Object> list;
     private int size;
+    @SuppressWarnings("unused")
     private int count;
 
     public void setList(List<Object> list) {
@@ -28,6 +30,7 @@ public class GuestBookTag extends TagSupport {
         this.count = count;
     }
 
+    @SuppressWarnings("SameReturnValue")
     @Override
     public int doStartTag() throws JspException {
         if(size==0) size=255;
@@ -41,14 +44,15 @@ public class GuestBookTag extends TagSupport {
                     GuestBook guestBook = null;
                     if(next instanceof GuestBook)
                         guestBook = (GuestBook)next;
-                    message.append("<li><strong>").append(guestBook.getActionDate()).append(", ").append(guestBook.getUserName())
+                    //noinspection ConstantConditions
+                    message.append("<li><strong>").append(guestBook.getActionDate()).append(", ").append(escapeHtml(guestBook.getUserName()))
                             .append("</strong><br>")
                             .append("<a href=\"#\">").append(guestBook.getDescription()).append("</a>")
                             .append("<div class=text-justify>");
                             if(guestBook.getMemo().length()>size)
-                                message.append(guestBook.getMemo().substring(0,size)).append(" ... ");
+                                message.append(escapeHtml(guestBook.getMemo()).substring(0,size)).append(" ... ");
                             else
-                                message.append(guestBook.getMemo());
+                                message.append(escapeHtml(guestBook.getMemo()));
                             message.append("</div>");
                     message.append("</li>");
                 }

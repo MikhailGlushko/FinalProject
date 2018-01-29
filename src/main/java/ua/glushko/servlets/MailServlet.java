@@ -37,7 +37,7 @@ public class MailServlet extends HttpServlet{
         processRequest(req, resp);
     }
 
-    public void processRequest(HttpServletRequest req, HttpServletResponse resp) {
+    private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
         req.setAttribute(RecoveryCommand.PARAM_MAIL_SETUP,properties);
         RecoveryCommand recoveryCommand = new RecoveryCommand();
         CommandRouter commandRouter = recoveryCommand.execute(req, resp);

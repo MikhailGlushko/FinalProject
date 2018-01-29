@@ -19,6 +19,9 @@ import java.util.Objects;
 import static ua.glushko.commands.Command.*;
 
 public class CommandFactory {
+
+    public static final String PARAM_SERVLET_PATH = "/do";
+
     public static final String COMMAND_LOGIN = "login";
     public static final String COMMAND_REGISTER = "register";
     public static final String COMMAND_RESET_PASSWORD = "resetpassword";
@@ -42,13 +45,13 @@ public class CommandFactory {
     // for requests setup
     public static final String COMMAND_ORDERS = "orders";
     public static final String COMMAND_ORDERS_READ = "orders_detail";
-    private static final String COMMAND_ORDERS_ACTION_CRUD = "orders_action";
-    private static final String COMMAND_ORDERS_ADD = "orders_add";
+    public static final String COMMAND_ORDERS_ACTION_CRUD = "orders_action";
+    public static final String COMMAND_ORDERS_ADD = "orders_add";
     public static final String COMMAND_ORDER_UPDATE = "orders_update";
     public static final String COMMAND_ORDER_DELETE = "orders_delete";
     public static final String COMMAND_ORDER_CREATE = "orders_create";
-    private static final String COMMAND_ORDER_TAKE = "orders_take";
-    private static final String COMMAND_ORDER_CHANGE_STATUS = "orders_change_status";
+    public static final String COMMAND_ORDER_TAKE = "orders_take";
+    public static final String COMMAND_ORDER_CHANGE_STATUS = "orders_change_status";
 
     // for guest book
     public static final String COMMAND_GUEST_BOOK = "guestbook";

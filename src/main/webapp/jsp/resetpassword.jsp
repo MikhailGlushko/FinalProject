@@ -47,7 +47,7 @@
                             <label class="sr-only" for="user_login"><fmt:message key="app.welcome.login"/><em>*</em></label>
                             <input class="form-control" id="user_login" type="text" name="user_login"
                                    placeholder="<fmt:message key="app.welcome.login"/>"
-                                   value="${param.user_login}" required/>
+                                   value="<c:out value="${param.user_login}"/>" required/>
                         </div>
                     </div>
                     <div class="input-row">
@@ -55,7 +55,7 @@
                             <label class="sr-only" for="user_password"><fmt:message key="app.welcome.password"/><em>*</em></label>
                             <input class="form-control" id="user_password" type="password" name="user_password"
                                    placeholder="<fmt:message key="app.welcome.password"/>"
-                                   value="${param.user_password}" required/>
+                                   value="<c:out value="${param.user_password}"/>" required/>
                         </div>
                     </div>
                     <div class="input-row">
@@ -63,7 +63,7 @@
                             <label class="sr-only" for="user_password2"><fmt:message key="app.welcome.password2"/><em>*</em></label>
                             <input class="form-control" id="user_password2" type="password" name="user_password2"
                                    placeholder="<fmt:message key="app.welcome.password2"/>"
-                                   value="${param.user_password2}" required>
+                                   value="<c:out value="${param.user_password2}"/>" required>
                         </div>
                     </div>
                     <div class="input-row">
@@ -71,7 +71,7 @@
                             <label class="sr-only" for="user_secret"><fmt:message key="app.welcome.secret"/><em>*</em></label>
                             <input class="form-control" id="user_secret" type="text" name="user_secret"
                                    placeholder="<fmt:message key="app.welcome.secret"/>"
-                                   value="${param.user_secret}" required>
+                                   value="<c:out value="${param.user_secret}"/>" required>
                         </div>
                     </div>
                     <c:if test="${not empty errorMessage}">

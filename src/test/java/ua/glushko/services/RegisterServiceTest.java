@@ -21,24 +21,23 @@ public class RegisterServiceTest {
     public void getService() {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         registerService = UsersService.getService();
+        assertNotNull(registerService);
     }
 
     @Test (expected = DaoException.class)
-    public void registerExistLogin() throws DaoException, DatabaseException {
+    public void registerExistLogin() throws DatabaseException {
         try {
             User user = registerService.register("admin", "admin", "admin", "admin","admin");
             assertNotNull("Должно было сработать исключение",user);
         } catch (DaoException e) {
             throw new DaoException(e);
-        } catch (TransactionException e) {
-            e.printStackTrace();
-        } catch (ParameterException e) {
+        } catch (TransactionException | ParameterException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void registerNewUser() throws DaoException, TransactionException, ParameterException, DatabaseException {
+    public void registerNewUser() throws TransactionException, ParameterException, DatabaseException {
         try {
             User user = registerService.register("test10", "test10", "test10", "test10","test10");
             assertNotNull("",user);
@@ -48,7 +47,7 @@ public class RegisterServiceTest {
     }
 
     @Test (expected = ParameterException.class)
-    public void registerUserWithNullParameters() throws TransactionException, DaoException, ParameterException, DatabaseException {
+    public void registerUserWithNullParameters() throws TransactionException, ParameterException, DatabaseException {
         try {
             User user = registerService.register(null, "test10", "test10", "test10","test10");
             assertNotNull("",user);

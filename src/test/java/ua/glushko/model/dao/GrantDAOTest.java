@@ -1,10 +1,8 @@
 package ua.glushko.model.dao;
 
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.model.dao.impl.GrantDAO;
-import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.Grant;
 import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
@@ -15,19 +13,19 @@ import static org.junit.Assert.assertNotNull;
 import ua.glushko.transaction.H2DataSource;
 
 public class GrantDAOTest {
-    private static final Logger logger = Logger.getLogger(UserDAO.class.getSimpleName());
-
     private static GenericDAO<Grant> grantDAO;
 
     @Before
     public void init() {
             ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
             grantDAO = DAOFactory.getFactory().getGrantDao();
+            assertNotNull(grantDAO);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void readAll() throws DaoException {
+    public void readAll() {
         List<Grant> grants = ((GrantDAO) grantDAO).read();
+        assertNotNull(grants);
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -46,6 +44,7 @@ public class GrantDAOTest {
     @Test
     public void read() throws DaoException {
         List<Grant> grants = ((GrantDAO) grantDAO).read("ADMIN");
+        assertNotNull(grants);
     }
 
     @Test(expected = UnsupportedOperationException.class)

@@ -1,6 +1,6 @@
 package ua.glushko.utils.tags;
 
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 import ua.glushko.commands.CommandFactory;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
@@ -15,6 +15,7 @@ import java.util.Objects;
 
 import static ua.glushko.commands.Command.*;
 import static ua.glushko.commands.CommandFactory.COMMAND_LOGOUT;
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 
 @SuppressWarnings("serial")
 public class MainMenuTag extends TagSupport {
@@ -28,7 +29,8 @@ public class MainMenuTag extends TagSupport {
             StringBuilder builder = new StringBuilder();
             builder.append("<div style=\"float: left; width: 75%\">")
                     .append("<a class=\"btn btn-default btn-sm\" href=\"")
-                    .append("/do?command="+ CommandFactory.COMMAND_WELCOME)
+                    .append(PARAM_SERVLET_PATH)
+                    .append("?command="+ CommandFactory.COMMAND_WELCOME)
                     .append("\">")
                     .append(" <i class=\"glyphicon glyphicon-home\"> </i> ")
                     .append(MessageManager.getMessage("main.home",locale))
@@ -43,7 +45,9 @@ public class MainMenuTag extends TagSupport {
             if(Objects.nonNull(grants))
             for (Object grant:grants) {
                 if (grant instanceof Grant && ((Grant) grant).getAction().contains("M")){
-                    builder.append("<a class=\"btn btn-default btn-sm\" href=\"/do?command=")
+                    builder.append("<a class=\"btn btn-default btn-sm\" href=\"")
+                            .append(PARAM_SERVLET_PATH)
+                            .append("?command=")
                             .append(((Grant)grant).getCommand())
                             .append("\">")
                             .append(MessageManager.getMessage("menu."+((Grant)grant).getMenu(),locale))
@@ -54,7 +58,9 @@ public class MainMenuTag extends TagSupport {
             builder.append("<div style=\"float: left; width: 25%;\" align=\"right\">");
             Object userName = pageContext.getSession().getAttribute(Authentication.PARAM_NAME_NAME);
             if(Objects.nonNull(userName)){
-                builder.append("<a class=\"btn btn-default btn-sm\" href=\"/do?command=")
+                builder.append("<a class=\"btn btn-default btn-sm\" href=\"")
+                        .append(PARAM_SERVLET_PATH)
+                        .append("?command=")
                         .append(COMMAND_LOGOUT)
                         .append("\" style=\"margin-right: 20; float: right\">")
                         .append(" <i class=\"glyphicon glyphicon-log-out\"> </i> ")

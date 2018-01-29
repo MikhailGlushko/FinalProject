@@ -21,7 +21,6 @@ public interface Command {
     String COOKIE_LOCALE = "locale";
     String PATH_PAGE_INDEX = "path.page.index";
     String PATH_PAGE_WELCOME = "path.page.welcome";
-    String PATH_PAGE_MAIN = "path.page.main";
     String PATH_PAGE_ERROR = "path.page.error";
     String PATH_PAGE_LOGIN = "path.page.login";
     String PATH_PAGE_REGISTER = "path.page.register";

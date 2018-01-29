@@ -10,14 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GrantDAO extends AbstractDAO<Grant> {
 
     private static final GrantDAO dao = new GrantDAO();
-    private final String NAME_TABLE = "grants";
-    private final String NAME_FIELD_ID = "id";
     private final String NAME_FIELD_COMMAND = "command";
     private final String NAME_FIELD_MENU = "menu";
     private final String NAME_FIELD_ROLE = "role";
@@ -46,7 +43,7 @@ public class GrantDAO extends AbstractDAO<Grant> {
 
     @Override
     protected String getTableName() {
-        return NAME_TABLE;
+        return "grants";
     }
 
     @Override
@@ -56,12 +53,11 @@ public class GrantDAO extends AbstractDAO<Grant> {
 
     @Override
     protected String getFieldList() {
-        String builder = NAME_FIELD_COMMAND + "," +
+        return NAME_FIELD_COMMAND + "," +
                 NAME_FIELD_MENU + "," +
                 NAME_FIELD_ROLE + "," +
                 NAME_FIELD_ACTION + "," +
                 NAME_FIELD_SCOPE;
-        return builder;
     }
 
     @Override
@@ -69,6 +65,7 @@ public class GrantDAO extends AbstractDAO<Grant> {
         List<Grant> list = new ArrayList<>();
         while (resultSet.next()) {
             Grant item = new Grant();
+            String NAME_FIELD_ID = "id";
             item.setId(resultSet.getInt(NAME_FIELD_ID));
             item.setCommand(resultSet.getString(NAME_FIELD_COMMAND));
             item.setMenu(resultSet.getString(NAME_FIELD_MENU));

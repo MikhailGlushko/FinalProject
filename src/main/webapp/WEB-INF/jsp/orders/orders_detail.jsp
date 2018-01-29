@@ -18,8 +18,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ремонтное агенство::Редактирование pfrfpjd</title>
     <link href="../../../css/style.css" rel="stylesheet" type="text/css">
-    <link href="../../../../dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="../../../../css/login.css" rel="stylesheet" type="text/css">
+    <link href="../../../dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main">
@@ -83,7 +83,7 @@
                             <input class="input-sm" style="float: right" id="order_description_short" type="text"
                                    name="order_description_short"
                                    placeholder="<fmt:message key="order.description.short"/>"
-                                   value="${orders_detail.descriptionShort}" required/>
+                                   value="<c:out value="${orders_detail.descriptionShort}"/>" required/>
                         </div>
                     </div>
                     <div class="row" style="width: 100%">
@@ -92,7 +92,7 @@
                                     key="order.description.detail"/><em>*</em></label>
                             <textarea class="input-sm" id="order_description_detail" name="order_description_detail"
                                       required
-                                      style="float: right; height: 100px">${orders_detail.descriptionDetail}</textarea>
+                                      style="float: right; height: 100px"><c:out value="${orders_detail.descriptionDetail}"/></textarea>
                         </div>
                     </div>
                     <div class="row" style="width: 100%">
@@ -100,7 +100,7 @@
                             <label style="float: left" for="order_appliance"><fmt:message
                                     key="order.appliance"/><em>*</em></label>
                             <textarea class="input-sm" id="order_appliance" name="order_appliance" required
-                                      style="float: right; height: 50px">${orders_detail.appliance}</textarea>
+                                      style="float: right; height: 50px"><c:out value="${orders_detail.appliance}"/></textarea>
                         </div>
                     </div>
                     <div class="row" style="width: 100%">
@@ -129,7 +129,7 @@
                                     key="order.city"/><em>*</em></label>
                             <input class="input-sm" style="float: right" id="order_city" type="text" name="order_city"
                                    placeholder="<fmt:message key="order.city"/>"
-                                   value="${orders_detail.city}"
+                                   value="<c:out value="${orders_detail.city}"/>"
                                    required/>
                         </div>
                     </div>
@@ -138,14 +138,14 @@
                             <label style="float: left" for="order_street"><fmt:message
                                     key="order.street"/><em>*</em></label>
                             <textarea class="input-sm" id="order_street" name="order_street" required
-                                      style="float: right; height: 50px">${orders_detail.street}</textarea>
+                                      style="float: right; height: 50px"><c:out value="${orders_detail.street}"/></textarea>
                         </div>
                     </div>
                     <div class="row" style="width: 100%">
                         <div class="form-group">
                             <label style="float: left" for="order_user_id"><fmt:message key="order.user.id"/></label>
                             <select class="input-sm" style="float: right" id="order_user_id" name="order_user_id">
-                                <option value="${orders_detail.userId}">${order_user_name}</option>
+                                <option value="${orders_detail.userId}"><c:out value="${order_user_name}"/></option>
                             </select>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                             <input class="input-sm" style="float: right" id="order_price" type="number"
                                    name="order_price"
                                    placeholder="<fmt:message key="order.price"/>"
-                                   value="${orders_detail.price}"/>
+                                   value="<c:out value="${orders_detail.price}"/>"/>
                         </div>
                     </div>
                     <div class="row" style="width: 100%">
@@ -166,7 +166,7 @@
                     <div class="row" style="width: 100%">
                         <div class="form-group">
                             <textarea class="input-sm" id="order_memo" type="text" name="order_memo"
-                                      style="float: right;height: 100px; width: 100%; max-width: 100%;">${orders_detail.memo}</textarea>
+                                      style="float: right;height: 100px; width: 100%; max-width: 100%;"><c:out value="${orders_detail.memo}"/></textarea>
                         </div>
                     </div>
                     <br>

@@ -6,7 +6,7 @@ import ua.glushko.model.entity.UserRole;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.List;
-
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 @SuppressWarnings("serial")
 public class OptGoupStaffTag extends TagSupport {
     private List<User> list;
@@ -20,6 +20,7 @@ public class OptGoupStaffTag extends TagSupport {
         this.value=value;
     }
 
+    @SuppressWarnings("SameReturnValue")
     @Override
     public int doStartTag() {
         StringBuilder builder = new StringBuilder();
@@ -30,11 +31,12 @@ public class OptGoupStaffTag extends TagSupport {
                     builder.append("<option value=\"").append(user.getId()).append("\"");
                     if(user.getId()==value)
                         builder.append(" selected ");
-                    builder.append(">").append(user.getName()).append("</option>");
+                    builder.append(">").append(escapeHtml(user.getName())).append("</option>");
                 }
             }
             builder.append("</optiongroup>");
         }
+        //noinspection EmptyCatchBlock
         try {
             pageContext.getOut().write(builder.toString());
         } catch (IOException e) {

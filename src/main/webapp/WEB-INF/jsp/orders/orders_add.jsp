@@ -17,8 +17,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Ремонтное агенство::Добавление заказа</title>
     <link href="../../../css/style.css" rel="stylesheet" type="text/css">
-    <link href="../../../../dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="../../../../css/login.css" rel="stylesheet" type="text/css">
+    <link href="../../../dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main">
@@ -48,7 +48,7 @@
                         <input class="input-sm" style="float: right" id="order_description_short" type="text"
                                name="order_description_short"
                                placeholder="<fmt:message key="order.description.short"/>"
-                               value="${param.order_description_short}" required/>
+                               value="<c:out value="${param.order_description_short}"/>" required/>
                     </div>
                 </div>
                 <br/>
@@ -58,7 +58,7 @@
                                 key="order.description.detail"/><em>*</em></label>
                         <textarea class="input-sm" id="order_description_detail" name="order_description_detail"
                                   required
-                                  style="float: right; height: 100px">${param.order_description_detail}</textarea>
+                                  style="float: right; height: 100px"><c:out value="${param.order_description_detail}"/></textarea>
                     </div>
                 </div>
                 <br/>
@@ -66,53 +66,50 @@
                     <div class="input-form">
                         <label for="order_appliance" style="float: left"><fmt:message key="order.appliance"/><em>*</em></label>
                         <textarea class="input-sm" id="order_appliance" name="order_appliance" required
-                                  style="float: right; height: 50px">${param.appliance}</textarea>
+                                  style="float: right; height: 50px"><c:out value="${param.appliance}"/></textarea>
                     </div>
                 </div>
                 <br/>
                 <div class="row" style="width: 100%">
                     <div class="input-form">
-                        <input class="input-sm" style="float: right" id="order_city" type="text" name="order_city"
-                               value="${param.order_city}" required/>
                         <label for="order_city" style="float: left"><fmt:message key="order.city"/><em>*</em></label>
+                        <input class="input-sm" style="float: right" id="order_city" type="text" name="order_city"
+                               value="<c:out value="${param.order_city}"/>" required/>
                     </div>
                 </div>
                 <br/>
                 <div class="row" style="width: 100%">
                     <div class="input-form">
-                        <%--<input id="order_street" type="text" name="order_street" value="" required/>--%>
+                        <label for="order_street" style="float: left"><fmt:message key="order.street"/><em>*</em></label>
                         <textarea class="input-sm" id="order_street" name="order_street" required
-                                  style="float: right; height: 50px">${param.order_street}</textarea>
-                        <label for="order_street" style="float: left"><fmt:message
-                                key="order.street"/><em>*</em></label>
+                                  style="float: right; height: 50px"><c:out value="${param.order_street}"/></textarea>
                     </div>
                 </div>
                 <br/>
                 <input type="hidden" name="order_user_id" value="${order_user_id}"/>
                 <div class="row" style="width: 100%">
                     <div class="input-form">
+                        <label for="order_expected_date" style="float: left"><fmt:message key="order.expected.actionDate"/><em>*</em></label>
                         <input class="input-sm" style="float: right" id="order_expected_date" type="date"
                                name="order_expected_date"
                                value="${param.order_expected_date}" required/>
-                        <label for="order_expected_date" style="float: left"><fmt:message
-                                key="order.expected.actionDate"/><em>*</em></label>
                     </div>
                 </div>
                 <br/>
                 <div class="row" style="width: 100%">
                     <div class="input-form">
-                        <textarea class="input-sm" id="order_memo" type="text" name="order_memo" value=""
-                                  style="float: right;height: 100px">${param.order_memo}</textarea>
                         <label for="order_memo" style="float: left"><fmt:message key="order.memo"/></label>
+                        <textarea class="input-sm" id="order_memo" type="text" name="order_memo" value=""
+                                  style="float: right;height: 100px"><c:out value="${param.order_memo}"/></textarea>
                     </div>
                 </div>
                 <br/>
                 <div class="row" style="width: 100%">
                     <div class="input-form">
+                        <label for="order_status" style="float: left"><fmt:message key="order.status"/></label>
                         <select class="input-sm" style="float: right" id="order_status" name="order_status" disabled>
                             <option value="NEW" selected>NEW</option>
                         </select>
-                        <label for="order_status" style="float: left"><fmt:message key="order.status"/></label>
                     </div>
                 </div>
                 <br>

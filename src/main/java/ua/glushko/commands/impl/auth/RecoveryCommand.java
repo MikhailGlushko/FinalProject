@@ -9,14 +9,13 @@ import ua.glushko.utils.mail.MailThread;
 import ua.glushko.model.entity.User;
 import ua.glushko.exception.DatabaseException;
 import ua.glushko.exception.ParameterException;
-import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Properties;
 
-import static ua.glushko.services.utils.Validator.getValidatedUserBeforeRecoveryPassword;
+import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeRecoveryPassword;
 
 /** Recovery password */
 public class RecoveryCommand implements Command {
@@ -40,7 +39,7 @@ public class RecoveryCommand implements Command {
             mailThread.start();
             LOGGER.debug("secret key for user "+user.getLogin()+" was sent to his email");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_PASSWORD_WAS_SEND, locale));
-        } catch (TransactionException | DatabaseException e) {
+        } catch (DatabaseException e) {
             LOGGER.debug("Password for user "+user.getLogin()+" was not change. User not exist.");
             page = ConfigurationManager.getProperty(PATH_PAGE_RECOVER);
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_NOT_EXIST, locale));

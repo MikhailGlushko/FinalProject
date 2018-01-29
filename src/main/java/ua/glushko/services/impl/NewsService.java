@@ -1,17 +1,16 @@
 package ua.glushko.services.impl;
 
 import ua.glushko.model.dao.DAOFactory;
-import ua.glushko.model.dao.impl.NewsDAO;
 import ua.glushko.model.entity.News;
 import ua.glushko.exception.DaoException;
 import ua.glushko.exception.DatabaseException;
 import ua.glushko.exception.TransactionException;
 import ua.glushko.services.Service;
-import ua.glushko.transaction.TransactionManager;
 
 import java.sql.SQLException;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class NewsService extends Service {
 
     private NewsService() {

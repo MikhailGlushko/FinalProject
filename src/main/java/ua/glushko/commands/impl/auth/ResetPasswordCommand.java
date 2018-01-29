@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
-import static ua.glushko.services.utils.Validator.getValidatedUserBeforeResetPassword;
+import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeResetPassword;
 
 /** Reset password */
 public class ResetPasswordCommand implements Command {

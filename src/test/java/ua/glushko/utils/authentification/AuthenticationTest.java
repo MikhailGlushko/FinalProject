@@ -7,7 +7,7 @@ import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
 import ua.glushko.exception.ParameterException;
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 import ua.glushko.services.impl.UsersService;
 import ua.glushko.transaction.ConnectionPool;
 
@@ -20,22 +20,23 @@ import java.util.Map;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ua.glushko.services.utils.Authentication.PARAM_GRANTS;
-import static ua.glushko.services.utils.Authentication.PARAM_ROLE;
+import static ua.glushko.commands.utils.Authentication.PARAM_GRANTS;
+import static ua.glushko.commands.utils.Authentication.PARAM_ROLE;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import ua.glushko.transaction.H2DataSource;
 
 public class AuthenticationTest {
 
-    HttpSession session;
-    HttpServletRequest request;
+    private HttpSession session;
+    private HttpServletRequest request;
     @Before
     public void setUp() throws Exception {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         UsersService usersService = UsersService.getService();
         Map<User, List<Grant>> useDataAndGrantsSet = usersService.authenticateUser("admin", "P@ssw0rd");
         User user = useDataAndGrantsSet.keySet().iterator().next();
+        assertNotNull(user);
         List<Grant> grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
         session = mock(HttpSession.class);
         request = mock(HttpServletRequest.class);

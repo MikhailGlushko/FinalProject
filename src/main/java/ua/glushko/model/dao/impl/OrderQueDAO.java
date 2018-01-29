@@ -1,24 +1,18 @@
 package ua.glushko.model.dao.impl;
 
-import ua.glushko.exception.DaoException;
 import ua.glushko.model.dao.AbstractDAO;
 import ua.glushko.model.entity.OrderQue;
 import ua.glushko.model.entity.UserRole;
-import ua.glushko.transaction.ConnectionWrapper;
-import ua.glushko.transaction.TransactionManager;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class OrderQueDAO extends AbstractDAO<OrderQue> {
 
-    private final String NAME_TABLE = "order_que";
-    private final String NAME_FIELD_ID = "id";
     private final String NAME_FIELD_ORDER_ID = "order_id";
     private final String NAME_FIELD_ROLE = "role";
     private final String NAME_FIELD_EMPLOYEE_ID = "employee_id";
@@ -38,18 +32,17 @@ public class OrderQueDAO extends AbstractDAO<OrderQue> {
 
     @Override
     protected String getTableName() {
-        return NAME_TABLE;
+        return "order_que";
     }
 
     @Override
     protected String getFieldList() {
-        String builder = NAME_FIELD_ORDER_ID + "," +
+        return NAME_FIELD_ORDER_ID + "," +
                 NAME_FIELD_ROLE + "," +
                 NAME_FIELD_EMPLOYEE_ID + "," +
                 NAME_FIELD_CREATE + "," +
                 NAME_FIELD_CLOSE + "," +
                 NAME_FIELD_MESSAGE;
-        return builder;
     }
 
     @Override
@@ -89,6 +82,7 @@ public class OrderQueDAO extends AbstractDAO<OrderQue> {
         List<OrderQue> list = new ArrayList<>();
         while (resultSet.next()) {
             OrderQue item = new OrderQue();
+            String NAME_FIELD_ID = "id";
             item.setId(resultSet.getInt(NAME_FIELD_ID));
             item.setOrderId(resultSet.getInt(NAME_FIELD_ORDER_ID));
             item.setRole(resultSet.getString(NAME_FIELD_ROLE));
@@ -115,7 +109,7 @@ public class OrderQueDAO extends AbstractDAO<OrderQue> {
                 " order by id desc";
     }
 
-    protected String getSelectQuery(int from, int limit) {
+    protected String getSelectQueryWithLimit() {
         return "select id, " + getFieldList() +
                 " from " + getTableName() +
                 " order by id desc limit ?,? ";

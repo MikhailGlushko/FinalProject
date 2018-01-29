@@ -38,7 +38,7 @@
                             <label for="user_login" style="float: left"><fmt:message key="app.welcome.login"/><em>*</em></label>
                             <input class="input-sm" style="float: right" id="user_login" type="text" name="user_login"
                                    placeholder="<fmt:message key="app.welcome.login"/>"
-                                   value="${user_detail.login}" required/>
+                                   value="<c:out value="${user_detail.login}"/>" required/>
                         </div>
                     </div>
                     <br>
@@ -48,7 +48,7 @@
                                     key="app.welcome.password.old"/><em>*</em></label>
                             <input class="input-sm" style="float: right" id="user_password_old" type="password" name="user_password_old"
                                    placeholder="<fmt:message key="app.welcome.password.old"/>"
-                                   value="${param.user_password_old}"/>
+                                   value="<c:out value="${param.user_password_old}"/>"/>
                         </div>
                     </div>
                     <br>
@@ -58,7 +58,7 @@
                                     key="app.welcome.password"/><em>*</em></label>
                             <input class="input-sm" style="float: right" id="user_password" type="password" name="user_password"
                                    placeholder="<fmt:message key="app.welcome.password"/>"
-                                   value="${param.user_password}"/>
+                                   value="<c:out value="${param.user_password}"/>"/>
                         </div>
                     </div>
                     <br>
@@ -68,7 +68,7 @@
                                     key="app.welcome.password2"/><em>*</em></label>
                             <input class="input-sm" style="float: right" id="user_password2" type="password" name="user_password2"
                                    placeholder="<fmt:message key="app.welcome.password2"/>"
-                                   value="${param.user_password2}"/>
+                                   value="<c:out value="${param.user_password2}"/>"/>
                         </div>
                     </div>
                     <br>
@@ -78,7 +78,7 @@
                                     key="app.welcome.name"/><em>*</em></label>
                             <input class="input-sm" style="float: right" id="user_name" type="text" name="user_name"
                                    placeholder="<fmt:message key="app.welcome.name"/>"
-                                   value="${user_detail.name}" required/>
+                                   value="<c:out value="${user_detail.name}"/>" required/>
                         </div>
                     </div>
                     <br>
@@ -88,7 +88,7 @@
                                     key="app.welcome.email"/><em>*</em></label>
                             <input class="input-sm" style="float: right" id="user_email" type="email" name="user_email"
                                    placeholder="<fmt:message key="app.welcome.email"/>"
-                                   value="${user_detail.email}" required/>
+                                   value="<c:out value="${user_detail.email}"/>" required/>
                         </div>
                     </div>
                     <br>
@@ -97,7 +97,7 @@
                             <label for="user_phone" style="float: left"><fmt:message key="app.welcome.phone"/></label>
                             <input class="input-sm" style="float: right" id="user_phone" type="tel" name="user_phone"
                                    placeholder="<fmt:message key="app.welcome.phone"/>"
-                                   value="${user_detail.phone}"/>
+                                   value="<c:out value="${user_detail.phone}"/>"/>
                         </div>
                     </div>
                     <br>

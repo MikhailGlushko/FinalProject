@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.users;
 
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.model.entity.User;
@@ -9,7 +9,8 @@ import ua.glushko.services.impl.UsersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static ua.glushko.services.utils.Authentication.*;
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
+import static ua.glushko.commands.utils.Authentication.*;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 
 /**
@@ -33,7 +34,7 @@ public class UserDeleteCommand implements Command {
         } catch (Exception e) {
             LOGGER.error(e);
         }
-        String page = "/do?command=" + COMMAND_USERS + "&page=" + request.getAttribute(PARAM_PAGE);
+        String page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS + "&page=" + request.getAttribute(PARAM_PAGE);
         return new CommandRouter(request, response, page);
     }
 }

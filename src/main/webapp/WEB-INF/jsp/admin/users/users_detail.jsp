@@ -38,7 +38,7 @@
                             <label for="user_name" style="float: left"><fmt:message key="app.welcome.name"/><em>*</em></label>
                             <input class="input-sm" style="float: right" id="user_name" type="text" name="user_name"
                                    placeholder="<fmt:message key="app.welcome.name"/>"
-                                   value="${user_detail.name}" required/>
+                                   value="<c:out value="${user_detail.name}"/>" required/>
                         </div>
                     </div>
                     <br>
@@ -47,7 +47,7 @@
                             <label for="user_email" style="float: left"><fmt:message key="app.welcome.email"/><em>*</em></label>
                             <input class="input-sm" style="float: right" id="user_email" type="email" name="user_email"
                                    placeholder="<fmt:message key="app.welcome.email"/>"
-                                   value="${user_detail.email}" required/>
+                                   value="<c:out value="${user_detail.email}"/>" required/>
                         </div>
                     </div>
                     <br>
@@ -56,7 +56,7 @@
                             <label for="user_phone" style="float: left"><fmt:message key="app.welcome.phone"/></label>
                             <input class="input-sm" style="float: right" id="user_phone" type="tel" name="user_phone"
                                    placeholder="<fmt:message key="app.welcome.phone"/>"
-                                   value="${user_detail.phone}"/>
+                                   value="<c:out value="${user_detail.phone}"/>"/>
                         </div>
                     </div>
                     <br>

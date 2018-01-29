@@ -1,4 +1,4 @@
-package ua.glushko.services.utils;
+package ua.glushko.commands.utils;
 
 import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.Scope;
@@ -61,6 +61,7 @@ public class Authentication {
     }
 
     public static Integer getCurrentUserId(HttpSession session){
+        //noinspection EmptyCatchBlock
         try {
             return Integer.valueOf(session.getAttribute(Authentication.PARAM_ID).toString());
         } catch (NumberFormatException e){}

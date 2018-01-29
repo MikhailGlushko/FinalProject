@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
-import static ua.glushko.services.utils.Validator.getValidatedUserBeforeCreate;
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
+import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeCreate;
 
 /**
  * Create new user
@@ -36,7 +37,7 @@ public class UserCreateCommand implements Command {
             request.setAttribute(PARAM_LAST_PAGE,count);
             LOGGER.debug("New user : "+newUser.getLogin()+" was registered.");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_IS_REGISTERED, locale));
-            page = "/do?command=" + COMMAND_USERS + "&page=" + request.getAttribute(PARAM_LAST_PAGE);
+            page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS + "&page=" + request.getAttribute(PARAM_LAST_PAGE);
         } catch (SQLException | TransactionException e) {
             LOGGER.error(e);
             LOGGER.debug("User already exist :"+newUser.getLogin()+" Registration rejected.");

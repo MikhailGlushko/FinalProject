@@ -2,7 +2,7 @@ package ua.glushko.commands.impl.orders;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.model.entity.Grant;
 import ua.glushko.model.entity.User;
@@ -19,26 +19,27 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ua.glushko.services.utils.Authentication.PARAM_GRANTS;
-import static ua.glushko.services.utils.Authentication.PARAM_ROLE;
+import static ua.glushko.commands.utils.Authentication.PARAM_GRANTS;
+import static ua.glushko.commands.utils.Authentication.PARAM_ROLE;
 import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_LOCALE;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 import ua.glushko.transaction.H2DataSource;
 
 public class OrdersListCommandTest {
-    HttpSession session = mock(HttpSession.class);
-    HttpServletRequest request = mock(HttpServletRequest.class);
-    HttpServletResponse response=mock(HttpServletResponse.class);
-    RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
-    List<Grant> grants;
-    Map<User, List<Grant>> useDataAndGrantsSet;
+    private final HttpSession session = mock(HttpSession.class);
+    private final HttpServletRequest request = mock(HttpServletRequest.class);
+    private final HttpServletResponse response=mock(HttpServletResponse.class);
+    private final RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
+    private List<Grant> grants;
+    private Map<User, List<Grant>> useDataAndGrantsSet;
 
     @Before
     public void setUp(){
@@ -50,7 +51,7 @@ public class OrdersListCommandTest {
     }
 
     @Test
-    public void getUsersListForUserAdmin() throws ServletException, DaoException, TransactionException, DatabaseException {
+    public void getUsersListForUserAdmin() throws ServletException, TransactionException, DatabaseException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("admin", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -61,11 +62,12 @@ public class OrdersListCommandTest {
 
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test
-    public void getUsersListForUserManager() throws ServletException, DaoException, TransactionException, DatabaseException {
+    public void getUsersListForUserManager() throws ServletException, TransactionException, DatabaseException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("manager", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -76,11 +78,12 @@ public class OrdersListCommandTest {
 
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test
-    public void getUsersListForUserMaster() throws ServletException, DaoException, TransactionException, DatabaseException {
+    public void getUsersListForUserMaster() throws ServletException, TransactionException, DatabaseException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("master", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -91,11 +94,12 @@ public class OrdersListCommandTest {
 
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test
-    public void getUsersListForUserCustomer() throws ServletException, DaoException, TransactionException, DatabaseException {
+    public void getUsersListForUserCustomer() throws ServletException, TransactionException, DatabaseException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("customer", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -106,11 +110,12 @@ public class OrdersListCommandTest {
 
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test (expected = DaoException.class)
-    public void getUsersListForGuest() throws ServletException, DaoException, TransactionException, DatabaseException {
+    public void getUsersListForGuest() throws ServletException, TransactionException, DatabaseException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser(null, null);
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -119,11 +124,12 @@ public class OrdersListCommandTest {
 
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
     @Test (expected = DaoException.class)
-    public void getUsersListForGuest2() throws ServletException, DaoException, TransactionException, DatabaseException {
+    public void getUsersListForGuest2() throws ServletException, TransactionException, DatabaseException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("test", "test");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -132,7 +138,8 @@ public class OrdersListCommandTest {
 
         Controller controller = new Controller();
         controller.init();
-        controller.processRequest(request,response);
+        when(request.getMethod()).thenReturn("POST");
+        controller.service(request,response);
     }
 
 }

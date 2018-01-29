@@ -24,14 +24,16 @@ public class LoginServiceTest {
     public void getService() {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         loginService = UsersService.getService();
+        assertNotNull(loginService);
     }
 
     @Test (expected = DaoException.class)
-    public void loginWrong() throws DaoException, DatabaseException {
+    public void loginWrong() throws DatabaseException {
         try {
             Map<User, List<Grant>> userListMap = loginService.authenticateUser("misha", "admin");
             User user = userListMap.keySet().iterator().next();
             List<Grant> grants = userListMap.get(user);
+            assertNull(grants);
             assertNull("Метод должен вернуть исключение",userListMap);
         } catch (DaoException e) {
             throw new DaoException(e);
@@ -41,13 +43,14 @@ public class LoginServiceTest {
     }
 
     @Test( expected = DaoException.class)
-    public void loginOk() throws DaoException, DatabaseException {
+    public void loginOk() throws DatabaseException {
         try {
             //String md5Hex = DigestUtils.md5Hex("admin");
             //System.out.println(md5Hex);
             Map<User, List<Grant>> userListMap = loginService.authenticateUser("admin", "admin");
             User user = userListMap.keySet().iterator().next();
             List<Grant> grants = userListMap.get(user);
+            assertNull(grants);
             assertNotNull("Метод должен вернуть обїект",userListMap);
         } catch (DaoException e) {
             throw new DaoException(e);

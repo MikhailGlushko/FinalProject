@@ -6,7 +6,6 @@ import ua.glushko.transaction.ConnectionWrapper;
 import ua.glushko.transaction.TransactionManager;
 
 import java.sql.*;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -173,7 +172,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     /**
      * Prepare statement for select
      */
-    protected void prepareStatementForSelectById(PreparedStatement statement, Integer id) throws SQLException {
+    private void prepareStatementForSelectById(PreparedStatement statement, Integer id) throws SQLException {
         statement.setInt(1, id);
     }
 
@@ -229,7 +228,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
      */
     public List<T> read(int start, int limit) throws DaoException {
         List<T> list;
-        String sql = getSelectQuery(start, limit);
+        String sql = getSelectQueryWithLimit();
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             statement.setInt(1, start);
@@ -257,7 +256,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
                 " where id =?";
     }
 
-    protected String getSelectQuery(int from, int limit) {
+    protected String getSelectQueryWithLimit() {
         return "select id, " + getFieldList() +
                 " from " + getTableName() +
                 " limit ?,? ";
@@ -288,7 +287,6 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
         return fieldList.replaceAll(",", "=?,") + "=?";
     }
 
-    @Override
     public List<String> getTableHead() {
         return titles;
     }

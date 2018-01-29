@@ -28,7 +28,7 @@ public class UsersService extends Service {
     }
 
     /** List of Users */
-    public List<User> getUsersList() throws TransactionException, DatabaseException {
+    public List<User> getUsersList() throws DatabaseException {
         return DAOFactory.getFactory().getUserDao().read();
     }
 
@@ -78,7 +78,7 @@ public class UsersService extends Service {
     }
 
     /** Get user by login */
-    public User getUserByLogin(String userLogin) throws TransactionException, ParameterException, DatabaseException {
+    public User getUserByLogin(String userLogin) throws ParameterException, DatabaseException {
         return DAOFactory.getFactory().getUserDao().getUserByLogin(userLogin);
     }
 
@@ -101,7 +101,6 @@ public class UsersService extends Service {
             }
             TransactionManager.endTransaction();
         } finally {
-            LOGGER.info("ROLLBACK");
             TransactionManager.rollBack();
         }
 
@@ -179,7 +178,7 @@ public class UsersService extends Service {
     }
 
     /** List of Stuff Users */
-    public List<User> getUsersByRole(UserRole role, boolean noInvertRole) throws TransactionException, DatabaseException {
+    public List<User> getUsersByRole(UserRole role, boolean noInvertRole) throws DatabaseException {
         return (DAOFactory.getFactory().getUserDao()).readByRole(role,noInvertRole);
     }
 }

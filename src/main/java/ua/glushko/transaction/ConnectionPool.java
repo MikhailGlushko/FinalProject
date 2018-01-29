@@ -5,6 +5,7 @@ import ua.glushko.exception.DatabaseException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /** Connection Poll */
 public class ConnectionPool {
@@ -21,10 +22,12 @@ public class ConnectionPool {
 
     public static Connection getConnection() throws DatabaseException {
         try {
-            return dataSource.getConnection();
+            if(Objects.nonNull(dataSource))
+                return dataSource.getConnection();
         } catch (SQLException e) {
             throw new DatabaseException("No Database");
         }
+        return null;
     }
 
     public void setDataSource(DataSource dataSource) {

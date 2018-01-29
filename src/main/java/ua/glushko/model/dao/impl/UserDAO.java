@@ -11,14 +11,11 @@ import ua.glushko.transaction.TransactionManager;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class UserDAO extends AbstractDAO<User> {
 
-    private final String NAME_TABLE = "users";
-    private final String NAME_FIELD_ID = "id";
     private final String NAME_FIELD_ROLE = "role";
     private final String NAME_FIELD_NAME = "name";
     private final String NAME_FIELD_LOGIN = "login";
@@ -40,12 +37,12 @@ public class UserDAO extends AbstractDAO<User> {
 
     @Override
     protected String getTableName() {
-        return NAME_TABLE;
+        return "users";
     }
 
     @Override
     protected String getFieldList() {
-        String builder = NAME_FIELD_ROLE + "," +
+        return NAME_FIELD_ROLE + "," +
                 NAME_FIELD_NAME + "," +
                 NAME_FIELD_LOGIN + "," +
                 NAME_FIELD_PASSWORD + "," +
@@ -53,7 +50,6 @@ public class UserDAO extends AbstractDAO<User> {
                 NAME_FIELD_PHONE + "," +
                 NAME_FIELD_STATUS + "," +
                 NAME_FIELD_LAST_LOGIN;
-        return builder;
     }
 
     @Override
@@ -88,6 +84,7 @@ public class UserDAO extends AbstractDAO<User> {
         List<User> list = new ArrayList<>();
         while (resultSet.next()) {
             User item = new User();
+            String NAME_FIELD_ID = "id";
             item.setId(resultSet.getInt(NAME_FIELD_ID));
             item.setRole(resultSet.getString(NAME_FIELD_ROLE));
             item.setName(resultSet.getString(NAME_FIELD_NAME));

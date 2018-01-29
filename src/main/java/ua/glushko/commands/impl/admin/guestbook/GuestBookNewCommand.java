@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_GUEST_BOOK;
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 
 /** Создание новую запись в книге отзывов */
 public class GuestBookNewCommand implements Command {
@@ -24,7 +25,7 @@ public class GuestBookNewCommand implements Command {
         } catch (Exception e) {
             LOGGER.error(e);
         }
-        String page = "/do?command=" + COMMAND_GUEST_BOOK;
+        String page = PARAM_SERVLET_PATH + "?command=" + COMMAND_GUEST_BOOK;
         return new CommandRouter(request, response, page);
 
     }

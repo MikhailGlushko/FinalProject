@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.guestbook;
 
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
@@ -14,9 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
-import static ua.glushko.services.utils.Authentication.R;
-import static ua.glushko.services.utils.Authentication.r;
+import static ua.glushko.commands.utils.Authentication.R;
+import static ua.glushko.commands.utils.Authentication.r;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PARAM_GUEST_BOOKS_LIST;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PARAM_GUEST_BOOKS_LIST_TITLE;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PATH_PAGE_GUEST_BOOK;
@@ -63,7 +64,9 @@ public class GuestBookListCommand implements Command {
             } else if((access & r) == r) { //right to read only its records
                 List<GuestBook> items = guestBookService.getGuestBookList(pageNumber, pagesCount, rowsCount);
                 List<String> titles = guestBookService.getGuestBookTitles();
-                int count = guestBookService.count(userId);
+                int count = 0;
+                if(Objects.nonNull(userId))
+                     count = guestBookService.count(userId);
                 count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
                 request.setAttribute(PARAM_GUEST_BOOKS_LIST_TITLE, titles);
                 request.setAttribute(PARAM_GUEST_BOOKS_LIST, items);

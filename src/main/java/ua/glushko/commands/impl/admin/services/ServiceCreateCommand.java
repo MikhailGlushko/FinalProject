@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.admin.services;
 
-import ua.glushko.services.utils.Authentication;
+import ua.glushko.commands.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.sql.SQLException;
 
-import static ua.glushko.services.utils.Authentication.C;
+import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
+import static ua.glushko.commands.utils.Authentication.C;
 import static ua.glushko.commands.CommandFactory.COMMAND_SERVICES;
 
 /** Create New entity */
@@ -27,13 +28,13 @@ public class ServiceCreateCommand implements Command {
         } catch (Exception e) {
             LOGGER.error(e);
         }
-        String page = "/do?command=" + COMMAND_SERVICES + "&page=" + request.getAttribute(PARAM_LAST_PAGE);
+        String page = PARAM_SERVLET_PATH + "?command=" + COMMAND_SERVICES + "&page=" + request.getAttribute(PARAM_LAST_PAGE);
         return new CommandRouter(request, response, page);
 
     }
 
     private void storeUserDataToDatabase(HttpServletRequest request) throws SQLException, TransactionException {
-        RepairService repairService=null;
+        RepairService repairService;
         try {
             int access = Authentication.checkAccess(request);
 
@@ -57,7 +58,7 @@ public class ServiceCreateCommand implements Command {
                 request.setAttribute(PARAM_LAST_PAGE,count);
             }
         } catch (ParameterException e) {
-            LOGGER.debug("new service "+repairService+" did not create");
+            LOGGER.debug("new service did not create");
             LOGGER.error(e);
         }
     }
