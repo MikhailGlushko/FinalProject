@@ -45,30 +45,32 @@ public class ShowOrdersListTag extends ShowListTag {
             if (next instanceof Order) {
                 order = (Order) next;
             }
-            String style="";
+            String style="default";
             //noinspection ConstantConditions
             if(Objects.nonNull(userId) && Objects.nonNull(order) && order.getUserId()==userId &&
                     (order.getStatus()== OrderStatus.CONFIRMATION || order.getStatus()==OrderStatus.PAYMENT || order.getStatus()==OrderStatus.REJECT)
                     || Objects.nonNull(userId) && order.getEmployeeId()==userId && (order.getStatus()==OrderStatus.VERIFICATION || order.getStatus()==OrderStatus.ESTIMATE || order.getStatus()==OrderStatus.PROGRESS || order.getStatus()==OrderStatus.COMPLETE)){
-                style = "class=\"btn-warning\"";
+                style = "warning";
             } else if(order.getStatus()==OrderStatus.NEW) {
-                style = "class=\"btn-info\"";
+                style = "info";
             } else if(Objects.nonNull(userId) && (order.getUserId()==userId || order.getEmployeeId()==userId)){
-                style = "class=\"btn-success\"";
+                style = "success";
             }
             builder.append("<tr onClick=\"window.location.href='")
                     .append(PARAM_SERVLET_PATH)
                     .append("?command=").append(command).append("_detail")
                     .append("&page=").append(page)
                     .append("&order_id=").append(Objects.requireNonNull(order).getId())
-                    .append("'; return false\" ").append(style).append(">")
-                    .append("<td><a href=\"")
+                    .append("'; return false\" ").append(">")
+                    .append("<td>")
+                    .append("<a style=\"font-size: 16px;\" class=\"label lb-lg label-pill label-").append(style).append("\" href=\"")
                     .append(PARAM_SERVLET_PATH)
                     .append("?command=").append(command).append("_detail")
                     .append("&page=").append(page)
                     .append("&order_id=").append(order.getId()).append("\">")
                     .append(order.getId())
-                    .append("</a></td>");
+                    .append("</a>")
+                    .append("</td>");
             builder.append("<td>").append(escapeHtml(order.getDescriptionShort())).append("</td>");
             builder.append("<td>").append(order.getStatus()).append("</td>");
             builder.append("<td>").append(order.getOrderDate()).append("</td>");

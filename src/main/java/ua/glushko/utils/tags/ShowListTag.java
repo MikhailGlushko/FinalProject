@@ -73,9 +73,7 @@ abstract class ShowListTag extends TagSupport {
             }
             builder.append("<table class=\"browser\">");
             makeHeader(builder);
-            builder.append("<tbody>");
             makeBody(list,builder, rowsCount);
-            builder.append("</tbody>");
             builder.append("</table><br/>");
 
             makeNavigator(builder, pagesCount, rowsCount, page);

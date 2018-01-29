@@ -221,22 +221,6 @@ public class OrderDAO extends AbstractDAO<Order> {
                 " where user_id="+userId+" or employee_id="+userId;
     }
 
-//    public Integer countWithoutEmployeeByStatus(OrderStatus status) throws DaoException{
-//        String sql = "SELECT count(*) as total \n" +
-//                "FROM repair_agency.orders a\n" +
-//                "where (employee_id is null or employee_id=0) and status=?\n";
-//        try (ConnectionWrapper con = TransactionManager.getConnection();
-//             PreparedStatement statement = con.prepareStatement(sql)) {
-//            statement.setString(1,status.name());
-//            ResultSet resultSet = statement.executeQuery();
-//            if(resultSet.next())
-//                return resultSet.getInt("total");
-//        } catch (Exception e) {
-//            throw new DaoException(e);
-//        }
-//        return 0;
-//    }
-
     public Map<OrderStatus, Map<OrderStats,Integer>> getTotal(Integer userId) throws DaoException {
         Map<OrderStatus,Map<OrderStats,Integer>> result = new LinkedHashMap<>();
         String sql="select a.status, coalesce(a.total,0) as `total`, coalesce(b.new,0) as `new`, coalesce(c.todays,0) as `today`, \n" +
