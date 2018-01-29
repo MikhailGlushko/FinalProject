@@ -23,7 +23,6 @@ public class OrdersCommandHelper {
     public static final String PARAM_ORDER_SERVICE = "order_repair_service";
     public static final String PARAM_ORDER_CITY = "order_city";
     public static final String PARAM_ORDER_STREET = "order_street";
-    public static final String PARAM_ORDER_DATE = "order_order_date";
     public static final String PARAM_ORDER_EXPECTED_DATE = "order_expected_date";
     public static final String PARAM_ORDER_APPL = "order_appliance";
     public static final String PARAM_ORDER_PRICE = "order_price";
@@ -35,11 +34,9 @@ public class OrdersCommandHelper {
     public static final String PARAM_ORDER_STATUS_CHANGE = "order_status_change";
     public static final String PARAM_ORDER_EMPLOYEE_ID = "order_employee_id";
     public static final String PARAM_ORDER_EMPLOYEE_ID_CHANGE = "order_employee_id_change";
-    public static final String PARAM_ORDER_EMPLOYEE_NAME = "order_employee_name";
 
     public static final String PARAM_ORDER_FORM_ACTION = "action";
     public static final String PARAM_ORDER = "orders_detail";
-    public static final String PARAM_ORDERS_SLIST = "orders_slist";
     public static final String PARAM_ORDERS_LIST = "orders_list";
     public static final String PARAM_ORDERS_LIST_TITLE = "orders_list_head";
     public static final String PARAM_ORDERS_COUNT_NEW  = "orders_count_new";

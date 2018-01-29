@@ -14,16 +14,13 @@ public class UsersCommandHelper {
     public static final String PARAM_USER_ID = "user_id";
     public static final String PARAM_USER_LOGIN = "user_login";
     public static final String PARAM_USER_PASSWORD = "user_password";
-    public static final String PARAM_USER_PASSWORD_MD5HEX = "user_password_md5hex";
     public static final String PARAM_USER_PASSWORD2 = "user_password2";
     public static final String PARAM_USER_SECRET = "user_secret";
     public static final String PARAM_USER_NAME = "user_name";
     public static final String PARAM_USER_ROLE = "user_role";
     public static final String PARAM_USER_STATUS = "user_status";
-    public static final String PARAM_USER_LAST_LOGIN = "user_last_login";
     public static final String PARAM_USER_EMAIL = "user_email";
     public static final String PARAM_USER_PHONE = "user_phone";
-    public static final String PARAM_USER_GRANTS = "user_grants";
 
     public static final String MESSAGE_USER_STATUS = "user.status.";
     public static final String MESSAGE_USER_INCORRECT_LOGIN_OR_PASSWORD = "user.incorrectLoginOrPassword";
