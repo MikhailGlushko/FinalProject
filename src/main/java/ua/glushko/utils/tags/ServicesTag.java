@@ -8,6 +8,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Generate List of RepairServices
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
+
 @SuppressWarnings({"serial", "unused"})
 public class ServicesTag extends TagSupport {
 

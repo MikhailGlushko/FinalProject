@@ -15,7 +15,11 @@ import static ua.glushko.commands.utils.Authentication.u;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 
 /**
- * Update data after editing
+ * Admin Order Management Command, which receives data from the form and update item in Database
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see Order
+ * @see OrdersService
  */
 public class OrderUpdateCommand implements Command {
     @Override

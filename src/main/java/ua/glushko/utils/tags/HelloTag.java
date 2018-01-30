@@ -13,6 +13,12 @@ import java.util.Objects;
 import static ua.glushko.commands.Command.*;
 import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 
+/**
+ * Print User hello on the page
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
+
 @SuppressWarnings("serial")
 public class HelloTag extends TagSupport {
 

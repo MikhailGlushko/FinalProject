@@ -3,7 +3,11 @@ package ua.glushko.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-/** GuestBook */
+/**
+ * GuestBook
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class GuestBook implements GenericEntity, Serializable{
     private int id;
     private int orderId;

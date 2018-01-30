@@ -4,6 +4,11 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * Get Localization Configuration Data
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class MessageManager {
     private static final String FILE_NAME_MESSAGES = "messages";
     private static final String VALUE_LOCALE_RU = "ru";

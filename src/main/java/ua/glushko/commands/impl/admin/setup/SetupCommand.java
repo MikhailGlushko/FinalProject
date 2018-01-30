@@ -14,7 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
 /**
- * Display credentials to the user to change them
+ * Command for display details of the current the user
+ * @version 1.0
+ * @author Mikhail Glushko
+ * @see User
+ * @see UsersService
  */
 public class SetupCommand implements Command {
 

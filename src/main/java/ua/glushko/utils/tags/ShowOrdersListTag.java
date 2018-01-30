@@ -12,6 +12,11 @@ import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PARAM_PAGE;
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
+/**
+ * Generate Orders list as table
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
 @SuppressWarnings("serial")
 public class ShowOrdersListTag extends ShowListTag {
     public void makeBody(List<Object> list, StringBuilder builder, Integer rowsCount) {

@@ -5,6 +5,11 @@ import ua.glushko.configaration.MessageManager;
 
 import java.sql.SQLException;
 
+/**
+ * DAO Exception
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
 public class DaoException extends DatabaseException {
 
     private static final Logger logger = Logger.getLogger(DaoException.class.getSimpleName());

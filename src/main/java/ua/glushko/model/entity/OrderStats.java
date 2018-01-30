@@ -1,5 +1,10 @@
 package ua.glushko.model.entity;
 
+/**
+ * Stats for Orders
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
 public enum OrderStats {
     STATUS, // count orders with current status
     NEW,    // count orders latest created by all customers

@@ -54,7 +54,7 @@ public class TransactionManager {
 
     public static void rollBack() throws DatabaseException {
         if (Objects.isNull(threadLocal.get()))
-            return; // already closed
+            return;
         try {
             ConnectionWrapper wrapper = threadLocal.get();
             Connection connection = wrapper.getConnection();

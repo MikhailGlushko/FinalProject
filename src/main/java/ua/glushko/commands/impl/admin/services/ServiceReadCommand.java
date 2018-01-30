@@ -16,7 +16,11 @@ import java.util.Objects;
 import static ua.glushko.commands.utils.Authentication.U;
 
 /**
- * Display information about the type of service with the ability to edit or delete
+ * Admin Service Management Command, which prepare detail data to show in form
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see RepairService
+ * @see RepairServicesService
  */
 public class ServiceReadCommand implements Command {
 

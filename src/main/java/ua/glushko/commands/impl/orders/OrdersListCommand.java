@@ -19,6 +19,13 @@ import java.util.Objects;
 import static ua.glushko.commands.impl.orders.OrdersCommandHelper.*;
 import static ua.glushko.commands.utils.Authentication.R;
 
+/**
+ * Admin Order Management Command, which prepare list of orders to show
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see Order
+ * @see OrdersService
+ */
 public class OrdersListCommand implements Command {
 
     @Override

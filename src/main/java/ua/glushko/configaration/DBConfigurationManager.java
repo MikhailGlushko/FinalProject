@@ -2,6 +2,11 @@ package ua.glushko.configaration;
 
 import java.util.ResourceBundle;
 
+/**
+ * Get Database Configuration Data
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class DBConfigurationManager {
     private static final String FILE_NAME_DB = "db";
 

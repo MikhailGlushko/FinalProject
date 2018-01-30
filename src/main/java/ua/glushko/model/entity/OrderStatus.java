@@ -1,6 +1,10 @@
 package ua.glushko.model.entity;
 
-/** Order status */
+/**
+ * Statuses for Orders
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public enum OrderStatus {
     NEW,            //new order
     VERIFICATION,   // verification by manager

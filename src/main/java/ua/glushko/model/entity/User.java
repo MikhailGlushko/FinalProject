@@ -3,17 +3,21 @@ package ua.glushko.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-/** Users */
+/**
+ * Users
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class User implements GenericEntity, Cloneable, Serializable {
 
     private int id;
-    private UserRole role = UserRole.CUSTOMER;  // by default as CLIENT
+    private UserRole role = UserRole.CUSTOMER;
     private String name = "";
     private String login;
     private String password;
     private String email;
     private String phone;
-    private UserStatus status = UserStatus.ACTIVE; // by default as ACTIVE
+    private UserStatus status = UserStatus.ACTIVE;
     private Date lastLogin;
 
     public Integer getId() {

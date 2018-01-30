@@ -2,7 +2,6 @@ package ua.glushko.services.impl;
 
 import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.dao.impl.OrderDAO;
-import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.*;
 import ua.glushko.exception.DaoException;
 import ua.glushko.exception.DatabaseException;
@@ -15,6 +14,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Order services
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class OrdersService extends Service {
 
     private OrdersService() {

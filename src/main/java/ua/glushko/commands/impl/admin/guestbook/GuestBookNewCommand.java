@@ -16,7 +16,13 @@ import java.util.Objects;
 import static ua.glushko.commands.CommandFactory.COMMAND_GUEST_BOOK;
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 
-/** Создание новую запись в книге отзывов */
+/**
+ * Command that prepares data and create new record infor show GuestBook record in Database
+ * @version 1.0
+ * @author Mikhail Glushko
+ * @see GuestBook
+ * @see GuestBookService
+ */
 public class GuestBookNewCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

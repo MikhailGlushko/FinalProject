@@ -6,7 +6,12 @@ import ua.glushko.exception.DaoException;
 import java.sql.SQLException;
 import java.util.List;
 
-
+/**
+ * CRUD Interface for DAO
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @param <T>
+ */
 public interface GenericDAO<T extends GenericEntity> {
 
     /**

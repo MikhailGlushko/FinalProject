@@ -7,6 +7,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO to work with Repair Services
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class RepairServiceDAO extends AbstractDAO<RepairService> {
 
     private final String NAME_FIELD_NAME = "name";

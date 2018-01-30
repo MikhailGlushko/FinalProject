@@ -96,8 +96,6 @@ public class OrderChangeStatusCommandTest {
     public void changeOrderStatus2() throws ServletException, DaoException, IOException {
         when(request.getParameter(PARAM_ORDER_FORM_ACTION)).thenReturn(PARAM_ORDER_ACTION_APPROVE);
         when(request.getParameter(PARAM_ORDER_MEMO_CHANGE)).thenReturn("Прошу согласовать");
-        //when(request.getParameter(PARAM_ORDER_STATUS_CHANGE)).thenReturn(OrderStatus.VERIFICATION.name());
-        //when(request.getParameter(PARAM_ORDER_EMPLOYEE_ID_CHANGE)).thenReturn("3");
         OrdersService ordersService = OrdersService.getService();
         Order oldOrder = ordersService.getOrderById(1);
         Controller controller = new Controller();

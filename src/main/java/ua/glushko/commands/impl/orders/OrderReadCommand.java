@@ -19,7 +19,11 @@ import static ua.glushko.commands.utils.Authentication.*;
 import static ua.glushko.commands.impl.orders.OrdersCommandHelper.*;
 
 /**
- * Display information about the type of service with the ability to edit or delete
+ * Admin Order Management Command, which prepare detail data to show in form
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see Order
+ * @see OrdersService
  */
 public class OrderReadCommand implements Command {
 
@@ -31,24 +35,24 @@ public class OrderReadCommand implements Command {
                 if(Objects.isNull(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID)))
                     throw new ParameterException("order.id.not.[resent");
                 int orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
-                // orders list
+
                 OrdersService ordersService = OrdersService.getService();
                 Order order = ordersService.getOrderById(orderId);
                 List<String> titles = ordersService.getOrderTitles();
-                // user data
+
                 UsersService usersService = UsersService.getService();
                 User client = usersService.getUserById(order.getUserId());
                 Integer clientId = client.getId();
                 String clientName = client.getName();
-                // get all users list
+
                 List<User> stuffs = usersService.getUsersByRole(UserRole.CUSTOMER, false);
-                // change all requests
+
                 request.setAttribute(PARAM_ORDER_USER_ID, clientId);
                 request.setAttribute(PARAM_ORDER_USER_NAME, clientName);
                 request.setAttribute(OrdersCommandHelper.PARAM_ORDERS_LIST_TITLE, titles);
                 request.setAttribute(OrdersCommandHelper.PARAM_ORDER, order);
                 request.setAttribute(OrdersCommandHelper.PARAM_EMPLOYEES_LIST, stuffs);
-                // services list
+
                 RepairServicesService repairServices = RepairServicesService.getService();
                 List<RepairService> repairServiceList = repairServices.getRepairServiceList();
                 request.setAttribute(OrdersCommandHelper.PARAM_SERVICES_LIST, repairServiceList);

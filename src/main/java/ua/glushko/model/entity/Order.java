@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-/** Orders */
+/**
+ * Orders
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class Order implements GenericEntity, Serializable {
     private boolean changed = false;
     private int id;

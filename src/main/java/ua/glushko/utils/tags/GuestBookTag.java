@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.Objects;
 import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 
+/**
+ * Print Guest Book data on the page
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
 @SuppressWarnings({"ALL", "unused"})
 public class GuestBookTag extends TagSupport {
 

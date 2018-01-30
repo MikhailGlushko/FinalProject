@@ -10,6 +10,11 @@ import ua.glushko.services.Service;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * repairServices services
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class RepairServicesService extends Service {
 
     private RepairServicesService() {

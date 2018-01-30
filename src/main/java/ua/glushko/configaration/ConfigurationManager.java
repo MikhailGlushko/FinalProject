@@ -3,6 +3,11 @@ package ua.glushko.configaration;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * Get Application Configuration Data
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class ConfigurationManager {
     private static final String FILE_NAME_CONFIG = "config";
 

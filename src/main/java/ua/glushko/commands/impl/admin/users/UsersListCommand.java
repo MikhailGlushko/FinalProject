@@ -14,7 +14,11 @@ import java.util.List;
 import static ua.glushko.commands.utils.Authentication.*;
 
 /**
- * Show users list
+ * Admin User Management Command, which prepare list of users to show
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see User
+ * @see UsersService
  */
 public class UsersListCommand implements Command {
 
@@ -22,7 +26,7 @@ public class UsersListCommand implements Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             int access = Authentication.checkAccess(request);
-            if ((access & R) == R) {    //user has rights to read
+            if ((access & R) == R) {
                 UsersService usersService = UsersService.getService();
                 Integer pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
                 Integer rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));

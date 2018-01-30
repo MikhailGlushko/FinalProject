@@ -17,7 +17,11 @@ import static ua.glushko.commands.utils.Authentication.U;
 import static ua.glushko.commands.CommandFactory.COMMAND_SERVICES;
 
 /**
- * Update data data after editing
+ * Admin Service Management Command, which receives data from the form and update item in Database
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see RepairService
+ * @see RepairServicesService
  */
 public class ServiceUpdateCommand implements Command {
     @Override
@@ -32,7 +36,7 @@ public class ServiceUpdateCommand implements Command {
                 String nameRu = request.getParameter(ServicesCommandHelper.PARAM_SERVICE_NAME_RU);
                 Integer parent = Integer.valueOf(request.getParameter(ServicesCommandHelper.PARAM_SERVICE_PARENT));
                 RepairServicesService service = RepairServicesService.getService();
-                // get user data from database
+
                 RepairService item = service.getRepairServiceById(serviceId);
                 item.setName(name);
                 item.setNameRu(nameRu);

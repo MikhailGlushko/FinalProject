@@ -2,6 +2,8 @@ package ua.glushko.model.entity;
 
 /**
  * User statuses
+ * @author Mikhail Glushko
+ * @version 1.0
  * Access to the system is granted only to users with the status ACTIVE
  */
 public enum UserStatus {

@@ -15,9 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Properties;
 
-import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeRecoveryPassword;
+import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeRecoveryPassword;
 
-/** Recovery password */
+/**
+ * User Password Recovery Command
+ * @version 1.0
+ * @author Mikhail Glushko
+ * @see User
+ * @see UsersService
+ */
 public class RecoveryCommand implements Command {
 
     public static final String PARAM_MAIL_SETUP ="mail_setup";

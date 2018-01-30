@@ -96,9 +96,8 @@ public class OrdersCommandHelper {
             throw new ParameterException("order.status.not.present");
 
         OrdersService ordersService= OrdersService.getService();
-        // get user data from database
         Order item = ordersService.getOrderById(orderId);
-        //validateAccessToUdate(Authentication.getCurrentUserId(request.getSession()));
+
         item.setDescriptionShort(orderDescriptionShort);
         item.setDescriptionDetail(orderDescriptionDetail);
         item.setRepairService(orderRepairService);
@@ -125,7 +124,7 @@ public class OrdersCommandHelper {
     }
 
     public static Order getValidatedOrderBeforeCreate(HttpServletRequest request) throws ParameterException {
-        // getting data from form
+
         Order order;
         String  orderDescriptionShort = request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_SHORT);
         String  orderDescriptionDetail = request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_DETAIL);
@@ -182,75 +181,101 @@ public class OrdersCommandHelper {
     }
 
     public static Order getValidatedOrderBeforeChangeStatus(HttpServletRequest request) throws ParameterException, DaoException {
-        Integer orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
-        OrdersService ordersService= OrdersService.getService();
-        Order order = ordersService.getOrderById(orderId);
-
         String action = request.getParameter(PARAM_ORDER_FORM_ACTION);
-        String actionMemo = request.getParameter(PARAM_ORDER_MEMO_CHANGE);
-        String userName = (String) request.getSession().getAttribute(PARAM_NAME_NAME);
-        String newStatus = request.getParameter(PARAM_ORDER_STATUS_CHANGE);
-        String newEmployeeId = request.getParameter(PARAM_ORDER_EMPLOYEE_ID_CHANGE);
-
         if(Objects.isNull(action))
             throw new ParameterException("action.not.presemt");
-        if(Objects.isNull(actionMemo))
-            throw new ParameterException("action.memo.not.present");
-        if(Objects.isNull(userName))
-            throw new ParameterException("user.name.not.present");
 
         switch (action){
             case PARAM_ORDER_ACTION_APPROVE:
-                if(Objects.isNull(newStatus))
-                    throw new ParameterException("new.status.not.present");
-                if(order.getStatus()== OrderStatus.VERIFICATION && (Objects.isNull(newEmployeeId) || newEmployeeId.isEmpty()))
-                    throw new ParameterException("new.employee.id.not.present");
-                if(order.getStatus()== OrderStatus.valueOf(newStatus))
-                    throw new ParameterException("same.status.in.approve.not.allowed");
-                order.setStatus(OrderStatus.valueOf(newStatus));
-                if(order.getStatus()==OrderStatus.COMPLETE && order.getManagerId()!=0)
-                    order.setEmployeeId(order.getManagerId());
-                if(Objects.nonNull(newEmployeeId) && !newEmployeeId.isEmpty())
-                    order.setEmployeeId(Integer.valueOf(newEmployeeId));
-                String oldMemo = order.getMemo();
-                if(Objects.isNull(oldMemo))
-                    oldMemo="";
-                //noinspection StringBufferReplaceableByString
-                order.setMemo(new StringBuilder(oldMemo).append("\n")
-                        .append(new Date(System.currentTimeMillis())).append(" ")
-                        .append(userName).append(" ")
-                        .append(action).append(" ")
-                        .append(order.getStatus())
-                        .append(actionMemo).toString());
-                break;
+                return prepareOrderToApprove(request, action);
             case PARAM_ORDER_ACTION_REJECT:
-                order.setEmployeeId(order.getUserId());
-                order.setStatus(OrderStatus.REJECT);
-                oldMemo = order.getMemo();
-                if(Objects.isNull(oldMemo))
-                    oldMemo="";
-                //noinspection StringBufferReplaceableByString
-                order.setMemo(new StringBuilder(oldMemo).append("\n")
-                        .append(new Date(System.currentTimeMillis())).append(" ")
-                        .append(userName).append(" ")
-                        .append(action).append(" ")
-                        .append(actionMemo).toString());
-                break;
+                return prepareOrderToReject(request, action);
             case PARAM_ORDER_ACTION_COMMENT:
-                oldMemo = order.getMemo();
-                if(Objects.isNull(oldMemo))
-                    oldMemo="";
-                //noinspection StringBufferReplaceableByString
-                order.setMemo(new StringBuilder(oldMemo).append("\n")
-                        .append(new Date(System.currentTimeMillis())).append(" ")
-                        .append(userName).append(" ")
-                        .append(action).append(" ")
-                        .append(actionMemo).toString());
-                break;
+                return prepareOrderToAddComment(request, action);
             default:
                 throw new ParameterException("unknown.command");
         }
+    }
 
+    private static Order prepareOrderToApprove(HttpServletRequest request, String action) throws ParameterException, DaoException {
+        OrdersService ordersService= OrdersService.getService();
+        Integer orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
+        Order order = ordersService.getOrderById(orderId);
+        String actionMemo = request.getParameter(PARAM_ORDER_MEMO_CHANGE);
+        if(Objects.isNull(actionMemo))
+            throw new ParameterException("action.memo.not.present");
+        String userName = (String) request.getSession().getAttribute(PARAM_NAME_NAME);
+        if(Objects.isNull(userName))
+            throw new ParameterException("user.name.not.present");
+        String newStatus = request.getParameter(PARAM_ORDER_STATUS_CHANGE);
+        if(Objects.isNull(newStatus))
+            throw new ParameterException("new.status.not.present");
+        String newEmployeeId = request.getParameter(PARAM_ORDER_EMPLOYEE_ID_CHANGE);
+        if(order.getStatus()== OrderStatus.VERIFICATION && (Objects.isNull(newEmployeeId) || newEmployeeId.isEmpty()))
+            throw new ParameterException("new.employee.id.not.present");
+        if(order.getStatus()== OrderStatus.valueOf(newStatus))
+            throw new ParameterException("same.status.in.approve.not.allowed");
+        order.setStatus(OrderStatus.valueOf(newStatus));
+        if(order.getStatus()==OrderStatus.COMPLETE && order.getManagerId()!=0)
+            order.setEmployeeId(order.getManagerId());
+        if(Objects.nonNull(newEmployeeId) && !newEmployeeId.isEmpty())
+            order.setEmployeeId(Integer.valueOf(newEmployeeId));
+        String oldMemo = order.getMemo();
+        if(Objects.isNull(oldMemo))
+            oldMemo="";
+        //noinspection StringBufferReplaceableByString
+        order.setMemo(new StringBuilder(oldMemo).append("\n")
+                .append(new Date(System.currentTimeMillis())).append(" ")
+                .append(userName).append(" ")
+                .append(action).append(" ")
+                .append(order.getStatus())
+                .append(actionMemo).toString());
+        return order;
+    }
+
+    private static Order prepareOrderToReject(HttpServletRequest request, String action) throws ParameterException, DaoException {
+        OrdersService ordersService= OrdersService.getService();
+        Integer orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
+        Order order = ordersService.getOrderById(orderId);
+        String actionMemo = request.getParameter(PARAM_ORDER_MEMO_CHANGE);
+        if(Objects.isNull(actionMemo))
+            throw new ParameterException("action.memo.not.present");
+        String userName = (String) request.getSession().getAttribute(PARAM_NAME_NAME);
+        if(Objects.isNull(userName))
+            throw new ParameterException("user.name.not.present");
+        order.setEmployeeId(order.getUserId());
+        order.setStatus(OrderStatus.REJECT);
+        String oldMemo = order.getMemo();
+        if(Objects.isNull(oldMemo))
+            oldMemo="";
+        //noinspection StringBufferReplaceableByString
+        order.setMemo(new StringBuilder(oldMemo).append("\n")
+                .append(new Date(System.currentTimeMillis())).append(" ")
+                .append(userName).append(" ")
+                .append(action).append(" ")
+                .append(actionMemo).toString());
+        return order;
+    }
+
+    private static Order prepareOrderToAddComment(HttpServletRequest request, String action) throws ParameterException, DaoException {
+        OrdersService ordersService= OrdersService.getService();
+        Integer orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
+        Order order = ordersService.getOrderById(orderId);
+        String actionMemo = request.getParameter(PARAM_ORDER_MEMO_CHANGE);
+        if(Objects.isNull(actionMemo))
+            throw new ParameterException("action.memo.not.present");
+        String userName = (String) request.getSession().getAttribute(PARAM_NAME_NAME);
+        if(Objects.isNull(userName))
+            throw new ParameterException("user.name.not.present");
+        String oldMemo = order.getMemo();
+        if(Objects.isNull(oldMemo))
+            oldMemo="";
+        //noinspection StringBufferReplaceableByString
+        order.setMemo(new StringBuilder(oldMemo).append("\n")
+                .append(new Date(System.currentTimeMillis())).append(" ")
+                .append(userName).append(" ")
+                .append(action).append(" ")
+                .append(actionMemo).toString());
         return order;
     }
 }

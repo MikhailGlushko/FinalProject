@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import static ua.glushko.commands.CommandFactory.*;
 
 /**
- * Analysis of the received command and redirection to the appropriate command
- * /do?command=<command>&action=<action>
- *
+ * Admin User Management Command that receives data from a form and analyzes what operation it must perform on the data
  * @see UserCreateCommand
  * @see UserUpdateCommand
  * @see UserDeleteCommand

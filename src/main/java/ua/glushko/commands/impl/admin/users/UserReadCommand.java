@@ -17,7 +17,11 @@ import static ua.glushko.commands.utils.Authentication.*;
 import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.PATH_PAGE_USERS_DETAIL;
 
 /**
- * Show user information
+ * Admin User Management Command, which prepare detail data to show in form
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see User
+ * @see UsersService
  */
 public class UserReadCommand implements Command {
 
@@ -25,7 +29,7 @@ public class UserReadCommand implements Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             int access = Authentication.checkAccess(request);
-            if ((access & U) == U) {    //user has rights to update
+            if ((access & U) == U) {
                 if(Objects.isNull(request.getParameter(UsersCommandHelper.PARAM_USER_ID)))
                     throw new ParameterException("user.didn't.login");
                 Integer id = Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_USER_ID));

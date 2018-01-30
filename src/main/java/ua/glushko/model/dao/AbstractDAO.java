@@ -9,6 +9,12 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * CRUD Implementation for DAO (Template method)
+ * @version 1.0
+ * @author Mikhail Glushko
+ * @param <T>
+ */
 abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO<T> {
 
     private List<String> titles;
@@ -82,7 +88,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws SQLException;
 
     /**
-     * получаем текст запроса на обновление
+     * get the text of the update request
      */
     private String getUpdateQuery() {
         return "update " + getTableName() +

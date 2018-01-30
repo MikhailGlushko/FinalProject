@@ -16,9 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
-import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeSetup;
+import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeSetup;
 
-/** Saving user credentials after change */
+/**
+ * Command which receiving data from the form and updating in in Database
+ * @version 1.0
+ * @author Mikhail Glushko
+ * @see User
+ * @see UsersService
+ */
+
 public class SetupSaveCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
@@ -46,7 +53,6 @@ public class SetupSaveCommand implements Command {
         }
             return new CommandRouter(request, response, page);
     }
-
 
     private void storeUserDataToSession(HttpServletRequest request, User user){
         request.setAttribute(PARAM_COMMAND, COMMAND_USERS);

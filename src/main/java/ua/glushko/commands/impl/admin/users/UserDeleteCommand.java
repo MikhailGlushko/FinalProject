@@ -17,7 +17,11 @@ import static ua.glushko.commands.utils.Authentication.*;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 
 /**
- * Delete exist user
+ * Admin User Management Command, which receives data from the form and delete record from database
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see User
+ * @see UsersService
  */
 public class UserDeleteCommand implements Command {
     @Override
@@ -30,7 +34,7 @@ public class UserDeleteCommand implements Command {
                 Integer userId = Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_USER_ID));
                 UsersService usersService = UsersService.getService();
                 LOGGER.debug("deleting user " + userId);
-                // update user data into database
+
                 User user = usersService.getUserById(userId);
                 usersService.deleteUser(userId);
                 LOGGER.debug("user " + user.getLogin() + " was deleted");

@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Switch language
+ * Switch language Command
+ * @author Mikhail Glushko
+ * @version 1.0
  */
 public class SwitchLanguageCommand implements Command {
 

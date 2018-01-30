@@ -10,6 +10,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO to work with News
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class NewsDAO extends AbstractDAO<News> {
 
     private final String NAME_FIELD_DESCRIPTION = "description";

@@ -7,6 +7,12 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.List;
 import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
+/**
+ * Generate Options input tag with group selector for Users
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
+
 @SuppressWarnings("serial")
 public class OptGoupStaffTag extends TagSupport {
     private List<User> list;

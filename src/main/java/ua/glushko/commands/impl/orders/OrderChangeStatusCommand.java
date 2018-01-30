@@ -20,7 +20,11 @@ import static ua.glushko.commands.utils.Authentication.U;
 import static ua.glushko.commands.utils.Authentication.u;
 
 /**
- * Update data after editing
+ * Admin Order Management Command which receives data from the form and change Order status
+ * @version 1.0
+ * @author Mikhail Glushko
+ * @see Order
+ * @see OrdersService
  */
 public class OrderChangeStatusCommand implements Command {
     @Override

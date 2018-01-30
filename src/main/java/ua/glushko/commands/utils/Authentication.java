@@ -14,6 +14,8 @@ import static ua.glushko.commands.Command.*;
 
 /**
  * Checking the rights of the current user
+ * @version 1.0
+ * @author Mikhail Glushko
  */
 public class Authentication {
 
@@ -87,7 +89,7 @@ public class Authentication {
             throw new ParameterException("role.is.null");
         String command = request.getParameter(PARAM_COMMAND);
         for (Object grant : currentUserGrantList) {
-            if (grant instanceof Grant && currentUserRole == ((Grant)grant).getRole() && command.startsWith(((Grant)grant).getCommand())) // считаем доступ только для нужной нам комманды
+            if (grant instanceof Grant && currentUserRole == ((Grant)grant).getRole() && command.startsWith(((Grant)grant).getCommand()))
                 userAccess |= calculateAccess((Grant)grant);
         }
 
@@ -103,8 +105,8 @@ public class Authentication {
      */
     private static int calculateAccess(Grant grant) {
         int userAccess = 0;
-        String grantAction = grant.getAction();   // allowed action
-        Scope grantScope = grant.getScope();      // scope
+        String grantAction = grant.getAction();
+        Scope grantScope = grant.getScope();
         char[] actionCharArray = grantAction.toCharArray();
         for (char oneChar : actionCharArray) {
             CRUD crud = CRUD.valueOf(String.valueOf(oneChar));

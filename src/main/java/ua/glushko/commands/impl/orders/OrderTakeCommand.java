@@ -24,7 +24,11 @@ import static ua.glushko.commands.utils.Authentication.PARAM_ROLE;
 import static ua.glushko.commands.utils.Authentication.U;
 
 /**
- * delete exist order
+ * Admin Order Management Command, which find new oldest order wint status NEW and assign it to current employee with role MANAGER
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see Order
+ * @see OrdersService
  */
 public class OrderTakeCommand implements Command {
     @Override
@@ -32,8 +36,8 @@ public class OrderTakeCommand implements Command {
         String page;
         try {
             Order order = takeNextOneNewOrderWithoutEmployee(request);
-            if(Objects.nonNull(order))
-                page = PARAM_SERVLET_PATH+ "?command=" + COMMAND_ORDERS_READ + "&"+ OrdersCommandHelper.PARAM_ORDER_ID+"="+order.getId();
+            if (Objects.nonNull(order))
+                page = PARAM_SERVLET_PATH + "?command=" + COMMAND_ORDERS_READ + "&" + OrdersCommandHelper.PARAM_ORDER_ID + "=" + order.getId();
             else
                 page = PARAM_SERVLET_PATH + "?command=" + COMMAND_ORDERS;
         } catch (Exception e) {
@@ -49,18 +53,9 @@ public class OrderTakeCommand implements Command {
             UserRole role = (UserRole) request.getSession().getAttribute(PARAM_ROLE);
             int access = Authentication.checkAccess(request);
             OrdersService ordersService = OrdersService.getService();
-            if ((access & U) == U) {
+            if ((access & U) == U && role == UserRole.MANAGER) {
                 Integer userId = (Integer) request.getSession().getAttribute(PARAM_ID);
-                switch (role) {
-                    case MANAGER:
-                        order = ordersService.takeNewOrder(userId, OrderStatus.NEW);
-                        break;
-                    case MASTER:
-                        order = ordersService.takeNewOrder(userId, OrderStatus.ESTIMATE);
-                        break;
-                    default:
-                        break;
-                }
+                order = ordersService.takeNewOrder(userId, OrderStatus.NEW);
             }
             request.setAttribute(PARAM_COMMAND, COMMAND_ORDERS);
         } catch (ParameterException e) {

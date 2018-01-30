@@ -32,7 +32,7 @@
         <hr/>
         <br/>
         <fmt:message key="guestbook.title"/>:<br/><br/>
-        <c:if test="${role=='CUSTOMER'}">
+        <c:if test="${sessionScope.role=='CUSTOMER'}">
             <div class="login_div" align="center">
                 <form name="new" method="post" action="<c:url value="/do"/>">
                     <input type="hidden" name="command" value="gestbook_new">
@@ -69,10 +69,10 @@
                 </form>
             </div>
         </c:if>
-        <c:if test="${not empty guestbook_list}">
+        <c:if test="${not empty requestScope.guestbook_list}">
             <div class="list" style="width: 100%">
                 <div class="panel-group col-lg-offset-1 col-lg-10" id="collapse-group">
-                    <c:forEach items="${guestbook_list}" var="item">
+                    <c:forEach items="${requestScope.guestbook_list}" var="item">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">

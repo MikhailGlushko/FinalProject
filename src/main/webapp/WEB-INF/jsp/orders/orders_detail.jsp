@@ -26,13 +26,22 @@
     <div class="content">
         <jsp:include page="../../../jsp/header.jspx"/>
         <jsp:include page="../../../jsp/mainmenu.jspx"/>
-        <c:if test="${not empty orders_detail}">
+        <c:if test="${not empty requestScope.orders_detail}">
             <br/>
             <div class="login_div" align="center" style="width: 550px; display: table-cell">
                 <form name="edit" method="post" action="<c:url value="/do"/>">
                     <input type="hidden" name="command" value="orders_action"/>
                     <input type="hidden" name="order_id" value="${orders_detail.id}"/>
                     <input type="hidden" name="page" value="${param.page}"/>
+                    <div class="row" style="width: 100%">
+                        <div class="form-group">
+                            <label for="order_id" style="float: left"><fmt:message key="order.id"/></label>
+                            <input class="input-sm" style="float: right" id="order_id" name="order_id" type="text"
+                                   placeholder="<fmt:message key="order.id"/>"
+                                   value="${orders_detail.id}"
+                                   disabled/>
+                        </div>
+                    </div>
                     <div class="row" style="width: 100%">
                         <div class="form-group">
                             <label for="order_repair_service" style="float: left"><fmt:message

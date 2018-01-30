@@ -2,7 +2,11 @@ package ua.glushko.model.entity;
 
 import java.io.Serializable;
 
-/** Repair Services */
+/**
+ * Repair Services
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class RepairService implements GenericEntity, Serializable{
     private Integer id;
     private int parent;

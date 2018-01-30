@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 
-/** Logout */
+/**
+ * User Logout Command
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class LogoutCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

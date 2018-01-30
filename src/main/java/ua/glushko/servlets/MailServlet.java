@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Properties;
 
+/**
+ * Mail Controller for Password Recovery Command
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 @WebServlet("/MailServlet")
 public class MailServlet extends HttpServlet{
 
