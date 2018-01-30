@@ -25,11 +25,10 @@ public class RecoveryCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         String page;
-        String locale = null;
+        String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
         User user = new User();
         try {
             user = getValidatedUserBeforeRecoveryPassword(request);
-            locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
             Properties properties = (Properties)request.getAttribute(PARAM_MAIL_SETUP);
             LOGGER.debug("user "+user.getLogin()+" try to recovery password");
             UsersService recoveryService = UsersService.getService();

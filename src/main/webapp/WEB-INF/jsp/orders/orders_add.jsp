@@ -99,7 +99,7 @@
                 <div class="row" style="width: 100%">
                     <div class="input-form">
                         <label for="order_memo" style="float: left"><fmt:message key="order.memo"/></label>
-                        <textarea class="input-sm" id="order_memo" type="text" name="order_memo" value=""
+                        <textarea class="input-sm" id="order_memo" name="order_memo"
                                   style="float: right;height: 100px"><c:out value="${param.order_memo}"/></textarea>
                     </div>
                 </div>

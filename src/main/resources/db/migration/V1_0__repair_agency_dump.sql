@@ -1,16 +1,3 @@
-DROP TABLE IF EXISTS `roles`;
-CREATE TABLE `roles`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL COMMENT '1 - SYSADMIN, 2 - ADMIN, 3 - MANAGER, 4 - MASTER',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO roles VALUES (1,'SYSADMIN'),
-(2,'ADMIN'),
-(3,'MANAGER'),
-(4,'MASTER'),
-(5,'CLIENT');
-
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -236,22 +223,6 @@ INSERT INTO `orders` VALUES (12,'Сломался холодилник9','Сло
 INSERT INTO `orders` VALUES (13,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
 INSERT INTO `orders` VALUES (14,'Сломался холодилник9','Сломался холодильник. Не морозит ',9,'Киев','Крещатик 44','2018-01-09',NULL,'Холодильник',0.00,5,NULL,'NEW',NULL,NULL );
 
-DROP TABLE IF EXISTS `orders_history`;
-CREATE TABLE `orders_history` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `action` enum('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `action_date` datetime NOT NULL,
-  `old_value` varchar(45) DEFAULT NULL,
-  `new_value` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `orders_history` VALUES (1,1,1,'ADD_COMMENT','ADD_COMMENT',now(),'','');
-
 DROP TABLE IF EXISTS `guest_book`;
 CREATE TABLE `guest_book` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -277,15 +248,3 @@ CREATE TABLE `news` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `news` VALUES (1,'News 1',now(),'Многие люди, учитывая нынешнюю обстановку в Украине, стараются экономить.<br>И вместо того, чтобы выбросить сломавшийся бытовой прибор, отправляются в мастерскую,<br>чтобы профессионал его отремонтировал. В большинстве случаев ремонт обходится дешевле,<br>чем покупка новой бытовой техники.<br>Наше агентство предлагает «вдохнуть вторую жизнь» в любой прибор, облегчающий быт людей.');
-
-DROP TABLE IF EXISTS `order_que`;
-CREATE TABLE `order_que` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL,
-  `role` enum('ADMIN','MANAGER','MASTER','CUSTOMER') NOT NULL,
-  `employee_id` int(11) DEFAULT NULL,
-  `create_date` datetime NOT NULL,
-  `close_date` datetime DEFAULT NULL,
-  `message` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;

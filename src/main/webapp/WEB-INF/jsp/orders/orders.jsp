@@ -20,7 +20,6 @@
     <title>Ремонтное агенство::Заказы</title>
     <link href="../../../css/style.css" rel="stylesheet" type="text/css">
     <link href="../../../dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="../../../css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="main">
@@ -38,8 +37,7 @@
                     <fmt:message key="order.my.items"/> <span class="badge badge-success">${orders_count_my}</span>
                 </div>
                 <div class="btn btn-sm btn-info btn-sm-2" style="float: left;">
-                    <fmt:message key="order.new.items"/> <span class="badge badge-info"
-                                                               onClick="window.location.href='/do?command=orders_take'">${orders_count_new}</span>
+                    <fmt:message key="order.new.items"/><c:if test="${role=='MANAGER'}"><span class="badge badge-info" onClick="window.location.href='/do?command=orders_take'">${orders_count_new}</span></c:if>
                 </div>
                 <div class="btn btn-sm btn-warning btm-sm-2" style="float: left;">
                     <fmt:message key="order.my.progress"/> <span class="badge badge-warning">${orders_count_progress}</span>

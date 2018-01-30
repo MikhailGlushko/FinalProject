@@ -2,19 +2,6 @@ CREATE SCHEMA IF NOT EXISTS REPAIR_AGENCY;
 
 SET SCHEMA REPAIR_AGENCY;
 
-DROP TABLE IF EXISTS `roles`;
-CREATE TABLE `roles`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL COMMENT '1 - SYSADMIN, 2 - ADMIN, 3 - MANAGER, 4 - MASTER',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO roles VALUES (1,'SYSADMIN'),
-(2,'ADMIN'),
-(3,'MANAGER'),
-(4,'MASTER'),
-(5,'CLIENT');
-
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -244,22 +231,6 @@ INSERT INTO `orders` VALUES (15,'Сломался холодилник9','Сло
 ALTER TABLE `repair_agency`.`orders` 
 ADD COLUMN `change_date` DATETIME NULL AFTER `manager_id`;
 
-DROP TABLE IF EXISTS `orders_history`;
-CREATE TABLE `orders_history` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `action` enum('CHANGE_EMPLOYEE','CHANGE_STATUS','CHANGE_DATE','CHANGE_PRICE','ADD_COMMENT','GUESTBOOK_COMMENT') NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `action_date` datetime NOT NULL,
-  `old_value` varchar(45) DEFAULT NULL,
-  `new_value` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `orders_history` VALUES (1,1,1,'ADD_COMMENT','ADD_COMMENT',now(),'','');
-
 DROP TABLE IF EXISTS `guest_book`;
 CREATE TABLE `guest_book` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -275,6 +246,9 @@ INSERT INTO `guest_book` VALUES (1,1,'CUSTOMER1','Огромное спасиб�
 INSERT INTO `guest_book` VALUES (2,2,'CUSTOMER2','Не советую!',now(), 'К сожалению, мое впечатление от работы этой компании мягко говоря негативное...., мало того что заменили оригинальный дисплей айфона на некачественную подделку, хотя по стоимости дисплей прошел как оригинал. И сама замена была сделан некачественно - по краям дисплей отходил от корпуса.. и не прошло и трех недель как стекло на дисплее лопнуло..В последующем официальные представители компании Apple подтвердили "качество" выполненной работы! Ребята обращайтесь к официальным дилерам, а не к серым конторкам типа OOO Эпл, которые не только срубят с вас лишние деньги за "оригинал", но и испортят вам настроение');
 INSERT INTO `guest_book` VALUES (3,3,'CUSTOMER3','Спасибо!',now(), 'В апреле мне делали ремонт macbook air 11 - меняли клавиатуру и трэкпад, под который попала жидкость, и началась коррозия. Спустя 4 месяца могу с ответственностью сказать, что ремонт сделали очень качественно. Спасибо! Сейчас у меня возникла новая проблема - жестко разбился дисплей Iphone. Сразу вспомнила о вас) Планирую к вам обратиться.');
 
+ALTER TABLE `repair_agency`.`guest_book`
+ADD COLUMN `user_id` int(11) NULL AFTER `memo`;
+
 DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -285,15 +259,3 @@ CREATE TABLE `news` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `news` VALUES (1,'News 1',now(),'Многие люди, учитывая нынешнюю обстановку в Украине, стараются экономить.<br>И вместо того, чтобы выбросить сломавшийся бытовой прибор, отправляются в мастерскую,<br>чтобы профессионал его отремонтировал. В большинстве случаев ремонт обходится дешевле,<br>чем покупка новой бытовой техники.<br>Наше агентство предлагает «вдохнуть вторую жизнь» в любой прибор, облегчающий быт людей.');
-
-DROP TABLE IF EXISTS `order_que`;
-CREATE TABLE `order_que` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL,
-  `role` enum('ADMIN','MANAGER','MASTER','CUSTOMER') NOT NULL,
-  `employee_id` int(11) DEFAULT NULL,
-  `create_date` datetime NOT NULL,
-  `close_date` datetime DEFAULT NULL,
-  `message` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -4,12 +4,14 @@ import ua.glushko.commands.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.ConfigurationManager;
+import ua.glushko.exception.ParameterException;
 import ua.glushko.model.entity.User;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Objects;
 
 import static ua.glushko.commands.utils.Authentication.*;
 import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.PATH_PAGE_USERS_DETAIL;
@@ -24,6 +26,8 @@ public class UserReadCommand implements Command {
         try {
             int access = Authentication.checkAccess(request);
             if ((access & U) == U) {    //user has rights to update
+                if(Objects.isNull(request.getParameter(UsersCommandHelper.PARAM_USER_ID)))
+                    throw new ParameterException("user.didn't.login");
                 Integer id = Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_USER_ID));
                 UsersService usersService = UsersService.getService();
                 User user = usersService.getUserById(id);

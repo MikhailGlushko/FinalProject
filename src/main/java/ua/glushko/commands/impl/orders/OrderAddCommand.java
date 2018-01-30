@@ -24,8 +24,6 @@ public class OrderAddCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         try {
-
-            // prepare list for menu
             RepairServicesService repairServices = RepairServicesService.getService();
             int userId = 0;
             try {
@@ -36,13 +34,10 @@ public class OrderAddCommand implements Command {
             UsersService usersService = UsersService.getService();
             List<RepairService> repairServiceList = repairServices.getRepairServiceList();
             List<Object[]> serviceList =  prepareList(repairServiceList);
-
-            // prepare user data who create request
             User client = usersService.getUserById(userId);
             Integer clientId = client.getId();
             String clientName = client.getName();
 
-            // store data to the session
             request.setAttribute(PARAM_ORDER_USER_ID,clientId);
             request.setAttribute(PARAM_ORDER_USER_NAME,clientName);
             request.setAttribute(OrdersCommandHelper.PARAM_ORDER, new Order());
@@ -51,16 +46,14 @@ public class OrderAddCommand implements Command {
         } catch (Exception e) {
             LOGGER.error(e);
         }
-        // forward to the form to create new request
         String page = ConfigurationManager.getProperty(OrdersCommandHelper.PATH_PAGE_ORDERS_ADD);
         return new CommandRouter(request, response, page);
     }
 
     private List<Object[]> prepareList(List<RepairService> repairServiceList) {
         List<Object[]> list = new LinkedList<>();
-        for (RepairService item:repairServiceList) {
+        for (RepairService item:repairServiceList)
             list.add(new Object[]{item.getId(),item.getNameRu()});
-        }
         return list;
     }
 }

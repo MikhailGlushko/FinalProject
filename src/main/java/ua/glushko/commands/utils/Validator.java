@@ -218,7 +218,7 @@ public class Validator {
     }
 
     /** Check user data before password change */
-    public static User getValidatedUserBeforePasswordChange(HttpServletRequest request) throws ParameterException{
+    public static void getValidatedUserBeforePasswordChange(HttpServletRequest request) throws ParameterException{
         String userLogin     = request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN);
         String userPassword  = request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD);
         String userPassword2 = request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2);
@@ -233,7 +233,6 @@ public class Validator {
         User user = new User();
         user.setLogin(userLogin);
         user.setPassword(userPassword);
-        return user;
     }
 
     /** Check User data before password reset */

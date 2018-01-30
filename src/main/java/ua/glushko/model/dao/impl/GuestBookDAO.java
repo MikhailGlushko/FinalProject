@@ -17,6 +17,7 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
     private final String NAME_FIELD_DESCRIPTION = "description";
     private final String NAME_FIELD_ACTION_DATE = "action_date";
     private final String NAME_FIELD_MEMO = "memo";
+    private final String NAME_FIELD_USER_ID = "user_id";
     private static final GuestBookDAO dao = new GuestBookDAO();
 
     private GuestBookDAO() {
@@ -38,7 +39,8 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
                 NAME_FIELD_USER_NAME + "," +
                 NAME_FIELD_DESCRIPTION + "," +
                 NAME_FIELD_ACTION_DATE + "," +
-                NAME_FIELD_MEMO;
+                NAME_FIELD_MEMO + "," +
+                NAME_FIELD_USER_ID;
     }
 
     @Override
@@ -57,6 +59,7 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
         else
             statement.setDate(4,null);
         statement.setString(5, entity.getMemo());
+        statement.setInt(6, entity.getUserId());
     }
 
     @Override
@@ -78,6 +81,7 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
             if(resultSet.getDate(NAME_FIELD_ACTION_DATE)!=null)
                 item.setActionDate(new java.sql.Date(resultSet.getTimestamp(NAME_FIELD_ACTION_DATE).getTime()));
             item.setMemo(resultSet.getString(NAME_FIELD_MEMO));
+            item.setUserId(resultSet.getInt(NAME_FIELD_USER_ID));
             list.add(item);
         }
         return list;

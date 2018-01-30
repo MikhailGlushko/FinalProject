@@ -2,7 +2,6 @@ package ua.glushko.services.impl;
 
 import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.dao.impl.OrderDAO;
-import ua.glushko.model.dao.impl.OrderQueDAO;
 import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.*;
 import ua.glushko.exception.DaoException;
@@ -98,8 +97,6 @@ public class OrdersService extends Service {
      */
     public Order takeNewOrder(int employeeId, OrderStatus status) throws DatabaseException, TransactionException {
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
-        OrderQueDAO orderQueDAO = DAOFactory.getFactory().getOrderQueDao();
-        UserDAO userDAO = DAOFactory.getFactory().getUserDao();
         Order order;
         try {
             TransactionManager.beginTransaction();
@@ -115,15 +112,6 @@ public class OrdersService extends Service {
             order.setEmployeeId(employeeId);
             order.setChangeDateDate(new Date(System.currentTimeMillis()));
             orderDAO.update(order);
-            User user = userDAO.read(employeeId);
-            // create new OrderQue for user
-            OrderQue orderQue = new OrderQue();
-            orderQue.setMessage("Рассмотреть заказ № " + order.getId());
-            orderQue.setOrderId(order.getId());
-            orderQue.setCreate(new Date(System.currentTimeMillis()));
-            orderQue.setRole(user.getRole());
-            orderQue.setEmployeeId(employeeId);
-            orderQueDAO.create(orderQue);
             TransactionManager.endTransaction();
         } finally {
             TransactionManager.rollBack();
@@ -135,8 +123,6 @@ public class OrdersService extends Service {
      * Update exist Order or create new
      */
     public void updateOrder(Order oderd) throws TransactionException, DatabaseException {
-        OrderQueDAO orderQueDAO = DAOFactory.getFactory().getOrderQueDao();
-        UserDAO userDAO = DAOFactory.getFactory().getUserDao();
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
         try {
             TransactionManager.beginTransaction();
@@ -147,24 +133,8 @@ public class OrdersService extends Service {
                 oderd.setEmployeeId(oderd.getUserId());
             if (oderd.getId() != null && oderd.getId() != 0) {
                 orderDAO.update(oderd);
-                OrderQue orderQue = new OrderQue();
-                orderQue.setRole(UserRole.MANAGER);
-                if (oderd.getEmployeeId() != 0) {
-                    User user = userDAO.read(oderd.getEmployeeId());
-                    orderQue.setEmployeeId(user.getId());
-                    orderQue.setRole(user.getRole());
-                    orderQue.setCreate(new Date(System.currentTimeMillis()));
-                    orderQue.setMessage("UPDATE_ORDER");
-                    orderQueDAO.create(orderQue);
-                }
             } else {
                 orderDAO.create(oderd);
-                OrderQue orderQue = new OrderQue();
-                orderQue.setOrderId(oderd.getId());
-                orderQue.setRole(UserRole.MANAGER);
-                orderQue.setCreate(new Date(System.currentTimeMillis()));
-                orderQue.setMessage("NEW_ORDER");
-                orderQueDAO.create(orderQue);
             }
             TransactionManager.endTransaction();
         } finally {
