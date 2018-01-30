@@ -176,6 +176,29 @@
                             </webResources>
                         </configuration>
                     </plugin>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>5.0.6</version>
+                        <configuration>
+                            <user>root</user>
+                            <password>compaq</password>
+                            <url>jdbc:mysql://127.0.0.1:3306/repair_agency</url>
+                            <driver>com.mysql.cj.jdbc.Driver</driver>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.tomcat.maven</groupId>
+                        <artifactId>tomcat7-maven-plugin</artifactId>
+                        <version>2.2</version>
+                        <configuration>
+                            <url>http://127.0.0.1:8080/manager/text</url>
+                            <username>tomcat</username>
+                            <password>tomcat</password>
+                            <path>/</path>
+                        </configuration>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
