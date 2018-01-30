@@ -1,5 +1,6 @@
 package ua.glushko.commands.impl.orders;
 
+import ua.glushko.commands.impl.orders.state.*;
 import ua.glushko.exception.DaoException;
 import ua.glushko.exception.ParameterException;
 import ua.glushko.model.entity.Order;
@@ -184,7 +185,6 @@ public class OrdersCommandHelper {
         String action = request.getParameter(PARAM_ORDER_FORM_ACTION);
         if(Objects.isNull(action))
             throw new ParameterException("action.not.presemt");
-
         switch (action){
             case PARAM_ORDER_ACTION_APPROVE:
                 return prepareOrderToApprove(request, action);
@@ -214,22 +214,15 @@ public class OrdersCommandHelper {
         if(order.getStatus()== OrderStatus.VERIFICATION && (Objects.isNull(newEmployeeId) || newEmployeeId.isEmpty()))
             throw new ParameterException("new.employee.id.not.present");
         if(order.getStatus()== OrderStatus.valueOf(newStatus))
-            throw new ParameterException("same.status.in.approve.not.allowed");
-        order.setStatus(OrderStatus.valueOf(newStatus));
-        if(order.getStatus()==OrderStatus.COMPLETE && order.getManagerId()!=0)
-            order.setEmployeeId(order.getManagerId());
-        if(Objects.nonNull(newEmployeeId) && !newEmployeeId.isEmpty())
-            order.setEmployeeId(Integer.valueOf(newEmployeeId));
-        String oldMemo = order.getMemo();
-        if(Objects.isNull(oldMemo))
-            oldMemo="";
-        //noinspection StringBufferReplaceableByString
-        order.setMemo(new StringBuilder(oldMemo).append("\n")
-                .append(new Date(System.currentTimeMillis())).append(" ")
-                .append(userName).append(" ")
-                .append(action).append(" ")
-                .append(order.getStatus())
-                .append(actionMemo).toString());
+            throw new ParameterException("same.status.in.nextStage.not.allowed");
+
+
+        OrderState orderState = OrderStateFactory.getSate(order.getStatus());
+        if (Objects.nonNull(newEmployeeId))
+            orderState.nextStage(order,actionMemo,userName,Integer.valueOf(newEmployeeId));
+        else
+            orderState.nextStage(order,actionMemo,userName,null);
+
         return order;
     }
 
@@ -243,17 +236,10 @@ public class OrdersCommandHelper {
         String userName = (String) request.getSession().getAttribute(PARAM_NAME_NAME);
         if(Objects.isNull(userName))
             throw new ParameterException("user.name.not.present");
-        order.setEmployeeId(order.getUserId());
-        order.setStatus(OrderStatus.REJECT);
-        String oldMemo = order.getMemo();
-        if(Objects.isNull(oldMemo))
-            oldMemo="";
-        //noinspection StringBufferReplaceableByString
-        order.setMemo(new StringBuilder(oldMemo).append("\n")
-                .append(new Date(System.currentTimeMillis())).append(" ")
-                .append(userName).append(" ")
-                .append(action).append(" ")
-                .append(actionMemo).toString());
+
+        OrderState orderState = OrderStateFactory.getSate(order.getStatus());
+        orderState.reject(order,actionMemo,userName);
+
         return order;
     }
 
