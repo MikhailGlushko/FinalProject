@@ -18,7 +18,11 @@ import static ua.glushko.commands.utils.Authentication.C;
 import static ua.glushko.commands.CommandFactory.COMMAND_SERVICES;
 
 /**
- * Create New entity
+ * Admin Service Management Command, which receives data from the form and creates a new record
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see RepairService
+ * @see RepairServicesService
  */
 public class ServiceCreateCommand implements Command {
     @Override

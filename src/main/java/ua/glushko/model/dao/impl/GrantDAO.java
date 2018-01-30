@@ -12,6 +12,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO to work with User Grants
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class GrantDAO extends AbstractDAO<Grant> {
 
     private static final GrantDAO dao = new GrantDAO();

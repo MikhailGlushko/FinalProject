@@ -4,6 +4,8 @@ import ua.glushko.model.dao.impl.*;
 
 /**
  * DAO Factory
+ * @version 1.0
+ * @author Mikhail Glushko
  */
 public class DAOFactory {
 

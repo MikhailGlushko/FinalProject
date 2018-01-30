@@ -21,6 +21,11 @@ import static ua.glushko.commands.impl.admin.news.NewsCommandHelper.PARAM_GUEST_
 import static ua.glushko.commands.impl.orders.OrdersCommandHelper.PARAM_ORDERS_STAT_TOTAL;
 import static ua.glushko.commands.impl.admin.services.ServicesCommandHelper.PARAM_SERVICE_LIST;
 
+/**
+ * Command which prepare stats data into main page
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
 public class WelcomeCommand implements Command {
 
     @Override
@@ -43,7 +48,6 @@ public class WelcomeCommand implements Command {
             if(!Authentication.isUserLogIn(request.getSession()))
                 throw new ParameterException("user.not.log.in");
 
-            // Статистика заказов
             Map<OrderStatus, Map<OrderStats, Integer>> stats = ordersService.getStats(Authentication.getCurrentUserId(request.getSession()));
             request.setAttribute(PARAM_ORDERS_STAT_TOTAL, stats);
 

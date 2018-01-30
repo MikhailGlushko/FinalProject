@@ -16,10 +16,14 @@ import java.sql.SQLException;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
-import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeCreate;
+import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeCreate;
 
 /**
- * Create new user
+ * Admin User Management Command, which receives data from the form and creates a new record
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see User
+ * @see UsersService
  */
 public class UserCreateCommand implements Command {
     @Override
@@ -42,7 +46,6 @@ public class UserCreateCommand implements Command {
             LOGGER.error(e);
             LOGGER.debug("User already exist :"+newUser.getLogin()+" Registration rejected.");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_ALREADY_EXIST, locale));
-            //page = ConfigurationManager.getProperty(PATH_PAGE_REGISTER);
             page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS_ADD);
         } catch (ParameterException e) {
             LOGGER.debug("User : "+newUser.getLogin()+" input incorrect data. Registration rejected.");

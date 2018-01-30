@@ -10,6 +10,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO to work with GuestBooks
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class GuestBookDAO extends AbstractDAO<GuestBook> {
 
     private final String NAME_FIELD_ORDER_ID = "order_id";

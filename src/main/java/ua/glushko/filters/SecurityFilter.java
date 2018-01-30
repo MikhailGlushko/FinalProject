@@ -14,6 +14,11 @@ import static ua.glushko.commands.Command.PARAM_COMMAND;
 import static ua.glushko.commands.Command.PATH_PAGE_LOGIN;
 import static ua.glushko.commands.CommandFactory.*;
 
+/**
+ * Filter to To verify user authorization before calling commands
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 @WebFilter(urlPatterns = { PARAM_SERVLET_PATH})
 public class SecurityFilter implements Filter {
 

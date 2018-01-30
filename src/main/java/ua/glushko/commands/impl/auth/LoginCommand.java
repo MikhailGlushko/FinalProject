@@ -24,9 +24,15 @@ import java.util.Objects;
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 import static ua.glushko.commands.utils.Validator.isUserStatusActive;
 import static ua.glushko.commands.utils.Validator.isUserStatusNotActive;
-import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeLogin;
+import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeLogin;
 
-/** User authorization */
+/**
+ * User authorization Command
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see User
+ * @see UsersService
+ * */
 public class LoginCommand implements Command {
 
     @Override

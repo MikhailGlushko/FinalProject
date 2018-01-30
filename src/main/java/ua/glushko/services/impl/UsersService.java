@@ -18,6 +18,11 @@ import ua.glushko.transaction.TransactionManager;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * User services
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class UsersService extends Service {
 
     private UsersService() {
@@ -50,8 +55,6 @@ public class UsersService extends Service {
 
     /** Update exist user or create new */
     public void updateUser(User user) throws TransactionException, DatabaseException {
-        //if (user.getLogin() == null || user.getLogin().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty())
-        //    throw new DaoException(MessageManager.getMessage("user.incorrectLoginOrPassword"));
         GenericDAO<User> userDao = DAOFactory.getFactory().getUserDao();
         try {
             TransactionManager.beginTransaction();
@@ -116,7 +119,6 @@ public class UsersService extends Service {
         try {
             userByLogin = ((UserDAO) userDao).getUserByLogin(login);
         } catch (DaoException e) {
-            // user not found. It's OK. Let's go to register it.
         }
         if (Objects.isNull(userByLogin)) {
             User user = new User();

@@ -16,7 +16,13 @@ import static ua.glushko.commands.utils.Authentication.C;
 import static ua.glushko.commands.utils.Authentication.c;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 
-/** Create new order */
+/**
+ * Admin Order Management Command, which receives data from the form and creates a new record
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see Order
+ * @see OrdersService
+ */
 public class OrderCreateCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
@@ -27,7 +33,7 @@ public class OrderCreateCommand implements Command {
             if ((access & C) == C || (access & c)==c) {
                 Order order = OrdersCommandHelper.getValidatedOrderBeforeCreate(request);
                 LOGGER.debug("creating new order "+order);
-                // update user data into database
+
                 OrdersService.getService().updateOrder(order);
                 LOGGER.debug("new order "+order+" was created");
                 int count = OrdersService.getService().count(order.getUserId());

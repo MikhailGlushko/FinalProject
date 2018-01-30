@@ -7,6 +7,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Generate Options input tag with group selector for RepairServices
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
+
 @SuppressWarnings("ALL")
 public class OptGoupTag extends TagSupport {
     private List<Object> list;

@@ -9,6 +9,12 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Generate Orders statistics as table
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
+
 @SuppressWarnings("serial")
 public class StatTag extends TagSupport {
 

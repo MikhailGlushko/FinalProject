@@ -14,6 +14,11 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
 
+/**
+ * DAO to work with Orders
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class OrderDAO extends AbstractDAO<Order> {
 
     private final String NAME_FIELD_DESCRIPTION_SHORT = "description_short";

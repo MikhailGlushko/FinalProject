@@ -79,7 +79,7 @@ public class ValidatorTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_NAME)).thenReturn(tmp.getName());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_EMAIL)).thenReturn(tmp.getEmail());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PHONE)).thenReturn(tmp.getPhone());
-        Validator.getValidatedUserBeforeSetup(request);
+        UsersCommandHelper.getValidatedUserBeforeSetup(request);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class ValidatorTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_NAME)).thenReturn(tmp.getName());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_EMAIL)).thenReturn(tmp.getEmail());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PHONE)).thenReturn(tmp.getPhone());
-        Validator.getValidatedUserBeforeSetup(request);
+        UsersCommandHelper.getValidatedUserBeforeSetup(request);
     }
 
     @Test (expected = ParameterException.class)
@@ -116,7 +116,7 @@ public class ValidatorTest {
 
         when(request.getParameter(UsersCommandHelper.PARAM_USER_STATUS)).thenReturn(tmp.getStatus().name());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_ROLE)).thenReturn(tmp.getRole().name());
-        Validator.getValidatedUserBeforeCreate(request);
+        UsersCommandHelper.getValidatedUserBeforeCreate(request);
     }
 
     @Test
@@ -136,7 +136,7 @@ public class ValidatorTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PHONE)).thenReturn(tmp.getPhone());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_STATUS)).thenReturn(tmp.getStatus().name());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_ROLE)).thenReturn(tmp.getRole().name());
-        Validator.getValidatedUserBeforeCreate(request);
+        UsersCommandHelper.getValidatedUserBeforeCreate(request);
     }
 
     @Test(expected = ParameterException.class)
@@ -148,7 +148,7 @@ public class ValidatorTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn(tmp.getLogin());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn(tmp.getPassword());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2)).thenReturn(tmp.getPassword());
-        Validator.getValidatedUserBeforePasswordChange(request);
+        UsersCommandHelper.getValidatedUserBeforePasswordChange(request);
     }
 
     @Test
@@ -162,7 +162,7 @@ public class ValidatorTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn(tmp.getLogin());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn(tmp.getPassword());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2)).thenReturn(tmp.getPassword());
-        Validator.getValidatedUserBeforePasswordChange(request);
+        UsersCommandHelper.getValidatedUserBeforePasswordChange(request);
     }
 
     @Test (expected = ParameterException.class)
@@ -178,7 +178,7 @@ public class ValidatorTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PHONE)).thenReturn(tmp.getPhone());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_STATUS)).thenReturn(tmp.getStatus().name());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_ROLE)).thenReturn(tmp.getRole().name());
-        Validator.getValidatedUserBeforeUpdateDetails(request);
+        UsersCommandHelper.getValidatedUserBeforeUpdateDetails(request);
     }
 
     @Test
@@ -193,7 +193,7 @@ public class ValidatorTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PHONE)).thenReturn(tmp.getPhone());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_STATUS)).thenReturn(tmp.getStatus().name());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_ROLE)).thenReturn(tmp.getRole().name());
-        Validator.getValidatedUserBeforeUpdateDetails(request);
+        UsersCommandHelper.getValidatedUserBeforeUpdateDetails(request);
     }
 
     @Test

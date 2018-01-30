@@ -15,9 +15,15 @@ import ua.glushko.services.impl.UsersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeRegistration;
+import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeRegistration;
 
-/** register new User */
+/**
+ * New User Register Command
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see User
+ * @see UsersService
+ */
 public class RegisterCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

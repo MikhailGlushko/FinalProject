@@ -10,6 +10,11 @@ import ua.glushko.services.Service;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * GuestBook services
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class GuestBookService extends Service {
 
     private GuestBookService() {

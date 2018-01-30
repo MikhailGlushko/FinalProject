@@ -1,5 +1,6 @@
 package ua.glushko.servlets;
 
+import org.apache.log4j.Logger;
 import ua.glushko.commands.Command;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.CommandFactory;
@@ -17,10 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
-
+/**
+ * Main Controller
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 @WebServlet(PARAM_SERVLET_PATH)
 public class Controller extends HttpServlet {
-
+    Logger LOGGER = Logger.getLogger(Command.class.getSimpleName());
     private final String DATA_SOURCE = ConfigurationManager.getProperty("jdbc/repair_agency");
     private final String JNDI_NAME   = ConfigurationManager.getProperty("java:/comp/env");
 
@@ -33,7 +38,7 @@ public class Controller extends HttpServlet {
                 DataSource dataSource = (DataSource) context.lookup(DATA_SOURCE);
                 ConnectionPool.getConnectionPool().setDataSource(dataSource);
             } catch (NamingException e) {
-                e.printStackTrace();
+                LOGGER.error(e);
             }
         }
     }
@@ -50,11 +55,8 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
         CommandFactory commandFactory = CommandFactory.getInstance();
-        // get command
         Command command = commandFactory.getCommand(req);
-        // execute command and get page to route
         CommandRouter commandRouter = command.execute(req, resp);
-        // route to new page
         commandRouter.route();
     }
 }

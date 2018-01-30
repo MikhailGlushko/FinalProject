@@ -15,6 +15,14 @@ import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PA
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PARAM_GUEST_BOOKS_LIST_TITLE;
 import static ua.glushko.commands.impl.admin.guestbook.GuestBookCommandHelper.PATH_PAGE_GUEST_BOOK;
 
+/**
+ * Command that prepares data for show GuestBook
+ * @version 1.0
+ * @author Mikhail Glushko
+ * @see GuestBook
+ * @see GuestBookService
+ *
+ */
 public class GuestBookListCommand implements Command {
 
     @Override

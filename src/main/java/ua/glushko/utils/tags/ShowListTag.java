@@ -14,6 +14,12 @@ import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 import static ua.glushko.commands.utils.Authentication.*;
 import static ua.glushko.commands.Command.*;
 
+/**
+ * Template for draw tables
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
+
 @SuppressWarnings("serial")
 abstract class ShowListTag extends TagSupport {
     private List<String> head;

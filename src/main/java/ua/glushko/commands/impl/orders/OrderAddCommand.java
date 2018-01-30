@@ -18,7 +18,11 @@ import java.util.List;
 import static ua.glushko.commands.impl.orders.OrdersCommandHelper.PARAM_ORDER_USER_ID;
 import static ua.glushko.commands.impl.orders.OrdersCommandHelper.PARAM_ORDER_USER_NAME;
 
-/** redirect to the form of adding a new order by pressing the "+" button on the form with the list of users*/
+/** /**
+ * Admin Order Management Command that redirect to the form of adding a new entity by pressing the "+" button on the form with the list
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
 public class OrderAddCommand implements Command {
 
     @Override

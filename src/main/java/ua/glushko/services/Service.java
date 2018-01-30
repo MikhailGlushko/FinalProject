@@ -10,7 +10,12 @@ import ua.glushko.transaction.TransactionManager;
 
 import java.sql.SQLException;
 
-public class Service {
+/**
+ * CRUD Parent Service for all Services
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
+abstract public class Service {
     protected final Logger LOGGER = Logger.getLogger(Service.class.getSimpleName());
 
     /** Get GenericEntity by id */

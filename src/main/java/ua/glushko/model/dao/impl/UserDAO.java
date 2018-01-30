@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * DAO to work with Users
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 public class UserDAO extends AbstractDAO<User> {
 
     private final String NAME_FIELD_ROLE = "role";

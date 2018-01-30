@@ -17,6 +17,12 @@ import static ua.glushko.commands.Command.*;
 import static ua.glushko.commands.CommandFactory.COMMAND_LOGOUT;
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 
+/**
+ * Print main menu on the page
+ * @version 1.0
+ * @author Mikhail Glushko
+ */
+
 @SuppressWarnings("serial")
 public class MainMenuTag extends TagSupport {
 

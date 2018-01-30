@@ -54,7 +54,6 @@ public class RecoveryCommandTest {
         MailServlet controller = new MailServlet();
         controller.init();
         when(request.getMethod()).thenReturn("POST");
-        //controller.service(request,response);
     }
 
     @Test

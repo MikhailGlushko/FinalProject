@@ -17,7 +17,11 @@ import static ua.glushko.commands.utils.Authentication.D;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 
 /**
- * delete exist order
+ * Admin Order Management Command, which receives data from the form and delete record from database
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see Order
+ * @see OrdersService
  */
 public class OrderDeleteCommand implements Command {
     @Override
@@ -31,7 +35,7 @@ public class OrderDeleteCommand implements Command {
                     throw new ParameterException("order.id.not.present");
                 Integer id = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
                 LOGGER.debug("deleting order " + id);
-                // update user data into database
+
                 Order order = ordersService.getOrderById(id);
                 ordersService.deleteOrder(id);
                 LOGGER.debug("service " + order + " was deleted");

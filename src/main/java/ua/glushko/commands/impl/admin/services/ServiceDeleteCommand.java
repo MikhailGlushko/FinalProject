@@ -17,7 +17,11 @@ import static ua.glushko.commands.utils.Authentication.D;
 import static ua.glushko.commands.CommandFactory.COMMAND_SERVICES;
 
 /**
- * Delete entity from database
+ * Admin Service Management Command, which receives data from the form and delete record from database
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see RepairService
+ * @see RepairServicesService
  */
 public class ServiceDeleteCommand implements Command {
     @Override
@@ -31,7 +35,6 @@ public class ServiceDeleteCommand implements Command {
                 RepairService repairService;
                 RepairServicesService service = RepairServicesService.getService();
                 LOGGER.debug("deleting service " + Id);
-                // update user data into database
                 repairService = service.getRepairServiceById(Id);
                 service.deleteRepairService(Id);
                 LOGGER.debug("service " + repairService + " was deleted");

@@ -13,6 +13,13 @@ import java.util.List;
 
 import static ua.glushko.commands.utils.Authentication.R;
 
+/**
+ * Admin Service Management Command, which prepare list of repairServices to show
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see RepairService
+ * @see RepairServicesService
+ */
 public class ServicesListCommand implements Command {
 
     @Override

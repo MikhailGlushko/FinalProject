@@ -13,9 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
-import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeResetPassword;
+import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeResetPassword;
 
-/** Reset password */
+/**
+ * User Password Reset Command
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see User
+ * @see UsersService
+ */
 public class ResetPasswordCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {

@@ -18,10 +18,14 @@ import static ua.glushko.commands.utils.Authentication.U;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS_READ;
 import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.PARAM_USER_ID;
-import static ua.glushko.commands.utils.Validator.getValidatedUserBeforeUpdateDetails;
+import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeUpdateDetails;
 
 /**
- * Update user data
+ * Admin User Management Command, which receives data from the form and update item in Database
+ * @author Mikhail Glushko
+ * @version 1.0
+ * @see User
+ * @see UsersService
  */
 public class UserUpdateCommand implements Command {
     @Override

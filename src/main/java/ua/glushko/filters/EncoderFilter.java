@@ -4,6 +4,11 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
+/**
+ * Filter to Decoding of information entered by the user
+ * @author Mikhail Glushko
+ * @version 1.0
+ */
 @WebFilter(urlPatterns = { "/*"})
 public class EncoderFilter implements Filter {
 
