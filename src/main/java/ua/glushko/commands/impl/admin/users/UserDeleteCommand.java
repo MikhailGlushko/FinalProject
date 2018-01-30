@@ -3,11 +3,14 @@ package ua.glushko.commands.impl.admin.users;
 import ua.glushko.commands.utils.Authentication;
 import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
+import ua.glushko.exception.ParameterException;
 import ua.glushko.model.entity.User;
 import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.Objects;
 
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 import static ua.glushko.commands.utils.Authentication.*;
@@ -22,8 +25,10 @@ public class UserDeleteCommand implements Command {
         try {
             int access = Authentication.checkAccess(request);
             if ((access & D) == D) {    //user has rights to delete
-                UsersService usersService = UsersService.getService();
+                if(Objects.isNull(request.getParameter(UsersCommandHelper.PARAM_USER_ID)))
+                    throw new ParameterException("user.didn't.login");
                 Integer userId = Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_USER_ID));
+                UsersService usersService = UsersService.getService();
                 LOGGER.debug("deleting user " + userId);
                 // update user data into database
                 User user = usersService.getUserById(userId);

@@ -11,6 +11,7 @@ public class GuestBook implements GenericEntity, Serializable{
     private String description;
     private Date actionDate;
     private String memo;
+    private int userId;
 
     @Override
     public Integer getId() {
@@ -61,6 +62,14 @@ public class GuestBook implements GenericEntity, Serializable{
         this.memo = memo;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "GuestBook{" +
@@ -70,6 +79,7 @@ public class GuestBook implements GenericEntity, Serializable{
                 ", description='" + description + '\'' +
                 ", actionDate=" + actionDate +
                 ", memo='" + memo + '\'' +
+                ", userId=" + userId +
                 '}';
     }
 }

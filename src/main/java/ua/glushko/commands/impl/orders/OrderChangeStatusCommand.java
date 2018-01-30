@@ -28,11 +28,11 @@ public class OrderChangeStatusCommand implements Command {
 
         try {
             int access = Authentication.checkAccess(request);
-            Order order = getValidatedOrderBeforeChangeStatus(request);
             if ((access & U) == U || (access & u) == u) {
+                Order order = getValidatedOrderBeforeChangeStatus(request);
                 OrdersService.getService().updateOrder(order);
+                request.setAttribute(OrdersCommandHelper.PARAM_ORDER, order);
             }
-            request.setAttribute(OrdersCommandHelper.PARAM_ORDER, order);
             request.setAttribute(PARAM_COMMAND, COMMAND_ORDERS);
             request.setAttribute(PARAM_PAGE, request.getParameter(PARAM_PAGE));
         } catch (ParameterException | DatabaseException | TransactionException e) {

@@ -14,24 +14,26 @@ import static ua.glushko.commands.utils.Authentication.U;
 import static ua.glushko.commands.utils.Authentication.u;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 
-/** Update data after editing */
+/**
+ * Update data after editing
+ */
 public class OrderUpdateCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
 
         try {
             int access = Authentication.checkAccess(request);
-            Order item = OrdersCommandHelper.getValidatedOrderBeforeUpdate(request);
             if ((access & U) == U || (access & u) == u) {
+                Order item = OrdersCommandHelper.getValidatedOrderBeforeUpdate(request);
                 OrdersService.getService().updateOrder(item);
+                LOGGER.debug("order " + item.getId() + " was updated");
+                request.setAttribute(OrdersCommandHelper.PARAM_ORDER, item);
             }
-            request.setAttribute(OrdersCommandHelper.PARAM_ORDER, item);
             request.setAttribute(PARAM_COMMAND, COMMAND_ORDERS);
-            LOGGER.debug("order " + item.getId()+" was updated");
         } catch (Exception e) {
             LOGGER.error(e);
         }
-        String page = PARAM_SERVLET_PATH + "?command=" + COMMAND_ORDERS +"&page=" + request.getAttribute(PARAM_PAGE);
+        String page = PARAM_SERVLET_PATH + "?command=" + COMMAND_ORDERS + "&page=" + request.getAttribute(PARAM_PAGE);
         return new CommandRouter(request, response, page);
 
     }

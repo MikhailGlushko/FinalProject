@@ -28,11 +28,10 @@ public class UserUpdateCommand implements Command {
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
         String page;
         String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
-        User userNew;
         try {
             int access = Authentication.checkAccess(request);
             if ((access & U) == U) {
-                userNew = getValidatedUserBeforeUpdateDetails(request);
+                User userNew = getValidatedUserBeforeUpdateDetails(request);
                 UsersService usersService = UsersService.getService();
                 User userOld = usersService.getUserById(userNew.getId());
                 populateUser(userNew, userOld);

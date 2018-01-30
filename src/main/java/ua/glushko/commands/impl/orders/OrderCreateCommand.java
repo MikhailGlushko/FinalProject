@@ -24,9 +24,8 @@ public class OrderCreateCommand implements Command {
         String page;
         try {
             int access = Authentication.checkAccess(request);
-            Order order = OrdersCommandHelper.getValidatedOrderBeforeCreate(request);
-
             if ((access & C) == C || (access & c)==c) {
+                Order order = OrdersCommandHelper.getValidatedOrderBeforeCreate(request);
                 LOGGER.debug("creating new order "+order);
                 // update user data into database
                 OrdersService.getService().updateOrder(order);

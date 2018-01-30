@@ -292,9 +292,7 @@ public class UserDAOTest {
             Thread.sleep(300);
             //assertEquals(read1.size(), read3.size());
             TransactionManager.rollBack();
-        } catch (SQLException | TransactionException e) {
-            logger.error(e);
-        } catch (InterruptedException e) {
+        } catch (SQLException | TransactionException | InterruptedException e) {
             logger.error(e);
         }
     }

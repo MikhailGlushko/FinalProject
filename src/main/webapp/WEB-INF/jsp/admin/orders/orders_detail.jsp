@@ -151,7 +151,7 @@
                     </div>
                     <div class="input-row">
                         <div class="input-field">
-                            <textarea id="order_memo" type="text" name="order_memo"
+                            <textarea id="order_memo" name="order_memo"
                                       style="height: 100px">${orders_detail.memo}</textarea>
                             <label for="order_memo"><fmt:message key="order.memo"/></label>
                         </div>
@@ -211,7 +211,7 @@
                         </div>
                         <div class="input-row">
                             <div class="input-field">
-                            <textarea id="order_memo_change" type="text" name="order_memo_change"
+                            <textarea id="order_memo_change" name="order_memo_change"
                                       style="height: 50px" required></textarea>
                                 <label for="order_memo_change"><fmt:message key="order.memo.change"/><em>*</em></label>
                             </div>

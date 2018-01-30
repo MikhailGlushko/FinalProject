@@ -98,7 +98,13 @@ abstract class ShowListTag extends TagSupport {
     protected abstract void makeBody(List<Object> list, StringBuilder builder, Integer rowsCount);
 
     private void makeNavigator(StringBuilder builder, Integer pagesCount, Integer rowsCount, Integer page) {
-        String command = pageContext.getRequest().getParameter(PARAM_COMMAND);
+        String command;
+        Object attr = pageContext.getRequest().getAttribute(PARAM_COMMAND);
+        if(Objects.isNull(attr))
+            command = pageContext.getRequest().getParameter(PARAM_COMMAND);
+        else {
+            command = (String) pageContext.getRequest().getAttribute(PARAM_COMMAND);
+        }
         int pageCount = list.size()/rowsCount;
         if (list.size()%rowsCount!=0)
             pageCount++;

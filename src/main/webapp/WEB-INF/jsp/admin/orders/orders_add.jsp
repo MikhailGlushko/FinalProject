@@ -32,7 +32,6 @@
                 <input type="hidden" name="command" value="orders_action"/>
                 <div class="input-row">
                     <div class="input-field">
-                        <%--<input id="order_repair_service" type="text" name="order_repair_service" value="" required/>--%>
                         <select id="order_repair_service" name="order_repair_service" value="${param.order_repair_service}" required>
                             <customtags:OptGoup list="${services_list}"/>
                         </select>
@@ -92,7 +91,7 @@
                 </fieldset>
                 <div class="input-row">
                     <div class="input-field">
-                        <textarea id="order_memo" type="text" name="order_memo" value="" style="height: 100px">${param.order_memo}</textarea>
+                        <textarea id="order_memo" name="order_memo" style="height: 100px">${param.order_memo}</textarea>
                         <label for="order_memo"><fmt:message key="order.memo"/></label>
                     </div>
                 </div>

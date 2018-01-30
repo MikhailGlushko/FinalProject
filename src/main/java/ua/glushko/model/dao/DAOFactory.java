@@ -39,8 +39,4 @@ public class DAOFactory {
     public NewsDAO getNewsDAO(){
         return NewsDAO.getInstance();
     }
-
-    public OrderQueDAO getOrderQueDao(){
-        return OrderQueDAO.getInstance();
-    }
 }
