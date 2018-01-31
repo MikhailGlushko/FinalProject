@@ -1,5 +1,6 @@
 package ua.glushko.services.impl;
 
+import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.dao.impl.OrderDAO;
 import ua.glushko.model.entity.*;
@@ -13,6 +14,9 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import static ua.glushko.commands.Command.PROPERTY_NAME_BROWSER_PAGES_COUNT;
+import static ua.glushko.commands.Command.PROPERTY_NAME_BROWSER_ROWS_COUNT;
 
 /**
  * Order services
@@ -38,7 +42,9 @@ public class OrdersService extends Service {
     /**
      * List of Orders by limit
      */
-    public List<Order> getOrderList(int page, int pagesCount, int rowsPerPage) throws SQLException {
+    public List<Order> getOrderList(int page) throws SQLException {
+        int pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
+        int rowsPerPage = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
         return DAOFactory.getFactory().getOrderDao().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 
@@ -80,7 +86,9 @@ public class OrdersService extends Service {
     /**
      * List of Orders for userId with Limit
      */
-    public List<Order> getOrderList(int page, int pagesCount, int rowsPerPage, Integer userId) throws TransactionException, SQLException {
+    public List<Order> getOrderList(int page, Integer userId) throws TransactionException, SQLException {
+        int pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
+        int rowsPerPage = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
 
         int start = (page - 1) * rowsPerPage;

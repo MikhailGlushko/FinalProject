@@ -27,31 +27,39 @@ public class OrderAddCommand implements Command {
 
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
+        RepairServicesService repairServices = RepairServicesService.getService();
+        UsersService usersService = UsersService.getService();
         try {
-            RepairServicesService repairServices = RepairServicesService.getService();
-            int userId = 0;
-            try {
-                userId = Integer.valueOf(request.getSession().getAttribute(Authentication.PARAM_ID).toString());
-            } catch (NumberFormatException e){
-                LOGGER.error(e);
-            }
-            UsersService usersService = UsersService.getService();
+            int userId = getUserId(request);
             List<RepairService> repairServiceList = repairServices.getRepairServiceList();
             List<Object[]> serviceList =  prepareList(repairServiceList);
             User client = usersService.getUserById(userId);
-            Integer clientId = client.getId();
-            String clientName = client.getName();
-
-            request.setAttribute(PARAM_ORDER_USER_ID,clientId);
-            request.setAttribute(PARAM_ORDER_USER_NAME,clientName);
-            request.setAttribute(OrdersCommandHelper.PARAM_ORDER, new Order());
-            request.setAttribute(OrdersCommandHelper.PARAM_SERVICES_LIST, repairServiceList);
-            request.setAttribute("serviceList",serviceList);
+            storeOrderdata(request, repairServiceList, serviceList, client);
         } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = ConfigurationManager.getProperty(OrdersCommandHelper.PATH_PAGE_ORDERS_ADD);
         return new CommandRouter(request, response, page);
+    }
+
+    private void storeOrderdata(HttpServletRequest request, List<RepairService> repairServiceList, List<Object[]> serviceList, User client) {
+        Integer clientId = client.getId();
+        String clientName = client.getName();
+        request.setAttribute(PARAM_ORDER_USER_ID,clientId);
+        request.setAttribute(PARAM_ORDER_USER_NAME,clientName);
+        request.setAttribute(OrdersCommandHelper.PARAM_ORDER, new Order());
+        request.setAttribute(OrdersCommandHelper.PARAM_SERVICES_LIST, repairServiceList);
+        request.setAttribute("serviceList",serviceList);
+    }
+
+    private int getUserId(HttpServletRequest request) {
+        int userId = 0;
+        try {
+            userId = Integer.valueOf(request.getSession().getAttribute(Authentication.PARAM_ID).toString());
+        } catch (NumberFormatException e){
+            LOGGER.error(e);
+        }
+        return userId;
     }
 
     private List<Object[]> prepareList(List<RepairService> repairServiceList) {

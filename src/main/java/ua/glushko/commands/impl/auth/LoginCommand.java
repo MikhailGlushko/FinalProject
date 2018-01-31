@@ -8,7 +8,6 @@ import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.*;
-import ua.glushko.exception.DaoException;
 import ua.glushko.exception.ParameterException;
 import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
@@ -38,53 +37,58 @@ public class LoginCommand implements Command {
 
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-        UsersService loginService = UsersService.getService();
-        String page = null;
         String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
-        User userBeforeLogin = new User();
+        String page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);;
+        UsersService loginService = UsersService.getService();
+        User userBeforeLogin = null;
         try {
             userBeforeLogin = prepareUserDataForLogin(request);
             LOGGER.debug("user " + userBeforeLogin.getLogin() + " try to login");
             Map<User, List<Grant>> userAuthenticateData = loginService.authenticateUser(userBeforeLogin.getLogin(), userBeforeLogin.getPassword());
-            if (Objects.nonNull(userAuthenticateData)) {
-                User userAfterLogin = userAuthenticateData.keySet().iterator().next();
-                List<Grant> currentUserGrants = userAuthenticateData.get(userAfterLogin);
-                if (isUserStatusActive(userAfterLogin)) {
-                    LOGGER.debug("user " + userAfterLogin.getLogin() + " was login");
-                    storeUserAuthenticateData(request, userAfterLogin, currentUserGrants);
-                    request.setAttribute(PARAM_COMMAND, CommandFactory.COMMAND_WELCOME);
-                    page = PARAM_SERVLET_PATH;
-                } else if (isUserStatusNotActive(userAfterLogin)) {
-                    LOGGER.debug("user " + userAfterLogin.getLogin() + " is " + userAfterLogin.getStatus());
-                    request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_STATUS + userAfterLogin.getStatus(), locale));
-                    page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
-                }
-            } else {
+            User userAfterLogin = getUserAfrerAuthenticate(userAuthenticateData);
+            if (Objects.isNull(userAuthenticateData)) {
                 LOGGER.debug("user " + userBeforeLogin.getLogin() + " rejected");
                 request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_INCORRECT_LOGIN_OR_PASSWORD, locale));
-                page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
+            } else if (isUserStatusNotActive(userAfterLogin)) {
+                LOGGER.debug("user " + userAfterLogin.getLogin() + " is " + userAfterLogin.getStatus());
+                request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_STATUS + userAfterLogin.getStatus(), locale));
+            } else if (isUserStatusActive(userAfterLogin)) {
+                LOGGER.debug("user " + userAfterLogin.getLogin() + " was login");
+                storeUserAuthenticateData(request, userAuthenticateData);
+                page = PARAM_SERVLET_PATH;
             }
         } catch (SQLException | TransactionException e) {
             LOGGER.debug("user " + userBeforeLogin.getLogin() + " rejected");
-            request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_DATABASE_NOT_FOUND, locale));
-            page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
+            request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_DATABASE_NOT_FOUND, locale));
         } catch (ParameterException e) {
-            LOGGER.debug("user " + userBeforeLogin.getLogin() + " rejected");
             LOGGER.debug(MessageManager.getMessage(e.getMessage()));
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(e.getMessage(), locale));
-            page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
         }
         return new CommandRouter(request, response, page);
     }
 
-    private void storeUserAuthenticateData(HttpServletRequest request, User currentUser, List<Grant> userGrants) {
+    private List<Grant> getGrantsAfrerAuthenticate(Map<User, List<Grant>> userAuthenticateData) {
+        if (Objects.nonNull(userAuthenticateData))
+            return userAuthenticateData.get(userAuthenticateData.keySet().iterator().next());
+        return null;
+    }
+
+    private User getUserAfrerAuthenticate(Map<User, List<Grant>> userAuthenticateData) {
+        if (Objects.nonNull(userAuthenticateData))
+            return userAuthenticateData.keySet().iterator().next();
+        return null;
+    }
+
+    private void storeUserAuthenticateData(HttpServletRequest request, Map<User, List<Grant>> userAuthenticateData) {
+        User currentUser = getUserAfrerAuthenticate(userAuthenticateData);
         request.getSession().setAttribute(Authentication.PARAM_LOGIN, currentUser.getLogin());
         request.getSession().setAttribute(Authentication.PARAM_NAME_NAME, currentUser.getName());
         request.getSession().setAttribute(Authentication.PARAM_ROLE, currentUser.getRole());
         request.getSession().setAttribute(Authentication.PARAM_ID, currentUser.getId());
-        request.getSession().setAttribute(Authentication.PARAM_GRANTS, userGrants);
+        request.getSession().setAttribute(Authentication.PARAM_GRANTS, getGrantsAfrerAuthenticate(userAuthenticateData));
+        request.setAttribute(PARAM_COMMAND, CommandFactory.COMMAND_WELCOME);
         Cookie[] cookies = request.getCookies();
-        if (Objects.nonNull(cookies))
+        if (Objects.nonNull(cookies)) {
             for (Cookie cookie : cookies) {
                 String name = cookie.getName();
                 if (name.equals(PARAM_LOCALE)) {
@@ -92,5 +96,6 @@ public class LoginCommand implements Command {
                     break;
                 }
             }
+        }
     }
 }

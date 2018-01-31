@@ -5,10 +5,8 @@ import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
-import ua.glushko.exception.DaoException;
 import ua.glushko.utils.mail.MailThread;
 import ua.glushko.model.entity.User;
-import ua.glushko.exception.DatabaseException;
 import ua.glushko.exception.ParameterException;
 import ua.glushko.services.impl.UsersService;
 
@@ -18,7 +16,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Properties;
 
-import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeRecoveryPassword;
+import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.prepareUserDataForRecoveryPassword;
 
 /**
  * User Password Recovery Command
@@ -33,34 +31,33 @@ public class RecoveryCommand implements Command {
 
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-        String page;
+        String page = ConfigurationManager.getProperty(PATH_PAGE_RECOVER);
         String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
-        User user = new User();
+        UsersService recoveryService = UsersService.getService();
+        User userBeforeRecovery = null;
         try {
-            user = getValidatedUserBeforeRecoveryPassword(request);
-            Properties properties = (Properties)request.getAttribute(PARAM_MAIL_SETUP);
-            LOGGER.debug("user "+user.getLogin()+" try to recovery password");
-            UsersService recoveryService = UsersService.getService();
-            User userData = recoveryService.getUserByLogin(user.getLogin());
-            if(Objects.nonNull(userData)) {
+            userBeforeRecovery = prepareUserDataForRecoveryPassword(request);
+            LOGGER.debug("user "+userBeforeRecovery.getLogin()+" try to recovery password");
+            User userData = recoveryService.getUserByLogin(userBeforeRecovery.getLogin());
+            if(Objects.isNull(userData)){
+                LOGGER.debug("Password for user " + userBeforeRecovery.getLogin() + " was not change. User not exist.");
+                request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_NOT_EXIST, locale));
+            } else {
                 String text = "Secret key : " + request.getSession().getId();
+                Properties properties = (Properties)request.getAttribute(PARAM_MAIL_SETUP);
                 MailThread mailThread = new MailThread(userData.getEmail(), "Password reset", text, properties);
                 mailThread.start();
-                LOGGER.debug("secret key for user " + user.getLogin() + " was sent to his email");
+                LOGGER.debug("secret key for user " + userBeforeRecovery.getLogin() + " was sent to his email");
                 request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_PASSWORD_WAS_SEND, locale));
-            } else {
-                LOGGER.debug("Password for user " + user.getLogin() + " was not change. User not exist.");
-                page = ConfigurationManager.getProperty(PATH_PAGE_RECOVER);
-                request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_NOT_EXIST, locale));
-                return new CommandRouter(request, response, page);
+                page = ConfigurationManager.getProperty(PATH_PAGE_RESET_PASSWORD);
             }
-        } catch (ParameterException | SQLException e) {
-            LOGGER.debug("Password for user "+user.getLogin()+" was not change. User not exist.");
-            page = ConfigurationManager.getProperty(PATH_PAGE_RECOVER);
+        } catch (ParameterException e) {
+            LOGGER.debug(e.getMessage());
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(e.getMessage(), locale));
-            return new CommandRouter(request, response, page);
+        } catch (SQLException e) {
+            LOGGER.debug("Password for user "+userBeforeRecovery.getLogin()+" was not change. User not exist.");
+            request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(e.getMessage(), locale));
         }
-        page = ConfigurationManager.getProperty(PATH_PAGE_RESET_PASSWORD);
         return new CommandRouter(request, response, page);
     }
 }

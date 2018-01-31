@@ -26,17 +26,14 @@ import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 public class UserDeleteCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
+        UsersService usersService = UsersService.getService();
         try {
-            int access = Authentication.checkAccess(request);
-            if ((access & D) == D) {    //user has rights to delete
-                if(Objects.isNull(request.getParameter(UsersCommandHelper.PARAM_USER_ID)))
-                    throw new ParameterException("user.didn't.login");
-                Integer userId = Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_USER_ID));
-                UsersService usersService = UsersService.getService();
+            if(isUserHasRightToDelete(request)) {
+                Integer userId = getUserId(request);
                 LOGGER.debug("deleting user " + userId);
-
                 User user = usersService.getUserById(userId);
-                usersService.deleteUser(userId);
+                if(Objects.nonNull(user))
+                    usersService.deleteUser(userId);
                 LOGGER.debug("user " + user.getLogin() + " was deleted");
                 request.setAttribute(PARAM_COMMAND, COMMAND_USERS);
             }
@@ -45,5 +42,15 @@ public class UserDeleteCommand implements Command {
         }
         String page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS + "&page=" + request.getAttribute(PARAM_PAGE);
         return new CommandRouter(request, response, page);
+    }
+
+    private Integer getUserId(HttpServletRequest request) throws ParameterException {
+        if(Objects.isNull(request.getParameter(UsersCommandHelper.PARAM_USER_ID)))
+            throw new ParameterException("user.didn't.login");
+        return Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_USER_ID));
+    }
+
+    private boolean isUserHasRightToDelete(HttpServletRequest request) throws ParameterException {
+        return (Authentication.checkAccess(request) & D) == D;
     }
 }

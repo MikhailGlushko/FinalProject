@@ -34,13 +34,13 @@ public class OrdersServiceTest {
 
     @Test
     public void getOrderList1() throws SQLException {
-        List<Order> orderList = service.getOrderList(1, 1, 1);
+        List<Order> orderList = service.getOrderList(1);
         assertNotNull(orderList);
     }
 
     @Test
     public void getOrderTitles() throws SQLException {
-        service.getOrderList(1, 1, 1);
+        service.getOrderList(1);
         List<String> orderTitles = service.getOrderTitles();
         assertNotNull(orderTitles);
     }
@@ -81,7 +81,7 @@ public class OrdersServiceTest {
 
     @Test
     public void getOrderList2() throws TransactionException, SQLException {
-        List<Order> orderList = service.getOrderList(1, 1, 1, 1);
+        List<Order> orderList = service.getOrderList(1, 1);
         assertNotNull(orderList);
     }
 }

@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
-import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeCreate;
+import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.prepareUserDataBeforeCreate;
 
 /**
  * Admin User Management Command, which receives data from the form and creates a new record
@@ -28,31 +28,33 @@ import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidat
 public class UserCreateCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-        String page;
+        String page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS_ADD);
         String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
-        User newUser = new User();
+        UsersService usersService = UsersService.getService();
+        User newUser = null;
         try {
-            newUser = getValidatedUserBeforeCreate(request);
-            UsersService registerService = UsersService.getService();
-            registerService.updateUser(newUser);
-            int count = registerService.count();
-            Integer rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
-            count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
-            request.setAttribute(PARAM_LAST_PAGE,count);
+            newUser = prepareUserDataBeforeCreate(request);
+            usersService.updateUser(newUser);
+            soreLastPageData(request, usersService);
             LOGGER.debug("New user : "+newUser.getLogin()+" was registered.");
-            request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_IS_REGISTERED, locale));
             page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS + "&page=" + request.getAttribute(PARAM_LAST_PAGE);
         } catch (SQLException | TransactionException e) {
-            LOGGER.error(e);
             LOGGER.debug("User already exist :"+newUser.getLogin()+" Registration rejected.");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_ALREADY_EXIST, locale));
-            page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS_ADD);
         } catch (ParameterException e) {
-            LOGGER.debug("User : "+newUser.getLogin()+" input incorrect data. Registration rejected.");
+            LOGGER.debug("Incorrect data. Registration rejected.");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(e.getMessage(), locale));
-            page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS_ADD);
         }
         return new CommandRouter(request, response, page);
+    }
+
+    private void soreLastPageData(HttpServletRequest request, UsersService usersService) throws SQLException {
+        int count = usersService.count();
+        Integer rowsCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
+        count = (count%rowsCount!=0)?count/rowsCount+1:count/rowsCount;
+        String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
+        request.setAttribute(PARAM_LAST_PAGE,count);
+        request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_IS_REGISTERED, locale));
     }
 
 }

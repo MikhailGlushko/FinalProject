@@ -18,6 +18,8 @@ import java.util.List;
  */
 abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO<T> {
 
+    protected String NAME_FIELD_ID = "id";
+    String NAME_FIELD_NAME = "name";
     private List<String> titles;
     protected AbstractDAO() {
         super();
@@ -88,9 +90,9 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
      * get the text of the update request
      */
     private String getUpdateQuery() {
-        return "update " + getTableName() +
+        return  " update " + getTableName() +
                 " set " + getFieldListForUpdate(getFieldList()) +
-                " where id=?";
+                " where "+NAME_FIELD_ID+"=?";
     }
 
     /**
@@ -99,7 +101,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
 
     public T delete(int id) throws SQLException {
         T object = read(id);
-        String sql = getDeleteQuery() + " where id=?";
+        String sql = getDeleteQuery() + " where "+NAME_FIELD_ID+"=?";
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             prepareStatementForDeleteByKey(statement, id);
@@ -179,7 +181,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     public List<T> read(String name) throws SQLException {
         List<T> list;
         String sql = getSelectQuery() +
-                " where name=?";
+                " where "+NAME_FIELD_NAME+"=?";
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
             prepareStatementForSelectByName(statement, name);
@@ -237,18 +239,18 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
      * query for select
      */
     protected String getSelectQuery() {
-        return "select id, " + getFieldList() +
+        return "select "+NAME_FIELD_ID+", " + getFieldList() +
                 " from " + getTableName();
     }
 
     protected String getSelectQueryById() {
-        return "select id, " + getFieldList() +
+        return " select "+NAME_FIELD_ID+", " + getFieldList() +
                 " from " + getTableName() +
-                " where id =?";
+                " where "+NAME_FIELD_ID+" =?";
     }
 
     protected String getSelectQueryWithLimit() {
-        return "select id, " + getFieldList() +
+        return "select "+NAME_FIELD_ID+", " + getFieldList() +
                 " from " + getTableName() +
                 " limit ?,? ";
     }

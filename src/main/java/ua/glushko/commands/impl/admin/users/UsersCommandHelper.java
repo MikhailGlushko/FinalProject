@@ -38,10 +38,10 @@ public class UsersCommandHelper {
     public static final String MESSAGE_USER_INCORRECT_DATA = "user.incorrectdata";
     public static final String MESSAGE_USER_NOT_EXIST = "user.notexist";
 
-    public static final String MESSAGE_USER_DATABASE_NOT_FOUND = "database.not.found";
+    public static final String MESSAGE_DATABASE_NOT_FOUND = "database.not.found";
 
 
-    public static User getValidatedUserBeforeRecoveryPassword(HttpServletRequest request) throws ParameterException {
+    public static User prepareUserDataForRecoveryPassword(HttpServletRequest request) throws ParameterException {
         String userLogin = request.getParameter(PARAM_USER_LOGIN);
         if (Objects.isNull(userLogin) || userLogin.isEmpty())
             throw new ParameterException("user.login.not.present");
@@ -65,7 +65,7 @@ public class UsersCommandHelper {
     }
 
     /** *Check user data before register */
-    public static User getValidatedUserBeforeRegistration(HttpServletRequest request) throws ParameterException {
+    public static User prepareUserDataBeforeRegistration(HttpServletRequest request) throws ParameterException {
         String userLogin = request.getParameter(PARAM_USER_LOGIN);
         String userPassword = request.getParameter(PARAM_USER_PASSWORD);
         String userPassword2 = request.getParameter(PARAM_USER_PASSWORD2);
@@ -101,7 +101,7 @@ public class UsersCommandHelper {
         return user;
     }
 
-    public static User getValidatedUserBeforeSetup(HttpServletRequest request) throws ParameterException {
+    public static User prepareUserDataBeforeSetup(HttpServletRequest request) throws ParameterException {
         String userId = request.getParameter(PARAM_USER_ID);
         String userLogin = request.getParameter(PARAM_USER_LOGIN);
         String userPassword = request.getParameter(PARAM_USER_PASSWORD);
@@ -137,7 +137,7 @@ public class UsersCommandHelper {
         return user;
     }
 
-    public static User getValidatedUserBeforeCreate(HttpServletRequest request) throws ParameterException{
+    public static User prepareUserDataBeforeCreate(HttpServletRequest request) throws ParameterException{
         String userLogin = request.getParameter(PARAM_USER_LOGIN);
         String userPassword = request.getParameter(PARAM_USER_PASSWORD);
         String userName = request.getParameter(PARAM_USER_NAME);
@@ -201,7 +201,7 @@ public class UsersCommandHelper {
     }
 
     /** Check User data before password reset */
-    public static User getValidatedUserBeforeResetPassword(HttpServletRequest request) throws ParameterException{
+    public static User gprepareUserDataBeforeResetPassword(HttpServletRequest request) throws ParameterException{
         String userLogin     = request.getParameter(PARAM_USER_LOGIN);
         String userPassword  = request.getParameter(PARAM_USER_PASSWORD);
         String userPassword2 = request.getParameter(PARAM_USER_PASSWORD2);
@@ -226,7 +226,7 @@ public class UsersCommandHelper {
     }
 
     /** Check User data before update */
-    public static User getValidatedUserBeforeUpdateDetails(HttpServletRequest request) throws ParameterException{
+    public static User getUserDataBeforeUpdate(HttpServletRequest request) throws ParameterException{
         String userId = request.getParameter(PARAM_USER_ID);
         String userName = request.getParameter(PARAM_USER_NAME);
         String userEmail = request.getParameter(PARAM_USER_EMAIL);

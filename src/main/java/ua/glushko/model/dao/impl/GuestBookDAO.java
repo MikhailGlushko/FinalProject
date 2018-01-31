@@ -94,19 +94,19 @@ public class GuestBookDAO extends AbstractDAO<GuestBook> {
 
     protected String getCountQuery(int orderId) {
         return "select count(*) AS total from " + getTableName()+
-                " where order_id="+orderId;
+                " where "+NAME_FIELD_ORDER_ID+"="+orderId;
     }
 
     @Override
     protected String getSelectQuery() {
-        return "select id, " + getFieldList() +
+        return "select "+NAME_FIELD_ID+", " + getFieldList() +
                 " from " + getTableName() +
-                " order by id desc";
+                " order by "+NAME_FIELD_ID+" desc";
     }
 
     protected String getSelectQueryWithLimit() {
-        return "select id, " + getFieldList() +
+        return "select "+NAME_FIELD_ID+", " + getFieldList() +
                 " from " + getTableName() +
-                " order by id desc limit ?,? ";
+                " order by "+NAME_FIELD_ID+" desc limit ?,? ";
     }
 }

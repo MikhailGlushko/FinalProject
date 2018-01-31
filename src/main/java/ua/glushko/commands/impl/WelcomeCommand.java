@@ -33,7 +33,7 @@ public class WelcomeCommand implements Command {
 
         try {
             GuestBookService guestBookService = GuestBookService.getService();
-            List<GuestBook> guestBookList = guestBookService.getGuestBookList(1, 1, 3);
+            List<GuestBook> guestBookList = guestBookService.getGuestBookList(1);
             request.setAttribute(PARAM_GUEST_BOOKS_LIST,guestBookList);
 
             NewsService newsService = NewsService.getService();

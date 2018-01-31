@@ -3,7 +3,6 @@ package ua.glushko.commands.utils;
 import org.junit.Before;
 import org.junit.Test;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
-import ua.glushko.exception.DaoException;
 import ua.glushko.exception.ParameterException;
 import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.dao.impl.UserDAO;
@@ -81,7 +80,7 @@ public class ValidatorTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_NAME)).thenReturn(tmp.getName());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_EMAIL)).thenReturn(tmp.getEmail());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PHONE)).thenReturn(tmp.getPhone());
-        UsersCommandHelper.getValidatedUserBeforeSetup(request);
+        UsersCommandHelper.prepareUserDataBeforeSetup(request);
     }
 
     @Test
@@ -98,7 +97,7 @@ public class ValidatorTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_NAME)).thenReturn(tmp.getName());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_EMAIL)).thenReturn(tmp.getEmail());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PHONE)).thenReturn(tmp.getPhone());
-        UsersCommandHelper.getValidatedUserBeforeSetup(request);
+        UsersCommandHelper.prepareUserDataBeforeSetup(request);
     }
 
     @Test (expected = ParameterException.class)
@@ -118,7 +117,7 @@ public class ValidatorTest {
 
         when(request.getParameter(UsersCommandHelper.PARAM_USER_STATUS)).thenReturn(tmp.getStatus().name());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_ROLE)).thenReturn(tmp.getRole().name());
-        UsersCommandHelper.getValidatedUserBeforeCreate(request);
+        UsersCommandHelper.prepareUserDataBeforeCreate(request);
     }
 
     @Test
@@ -138,7 +137,7 @@ public class ValidatorTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PHONE)).thenReturn(tmp.getPhone());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_STATUS)).thenReturn(tmp.getStatus().name());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_ROLE)).thenReturn(tmp.getRole().name());
-        UsersCommandHelper.getValidatedUserBeforeCreate(request);
+        UsersCommandHelper.prepareUserDataBeforeCreate(request);
     }
 
     @Test(expected = ParameterException.class)
@@ -180,7 +179,7 @@ public class ValidatorTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PHONE)).thenReturn(tmp.getPhone());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_STATUS)).thenReturn(tmp.getStatus().name());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_ROLE)).thenReturn(tmp.getRole().name());
-        UsersCommandHelper.getValidatedUserBeforeUpdateDetails(request);
+        UsersCommandHelper.getUserDataBeforeUpdate(request);
     }
 
     @Test
@@ -195,7 +194,7 @@ public class ValidatorTest {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PHONE)).thenReturn(tmp.getPhone());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_STATUS)).thenReturn(tmp.getStatus().name());
         when(request.getParameter(UsersCommandHelper.PARAM_USER_ROLE)).thenReturn(tmp.getRole().name());
-        UsersCommandHelper.getValidatedUserBeforeUpdateDetails(request);
+        UsersCommandHelper.getUserDataBeforeUpdate(request);
     }
 
     @Test

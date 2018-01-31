@@ -24,17 +24,25 @@ public class SetupCommand implements Command {
 
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
+        String page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS_SETUP);
+        UsersService usersService = UsersService.getService();
         try {
-            if (Objects.isNull(request.getSession().getAttribute(Authentication.PARAM_LOGIN)))
-                throw new ParameterException("user.not.logined");
-            String userLogin = (String) request.getSession().getAttribute(Authentication.PARAM_LOGIN);
-            UsersService usersService = UsersService.getService();
+            String userLogin = getLogin(request);
             User user = usersService.getUserByLogin(userLogin);
-            request.getSession().setAttribute(UsersCommandHelper.PARAM_NAME_USER, user);
+            storeUserData(request, user);
         } catch (Exception e) {
             LOGGER.error(e);
         }
-        String page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS_SETUP);
         return new CommandRouter(request, response, page);
+    }
+
+    private void storeUserData(HttpServletRequest request, User user) {
+        request.getSession().setAttribute(UsersCommandHelper.PARAM_NAME_USER, user);
+    }
+
+    private String getLogin(HttpServletRequest request) throws ParameterException {
+        if (Objects.isNull(request.getSession().getAttribute(Authentication.PARAM_LOGIN)))
+            throw new ParameterException("user.didn't.login");
+        return (String) request.getSession().getAttribute(Authentication.PARAM_LOGIN);
     }
 }

@@ -1,5 +1,6 @@
 package ua.glushko.services.impl;
 
+import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.entity.RepairService;
 import ua.glushko.exception.DaoException;
@@ -9,6 +10,9 @@ import ua.glushko.services.Service;
 
 import java.sql.SQLException;
 import java.util.*;
+
+import static ua.glushko.commands.Command.PROPERTY_NAME_BROWSER_PAGES_COUNT;
+import static ua.glushko.commands.Command.PROPERTY_NAME_BROWSER_ROWS_COUNT;
 
 /**
  * repairServices services
@@ -30,7 +34,9 @@ public class RepairServicesService extends Service {
     }
 
     /** List of repairServices with limit */
-    public List<RepairService> getRepairServiceList(int page, int pagesCount, int rowsPerPage) throws SQLException {
+    public List<RepairService> getRepairServiceList(int page) throws SQLException {
+        Integer pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
+        Integer rowsPerPage = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
         return DAOFactory.getFactory().getRepairServiceDao().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 

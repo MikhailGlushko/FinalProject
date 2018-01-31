@@ -80,21 +80,21 @@ public class NewsDAO extends AbstractDAO<News> {
         return list;
     }
 
-    protected String getCountQuery(int orderId) {
+    protected String getCountQuery(int id) {
         return "select count(*) AS total from " + getTableName()+
-                " where order_id="+orderId;
+                " where NAME_FIELD_ID="+id;
     }
 
     @Override
     protected String getSelectQuery() {
-        return "select id, " + getFieldList() +
+        return "select "+NAME_FIELD_ID+", " + getFieldList() +
                 " from " + getTableName()+
-                " order by id desc";
+                " order by "+NAME_FIELD_ID+" desc";
     }
 
     protected String getSelectQueryWithLimit() {
-        return "select id, " + getFieldList() +
+        return "select "+NAME_FIELD_ID+", " + getFieldList() +
                 " from " + getTableName() +
-                " order by id desc limit ?,? ";
+                " order by "+NAME_FIELD_ID+" desc limit ?,? ";
     }
 }

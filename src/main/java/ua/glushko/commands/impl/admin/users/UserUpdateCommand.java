@@ -5,7 +5,6 @@ import ua.glushko.commands.CommandRouter;
 import ua.glushko.commands.Command;
 import ua.glushko.configaration.MessageManager;
 import ua.glushko.model.entity.User;
-import ua.glushko.exception.DatabaseException;
 import ua.glushko.exception.ParameterException;
 import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
@@ -20,7 +19,7 @@ import static ua.glushko.commands.utils.Authentication.U;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS_READ;
 import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.PARAM_USER_ID;
-import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeUpdateDetails;
+import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getUserDataBeforeUpdate;
 
 /**
  * Admin User Management Command, which receives data from the form and update item in Database
@@ -32,30 +31,28 @@ import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidat
 public class UserUpdateCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-        String page;
+        String page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS_READ + "&user_id=" + request.getParameter(PARAM_USER_ID);
+        UsersService usersService = UsersService.getService();
         String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
         try {
-            int access = Authentication.checkAccess(request);
-            if ((access & U) == U) {
-                User userNew = getValidatedUserBeforeUpdateDetails(request);
-                UsersService usersService = UsersService.getService();
-                User userOld = usersService.getUserById(userNew.getId());
-                populateUser(userNew, userOld);
-                usersService.updateUser(userOld);
+            if(isUserHasRightToUpdate(request)){
+                User newUser = getUserDataBeforeUpdate(request);
+                User oldUser = usersService.getUserById(newUser.getId());
+                populateUser(newUser, oldUser);
+                usersService.updateUser(oldUser);
             }
             page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS + "&page=" + request.getAttribute(PARAM_PAGE);
-            return new CommandRouter(request, response, page);
         } catch (TransactionException | SQLException e) {
             LOGGER.error(e);
-            page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS_READ + "&user_id=" + request.getParameter(PARAM_USER_ID);
-            return new CommandRouter(request, response, page);
         } catch (ParameterException e) {
             LOGGER.error(e);
-            request.setAttribute(PARAM_ERROR_MESSAGE,
-                    MessageManager.getMessage(e.getMessage(), locale));
-            page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS_READ + "&user_id=" + request.getParameter(PARAM_USER_ID);
-            return new CommandRouter(request, response, page);
+            request.setAttribute(PARAM_ERROR_MESSAGE,MessageManager.getMessage(e.getMessage(), locale));
         }
+        return new CommandRouter(request, response, page);
+    }
+
+    private boolean isUserHasRightToUpdate(HttpServletRequest request) throws ParameterException {
+        return (Authentication.checkAccess(request) & U) == U;
     }
 
     private void populateUser(User userFrom, User userTo) {

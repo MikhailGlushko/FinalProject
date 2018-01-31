@@ -1,5 +1,6 @@
 package ua.glushko.services.impl;
 
+import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.entity.GuestBook;
 import ua.glushko.exception.DaoException;
@@ -9,6 +10,9 @@ import ua.glushko.services.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import static ua.glushko.commands.Command.PROPERTY_NAME_BROWSER_PAGES_COUNT;
+import static ua.glushko.commands.Command.PROPERTY_NAME_BROWSER_ROWS_COUNT;
 
 /**
  * GuestBook services
@@ -30,7 +34,9 @@ public class GuestBookService extends Service {
     }
 
     /** List of GuestBook with limit*/
-    public List<GuestBook> getGuestBookList(int page, int pagesCount, int rowsPerPage) throws SQLException {
+    public List<GuestBook> getGuestBookList(int page) throws SQLException {
+        int pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
+        int rowsPerPage = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
         return DAOFactory.getFactory().getGuestBookDAO().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 

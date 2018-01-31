@@ -31,13 +31,10 @@ import static ua.glushko.commands.utils.Authentication.u;
 public class OrderChangeStatusCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-
+        OrdersService service = OrdersService.getService();
         try {
-            int access = Authentication.checkAccess(request);
-            if ((access & U) == U || (access & u) == u) {
-                Order order = getValidatedOrderBeforeChangeStatus(request);
-                OrdersService.getService().updateOrder(order);
-                request.setAttribute(OrdersCommandHelper.PARAM_ORDER, order);
+            if(isUserHasRightToUpdate(request)){
+                changeStatus(request, service);
             }
             request.setAttribute(PARAM_COMMAND, COMMAND_ORDERS);
             request.setAttribute(PARAM_PAGE, request.getParameter(PARAM_PAGE));
@@ -49,5 +46,16 @@ public class OrderChangeStatusCommand implements Command {
             e.printStackTrace();
         }
         return new CommandRouter(request, response, PARAM_SERVLET_PATH);
+    }
+
+    private void changeStatus(HttpServletRequest request, OrdersService service) throws ParameterException, SQLException, TransactionException {
+        Order order = getValidatedOrderBeforeChangeStatus(request);
+        service.updateOrder(order);
+        request.setAttribute(OrdersCommandHelper.PARAM_ORDER, order);
+    }
+
+    private boolean isUserHasRightToUpdate(HttpServletRequest request) throws ParameterException {
+        return (Authentication.checkAccess(request) & U)==U || (Authentication.checkAccess(request) & u)==u;
+
     }
 }

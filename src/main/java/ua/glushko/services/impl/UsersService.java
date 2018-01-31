@@ -1,6 +1,7 @@
 package ua.glushko.services.impl;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.model.dao.GenericDAO;
 import ua.glushko.model.dao.DAOFactory;
 import ua.glushko.model.dao.impl.GrantDAO;
@@ -17,6 +18,9 @@ import ua.glushko.transaction.TransactionManager;
 
 import java.sql.SQLException;
 import java.util.*;
+
+import static ua.glushko.commands.Command.PROPERTY_NAME_BROWSER_PAGES_COUNT;
+import static ua.glushko.commands.Command.PROPERTY_NAME_BROWSER_ROWS_COUNT;
 
 /**
  * User services
@@ -38,7 +42,9 @@ public class UsersService extends Service {
     }
 
     /** List of Users with limit */
-    public List<User> getUsersList(int page, int pagesCount, int rowsPerPage) throws SQLException {
+    public List<User> getUsersList(int page) throws SQLException {
+        Integer pagesCount = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_PAGES_COUNT));
+        Integer rowsPerPage = Integer.valueOf(ConfigurationManager.getProperty(PROPERTY_NAME_BROWSER_ROWS_COUNT));
         return DAOFactory.getFactory().getUserDao().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 

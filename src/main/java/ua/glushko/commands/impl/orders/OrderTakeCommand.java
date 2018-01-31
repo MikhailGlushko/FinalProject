@@ -50,18 +50,28 @@ public class OrderTakeCommand implements Command {
 
     private Order takeNextOneNewOrderWithoutEmployee(HttpServletRequest request) throws TransactionException, SQLException {
         Order order = null;
+        OrdersService ordersService = OrdersService.getService();
         try {
-            UserRole role = (UserRole) request.getSession().getAttribute(PARAM_ROLE);
-            int access = Authentication.checkAccess(request);
-            OrdersService ordersService = OrdersService.getService();
-            if ((access & U) == U && role == UserRole.MANAGER) {
-                Integer userId = (Integer) request.getSession().getAttribute(PARAM_ID);
-                order = ordersService.takeNewOrder(userId, OrderStatus.NEW);
+            if(isManagerRightToUpdate(request)){
+                order = getNewOrder(request, ordersService);
             }
             request.setAttribute(PARAM_COMMAND, COMMAND_ORDERS);
         } catch (ParameterException e) {
             LOGGER.error(e);
         }
         return order;
+    }
+
+    private Order getNewOrder(HttpServletRequest request, OrdersService ordersService) throws SQLException, TransactionException {
+        Order order;
+        Integer userId = (Integer) request.getSession().getAttribute(PARAM_ID);
+        order = ordersService.takeNewOrder(userId, OrderStatus.NEW);
+        return order;
+    }
+
+    private boolean isManagerRightToUpdate(HttpServletRequest request) throws ParameterException {
+        UserRole role = (UserRole) request.getSession().getAttribute(PARAM_ROLE);
+        return (Authentication.checkAccess(request) & U)==U && role == UserRole.MANAGER;
+
     }
 }

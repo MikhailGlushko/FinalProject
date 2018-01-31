@@ -33,13 +33,13 @@ public class RepairServicesServiceTest {
 
     @Test
     public void getRepairServiceList1() throws SQLException {
-        List<RepairService> repairServiceList = service.getRepairServiceList(1, 1, 1);
+        List<RepairService> repairServiceList = service.getRepairServiceList(1);
         assertNotNull(repairServiceList);
     }
 
     @Test
     public void getRepairServiceTitles() throws SQLException {
-        service.getRepairServiceList(1, 1, 1);
+        service.getRepairServiceList(1);
         List<String> serviceTitles = service.getRepairServiceTitles();
         assertNotNull(serviceTitles);
     }

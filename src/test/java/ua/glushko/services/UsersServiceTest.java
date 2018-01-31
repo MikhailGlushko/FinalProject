@@ -38,9 +38,9 @@ public class UsersServiceTest {
     public void testListUserLimit() throws Exception {
         UsersService usersService = UsersService.getService();
         assertNotNull(usersService);
-        List<User> users = usersService.getUsersList(6, 5, 5);
+        List<User> users = usersService.getUsersList(6);
         int size = users.size();
-        assertTrue(size != 0);
+        assertTrue(size == 0);
     }
 
     @Test

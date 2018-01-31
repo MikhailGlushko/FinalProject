@@ -33,13 +33,13 @@ public class GuestBookServiceTest {
 
     @Test
     public void getGuestBookList1() throws SQLException {
-        List<GuestBook> guestBookList = service.getGuestBookList(1, 1, 1);
+        List<GuestBook> guestBookList = service.getGuestBookList(1);
         assertNotNull(guestBookList);
     }
 
     @Test
     public void getGuestBookTitles() throws SQLException {
-        service.getGuestBookList(1, 1, 1);
+        service.getGuestBookList(1);
         List<String> guestBookTitles = service.getGuestBookTitles();
         assertNotNull(guestBookTitles);
     }

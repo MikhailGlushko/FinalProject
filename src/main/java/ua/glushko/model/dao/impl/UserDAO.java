@@ -107,7 +107,7 @@ public class UserDAO extends AbstractDAO<User> {
 
     public User checkUserAuth(String login, String pass) throws SQLException {
         String sql = getSelectQuery() +
-                " where login=? and password=?";
+                " where "+NAME_FIELD_LOGIN+"=? and "+NAME_FIELD_PASSWORD+"=?";
         List<User> users;
         ResultSet resultSet;
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -126,7 +126,7 @@ public class UserDAO extends AbstractDAO<User> {
         if(login==null || login.isEmpty())
             throw new ParameterException("login is null");
         String sql = getSelectQuery() +
-                " where login=?";
+                " where "+NAME_FIELD_LOGIN+"=?";
         List<User> users;
         ResultSet resultSet;
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -143,9 +143,9 @@ public class UserDAO extends AbstractDAO<User> {
     public List<User> readByRole(UserRole  role, boolean flag) throws SQLException {
         String sql;
         if(flag)
-            sql = getSelectQuery() +" where role=?";
+            sql = getSelectQuery() +" where "+NAME_FIELD_ROLE+"=?";
         else
-            sql = getSelectQuery() +" where role!=?";
+            sql = getSelectQuery() +" where "+NAME_FIELD_ROLE+"!=?";
         List<User> users;
         ResultSet resultSet;
         try (ConnectionWrapper con = TransactionManager.getConnection();

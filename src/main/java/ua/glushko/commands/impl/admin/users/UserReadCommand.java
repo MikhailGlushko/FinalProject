@@ -27,22 +27,34 @@ public class UserReadCommand implements Command {
 
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
+        UsersService usersService = UsersService.getService();
         try {
-            int access = Authentication.checkAccess(request);
-            if ((access & U) == U) {
-                if(Objects.isNull(request.getParameter(UsersCommandHelper.PARAM_USER_ID)))
-                    throw new ParameterException("user.didn't.login");
-                Integer id = Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_USER_ID));
-                UsersService usersService = UsersService.getService();
+            if(isUserHasRightToUpdate(request)){
+                Integer id = getUserId(request);
                 User user = usersService.getUserById(id);
                 List<String> titles = usersService.getUsersTitles();
-                request.setAttribute(UsersCommandHelper.PARAM_USER_LIST_TITLE, titles);
-                request.setAttribute(UsersCommandHelper.PARAM_NAME_USER, user);
+                storeUserDataToRequest(request, user, titles);
             }
         } catch (Exception e) {
             LOGGER.error(e);
         }
         String page = ConfigurationManager.getProperty(PATH_PAGE_USERS_DETAIL);
         return new CommandRouter(request, response, page);
+    }
+
+    private void storeUserDataToRequest(HttpServletRequest request, User user, List<String> titles) {
+        request.setAttribute(UsersCommandHelper.PARAM_USER_LIST_TITLE, titles);
+        request.setAttribute(UsersCommandHelper.PARAM_NAME_USER, user);
+    }
+
+    private Integer getUserId(HttpServletRequest request) throws ParameterException {
+        if(Objects.isNull(request.getParameter(UsersCommandHelper.PARAM_USER_ID)))
+            throw new ParameterException("user.didn't.login");
+        return Integer.valueOf(request.getParameter(UsersCommandHelper.PARAM_USER_ID));
+    }
+
+    private boolean isUserHasRightToUpdate(HttpServletRequest request) throws ParameterException {
+        return (Authentication.checkAccess(request) & U)==U;
+
     }
 }
