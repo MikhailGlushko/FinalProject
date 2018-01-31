@@ -4,6 +4,8 @@ import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
+import ua.glushko.exception.DaoException;
+import ua.glushko.exception.DatabaseException;
 import ua.glushko.model.entity.User;
 import ua.glushko.exception.ParameterException;
 import ua.glushko.exception.TransactionException;
@@ -35,7 +37,7 @@ public class ResetPasswordCommand implements Command {
             LOGGER.debug("New password for user : "+user.getLogin()+" changed.");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_PASSWORD_WAS_CHANGED, locale));
             page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
-        } catch (SQLException | TransactionException e) {
+        } catch (DatabaseException | TransactionException e) {
             LOGGER.error(e);
             LOGGER.debug("Password for user "+user.getLogin()+" was not change.");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_NOT_EXIST, locale));

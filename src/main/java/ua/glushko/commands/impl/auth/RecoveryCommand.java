@@ -5,6 +5,7 @@ import ua.glushko.commands.Command;
 import ua.glushko.commands.impl.admin.users.UsersCommandHelper;
 import ua.glushko.configaration.ConfigurationManager;
 import ua.glushko.configaration.MessageManager;
+import ua.glushko.exception.DaoException;
 import ua.glushko.utils.mail.MailThread;
 import ua.glushko.model.entity.User;
 import ua.glushko.exception.DatabaseException;
@@ -44,7 +45,7 @@ public class RecoveryCommand implements Command {
             mailThread.start();
             LOGGER.debug("secret key for user "+user.getLogin()+" was sent to his email");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_PASSWORD_WAS_SEND, locale));
-        } catch (DatabaseException e) {
+        } catch (DaoException e) {
             LOGGER.debug("Password for user "+user.getLogin()+" was not change. User not exist.");
             page = ConfigurationManager.getProperty(PATH_PAGE_RECOVER);
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_NOT_EXIST, locale));

@@ -81,7 +81,7 @@ public class UsersService extends Service {
     }
 
     /** Get user by login */
-    public User getUserByLogin(String userLogin) throws ParameterException, DatabaseException {
+    public User getUserByLogin(String userLogin) throws ParameterException, DaoException {
         return DAOFactory.getFactory().getUserDao().getUserByLogin(userLogin);
     }
 

@@ -57,11 +57,11 @@ public class LoginCommand implements Command {
                 request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_STATUS + userAfterLogin.getStatus(), locale));
                 page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
             }
-        } catch (DaoException | TransactionException e) {
+        } catch (DaoException e) {
             LOGGER.debug("user " + userBeforeLogin.getLogin() + " rejected");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_INCORRECT_LOGIN_OR_PASSWORD, locale));
             page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
-        } catch (DatabaseException e){
+        } catch (DatabaseException | TransactionException e){
             LOGGER.debug("user " + userBeforeLogin.getLogin() + " rejected");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_DATABASE_NOT_FOUND, locale));
             page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
