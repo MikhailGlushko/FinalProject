@@ -63,11 +63,10 @@ public class CommandFactory {
     public static final String COMMAND_LANG = "lang";
 
     private static final Logger logger = Logger.getLogger(CommandFactory.class.getSimpleName());
-    private static final CommandFactory COMMAND_FACTORY = new CommandFactory();
 
     private final Map<String, Command> commandMap = new HashMap<>();
 
-    private CommandFactory() {
+    public CommandFactory() {
         commandMap.put(COMMAND_LOGIN, new LoginCommand());
         commandMap.put(COMMAND_LOGOUT, new LogoutCommand());
         commandMap.put(COMMAND_WELCOME, new WelcomeCommand());
@@ -108,13 +107,6 @@ public class CommandFactory {
         commandMap.put(COMMAND_SETUP, new SetupCommand());
         commandMap.put(COMMAND_SETUP_SAVE, new SetupSaveCommand());
         commandMap.put(COMMAND_RESET_PASSWORD, new ResetPasswordCommand());
-    }
-
-    /**
-     * получаем екземпляр фабрики
-     */
-    public static CommandFactory getInstance() {
-        return COMMAND_FACTORY;
     }
 
     /**

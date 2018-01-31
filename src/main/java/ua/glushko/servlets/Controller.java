@@ -28,6 +28,7 @@ public class Controller extends HttpServlet {
     Logger LOGGER = Logger.getLogger(Command.class.getSimpleName());
     private final String DATA_SOURCE = ConfigurationManager.getProperty("jdbc/repair_agency");
     private final String JNDI_NAME   = ConfigurationManager.getProperty("java:/comp/env");
+    private CommandFactory commandFactory = new CommandFactory();
 
     @Override
     public void init() throws ServletException {
@@ -54,7 +55,6 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
-        CommandFactory commandFactory = CommandFactory.getInstance();
         Command command = commandFactory.getCommand(req);
         CommandRouter commandRouter = command.execute(req, resp);
         commandRouter.route();
