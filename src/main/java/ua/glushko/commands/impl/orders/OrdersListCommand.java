@@ -51,8 +51,11 @@ public class OrdersListCommand implements Command {
             List<String> titles = ordersService.getOrderTitles();
             Map<OrderStatus, Map<OrderStats, Integer>> stats = ordersService.getStats(Authentication.getCurrentUserId(request.getSession()));
             if (Objects.nonNull(stats)) {
+                Integer countNew = null;
                 Map<OrderStats, Integer> orderStatsNew = stats.get(OrderStatus.NEW);
-                Integer countNew = orderStatsNew.get(OrderStats.STATUS);
+                if(Objects.nonNull(orderStatsNew))
+                countNew = orderStatsNew.get(OrderStats.STATUS);
+                if(Objects.nonNull(countNew))
                 request.setAttribute(PARAM_ORDERS_COUNT_NEW, countNew);
             }
             int count = ordersService.count(userId);
