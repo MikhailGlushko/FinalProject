@@ -81,8 +81,8 @@
                                     key="order.employee.id"/></label>
                             <select class="input-sm" style="float: right" id="order_employee_id"
                                     name="order_employee_id">
-                                <option value="" disabled selected>${orders_detail.employeeName}</option>
-                                <option value="${orders_detail.userId}">${order_user_name}</option>
+                                <option value="" disabled selected><c:out value="${orders_detail.employeeName}"/></option>
+                                <option value="${orders_detail.userId}"><c:out value="${order_user_name}" /></option>
                                 <c:if test="${role =='ADMIN'}">
                                     <customtags:OptGoupStuff list="${employee_list}"
                                                              value="${orders_detail.employeeId}"/>
@@ -106,8 +106,7 @@
                                     key="order.description.detail"/><em>*</em></label>
                             <textarea class="input-sm" id="order_description_detail" name="order_description_detail"
                                       required
-                                      style="float: right; height: 100px"><c:out
-                                    value="${orders_detail.descriptionDetail}"/></textarea>
+                                      style="float: right; height: 100px"><c:out value="${orders_detail.descriptionDetail}"/></textarea>
                         </div>
                     </div>
                     <div class="row" style="width: 100%">
@@ -115,8 +114,7 @@
                             <label style="float: left" for="order_appliance"><fmt:message
                                     key="order.appliance"/><em>*</em></label>
                             <textarea class="input-sm" id="order_appliance" name="order_appliance" required
-                                      style="float: right; height: 50px"><c:out
-                                    value="${orders_detail.appliance}"/></textarea>
+                                      style="float: right; height: 50px"><c:out value="${orders_detail.appliance}"/></textarea>
                         </div>
                     </div>
                     <div class="row" style="width: 100%">
@@ -183,8 +181,7 @@
                     <div class="row" style="width: 100%">
                         <div class="form-group">
                             <textarea class="input-sm" id="order_memo" type="text" name="order_memo"
-                                      style="float: right;height: 100px; width: 100%; max-width: 100%;"><c:out
-                                    value="${orders_detail.memo}"/></textarea>
+                                      style="float: right;height: 100px; width: 100%; max-width: 100%;"><c:out value="${orders_detail.memo}"/></textarea>
                         </div>
                     </div>
                     <br>

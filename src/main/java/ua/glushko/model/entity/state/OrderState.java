@@ -5,7 +5,7 @@ import ua.glushko.model.entity.OrderStatus;
 
 import java.util.Date;
 import java.util.Objects;
-
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 public interface OrderState {
 
     void nextStage(Order order, String message, String userName, Integer userId);
@@ -22,9 +22,9 @@ public interface OrderState {
             oldMemo="";
         return (new StringBuilder(oldMemo).append("\n")
                 .append(new Date(System.currentTimeMillis())).append(" ")
-                .append(userName).append(" ")
+                .append(escapeHtml(userName)).append(" ")
                 .append(OrderStatus.REJECT).append(" ")
                 .append(order.getStatus())
-                .append(message).toString());
+                .append(escapeHtml(message)).toString());
     }
 }
