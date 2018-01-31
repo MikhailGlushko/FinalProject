@@ -33,7 +33,8 @@ public class SecurityFilter implements Filter {
                                         command.equals(COMMAND_LOGOUT)||
                                         command.equals(COMMAND_WELCOME) ||
                                         command.equals(COMMAND_LANG) ||
-                                        command.equals(COMMAND_REGISTER)))
+                                        command.equals(COMMAND_REGISTER)) ||
+                                        command.equals(COMMAND_RESET_PASSWORD))
             filterChain.doFilter(servletRequest,servletResponse);
         else if (Authentication.isUserLogIn(((HttpServletRequest)servletRequest).getSession()))
                 filterChain.doFilter(servletRequest,servletResponse);
