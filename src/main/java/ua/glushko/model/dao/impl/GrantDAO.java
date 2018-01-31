@@ -113,7 +113,7 @@ public class GrantDAO extends AbstractDAO<Grant> {
     }
 
     @Override
-    public List<Grant> read(String role) throws DaoException {
+    public List<Grant> read(String role) throws SQLException {
         List<Grant> list;
         String sql = getSelectQuery() +
                 " where role=?";
@@ -123,8 +123,6 @@ public class GrantDAO extends AbstractDAO<Grant> {
             prepareStatementForSelectByName(statement, role);
             resultSet = statement.executeQuery();
             list = parseResultSet(resultSet);
-        } catch (Exception e) {
-            throw new DaoException(e);
         }
         return list;
     }

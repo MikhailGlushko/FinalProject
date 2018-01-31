@@ -1,5 +1,6 @@
 package ua.glushko.model.dao;
 
+import ua.glushko.exception.DatabaseException;
 import ua.glushko.model.entity.GenericEntity;
 import ua.glushko.exception.DaoException;
 
@@ -17,34 +18,34 @@ public interface GenericDAO<T extends GenericEntity> {
     /**
      * Create new record
      */
-    void create(T object) throws DaoException;
+    void create(T object) throws SQLException;
 
     /**
      * Update record
      */
-    void update(T object) throws DaoException;
+    void update(T object) throws SQLException;
 
     /**
      * Delete record
      */
-    T delete(int id) throws DaoException;
+    T delete(int id) throws SQLException;
 
     /**
      * Delete all records
      */
-    void deleteAll() throws DaoException;
+    void deleteAll() throws SQLException;
 
     /**
      * Get record by id
      */
-    T read(int id) throws DaoException;
+    T read(int id) throws SQLException;
 
     /**
      * Get all records
      */
-    List<T> read() throws DaoException;
+    List<T> read() throws DatabaseException, SQLException;
 
-    List<T> read(int start, int limit) throws DaoException;
+    List<T> read(int start, int limit) throws SQLException;
 
     Integer count() throws SQLException;
 }

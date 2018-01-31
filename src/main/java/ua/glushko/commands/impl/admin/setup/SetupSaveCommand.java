@@ -14,6 +14,8 @@ import ua.glushko.services.impl.UsersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.sql.SQLException;
+
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeSetup;
@@ -29,7 +31,7 @@ import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidat
 public class SetupSaveCommand implements Command {
     @Override
     public CommandRouter execute(HttpServletRequest request, HttpServletResponse response) {
-        String page;
+        String page = null;
         String locale = (String) request.getSession().getAttribute(PARAM_LOCALE);
         User userNew;
         try {
@@ -50,8 +52,10 @@ public class SetupSaveCommand implements Command {
             page = ConfigurationManager.getProperty(UsersCommandHelper.PATH_PAGE_USERS_SETUP);
             request.setAttribute(PARAM_ERROR_MESSAGE,
                     MessageManager.getMessage(e.getMessage(), locale));
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-            return new CommandRouter(request, response, page);
+        return new CommandRouter(request, response, page);
     }
 
     private void storeUserDataToSession(HttpServletRequest request, User user){

@@ -25,12 +25,12 @@ public class RepairServicesService extends Service {
     }
 
     /** List of RepairServices */
-    public List<RepairService> getRepairServiceList() throws DatabaseException {
+    public List<RepairService> getRepairServiceList() throws SQLException {
         return DAOFactory.getFactory().getRepairServiceDao().read();
     }
 
     /** List of repairServices with limit */
-    public List<RepairService> getRepairServiceList(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
+    public List<RepairService> getRepairServiceList(int page, int pagesCount, int rowsPerPage) throws SQLException {
         return DAOFactory.getFactory().getRepairServiceDao().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 
@@ -40,17 +40,17 @@ public class RepairServicesService extends Service {
     }
 
     /** Get RepairService by id*/
-    public RepairService getRepairServiceById(int id) throws DaoException {
+    public RepairService getRepairServiceById(int id) throws SQLException {
         return getById(DAOFactory.getFactory().getRepairServiceDao(),id);
     }
 
     /** Update RepairService or create new */
-    public void updateRepairService(RepairService service) throws TransactionException, DatabaseException {
+    public void updateRepairService(RepairService service) throws TransactionException, SQLException {
         update(DAOFactory.getFactory().getRepairServiceDao(),service);
     }
 
     /** delete exist RepairService */
-    public void deleteRepairService(Integer serviceId) throws TransactionException, DatabaseException {
+    public void deleteRepairService(Integer serviceId) throws TransactionException, SQLException {
         delete(DAOFactory.getFactory().getRepairServiceDao(),serviceId);
     }
 

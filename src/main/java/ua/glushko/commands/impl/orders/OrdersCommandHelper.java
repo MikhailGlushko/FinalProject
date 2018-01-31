@@ -8,6 +8,7 @@ import ua.glushko.model.entity.OrderStatus;
 import ua.glushko.services.impl.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,7 +59,7 @@ public class OrdersCommandHelper {
     public static final String PATH_PAGE_ORDERS_DETAIL = "path.page.ordersdetail";
     public static final String PATH_PAGE_ORDERS_ADD = "path.page.ordersadd";
 
-    public static Order getValidatedOrderBeforeUpdate(HttpServletRequest request) throws DaoException, ParameterException {
+    public static Order getValidatedOrderBeforeUpdate(HttpServletRequest request) throws SQLException, ParameterException {
         String  orderDescriptionShort = request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_SHORT);
         String  orderDescriptionDetail = request.getParameter(OrdersCommandHelper.PARAM_ORDER_DESC_DETAIL);
         String  orderCity = request.getParameter(OrdersCommandHelper.PARAM_ORDER_CITY);
@@ -181,7 +182,7 @@ public class OrdersCommandHelper {
         return order;
     }
 
-    public static Order getValidatedOrderBeforeChangeStatus(HttpServletRequest request) throws ParameterException, DaoException {
+    public static Order getValidatedOrderBeforeChangeStatus(HttpServletRequest request) throws ParameterException, SQLException {
         String action = request.getParameter(PARAM_ORDER_FORM_ACTION);
         if(Objects.isNull(action))
             throw new ParameterException("action.not.presemt");
@@ -197,7 +198,7 @@ public class OrdersCommandHelper {
         }
     }
 
-    private static Order prepareOrderToApprove(HttpServletRequest request, String action) throws ParameterException, DaoException {
+    private static Order prepareOrderToApprove(HttpServletRequest request, String action) throws ParameterException, SQLException {
         OrdersService ordersService= OrdersService.getService();
         Integer orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
         Order order = ordersService.getOrderById(orderId);
@@ -226,7 +227,7 @@ public class OrdersCommandHelper {
         return order;
     }
 
-    private static Order prepareOrderToReject(HttpServletRequest request, String action) throws ParameterException, DaoException {
+    private static Order prepareOrderToReject(HttpServletRequest request, String action) throws ParameterException, SQLException {
         OrdersService ordersService= OrdersService.getService();
         Integer orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
         Order order = ordersService.getOrderById(orderId);
@@ -243,7 +244,7 @@ public class OrdersCommandHelper {
         return order;
     }
 
-    private static Order prepareOrderToAddComment(HttpServletRequest request, String action) throws ParameterException, DaoException {
+    private static Order prepareOrderToAddComment(HttpServletRequest request, String action) throws ParameterException, SQLException {
         OrdersService ordersService= OrdersService.getService();
         Integer orderId = Integer.valueOf(request.getParameter(OrdersCommandHelper.PARAM_ORDER_ID));
         Order order = ordersService.getOrderById(orderId);

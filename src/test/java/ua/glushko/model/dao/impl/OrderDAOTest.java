@@ -29,25 +29,25 @@ public class OrderDAOTest {
     }
 
     @Test
-    public void readAll() throws DaoException {
+    public void readAll() throws SQLException {
         List<Order> read = dao.read();
         assertNotNull(read);
     }
 
     @Test
-    public void readById() throws DaoException {
+    public void readById() throws SQLException {
         Order read = dao.read(1);
         assertNotNull(read);
     }
 
     @Test
-    public void readByCustomer() throws DaoException {
+    public void readByCustomer() throws SQLException {
         List<Order> orders = dao.read(0, 100, 5);
         assertNotNull(orders);
     }
 
     @Test
-    public void readByEmployee() throws DaoException {
+    public void readByEmployee() throws SQLException {
         List<Order> orders = dao.read(0, 100, 0);
         assertNotNull(orders);
     }
@@ -67,7 +67,7 @@ public class OrderDAOTest {
     }
 
     @Test
-    public void readLimit() throws DaoException {
+    public void readLimit() throws SQLException {
         List<Order> read = dao.read(0, 2);
         assertTrue(read.size()==2);
     }
@@ -80,7 +80,7 @@ public class OrderDAOTest {
     }
 
     @Test
-    public void getTotal() throws DaoException {
+    public void getTotal() throws SQLException {
         Map<OrderStatus, Map<OrderStats,Integer>> total = dao.getTotal(4);
         assertNotNull(total);
     }

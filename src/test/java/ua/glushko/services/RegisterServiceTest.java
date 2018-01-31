@@ -11,6 +11,8 @@ import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 import ua.glushko.transaction.ConnectionPool;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 
 public class RegisterServiceTest {
@@ -24,11 +26,11 @@ public class RegisterServiceTest {
         assertNotNull(registerService);
     }
 
-    @Test (expected = DaoException.class)
-    public void registerExistLogin() throws DatabaseException {
+    @Test
+    public void registerExistLogin() throws SQLException {
         try {
             User user = registerService.register("admin", "admin", "admin", "admin","admin");
-            assertNotNull("Должно было сработать исключение",user);
+            assertNull("Должно было сработать исключение",user);
         } catch (DaoException e) {
             throw new DaoException(e);
         } catch (TransactionException | ParameterException e) {
@@ -37,7 +39,7 @@ public class RegisterServiceTest {
     }
 
     @Test
-    public void registerNewUser() throws TransactionException, ParameterException, DatabaseException {
+    public void registerNewUser() throws TransactionException, ParameterException, SQLException {
         try {
             User user = registerService.register("test10", "test10", "test10", "test10","test10");
             assertNotNull("",user);
@@ -47,7 +49,7 @@ public class RegisterServiceTest {
     }
 
     @Test (expected = ParameterException.class)
-    public void registerUserWithNullParameters() throws TransactionException, ParameterException, DatabaseException {
+    public void registerUserWithNullParameters() throws TransactionException, ParameterException, SQLException {
         try {
             User user = registerService.register(null, "test10", "test10", "test10","test10");
             assertNotNull("",user);

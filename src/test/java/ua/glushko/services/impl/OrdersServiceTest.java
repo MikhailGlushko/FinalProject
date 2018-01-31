@@ -27,26 +27,26 @@ public class OrdersServiceTest {
     }
 
     @Test
-    public void getOrderList() throws DatabaseException {
+    public void getOrderList() throws SQLException {
         List<Order> orderList = service.getOrderList();
         assertNotNull(orderList);
     }
 
     @Test
-    public void getOrderList1() throws DatabaseException {
+    public void getOrderList1() throws SQLException {
         List<Order> orderList = service.getOrderList(1, 1, 1);
         assertNotNull(orderList);
     }
 
     @Test
-    public void getOrderTitles() throws DatabaseException {
+    public void getOrderTitles() throws SQLException {
         service.getOrderList(1, 1, 1);
         List<String> orderTitles = service.getOrderTitles();
         assertNotNull(orderTitles);
     }
 
     @Test
-    public void getOrderById() throws DaoException {
+    public void getOrderById() throws SQLException {
         Order orderById = service.getOrderById(1);
         assertNotNull(orderById);
         orderById = service.getOrderById(100);
@@ -54,7 +54,7 @@ public class OrdersServiceTest {
     }
 
     @Test
-    public void updateOrder() throws TransactionException, DatabaseException {
+    public void updateOrder() throws TransactionException, SQLException {
         Order orderById = service.getOrderById(1);
         OrderStatus status = orderById.getStatus();
         orderById.setStatus(OrderStatus.REJECT);
@@ -65,7 +65,7 @@ public class OrdersServiceTest {
     }
 
     @Test
-    public void deleteOrder() throws TransactionException, DatabaseException {
+    public void deleteOrder() throws TransactionException, SQLException {
         service.deleteOrder(2);
         Order order = service.getOrderById(2);
         assertNull(order);
@@ -80,7 +80,7 @@ public class OrdersServiceTest {
     }
 
     @Test
-    public void getOrderList2() throws TransactionException, DatabaseException {
+    public void getOrderList2() throws TransactionException, SQLException {
         List<Order> orderList = service.getOrderList(1, 1, 1, 1);
         assertNotNull(orderList);
     }

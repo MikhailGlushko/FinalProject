@@ -33,12 +33,12 @@ public class UsersService extends Service {
     }
 
     /** List of Users */
-    public List<User> getUsersList() throws DatabaseException {
+    public List<User> getUsersList() throws SQLException {
         return DAOFactory.getFactory().getUserDao().read();
     }
 
     /** List of Users with limit */
-    public List<User> getUsersList(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
+    public List<User> getUsersList(int page, int pagesCount, int rowsPerPage) throws SQLException {
         return DAOFactory.getFactory().getUserDao().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 
@@ -48,13 +48,13 @@ public class UsersService extends Service {
     }
 
     /** Get User by id */
-    public User getUserById(int id) throws DaoException {
+    public User getUserById(int id) throws SQLException {
         GenericDAO<User> userDao = DAOFactory.getFactory().getUserDao();
         return userDao.read(id);
     }
 
     /** Update exist user or create new */
-    public void updateUser(User user) throws TransactionException, DatabaseException {
+    public void updateUser(User user) throws TransactionException, SQLException {
         GenericDAO<User> userDao = DAOFactory.getFactory().getUserDao();
         try {
             TransactionManager.beginTransaction();
@@ -75,51 +75,45 @@ public class UsersService extends Service {
             else
                 userDao.create(user);
             TransactionManager.endTransaction();
-        } finally {
+        } catch (SQLException e){
             TransactionManager.rollBack();
         }
     }
 
     /** Get user by login */
-    public User getUserByLogin(String userLogin) throws ParameterException, DaoException {
+    public User getUserByLogin(String userLogin) throws ParameterException, SQLException {
         return DAOFactory.getFactory().getUserDao().getUserByLogin(userLogin);
     }
 
     /** Get user Grants */
-    public Map<User, List<Grant>> authenticateUser(String login, String password) throws TransactionException, DatabaseException {
-        User user;
-        Map<User, List<Grant>> userWithGrants = new HashMap<>();
-        List<Grant> grants = Collections.emptyList();
+    public Map<User, List<Grant>> authenticateUser(String login, String password) throws TransactionException, SQLException {
+        Map<User, List<Grant>> userWithGrants = null;
         GenericDAO<User> userDAO = DAOFactory.getFactory().getUserDao();
         GenericDAO<Grant> grantDAO = DAOFactory.getFactory().getGrantDao();
         try {
             String m5HexPassword = DigestUtils.md5Hex(login+password);
             TransactionManager.beginTransaction();
-            user = ((UserDAO) userDAO).checkUserAuth(login, m5HexPassword);
+            User user = ((UserDAO) userDAO).checkUserAuth(login, m5HexPassword);
             if (Objects.nonNull(user)) {
-                grants = ((GrantDAO) grantDAO).read(user.getRole().name());
+                List<Grant> grants = ((GrantDAO) grantDAO).read(user.getRole().name());
                 User tmp = (User) user.clone();
                 tmp.setLastLogin(new Date(System.currentTimeMillis()));
                 userDAO.update(tmp);
+                userWithGrants = new HashMap<>();
+                userWithGrants.put(user, grants);
             }
             TransactionManager.endTransaction();
-        } finally {
+        } catch (SQLException e){
             TransactionManager.rollBack();
         }
-
-        userWithGrants.put(user, grants);
         return userWithGrants;
     }
 
     /** Register new User */
     public User register(String login, String password, String name, String email, String phone)
-            throws TransactionException, ParameterException, DatabaseException {
+            throws TransactionException, ParameterException, SQLException {
         GenericDAO<User> userDao = DAOFactory.getFactory().getUserDao();
-        User userByLogin = null;
-        try {
-            userByLogin = ((UserDAO) userDao).getUserByLogin(login);
-        } catch (DaoException e) {
-        }
+        User userByLogin = ((UserDAO) userDao).getUserByLogin(login);
         if (Objects.isNull(userByLogin)) {
             User user = new User();
             try {
@@ -134,37 +128,39 @@ public class UsersService extends Service {
                 userDao.create(user);
                 TransactionManager.endTransaction();
                 LOGGER.debug("New user registered");
-            } finally {
+            } catch (SQLException e){
                 TransactionManager.rollBack();
             }
             return user;
         } else {
-            throw new DaoException("user already exist");
+            return null;
         }
     }
 
     /** Change password */
     public User changePassword(String login, String password)
-            throws TransactionException, ParameterException, DatabaseException {
+            throws TransactionException, ParameterException, SQLException {
 
         GenericDAO<User> userDao = DAOFactory.getFactory().getUserDao();
-        User user;
+        User user = null;
         try {
             String m5HexPassword = DigestUtils.md5Hex(login+password);
-            user = ((UserDAO) userDao).getUserByLogin(login);
-            user.setPassword(m5HexPassword);
             TransactionManager.beginTransaction();
-            userDao.update(user);
+            user = ((UserDAO) userDao).getUserByLogin(login);
+            if(Objects.nonNull(user)) {
+                user.setPassword(m5HexPassword);
+                userDao.update(user);
+            }
             TransactionManager.endTransaction();
             LOGGER.debug("Password changed");
-        } finally {
+        } catch (SQLException e){
             TransactionManager.rollBack();
         }
         return user;
     }
 
     /** delete exist User */
-    public void deleteUser(Integer userId) throws TransactionException, DatabaseException {
+    public void deleteUser(Integer userId) throws TransactionException, SQLException {
         delete(DAOFactory.getFactory().getUserDao(),userId);
     }
 
@@ -180,7 +176,7 @@ public class UsersService extends Service {
     }
 
     /** List of Stuff Users */
-    public List<User> getUsersByRole(UserRole role, boolean noInvertRole) throws DatabaseException {
+    public List<User> getUsersByRole(UserRole role, boolean noInvertRole) throws SQLException {
         return (DAOFactory.getFactory().getUserDao()).readByRole(role,noInvertRole);
     }
 }

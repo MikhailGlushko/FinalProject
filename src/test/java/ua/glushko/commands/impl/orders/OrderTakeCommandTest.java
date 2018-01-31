@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +52,7 @@ public class OrderTakeCommandTest {
     }
 
     @Test
-    public void take() throws ServletException, DatabaseException, TransactionException, IOException {
+    public void take() throws ServletException, SQLException, TransactionException, IOException {
         UsersService usersService = UsersService.getService();
         Map<User, List<Grant>> useDataAndGrantsSet = usersService.authenticateUser("manager", "P@ssw0rd");
         List<Grant> grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());

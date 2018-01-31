@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class OrderCRUDCommandTest {
     private Map<User, List<Grant>> useDataAndGrantsSet;
 
     @Before
-    public void setUp() throws DatabaseException, TransactionException {
+    public void setUp() throws SQLException, TransactionException {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         when(request.getSession()).thenReturn(session);
         when(request.getSession().getAttribute(PARAM_LOCALE)).thenReturn("ru");
@@ -77,7 +78,7 @@ public class OrderCRUDCommandTest {
 
 
     @Test
-    public void saveOrderToDatabase() throws ServletException, DatabaseException, IOException {
+    public void saveOrderToDatabase() throws ServletException, SQLException, IOException {
         when(request.getParameter(PARAM_ORDER_ACTION)).thenReturn(PARAM_ORDER_ACTION_SAVE);
         Controller controller = new Controller();
         controller.init();
@@ -94,7 +95,7 @@ public class OrderCRUDCommandTest {
     }
 
     @Test
-    public void deleteOrderDataFromDatabase() throws ServletException, DaoException, IOException {
+    public void deleteOrderDataFromDatabase() throws ServletException, SQLException, IOException {
         when(request.getParameter(PARAM_ORDER_ACTION)).thenReturn(PARAM_ORDER_ACTION_DELETE);
         Controller controller = new Controller();
         controller.init();
@@ -110,7 +111,7 @@ public class OrderCRUDCommandTest {
     }
 
     @Test
-    public void createOrderIntoDatabase() throws ServletException, DatabaseException, TransactionException, IOException {
+    public void createOrderIntoDatabase() throws ServletException, SQLException, TransactionException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("customer", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -129,7 +130,7 @@ public class OrderCRUDCommandTest {
     }
 
     @Test
-    public void createOrderIntoDatabase2() throws ServletException, DatabaseException, TransactionException, IOException {
+    public void createOrderIntoDatabase2() throws ServletException, SQLException, TransactionException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("customer", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());

@@ -26,32 +26,32 @@ public class GuestBookServiceTest {
     }
 
     @Test
-    public void getGuestBookList() throws DatabaseException {
+    public void getGuestBookList() throws SQLException {
         List<GuestBook> guestBookList = service.getGuestBookList();
         assertNotNull(guestBookList);
     }
 
     @Test
-    public void getGuestBookList1() throws DatabaseException {
+    public void getGuestBookList1() throws SQLException {
         List<GuestBook> guestBookList = service.getGuestBookList(1, 1, 1);
         assertNotNull(guestBookList);
     }
 
     @Test
-    public void getGuestBookTitles() throws DatabaseException {
+    public void getGuestBookTitles() throws SQLException {
         service.getGuestBookList(1, 1, 1);
         List<String> guestBookTitles = service.getGuestBookTitles();
         assertNotNull(guestBookTitles);
     }
 
     @Test
-    public void getGuestBookById() throws DaoException {
+    public void getGuestBookById() throws SQLException {
         GuestBook book = service.getGuestBookById(1);
         assertNotNull(book);
     }
 
     @Test
-    public void updateGuestBook() throws TransactionException, DatabaseException {
+    public void updateGuestBook() throws TransactionException, SQLException {
         GuestBook book = service.getGuestBookById(1);
         assertNotNull(book);
         String decription = book.getDescription();
@@ -63,7 +63,7 @@ public class GuestBookServiceTest {
     }
 
     @Test
-    public void deleteGuestBook() throws TransactionException, DatabaseException {
+    public void deleteGuestBook() throws TransactionException, SQLException {
         GuestBook book = service.getGuestBookById(1);
         book.setId(0);
         service.updateGuestBook(book);

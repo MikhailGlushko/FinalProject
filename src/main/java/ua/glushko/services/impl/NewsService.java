@@ -25,7 +25,7 @@ public class NewsService extends Service {
     }
 
     /** List of News with limit */
-    public List<News> getNewsList(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
+    public List<News> getNewsList(int page, int pagesCount, int rowsPerPage) throws SQLException {
         return DAOFactory.getFactory().getNewsDAO().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 }

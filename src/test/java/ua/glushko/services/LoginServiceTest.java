@@ -11,8 +11,10 @@ import ua.glushko.exception.TransactionException;
 import ua.glushko.services.impl.UsersService;
 import ua.glushko.transaction.ConnectionPool;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.junit.Assert.*;
 
@@ -27,12 +29,16 @@ public class LoginServiceTest {
         assertNotNull(loginService);
     }
 
-    @Test (expected = DaoException.class)
-    public void loginWrong() throws DatabaseException {
+    @Test
+    public void loginWrong() throws SQLException {
         try {
             Map<User, List<Grant>> userListMap = loginService.authenticateUser("misha", "admin");
-            User user = userListMap.keySet().iterator().next();
-            List<Grant> grants = userListMap.get(user);
+            User user = null;
+            if(Objects.nonNull(userListMap))
+                user = userListMap.keySet().iterator().next();
+            List<Grant> grants = null;
+            if(Objects.nonNull(user))
+                grants = userListMap.get(user);
             assertNull(grants);
             assertNull("Метод должен вернуть исключение",userListMap);
         } catch (DaoException e) {
@@ -42,16 +48,17 @@ public class LoginServiceTest {
         }
     }
 
-    @Test( expected = DaoException.class)
-    public void loginOk() throws DatabaseException {
+    @Test
+    public void loginOk() throws SQLException {
         try {
-            //String md5Hex = DigestUtils.md5Hex("admin");
-            //System.out.println(md5Hex);
             Map<User, List<Grant>> userListMap = loginService.authenticateUser("admin", "admin");
-            User user = userListMap.keySet().iterator().next();
-            List<Grant> grants = userListMap.get(user);
+            User user = null;
+            if(Objects.nonNull(userListMap))
+                user = userListMap.keySet().iterator().next();
+            List<Grant> grants = null;
+            if(Objects.nonNull(user))
+                grants = userListMap.get(user);
             assertNull(grants);
-            assertNotNull("Метод должен вернуть обїект",userListMap);
         } catch (DaoException e) {
             throw new DaoException(e);
         } catch (TransactionException e) {

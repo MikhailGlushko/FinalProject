@@ -15,6 +15,8 @@ import ua.glushko.transaction.H2DataSource;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -67,7 +69,7 @@ public class ValidatorTest {
     }
 
     @Test(expected = ParameterException.class)
-    public void getValidatedUserBeforeSetup() throws DaoException, ParameterException {
+    public void getValidatedUserBeforeSetup() throws SQLException, ParameterException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         UserDAO userDAO = DAOFactory.getFactory().getUserDao();
         User tmp = userDAO.read(1);
@@ -83,7 +85,7 @@ public class ValidatorTest {
     }
 
     @Test
-    public void getValidatedUserBeforeSetup2() throws DaoException, ParameterException {
+    public void getValidatedUserBeforeSetup2() throws SQLException, ParameterException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         UserDAO userDAO = DAOFactory.getFactory().getUserDao();
         User tmp = userDAO.read(1);
@@ -100,7 +102,7 @@ public class ValidatorTest {
     }
 
     @Test (expected = ParameterException.class)
-    public void getValidatedUserBeforeCreate() throws DaoException, ParameterException {
+    public void getValidatedUserBeforeCreate() throws SQLException, ParameterException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         UserDAO userDAO = DAOFactory.getFactory().getUserDao();
         User tmp = userDAO.read(1);
@@ -120,7 +122,7 @@ public class ValidatorTest {
     }
 
     @Test
-    public void getValidatedUserBeforeCreate2() throws DaoException, ParameterException {
+    public void getValidatedUserBeforeCreate2() throws SQLException, ParameterException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         UserDAO userDAO = DAOFactory.getFactory().getUserDao();
         User tmp = userDAO.read(1);
@@ -140,7 +142,7 @@ public class ValidatorTest {
     }
 
     @Test(expected = ParameterException.class)
-    public void getValidatedUserBeforePasswordChange() throws DaoException, ParameterException {
+    public void getValidatedUserBeforePasswordChange() throws SQLException, ParameterException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         UserDAO userDAO = DAOFactory.getFactory().getUserDao();
         User tmp = userDAO.read(1);
@@ -152,7 +154,7 @@ public class ValidatorTest {
     }
 
     @Test
-    public void getValidatedUserBeforePasswordChange2() throws DaoException, ParameterException {
+    public void getValidatedUserBeforePasswordChange2() throws SQLException, ParameterException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         UserDAO userDAO = DAOFactory.getFactory().getUserDao();
         User tmp = userDAO.read(1);
@@ -166,7 +168,7 @@ public class ValidatorTest {
     }
 
     @Test (expected = ParameterException.class)
-    public void getValidatedUserBeforeUpdateDetails() throws DaoException, ParameterException {
+    public void getValidatedUserBeforeUpdateDetails() throws SQLException, ParameterException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         UserDAO userDAO = DAOFactory.getFactory().getUserDao();
         User tmp = userDAO.read(1);
@@ -182,7 +184,7 @@ public class ValidatorTest {
     }
 
     @Test
-    public void getValidatedUserBeforeUpdateDetails2() throws DaoException, ParameterException {
+    public void getValidatedUserBeforeUpdateDetails2() throws SQLException, ParameterException {
         HttpServletRequest request = mock(HttpServletRequest.class);
         UserDAO userDAO = DAOFactory.getFactory().getUserDao();
         User tmp = userDAO.read(1);

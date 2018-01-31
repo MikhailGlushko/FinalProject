@@ -27,6 +27,7 @@ import static ua.glushko.commands.CommandFactory.COMMAND_LOGIN;
 import ua.glushko.transaction.H2DataSource;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class LoginCommandTest {
     private final HttpSession session = mock(HttpSession.class);
@@ -65,7 +66,7 @@ public class LoginCommandTest {
     }
 
     @Test
-    public void loginBlockedUser() throws ServletException, DatabaseException, TransactionException, IOException {
+    public void loginBlockedUser() throws ServletException, SQLException, TransactionException, IOException {
         UsersService service = UsersService.getService();
         User user = service.getUserById(1);
         user.setStatus(UserStatus.BLOCKED);

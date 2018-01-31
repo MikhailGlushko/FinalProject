@@ -15,6 +15,9 @@ import ua.glushko.services.impl.UsersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.sql.SQLException;
+import java.util.Objects;
+
 import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeRegistration;
 
 /**
@@ -33,16 +36,17 @@ public class RegisterCommand implements Command {
         try {
             newUser = getValidatedUserBeforeRegistration(request);
             UsersService registerService = UsersService.getService();
-            registerService.register(newUser.getLogin(), newUser.getPassword(), newUser.getName(), newUser.getEmail(), newUser.getPhone());
-            LOGGER.debug("New user : "+newUser.getLogin()+" was registered.");
-            request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_IS_REGISTERED, locale));
-            page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
-        } catch (DaoException | TransactionException e) {
-            LOGGER.error(e);
-            LOGGER.debug("User already exist :" + newUser.getLogin() + " Registration rejected.");
-            request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_ALREADY_EXIST, locale));
-            page = ConfigurationManager.getProperty(PATH_PAGE_REGISTER);
-        } catch (DatabaseException e){
+            User user = registerService.register(newUser.getLogin(), newUser.getPassword(), newUser.getName(), newUser.getEmail(), newUser.getPhone());
+            if(Objects.nonNull(user)) {
+                LOGGER.debug("New user : " + newUser.getLogin() + " was registered.");
+                request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_IS_REGISTERED, locale));
+                page = ConfigurationManager.getProperty(PATH_PAGE_LOGIN);
+            } else {
+                LOGGER.debug("User already exist :" + newUser.getLogin() + " Registration rejected.");
+                request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_ALREADY_EXIST, locale));
+                page = ConfigurationManager.getProperty(PATH_PAGE_REGISTER);
+            }
+        } catch (SQLException | TransactionException e){
             LOGGER.error(e);
             LOGGER.debug("Database not found :" + newUser.getLogin() + " Registration rejected.");
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_DATABASE_NOT_FOUND, locale));

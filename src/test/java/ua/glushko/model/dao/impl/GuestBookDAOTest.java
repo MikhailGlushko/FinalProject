@@ -6,6 +6,7 @@ import ua.glushko.model.entity.GuestBook;
 import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -39,26 +40,26 @@ public class GuestBookDAOTest {
     }
 
     @Test
-    public void read() throws DaoException {
+    public void read() throws SQLException {
         List<GuestBook> read = instance.read();
         assertNotNull(read);
     }
 
     @Test
-    public void readLimit() throws DaoException {
+    public void readLimit() throws SQLException {
         List<GuestBook> read = instance.read(0,1);
         assertTrue(read.size()==1);
     }
 
     @Test
-    public void create() throws DaoException {
+    public void create() throws SQLException {
         GuestBook guestBook = new GuestBook();
         instance.create(guestBook);
         assertTrue(guestBook.getId()!=0);
     }
 
     @Test
-    public void update() throws DaoException {
+    public void update() throws SQLException {
         GuestBook guestBook = instance.read(1);
         String decription = guestBook.getDescription();
         guestBook.setDescription(decription+"!");

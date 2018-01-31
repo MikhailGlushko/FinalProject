@@ -14,6 +14,8 @@ import ua.glushko.services.impl.UsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Properties;
 
 import static ua.glushko.commands.impl.admin.users.UsersCommandHelper.getValidatedUserBeforeRecoveryPassword;
@@ -40,17 +42,19 @@ public class RecoveryCommand implements Command {
             LOGGER.debug("user "+user.getLogin()+" try to recovery password");
             UsersService recoveryService = UsersService.getService();
             User userData = recoveryService.getUserByLogin(user.getLogin());
-            String text = "Secret key : "+request.getSession().getId();
-            MailThread mailThread = new MailThread(userData.getEmail(), "Password reset", text ,properties);
-            mailThread.start();
-            LOGGER.debug("secret key for user "+user.getLogin()+" was sent to his email");
-            request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_PASSWORD_WAS_SEND, locale));
-        } catch (DaoException e) {
-            LOGGER.debug("Password for user "+user.getLogin()+" was not change. User not exist.");
-            page = ConfigurationManager.getProperty(PATH_PAGE_RECOVER);
-            request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_NOT_EXIST, locale));
-            return new CommandRouter(request, response, page);
-        } catch (ParameterException e) {
+            if(Objects.nonNull(userData)) {
+                String text = "Secret key : " + request.getSession().getId();
+                MailThread mailThread = new MailThread(userData.getEmail(), "Password reset", text, properties);
+                mailThread.start();
+                LOGGER.debug("secret key for user " + user.getLogin() + " was sent to his email");
+                request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_PASSWORD_WAS_SEND, locale));
+            } else {
+                LOGGER.debug("Password for user " + user.getLogin() + " was not change. User not exist.");
+                page = ConfigurationManager.getProperty(PATH_PAGE_RECOVER);
+                request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(UsersCommandHelper.MESSAGE_USER_NOT_EXIST, locale));
+                return new CommandRouter(request, response, page);
+            }
+        } catch (ParameterException | SQLException e) {
             LOGGER.debug("Password for user "+user.getLogin()+" was not change. User not exist.");
             page = ConfigurationManager.getProperty(PATH_PAGE_RECOVER);
             request.setAttribute(PARAM_ERROR_MESSAGE, MessageManager.getMessage(e.getMessage(), locale));

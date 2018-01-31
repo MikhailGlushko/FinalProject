@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class OrderChangeStatusCommandTest {
     private final RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
 
     @Before
-    public void setUp() throws DatabaseException, TransactionException {
+    public void setUp() throws SQLException, TransactionException {
         ConnectionPool.getConnectionPool().setDataSource(H2DataSource.getInstance());
         when(request.getSession()).thenReturn(session);
         when(request.getSession().getAttribute(PARAM_LOCALE)).thenReturn("ru");
@@ -77,7 +78,7 @@ public class OrderChangeStatusCommandTest {
     }
 
     @Test
-    public void changeOrderStatus() throws ServletException, DaoException, IOException {
+    public void changeOrderStatus() throws ServletException, SQLException, IOException {
         when(request.getParameter(PARAM_ORDER_FORM_ACTION)).thenReturn(PARAM_ORDER_ACTION_APPROVE);
         when(request.getParameter(PARAM_ORDER_MEMO_CHANGE)).thenReturn("Прошу согласовать");
         when(request.getParameter(PARAM_ORDER_STATUS_CHANGE)).thenReturn(OrderStatus.VERIFICATION.name());
@@ -93,7 +94,7 @@ public class OrderChangeStatusCommandTest {
     }
 
     @Test
-    public void changeOrderStatus2() throws ServletException, DaoException, IOException {
+    public void changeOrderStatus2() throws ServletException, SQLException, IOException {
         when(request.getParameter(PARAM_ORDER_FORM_ACTION)).thenReturn(PARAM_ORDER_ACTION_APPROVE);
         when(request.getParameter(PARAM_ORDER_MEMO_CHANGE)).thenReturn("Прошу согласовать");
         OrdersService ordersService = OrdersService.getService();

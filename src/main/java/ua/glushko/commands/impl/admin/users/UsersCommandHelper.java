@@ -51,7 +51,7 @@ public class UsersCommandHelper {
     }
 
     /** Check User data before login */
-    public static User getValidatedUserBeforeLogin(HttpServletRequest request) throws ParameterException {
+    public static User prepareUserDataForLogin(HttpServletRequest request) throws ParameterException {
         String userLogin = request.getParameter(PARAM_USER_LOGIN);
         String userPassword = request.getParameter(PARAM_USER_PASSWORD);
         if (Objects.isNull(userLogin) || userLogin.isEmpty())

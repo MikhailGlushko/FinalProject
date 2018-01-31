@@ -105,7 +105,7 @@ public class UserDAO extends AbstractDAO<User> {
         return list;
     }
 
-    public User checkUserAuth(String login, String pass) throws DaoException {
+    public User checkUserAuth(String login, String pass) throws SQLException {
         String sql = getSelectQuery() +
                 " where login=? and password=?";
         List<User> users;
@@ -116,16 +116,13 @@ public class UserDAO extends AbstractDAO<User> {
             statement.setString(2, pass);
             resultSet = statement.executeQuery();
             users = parseResultSet(resultSet);
-            String PROPERTY_NAME_USER_INCORRECT_LOGIN_OR_PASSWORD = "user.incorrectLoginOrPassword";
-            if (users.size() == 0)
-                throw new DaoException(MessageManager.getMessage(PROPERTY_NAME_USER_INCORRECT_LOGIN_OR_PASSWORD));
-        } catch (Exception e) {
-            throw new DaoException(e);
+            if (users.size() != 1)
+                return null;
         }
         return users.iterator().next();
     }
 
-    public User getUserByLogin(String login) throws DaoException, ParameterException {
+    public User getUserByLogin(String login) throws SQLException, ParameterException {
         if(login==null || login.isEmpty())
             throw new ParameterException("login is null");
         String sql = getSelectQuery() +
@@ -137,15 +134,13 @@ public class UserDAO extends AbstractDAO<User> {
             statement.setString(1, login);
             resultSet = statement.executeQuery();
             users = parseResultSet(resultSet);
-            if (users.size() == 0)
-                throw new DaoException("user not fount");
-        } catch (Exception e) {
-            throw new DaoException(e);
+            if (users.size() != 1)
+                return null;
         }
         return users.iterator().next();
     }
 
-    public List<User> readByRole(UserRole  role, boolean flag) throws DaoException {
+    public List<User> readByRole(UserRole  role, boolean flag) throws SQLException {
         String sql;
         if(flag)
             sql = getSelectQuery() +" where role=?";
@@ -160,8 +155,6 @@ public class UserDAO extends AbstractDAO<User> {
             users = parseResultSet(resultSet);
             if (users.size() == 0)
                 return null;
-        } catch (Exception e) {
-            throw new DaoException(e);
         }
         return users;
     }

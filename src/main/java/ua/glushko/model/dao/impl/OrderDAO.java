@@ -145,7 +145,7 @@ public class OrderDAO extends AbstractDAO<Order> {
         return list;
     }
 
-    public Order take(OrderStatus status) throws DaoException{
+    public Order take(OrderStatus status) throws SQLException {
         String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
                 "FROM repair_agency.orders a\n" +
                 "left join users b on a.user_id=b.id \n" +
@@ -159,16 +159,14 @@ public class OrderDAO extends AbstractDAO<Order> {
             statement.setString(1,status.name());
             ResultSet resultSet = statement.executeQuery();
             list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
         }
         if (list.size() > 1) {
-            throw new DaoException("Received more than one record.");
+            return null;
         }
         return list.iterator().next();
     }
 
-    public List<Order> read(int start, int limit, int userId) throws DaoException {
+    public List<Order> read(int start, int limit, int userId) throws SQLException {
         List<Order> list;
         String sql = "SELECT a.*, b.name as `user_name`, coalesce(c.name,'NOT ASSIGNED') as `employee_name`\n" +
                 "FROM repair_agency.orders a\n" +
@@ -186,8 +184,6 @@ public class OrderDAO extends AbstractDAO<Order> {
             ResultSet resultSet = statement.executeQuery();
             setTitles(resultSet.getMetaData());
             list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
         }
         return list;
     }
@@ -226,7 +222,7 @@ public class OrderDAO extends AbstractDAO<Order> {
                 " where user_id="+userId+" or employee_id="+userId;
     }
 
-    public Map<OrderStatus, Map<OrderStats,Integer>> getTotal(Integer userId) throws DaoException {
+    public Map<OrderStatus, Map<OrderStats,Integer>> getTotal(Integer userId) throws SQLException {
         Map<OrderStatus,Map<OrderStats,Integer>> result = new LinkedHashMap<>();
         String sql="select a.status, coalesce(a.total,0) as `total`, coalesce(b.new,0) as `new`, coalesce(c.todays,0) as `today`, \n" +
                 "coalesce(d.owner,0) as `owner`,coalesce(e.execution,0) as `execution`, coalesce(f.noemployee,0) as `noemployee`, \n" +
@@ -272,8 +268,6 @@ public class OrderDAO extends AbstractDAO<Order> {
                     result.put(key,value);
                 }
             }
-        } catch (SQLException e) {
-            throw new DaoException(e);
         }
         return result;
     }

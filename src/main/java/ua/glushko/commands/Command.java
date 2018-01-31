@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 
 public interface Command {
     Logger LOGGER = Logger.getLogger(Command.class.getSimpleName());

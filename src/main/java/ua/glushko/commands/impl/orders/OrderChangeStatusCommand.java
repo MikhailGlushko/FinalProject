@@ -12,6 +12,8 @@ import ua.glushko.commands.utils.Authentication;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.sql.SQLException;
+
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS_READ;
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
@@ -43,6 +45,8 @@ public class OrderChangeStatusCommand implements Command {
             request.setAttribute(PARAM_COMMAND, COMMAND_ORDERS_READ);
             request.setAttribute(PARAM_PAGE, request.getParameter(PARAM_PAGE));
             request.setAttribute(PARAM_ORDER_ID, request.getParameter(PARAM_ORDER_ID));
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return new CommandRouter(request, response, PARAM_SERVLET_PATH);
     }

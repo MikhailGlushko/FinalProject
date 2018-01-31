@@ -8,6 +8,7 @@ import ua.glushko.model.entity.RepairService;
 import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.assertNotEquals;
@@ -27,20 +28,20 @@ public class RepairServiceDAOTest {
     }
 
     @Test
-    public void readAll() throws DaoException {
+    public void readAll() throws SQLException {
         List<RepairService> list = reapirServiceDAO.read();
         assertNotNull(list);
     }
 
     @Test
-    public void create() throws DaoException {
+    public void create() throws SQLException {
         RepairService repairService = new RepairService();
         reapirServiceDAO.create(repairService);
         assertTrue(repairService.getId()!=0);
     }
 
     @Test
-    public void update() throws DaoException {
+    public void update() throws SQLException {
         RepairService read = reapirServiceDAO.read(1);
         String name = read.getName();
         read.setName(name+"!");

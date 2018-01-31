@@ -2,6 +2,7 @@ package ua.glushko.model.dao;
 
 import org.apache.log4j.Logger;
 import org.junit.*;
+import ua.glushko.exception.DatabaseException;
 import ua.glushko.model.dao.impl.UserDAO;
 import ua.glushko.model.entity.User;
 import ua.glushko.model.entity.UserRole;
@@ -32,7 +33,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void getUsers() {
+    public void getUsers() throws SQLException {
         try {
             assertNotNull(userDAO);
             //получаем список пользователей, должен быть не пустой
@@ -44,7 +45,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void getUserswitLimit() {
+    public void getUserswitLimit() throws SQLException {
         try {
             assertNotNull(userDAO);
             //получаем список пользователей, должен быть не пустой
@@ -56,7 +57,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void getExistUserById() {
+    public void getExistUserById() throws SQLException {
         try {
             User user = userDAO.read(1);
             assertNotNull("Пользователь с ключом 1 не найден", user);
@@ -67,7 +68,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void getNoExistUserById() {
+    public void getNoExistUserById() throws SQLException {
         try {
             // получаем пользователя с ключом 10, нет такого
             User user = userDAO.read(100);
@@ -78,7 +79,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void getExistUserByName() {
+    public void getExistUserByName() throws SQLException {
         try {
             // получаем пользователя с существующим именем
             List<User> list = ((UserDAO) userDAO).read("Manager");
@@ -89,7 +90,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void getNoExistUserByName() {
+    public void getNoExistUserByName() throws SQLException {
         try {
             // получаем пользователя с несуществующим именем
             List<User> list = ((UserDAO) userDAO).read("MANAGER1");
@@ -212,7 +213,7 @@ public class UserDAOTest {
     }
 
     @Test(expected = DaoException.class)
-    public void deleteOneNoExist() throws DaoException {
+    public void deleteOneNoExist() throws SQLException {
         try {
             // пробуем удалить не существующую запись, ожидаем исключение
             userDAO.delete(100);
@@ -287,6 +288,10 @@ public class UserDAOTest {
                     Thread.sleep(100);
                 } catch (DaoException | InterruptedException e) {
                     logger.error(e);
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }).start();
             Thread.sleep(300);
@@ -305,14 +310,14 @@ public class UserDAOTest {
     }
 
     @Test
-    public void getAdmins() throws DaoException {
+    public void getAdmins() throws SQLException {
         userDAO = DAOFactory.getFactory().getUserDao();
         List<User> users = ((UserDAO) userDAO).readByRole(UserRole.ADMIN, true);
         assertTrue(users.size() == 1);
     }
 
     @Test
-    public void getStuff() throws DaoException {
+    public void getStuff() throws SQLException {
         userDAO = DAOFactory.getFactory().getUserDao();
         List<User> users = ((UserDAO) userDAO).readByRole(UserRole.CUSTOMER, false);
         assertTrue(users.size() != 1);

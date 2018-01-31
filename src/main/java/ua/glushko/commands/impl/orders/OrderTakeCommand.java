@@ -14,6 +14,7 @@ import ua.glushko.commands.utils.Authentication;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 import static ua.glushko.commands.CommandFactory.COMMAND_ORDERS;
@@ -47,7 +48,7 @@ public class OrderTakeCommand implements Command {
         return new CommandRouter(request, response, page, CommandRouter.REDIRECT);
     }
 
-    private Order takeNextOneNewOrderWithoutEmployee(HttpServletRequest request) throws TransactionException, DatabaseException {
+    private Order takeNextOneNewOrderWithoutEmployee(HttpServletRequest request) throws TransactionException, SQLException {
         Order order = null;
         try {
             UserRole role = (UserRole) request.getSession().getAttribute(PARAM_ROLE);

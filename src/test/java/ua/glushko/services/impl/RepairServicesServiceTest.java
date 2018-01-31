@@ -26,32 +26,32 @@ public class RepairServicesServiceTest {
     }
 
     @Test
-    public void getRepairServiceList() throws DatabaseException {
+    public void getRepairServiceList() throws SQLException {
         List<RepairService> repairServiceList = service.getRepairServiceList();
         assertNotNull(repairServiceList);
     }
 
     @Test
-    public void getRepairServiceList1() throws DatabaseException {
+    public void getRepairServiceList1() throws SQLException {
         List<RepairService> repairServiceList = service.getRepairServiceList(1, 1, 1);
         assertNotNull(repairServiceList);
     }
 
     @Test
-    public void getRepairServiceTitles() throws DatabaseException {
+    public void getRepairServiceTitles() throws SQLException {
         service.getRepairServiceList(1, 1, 1);
         List<String> serviceTitles = service.getRepairServiceTitles();
         assertNotNull(serviceTitles);
     }
 
     @Test
-    public void getRepairServiceById() throws DaoException {
+    public void getRepairServiceById() throws SQLException {
         RepairService repairServiceById = service.getRepairServiceById(1);
         assertNotNull(repairServiceById);
     }
 
     @Test
-    public void updateRepairService() throws TransactionException, DatabaseException {
+    public void updateRepairService() throws TransactionException, SQLException {
         RepairService repairServiceById = service.getRepairServiceById(1);
         String name = repairServiceById.getName();
         repairServiceById.setName(name+"!");
@@ -62,7 +62,7 @@ public class RepairServicesServiceTest {
     }
 
     @Test
-    public void deleteRepairService() throws TransactionException, DatabaseException {
+    public void deleteRepairService() throws TransactionException, SQLException {
         service.deleteRepairService(2);
         RepairService service = this.service.getRepairServiceById(2);
         assertNull(service);

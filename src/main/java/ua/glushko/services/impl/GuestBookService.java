@@ -25,12 +25,12 @@ public class GuestBookService extends Service {
     }
 
     /** List of all GuestBooks*/
-    public List<GuestBook> getGuestBookList() throws DatabaseException {
+    public List<GuestBook> getGuestBookList() throws SQLException {
         return DAOFactory.getFactory().getGuestBookDAO().read();
     }
 
     /** List of GuestBook with limit*/
-    public List<GuestBook> getGuestBookList(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
+    public List<GuestBook> getGuestBookList(int page, int pagesCount, int rowsPerPage) throws SQLException {
         return DAOFactory.getFactory().getGuestBookDAO().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 
@@ -40,17 +40,17 @@ public class GuestBookService extends Service {
     }
 
     /** Get GuestBook by id */
-    public GuestBook getGuestBookById(int id) throws DaoException {
+    public GuestBook getGuestBookById(int id) throws SQLException {
         return getById(DAOFactory.getFactory().getGuestBookDAO(),id);
     }
 
     /** Update exist GuestBook or create new*/
-    public void updateGuestBook(GuestBook item) throws TransactionException, DatabaseException {
+    public void updateGuestBook(GuestBook item) throws TransactionException, SQLException {
         update(DAOFactory.getFactory().getGuestBookDAO(),item);
     }
 
     /** Delete exist GuestBook */
-    public void deleteGuestBook(Integer serviceId) throws TransactionException, DatabaseException {
+    public void deleteGuestBook(Integer serviceId) throws TransactionException, SQLException {
         delete(DAOFactory.getFactory().getGuestBookDAO(),serviceId);
     }
 

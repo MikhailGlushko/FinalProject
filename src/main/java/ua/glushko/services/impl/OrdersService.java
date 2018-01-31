@@ -31,14 +31,14 @@ public class OrdersService extends Service {
     /**
      * List of Orders
      */
-    public List<Order> getOrderList() throws DatabaseException {
+    public List<Order> getOrderList() throws SQLException {
         return DAOFactory.getFactory().getOrderDao().read();
     }
 
     /**
      * List of Orders by limit
      */
-    public List<Order> getOrderList(int page, int pagesCount, int rowsPerPage) throws DatabaseException {
+    public List<Order> getOrderList(int page, int pagesCount, int rowsPerPage) throws SQLException {
         return DAOFactory.getFactory().getOrderDao().read((page - 1) * rowsPerPage, pagesCount * rowsPerPage);
     }
 
@@ -52,14 +52,14 @@ public class OrdersService extends Service {
     /**
      * Get order by id
      */
-    public Order getOrderById(int id) throws DaoException {
+    public Order getOrderById(int id) throws SQLException {
         return getById(DAOFactory.getFactory().getOrderDao(), id);
     }
 
     /**
      * Delete exist order
      */
-    public void deleteOrder(Integer serviceId) throws TransactionException, DatabaseException {
+    public void deleteOrder(Integer serviceId) throws TransactionException, SQLException {
         delete(DAOFactory.getFactory().getOrderDao(), serviceId);
     }
 
@@ -80,7 +80,7 @@ public class OrdersService extends Service {
     /**
      * List of Orders for userId with Limit
      */
-    public List<Order> getOrderList(int page, int pagesCount, int rowsPerPage, Integer userId) throws TransactionException, DatabaseException {
+    public List<Order> getOrderList(int page, int pagesCount, int rowsPerPage, Integer userId) throws TransactionException, SQLException {
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
 
         int start = (page - 1) * rowsPerPage;
@@ -99,9 +99,9 @@ public class OrdersService extends Service {
     /**
      * get new order and set current userId to employeeId
      */
-    public Order takeNewOrder(int employeeId, OrderStatus status) throws DatabaseException, TransactionException {
+    public Order takeNewOrder(int employeeId, OrderStatus status) throws SQLException, TransactionException {
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
-        Order order;
+        Order order = null;
         try {
             TransactionManager.beginTransaction();
             order = orderDAO.take(status);
@@ -117,7 +117,7 @@ public class OrdersService extends Service {
             order.setChangeDateDate(new Date(System.currentTimeMillis()));
             orderDAO.update(order);
             TransactionManager.endTransaction();
-        } finally {
+        } catch (SQLException e){
             TransactionManager.rollBack();
         }
         return order;
@@ -126,7 +126,7 @@ public class OrdersService extends Service {
     /**
      * Update exist Order or create new
      */
-    public void updateOrder(Order oderd) throws TransactionException, DatabaseException {
+    public void updateOrder(Order oderd) throws TransactionException, SQLException {
         OrderDAO orderDAO = DAOFactory.getFactory().getOrderDao();
         try {
             TransactionManager.beginTransaction();
@@ -141,12 +141,12 @@ public class OrdersService extends Service {
                 orderDAO.create(oderd);
             }
             TransactionManager.endTransaction();
-        } finally {
+        } catch (SQLException e){
             TransactionManager.rollBack();
         }
     }
 
-    public Map<OrderStatus, Map<OrderStats, Integer>> getStats(Integer userId) throws DaoException {
+    public Map<OrderStatus, Map<OrderStats, Integer>> getStats(Integer userId) throws SQLException {
         return DAOFactory.getFactory().getOrderDao().getTotal(userId);
     }
 }

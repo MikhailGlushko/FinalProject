@@ -7,6 +7,7 @@ import ua.glushko.model.entity.Grant;
 import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionPool;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
@@ -29,12 +30,12 @@ public class GrantDAOTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void deleteOne() throws DaoException {
+    public void deleteOne() throws SQLException {
         grantDAO.delete(1);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void updateOne() throws DaoException {
+    public void updateOne() throws SQLException {
         List<Grant> grants = ((GrantDAO) grantDAO).read("ADMIN");
         assertNotNull(grants);
         Grant grant = grants.iterator().next();
@@ -42,31 +43,31 @@ public class GrantDAOTest {
     }
 
     @Test
-    public void read() throws DaoException {
+    public void read() throws SQLException {
         List<Grant> grants = ((GrantDAO) grantDAO).read("ADMIN");
         assertNotNull(grants);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void create() throws DaoException {
+    public void create() throws SQLException {
         Grant grant = new Grant();
         grantDAO.create(grant);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void update() throws DaoException {
+    public void update() throws SQLException {
         Grant grant = grantDAO.read(1);
         grantDAO.update(grant);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void delete() throws DaoException {
+    public void delete() throws SQLException {
         Grant grant = grantDAO.read(1);
         grantDAO.delete(grant.getId());
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void deleteAll() throws DaoException {
+    public void deleteAll() throws SQLException {
         grantDAO.deleteAll();
     }
 

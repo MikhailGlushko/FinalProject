@@ -19,55 +19,55 @@ abstract public class Service {
     protected final Logger LOGGER = Logger.getLogger(Service.class.getSimpleName());
 
     /** Get GenericEntity by id */
-    protected <T extends GenericEntity> T getById(AbstractDAO<T> dao, int id) throws DaoException {
+    protected <T extends GenericEntity> T getById(AbstractDAO<T> dao, int id) throws SQLException {
         return dao.read(id);
     }
 
     /** Update exist GenericEntity or create new */
-    protected <T extends GenericEntity> void update(AbstractDAO<T> dao, T item) throws TransactionException, DatabaseException {
-        try{
+    protected <T extends GenericEntity> void update(AbstractDAO<T> dao, T item) throws TransactionException, SQLException {
+        try {
             TransactionManager.beginTransaction();
-            if(item.getId()!=null && item.getId()!=0)
+            if (item.getId() != null && item.getId() != 0)
                 dao.update(item);
             else
                 dao.create(item);
             TransactionManager.endTransaction();
-        } finally {
+        } catch (SQLException e){
             TransactionManager.rollBack();
         }
     }
 
     /** Delete exist GenericEntity */
-    protected <T extends GenericEntity> void delete(AbstractDAO<T> dao, Integer id) throws TransactionException, DatabaseException {
+    protected <T extends GenericEntity> void delete(AbstractDAO<T> dao, Integer id) throws TransactionException, SQLException {
         try{
             TransactionManager.beginTransaction();
             dao.delete(id);
             TransactionManager.endTransaction();
-        } finally {
+        } catch (SQLException e){
             TransactionManager.rollBack();
         }
     }
 
     /** Total of GenericEntity */
     protected <T extends GenericEntity> Integer count(AbstractDAO<T> dao) throws SQLException, TransactionException {
-        Integer count;
+        Integer count=null;
         try{
             TransactionManager.beginTransaction();
             count = dao.count();
             TransactionManager.endTransaction();
-        } finally {
+        } catch (SQLException e){
             TransactionManager.rollBack();
         }
         return count;
     }
 
     protected <T extends GenericEntity> Integer count(AbstractDAO<T> dao, int userId) throws SQLException, TransactionException {
-        Integer count;
+        Integer count =null;
         try{
             TransactionManager.beginTransaction();
             count = dao.count(userId);
             TransactionManager.endTransaction();
-        } finally {
+        } catch (SQLException e){
             TransactionManager.rollBack();
         }
         return count;

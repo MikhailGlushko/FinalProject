@@ -1,5 +1,6 @@
 package ua.glushko.model.dao;
 
+import ua.glushko.exception.DatabaseException;
 import ua.glushko.model.entity.GenericEntity;
 import ua.glushko.exception.DaoException;
 import ua.glushko.transaction.ConnectionWrapper;
@@ -28,7 +29,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
      * @throws DaoException - Exception
      */
     @Override
-    public void create(T object) throws DaoException {
+    public void create(T object) throws SQLException {
         String sql = getCreateQuery();
         ResultSet generatedKeys;
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -40,8 +41,6 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             }
             generatedKeys = statement.getGeneratedKeys();
             setGeneratedKey(object, generatedKeys);
-        } catch (SQLException e) {
-            throw new DaoException(e);
         }
     }
 
@@ -68,7 +67,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
      * Update exist GenericEntity
      */
     @Override
-    public void update(T object) throws DaoException {
+    public void update(T object) throws SQLException {
         String sql = getUpdateQuery();
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
@@ -77,8 +76,6 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             if (effectedRows != 1) {
                 throw new DaoException("Can not update record - record not found. Unsuccessful operation.");
             }
-        } catch (SQLException e) {
-            throw new DaoException(e);
         }
     }
 
@@ -100,7 +97,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
      * delete exist GenericEntity
      */
 
-    public T delete(int id) throws DaoException {
+    public T delete(int id) throws SQLException {
         T object = read(id);
         String sql = getDeleteQuery() + " where id=?";
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -110,8 +107,6 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             if (effectedRows != 1) {
                 throw new DaoException("Can not delete record. Operation aborted");
             }
-        } catch (SQLException e) {
-            throw new DaoException(e);
         }
         return object;
     }
@@ -127,7 +122,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
      * Delete all exist GenericEntities
      */
     @Override
-    public void deleteAll() throws DaoException {
+    public void deleteAll() throws SQLException {
         String sql = getDeleteQuery();
         try (ConnectionWrapper con = TransactionManager.getConnection();
              PreparedStatement statement = con.prepareStatement(sql)) {
@@ -135,8 +130,6 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             if (effectedRows == 0) {
                 throw new DaoException("Can not delete record. Operation aborted");
             }
-        } catch (Exception e) {
-            throw new DaoException(e);
         }
     }
 
@@ -150,7 +143,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     /**
      * Read GenericEntity from database by id
      */
-    public T read(int id) throws DaoException {
+    public T read(int id) throws SQLException {
         List<T> list;
         String sql = getSelectQueryById();
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -158,8 +151,6 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             prepareStatementForSelectById(statement, id);
             ResultSet resultSet = statement.executeQuery();
             list = parseResultSet(resultSet);
-        } catch (Exception e) {
-            throw new DaoException(e);
         }
         if (list.size() == 0) {
             return null;
@@ -185,7 +176,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     /**
      * Get list of GenericEntities by name
      */
-    public List<T> read(String name) throws DaoException {
+    public List<T> read(String name) throws SQLException {
         List<T> list;
         String sql = getSelectQuery() +
                 " where name=?";
@@ -195,8 +186,6 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             ResultSet resultSet = statement.executeQuery();
             setTitles(statement.getMetaData());
             list = parseResultSet(resultSet);
-        } catch (Exception e) {
-            throw new DaoException(e);
         }
         return list;
     }
@@ -211,7 +200,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
     /**
      * Get list of all GenericEntities
      */
-    public List<T> read() throws DaoException {
+    public List<T> read() throws SQLException {
         List<T> list;
         String sql = getSelectQuery();
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -219,8 +208,6 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             ResultSet resultSet = statement.executeQuery();
             setTitles(statement.getMetaData());
             list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
         }
         return list;
     }
@@ -232,7 +219,7 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
      * @return list of Entities
      * @throws DaoException - exception
      */
-    public List<T> read(int start, int limit) throws DaoException {
+    public List<T> read(int start, int limit) throws SQLException {
         List<T> list;
         String sql = getSelectQueryWithLimit();
         try (ConnectionWrapper con = TransactionManager.getConnection();
@@ -242,8 +229,6 @@ abstract public class AbstractDAO<T extends GenericEntity> implements GenericDAO
             ResultSet resultSet = statement.executeQuery();
             setTitles(resultSet.getMetaData());
             list = parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException(e);
         }
         return list;
     }

@@ -19,8 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -51,7 +53,7 @@ public class UsersListCommandTest {
    }
 
     @Test
-    public void getUsersListForUserAdmin() throws ServletException, TransactionException, DatabaseException, IOException {
+    public void getUsersListForUserAdmin() throws ServletException, TransactionException, SQLException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("admin", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -66,7 +68,7 @@ public class UsersListCommandTest {
     }
 
     @Test
-    public void getUsersListForUserManager() throws ServletException, TransactionException, DatabaseException, IOException {
+    public void getUsersListForUserManager() throws ServletException, TransactionException, SQLException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("manager", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -81,7 +83,7 @@ public class UsersListCommandTest {
     }
 
     @Test
-    public void getUsersListForUserMaster() throws ServletException, TransactionException, DatabaseException, IOException {
+    public void getUsersListForUserMaster() throws ServletException, TransactionException, SQLException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("master", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -96,7 +98,7 @@ public class UsersListCommandTest {
     }
 
     @Test
-    public void getUsersListForUserCustomer() throws ServletException, TransactionException, DatabaseException, IOException {
+    public void getUsersListForUserCustomer() throws ServletException, TransactionException, SQLException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("customer", "P@ssw0rd");
         grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
@@ -110,11 +112,12 @@ public class UsersListCommandTest {
         controller.service(request,response);
     }
 
-    @Test (expected = DaoException.class)
-    public void getUsersListForGuest() throws ServletException, TransactionException, DatabaseException, IOException {
+    @Test
+    public void getUsersListForGuest() throws ServletException, TransactionException, SQLException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser(null, null);
-        grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
+        if(Objects.nonNull(useDataAndGrantsSet))
+            grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
         when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.CUSTOMER);
         when(session.getAttribute(PARAM_GRANTS)).thenReturn(grants);
 
@@ -124,11 +127,12 @@ public class UsersListCommandTest {
         controller.service(request,response);
     }
 
-    @Test (expected = DaoException.class)
-    public void getUsersListForGuest2() throws ServletException, TransactionException, DatabaseException, IOException {
+    @Test
+    public void getUsersListForGuest2() throws ServletException, TransactionException, SQLException, IOException {
         UsersService usersService = UsersService.getService();
         useDataAndGrantsSet = usersService.authenticateUser("test", "test");
-        grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
+        if(Objects.nonNull(useDataAndGrantsSet))
+            grants = useDataAndGrantsSet.get(useDataAndGrantsSet.keySet().iterator().next());
         when(session.getAttribute(PARAM_ROLE)).thenReturn(UserRole.CUSTOMER);
         when(session.getAttribute(PARAM_GRANTS)).thenReturn(grants);
 

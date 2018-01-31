@@ -13,6 +13,8 @@ import ua.glushko.services.impl.UsersService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.sql.SQLException;
+
 import static ua.glushko.commands.CommandFactory.PARAM_SERVLET_PATH;
 import static ua.glushko.commands.utils.Authentication.U;
 import static ua.glushko.commands.CommandFactory.COMMAND_USERS;
@@ -43,7 +45,7 @@ public class UserUpdateCommand implements Command {
             }
             page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS + "&page=" + request.getAttribute(PARAM_PAGE);
             return new CommandRouter(request, response, page);
-        } catch (TransactionException | DatabaseException e) {
+        } catch (TransactionException | SQLException e) {
             LOGGER.error(e);
             page = PARAM_SERVLET_PATH + "?command=" + COMMAND_USERS_READ + "&user_id=" + request.getParameter(PARAM_USER_ID);
             return new CommandRouter(request, response, page);

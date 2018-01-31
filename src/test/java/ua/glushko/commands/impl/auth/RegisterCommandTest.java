@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -42,8 +43,8 @@ public class RegisterCommandTest {
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
     }
 
-    @Test (expected = DaoException.class)
-    public void registerIncorrectData() throws ServletException, ParameterException, DatabaseException, IOException {
+    @Test
+    public void registerIncorrectData() throws ServletException, ParameterException, SQLException, IOException {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("adm");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("admin");
         Controller controller = new Controller();
@@ -71,7 +72,7 @@ public class RegisterCommandTest {
     }
 
     @Test
-    public void register() throws ServletException, ParameterException, DatabaseException, IOException {
+    public void register() throws ServletException, ParameterException, SQLException, IOException {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("testuser");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("P@ssw0rd");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2)).thenReturn("P@ssw0rd");
@@ -88,8 +89,8 @@ public class RegisterCommandTest {
         assertNotNull(test);
     }
 
-    @Test(expected = DaoException.class)
-    public void register2() throws ServletException, ParameterException, DatabaseException, IOException {
+    @Test
+    public void register2() throws ServletException, ParameterException, SQLException, IOException {
         when(request.getParameter(UsersCommandHelper.PARAM_USER_LOGIN)).thenReturn("testuser");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD)).thenReturn("P@ssw0rd");
         when(request.getParameter(UsersCommandHelper.PARAM_USER_PASSWORD2)).thenReturn("P@ssw0rd");
