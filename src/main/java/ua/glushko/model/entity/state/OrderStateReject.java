@@ -1,14 +1,15 @@
-package ua.glushko.commands.impl.orders.state;
+package ua.glushko.model.entity.state;
 
 import ua.glushko.model.entity.Order;
 import ua.glushko.model.entity.OrderStatus;
 
-public class OrderStatePayment implements OrderState {
+public class OrderStateReject implements OrderState {
     @Override
     public void nextStage(Order order, String message, String userName, Integer userId) {
-        order.setStatus(OrderStatus.CLOSE);
-        order.setEmployeeId(order.getUserId());
+        order.setStatus(OrderStatus.NEW);
         order.setMemo(newMemo(order,message,userName));
+        order.setManagerId(0);
+        order.setEmployeeId(0);
     }
 
     @Override

@@ -1,13 +1,12 @@
-package ua.glushko.commands.impl.orders.state;
+package ua.glushko.model.entity.state;
 
 import ua.glushko.model.entity.Order;
 import ua.glushko.model.entity.OrderStatus;
 
-public class OrderStateNew implements OrderState {
+public class OrderStateConfirmation implements OrderState {
     @Override
     public void nextStage(Order order, String message, String userName, Integer userId) {
-        order.setStatus(OrderStatus.VERIFICATION);
-        order.setEmployeeId(userId);
+        order.setStatus(OrderStatus.PROGRESS);
         order.setMemo(newMemo(order,message,userName));
     }
 }

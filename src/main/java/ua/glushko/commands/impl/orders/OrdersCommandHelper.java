@@ -1,6 +1,6 @@
 package ua.glushko.commands.impl.orders;
 
-import ua.glushko.commands.impl.orders.state.*;
+import ua.glushko.model.entity.state.*;
 import ua.glushko.exception.DaoException;
 import ua.glushko.exception.ParameterException;
 import ua.glushko.model.entity.Order;

@@ -1,4 +1,4 @@
-package ua.glushko.commands.impl.orders.state;
+package ua.glushko.model.entity.state;
 
 import ua.glushko.model.entity.OrderStatus;
 
